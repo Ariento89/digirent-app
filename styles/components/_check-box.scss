@@ -1,0 +1,29 @@
+@import '../abstract/mixins';
+@import '../abstract/breakpoint';
+
+.Checkbox {
+  @include flex(stretch, center);
+
+  .label {
+    cursor: pointer;
+    @include font(16px, $fw-light);
+    color: $color-dark-gray;
+  }
+
+  .checkbox {
+    flex-shrink: 0;
+    cursor: pointer;
+    height: 25px;
+    width: 25px;
+
+    &.active {
+      img {
+        display: block;
+      }
+    }
+
+    img {
+      display: none;
+    }
+  }
+}

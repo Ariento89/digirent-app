@@ -1,0 +1,214 @@
+@import '../abstract/mixins';
+@import '../abstract/variables';
+@import '../abstract/breakpoint';
+
+* {
+  font-family: $font-primary;
+  outline: none !important;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+  min-width: 100%;
+  overflow-x: hidden;
+  position: relative;
+  color: #3e3e3e;
+}
+
+.text-primary {
+  color: $color-primary !important;
+}
+
+.text-dark-gray {
+  color: $color-dark-gray !important;
+}
+
+.text-md {
+  @include font(25px, 400);
+  @include clear-spacing;
+}
+
+.text-sm {
+  @include font(16px, $fw-light);
+  @include clear-spacing;
+}
+
+.page-wrapper {
+  position: relative;
+  overflow: hidden;
+}
+
+.left-main-background {
+  position: absolute;
+  left: 0;
+  top: 720px;
+  z-index: -1;
+}
+
+.right-main-background {
+  position: absolute;
+  right: 0;
+  top: 100px;
+  z-index: -1;
+}
+
+.confirmation-modal {
+  .modal-content {
+    overflow: hidden;
+  }
+
+  .modal-body {
+    padding: 0;
+    position: relative;
+
+    .modal-background {
+      width: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+    }
+
+    .main-content {
+      padding: 90px 25px 40px 25px;
+      position: relative;
+      z-index: 2;
+
+      @include media-breakpoint-down(xs) {
+        padding-top: 60px;
+      }
+
+      .description {
+        padding: 0 25px;
+        text-align: center;
+        @include font(18px, $fw-light);
+        line-height: 25px;
+
+        @include media-breakpoint-down(xs) {
+          font-size: 16px;
+          padding: 0;
+        }
+      }
+
+      .buttons {
+        @include flex(stretch, stretch);
+
+        @include media-breakpoint-down(xs) {
+          flex-direction: column;
+
+          .button {
+            width: 100%;
+          }
+        }
+
+        .button {
+          flex-basis: 50%;
+
+          &.btn-yes {
+            margin-right: 5px;
+          }
+
+          &.btn-no {
+            margin-left: 5px;
+          }
+
+          @include media-breakpoint-down(xs) {
+            flex-basis: 50%;
+            margin-left: 0 !important;
+            margin-right: 0 !important;
+
+            &.btn-no {
+              margin-top: 5px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.modal {
+  .modal-content {
+    @include simple-shadow;
+    border-radius: 10px;
+    border: 0;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .modal-dialog {
+    &.modal-lg,
+    &.modal-xl {
+      @include media-breakpoint-down(lg) {
+        max-width: 100% !important;
+        padding-left: 25px !important;
+        padding-right: 25px !important;
+      }
+
+      @include media-breakpoint-down(xs) {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+      }
+    }
+  }
+}
+
+.modal-backdrop {
+  background-color: #fff;
+  backdrop-filter: blur(10px);
+}
+
+button,
+.button-hover {
+  transition: 300ms;
+
+  &:hover {
+    transition: 300ms;
+    filter: brightness(115%);
+  }
+}
+
+.block-center {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+input,
+textarea {
+  &::-webkit-input-placeholder {
+    color: $color-placeholder;
+    font-weight: $fw-light;
+  }
+  &:-moz-placeholder {
+    color: $color-placeholder;
+    font-weight: $fw-light;
+    opacity: 1;
+  }
+  &::-moz-placeholder {
+    color: $color-placeholder;
+    font-weight: $fw-light;
+    opacity: 1;
+  }
+  &:-ms-input-placeholder {
+    color: $color-placeholder;
+    font-weight: $fw-light;
+  }
+  &::-ms-input-placeholder {
+    color: $color-placeholder;
+    font-weight: $fw-light;
+  }
+
+  &::placeholder {
+    color: $color-placeholder;
+    font-weight: $fw-light;
+  }
+}
+
+.ps__thumb-y {
+  background-color: $color-primary !important;
+}

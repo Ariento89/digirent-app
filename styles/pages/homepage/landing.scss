@@ -1,0 +1,118 @@
+// Landing
+.layout-content.homepage {
+  .landing {
+    min-height: 90vh;
+    background-image: url('/images/homepage-bg.jpg');
+    background-size: cover;
+    background-position: top;
+    background-repeat: no-repeat;
+    background-blend-mode: darken;
+    background-color: rgba(0, 0, 0, 0.4);
+    position: relative;
+    @include flex(center, center, column);
+
+    .title {
+      @include font(5.5rem, bold);
+      padding-left: 25px;
+      padding-right: 25px;
+      color: white;
+      text-align: center;
+
+      .alt {
+        font-family: $font-secondary;
+        color: $color-primary;
+      }
+
+      @include media-breakpoint-down(lg) {
+        font-size: 4rem;
+      }
+
+      @include media-breakpoint-down(md) {
+        font-size: 3rem;
+      }
+    }
+
+    .input-fields {
+      margin: 30px 25px 0;
+      background-color: white;
+      padding: 12px 15px;
+      border-radius: 40px;
+      @include flex(stretch, stretch);
+
+      @include media-breakpoint-only(md) {
+        .Input {
+          .field-icon,
+          .field-divider {
+            display: none;
+          }
+
+          input {
+            padding: 12px 15px;
+          }
+        }
+      }
+
+      @include media-breakpoint-down(sm) {
+        background-color: transparent;
+        border-radius: $border-radius;
+        flex-direction: column;
+        width: 80%;
+
+        .Input {
+          margin-bottom: 10px;
+        }
+      }
+
+      @include media-breakpoint-down(xs) {
+        margin-top: 0;
+        width: 100%;
+
+        .button {
+          padding: 14px 20px;
+        }
+      }
+    }
+
+    .scroll-down {
+      @include flex();
+      position: absolute;
+      width: 100%;
+      bottom: 0;
+
+      .scroll-down-wrapper {
+        flex-shrink: 0;
+        position: relative;
+
+        .scroll-down-space {
+          margin-left: -1px;
+          margin-right: -1px;
+          margin-bottom: -1px;
+        }
+
+        .scroll-down {
+          width: 35px;
+          height: 35px;
+          padding: 8px;
+          position: absolute;
+          top: 10px;
+          left: 0;
+          right: 0;
+          margin-left: auto;
+          margin-right: auto;
+          border-radius: 40px;
+          cursor: pointer;
+
+          &:hover {
+            background-color: rgba(255, 255, 255, 0.25);
+          }
+        }
+      }
+
+      .white-space {
+        flex: 1;
+        background-color: white;
+        margin-bottom: -1px;
+      }
+    }
+  }
+}

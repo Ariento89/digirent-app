@@ -1,0 +1,21 @@
+@import "../abstract/variables";
+
+.search-bar {
+  @include flex(stretch, center);
+  position: relative;
+
+  img {
+    width: 18px;
+    position: absolute;
+    right: 20px;
+  }
+  input {
+    width: 100%;
+    padding: 12px 20px;
+    border-radius: 20px;
+    border: 0;
+    color: $color-dark-gray;
+    @include simple-shadow;
+    @include font(16px, $fw-light);
+  }
+}

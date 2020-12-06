@@ -1,0 +1,207 @@
+@import './abstract/variables';
+@import './abstract/mixins';
+@import './abstract/breakpoint';
+
+.layout-content.blog {
+  padding-bottom: 400px;
+
+  @include media-breakpoint-down(lg) {
+    padding-bottom: 250px;
+  }
+
+  @include media-breakpoint-down(sm) {
+    padding-bottom: 150px;
+  }
+
+  .container-lg {
+    max-width: 1700px;
+  }
+
+  .btn-show-more {
+    padding: 0;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+
+    img {
+      width: 40%;
+    }
+  }
+
+  .blogs {
+    margin-top: 150px;
+    padding-right: 100px;
+    position: relative;
+
+    @include media-breakpoint-down(lg) {
+      padding-right: 0;
+    }
+
+    .item {
+      margin-bottom: 150px;
+
+      @include breakpoint-down(420px) {
+        margin-bottom: 75px;
+      }
+    }
+  }
+
+  .sidebar {
+    @include media-breakpoint-down(md) {
+      margin-top: 200px;
+    }
+
+    .recent-blogs {
+      margin-top: 100px;
+
+      @include media-breakpoint-down(xs) {
+        margin-top: 50px;
+      }
+
+      .main-subtitle {
+        font-size: 22px;
+        color: #5d5d5d;
+        padding-left: 40px;
+      }
+
+      .list {
+        margin-top: 40px;
+
+        @include media-breakpoint-down(xs) {
+          margin-top: 20px;
+        }
+
+        .item {
+          padding: 25px 40px;
+          margin-bottom: 20px;
+          position: relative;
+          border-radius: 37px;
+          @include flex(stretch, center);
+
+          .content {
+            margin: 0 20px;
+            padding-top: 30px;
+
+            .title {
+              font-size: 20px;
+            }
+
+            .date {
+              z-index: 1;
+              width: 80px;
+              padding-top: 20px;
+              padding-bottom: 5px;
+              background-color: $color-primary;
+              position: absolute;
+              display: block;
+              top: 0;
+              color: white;
+              text-align: center;
+              border-bottom-left-radius: 8px;
+              border-bottom-right-radius: 8px;
+              @include font(18px, $fw-light);
+
+              .year {
+                position: absolute;
+                right: -50px;
+                color: #cbcbcb;
+              }
+            }
+          }
+
+          .image {
+            flex-shrink: 0;
+            height: 100px;
+            width: 100px;
+            background-image: url('/images/house-sample-1.jpg');
+            background-position: center;
+            background-size: cover;
+            background-repeat: no-repeat;
+            border-radius: 50%;
+          }
+
+          .button {
+            margin-left: auto;
+            flex-shrink: 0;
+            padding: 0;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+
+            img {
+              width: 40%;
+            }
+          }
+
+          @include media-breakpoint-down(xs) {
+            padding: 25px;
+
+            .image {
+              height: 60px;
+              width: 60px;
+            }
+          }
+        }
+      }
+    }
+
+    .archives {
+      margin-top: 100px;
+
+      @include media-breakpoint-down(xs) {
+        margin-top: 50px;
+      }
+
+      .main-subtitle {
+        font-size: 22px;
+        color: #5d5d5d;
+        padding-left: 40px;
+      }
+
+      .list {
+        margin-top: 40px;
+        border-radius: 37px;
+        padding: 25px 40px;
+
+        .item {
+          margin-bottom: 15px;
+          @include flex;
+
+          &:last-child {
+            margin-bottom: 0;
+
+            .content {
+              border-bottom: 0;
+            }
+          }
+
+          .button {
+            flex-shrink: 0;
+            padding: 0;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            align-self: center;
+
+            img {
+              width: 40%;
+            }
+          }
+
+          .content {
+            @include flex(space-between, center);
+            padding: 8px 0;
+            margin-left: 20px;
+            flex: 1;
+            border-bottom: 1px solid $color-gray;
+          }
+        }
+
+        @include media-breakpoint-down(xs) {
+          margin-top: 20px;
+          padding: 25px;
+        }
+      }
+    }
+  }
+}

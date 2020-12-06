@@ -1,0 +1,420 @@
+@import './abstract/variables';
+@import './abstract/mixins';
+@import './abstract/breakpoint';
+
+$main-border-radius: 30px;
+
+@include media-breakpoint-down(xs) {
+  $main-border-radius: 10px;
+}
+
+.layout-content.property-details {
+  padding-bottom: 400px;
+
+  @include media-breakpoint-down(lg) {
+    padding-bottom: 250px;
+  }
+
+  @include media-breakpoint-down(sm) {
+    padding-bottom: 150px;
+  }
+
+  .container.max-width {
+    max-width: 1800px;
+  }
+
+  .property-detail {
+    // left
+    .house-photo {
+      width: 100%;
+      height: 550px;
+      position: relative;
+      padding: 20px;
+      border-radius: $main-border-radius;
+      @include flex(space-between, flex-start);
+      @include simple-shadow;
+
+      background-position: center;
+      background-size: cover;
+      background-repeat: no-repeat;
+
+      @include media-breakpoint-down(lg) {
+        height: 500px;
+      }
+
+      @include media-breakpoint-down(md) {
+        height: 400px;
+      }
+
+      @include media-breakpoint-down(sm) {
+        height: 350px;
+      }
+
+      .star-photo {
+        width: 40px;
+        height: 40px;
+        padding: 8px;
+        border-radius: 50%;
+        transition: 250ms;
+        cursor: pointer;
+
+        img {
+          width: 100%;
+        }
+
+        &:hover {
+          transition: 250ms;
+          background: rgba(0, 0, 0, 0.2);
+        }
+      }
+
+      .slick-arrows-container {
+        position: absolute;
+        left: 20px;
+        right: 20px;
+        top: 45%;
+        @include flex(space-between, center);
+      }
+    }
+
+    .house-insides {
+      @include flex(center, center);
+
+      .item {
+        height: 175px;
+        padding-left: 20px;
+        padding-right: 20px;
+
+        .photo {
+          width: 100%;
+          height: 100%;
+          background-position: center;
+          background-size: cover;
+          background-repeat: no-repeat;
+          border-radius: 20px;
+          @include simple-shadow;
+        }
+      }
+
+      .slick-list {
+        margin-left: 25px;
+        margin-right: 25px;
+
+        @include media-breakpoint-down(sm) {
+          margin-left: 0;
+          margin-right: 0;
+        }
+      }
+    }
+
+    .house-long-description {
+      border-radius: $main-border-radius;
+      padding: 30px;
+      margin-top: 75px;
+
+      @include media-breakpoint-down(sm) {
+        margin-top: 50px;
+        padding: 20 25px;
+      }
+    }
+
+    // right
+    .property-name {
+      padding: 25px 40px 50px;
+      background-color: white;
+      border-radius: $main-border-radius;
+      position: relative;
+      @include simple-shadow;
+
+      @include media-breakpoint-down(xs) {
+        padding: 25px 25px 50px;
+      }
+
+      .apartment-text {
+        margin-bottom: 15px;
+        color: $color-primary;
+        display: block;
+        text-align: right;
+        @include font(15px, $fw-light);
+      }
+
+      .name {
+        @include font(35px, $fw-bold);
+        margin-bottom: 8px;
+      }
+
+      .btn-open-map {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: -18px;
+        margin: 0 auto;
+
+        padding: 10px 12px;
+        border-radius: 15px;
+        background-color: white;
+        border: 0;
+        @include flex(center, center);
+        @include font(16px, $fw-light);
+        @include simple-shadow;
+
+        a {
+          color: $color-dark-gray;
+          text-decoration: none;
+        }
+
+        img {
+          margin-right: 5px;
+        }
+      }
+    }
+
+    .property-other-info {
+      margin-top: 50px;
+
+      .item {
+        width: 100%;
+        margin-bottom: 20px;
+        padding: 12px 15px;
+        border-radius: 30px;
+        background-color: white;
+        @include simple-shadow;
+        @include flex(stretch, center);
+
+        &.item-price {
+          .main-title {
+            flex: 1;
+            text-align: center;
+            font-size: 15px;
+          }
+
+          .divider {
+            width: 1px;
+            height: 25px;
+            background-color: black;
+            opacity: 0.05;
+            display: block;
+
+            &.left {
+              margin-left: 15px;
+            }
+
+            &.right {
+              margin-right: 15px;
+            }
+          }
+        }
+
+        &.item-others {
+          width: fit-content;
+          padding-left: 25px;
+          @include flex(stretch, center);
+
+          .sqft-icon {
+            @include font(14px, $fw-light);
+            color: white;
+            background-color: $color-primary;
+            padding: 2px 4px;
+          }
+        }
+
+        &.item-date {
+          width: fit-content;
+          padding-left: 25px;
+          @include flex(stretch, center);
+        }
+      }
+    }
+
+    .property-amenities {
+      margin-top: 30px;
+      padding: 25px 40px 25px;
+      background-color: white;
+      border-radius: $main-border-radius;
+      position: relative;
+      @include simple-shadow;
+      @include flex(stretch, center);
+
+      @include media-breakpoint-down(xs) {
+        padding: 25px;
+      }
+
+      .list {
+        flex: 1;
+        flex-wrap: wrap;
+        @include flex;
+
+        .item {
+          padding-right: 10px;
+          @include flex(stretch, center);
+
+          &:last-child {
+            .icon {
+              display: none;
+            }
+          }
+
+          .icon {
+            width: 5px;
+            height: 5px;
+            margin-left: 10px;
+            border-radius: 50%;
+            background-color: $color-primary;
+          }
+        }
+      }
+
+      .divider {
+        width: 1px;
+        max-height: 100%;
+        background-color: black;
+        opacity: 0.05;
+        display: block;
+        margin-left: 15px;
+        margin-right: 15px;
+        align-self: stretch;
+      }
+    }
+
+    .btn-apply {
+      margin-top: 50px;
+    }
+
+    .landlord-details {
+      max-width: 500px;
+      margin: 200px auto 0;
+      padding: 90px 40px 30px;
+      position: relative;
+      border-radius: $main-border-radius;
+
+      background-image: url('/images/header-bg-2.svg');
+      background-position: top;
+      background-size: cover;
+      background-repeat: no-repeat;
+
+      .landlord-photo {
+        height: 150px;
+        width: 150px;
+        border-radius: 50%;
+        background: white;
+        @include simple-shadow;
+
+        padding: 10px;
+        position: absolute;
+        top: -75px;
+        left: 0;
+        right: 0;
+        margin-left: auto;
+        margin-right: auto;
+
+        .photo {
+          width: 100%;
+          height: 100%;
+          border-radius: 50%;
+          background-image: url('/images/landlord-sample-photo.jpg');
+          background-position: center;
+          background-size: cover;
+          background-repeat: no-repeat;
+        }
+      }
+
+      .landlord-name {
+        .name {
+          @include font(28px, $fw-bold);
+          margin-bottom: 5px;
+        }
+      }
+
+      .landlord-response {
+        border-radius: $main-border-radius;
+        background-color: white;
+        padding: 10px 15px;
+        @include simple-shadow;
+        @include flex(space-between, center);
+
+        @include breakpoint-down(500px) {
+          @include flex(flex-start, flex-start, column);
+          border-radius: 10px;
+
+          .divider {
+            width: 50px !important;
+            height: 1px !important;
+            margin: 10px 0 !important;
+          }
+        }
+
+        .main-desc {
+          font-size: 15px;
+        }
+
+        .divider {
+          width: 1px;
+          max-height: 100%;
+          background-color: black;
+          opacity: 0.05;
+          display: block;
+          margin-left: 15px;
+          margin-right: 15px;
+          align-self: stretch;
+        }
+      }
+    }
+  }
+
+  .recently-viewed {
+    margin-top: 250px;
+
+    @include media-breakpoint-down(lg) {
+      margin-top: 200px;
+    }
+
+    @include media-breakpoint-down(md) {
+      margin-top: 150px;
+    }
+
+    @include media-breakpoint-down(sm) {
+      margin-top: 100px;
+    }
+
+    .list {
+      margin-top: 100px;
+      @include flex(center, center);
+
+      @include media-breakpoint-down(md) {
+        margin-top: 50px;
+      }
+
+      @include media-breakpoint-down(xs) {
+        margin-top: 25px;
+      }
+
+      .item {
+        padding-left: 35px;
+        padding-right: 35px;
+
+        .property-info {
+          margin: 0 0 15px 0;
+        }
+
+        @include media-breakpoint-only(sm) {
+          padding-left: 60px;
+          padding-right: 60px;
+        }
+
+        @include media-breakpoint-only(xs) {
+          padding: 5px;
+        }
+      }
+
+      .slick-list {
+        margin-left: 25px;
+        margin-right: 25px;
+
+        @include media-breakpoint-down(sm) {
+          margin-left: 0;
+          margin-right: 0;
+        }
+      }
+    }
+  }
+}

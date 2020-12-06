@@ -1,0 +1,88 @@
+@import '../abstract/variables';
+@import '../abstract/mixins';
+
+.blog-card {
+  position: relative;
+  background-color: white;
+
+  .blog-image {
+    position: absolute;
+    top: -100px;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    @include simple-shadow;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+
+    .bottom-design {
+      position: absolute;
+      bottom: -11px;
+      width: 200px;
+      height: 52px; // ratio: 200:52
+      margin-left: auto;
+      margin-right: auto;
+      left: 0;
+      right: 0;
+    }
+
+    .overlay {
+      position: relative;
+      z-index: 3;
+      width: 100%;
+      height: 100%;
+      background-image: url('/images/house-sample-1.jpg');
+      background-position: center;
+      background-size: cover;
+      background-repeat: no-repeat;
+      border-radius: 50%;
+    }
+
+    .date {
+      z-index: 1;
+      width: 80px;
+      position: absolute;
+      display: block;
+      right: -80px;
+      top: 115px;
+      text-align: center;
+      @include font(18px, $fw-light);
+
+      @include breakpoint-down(370px) {
+        bottom: -35px;
+        right: 0;
+        left: 0;
+        top: auto;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .year {
+        position: absolute;
+        right: -50px;
+        color: #cbcbcb;
+      }
+    }
+
+    @include breakpoint-down(420px) {
+      top: -30px;
+      width: 150px;
+      height: 150px;
+
+      .bottom-design {
+        width: 150px;
+        height: 39px;
+      }
+    }
+  }
+
+  .title {
+    margin-top: 120px;
+
+    @include breakpoint-down(370px) {
+      margin-top: 160px;
+    }
+  }
+}

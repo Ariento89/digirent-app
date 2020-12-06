@@ -1,0 +1,247 @@
+@import './abstract/variables';
+@import './abstract/mixins';
+@import './abstract/breakpoint';
+
+.layout-content.account-tenant {
+  padding-bottom: 400px;
+
+  @include media-breakpoint-down(lg) {
+    padding-bottom: 250px;
+  }
+
+  @include media-breakpoint-down(sm) {
+    padding-bottom: 150px;
+  }
+
+  .main-subtitle {
+    line-height: 30px;
+  }
+
+  .user-profile {
+    .top {
+      @include flex();
+      flex-direction: column;
+
+      .photo-holder {
+        width: 100%;
+        height: 300px;
+        background-image: url('/images/tenant-sample-photo.jpg');
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
+        @include flex(space-between, center);
+        border-top-left-radius: $border-radius;
+        border-top-right-radius: $border-radius;
+        position: relative;
+
+        .photo-additional-bg {
+          position: absolute;
+          width: 100%;
+          bottom: -3px;
+        }
+
+        .settings {
+          margin-left: -20px;
+          margin-top: -40px;
+
+          @include media-breakpoint-down(md) {
+            margin-left: 10px;
+          }
+
+          .item {
+            height: 35px;
+            width: 35px;
+            background-color: white;
+            border-radius: 50%;
+            padding: 8px;
+            @include simple-shadow;
+            @include flex(center, center);
+            margin-bottom: 8px;
+            cursor: pointer;
+            transition: 300ms;
+
+            img {
+              width: 100%;
+            }
+
+            span {
+              color: $color-primary;
+              @include font(15px, $fw-light);
+            }
+
+            &:hover {
+              transition: 300ms;
+              opacity: 0.9;
+              @include simple-shadow-hover;
+            }
+          }
+        }
+
+        .status-banner {
+          margin-top: -40px;
+          padding: 10px 20px;
+          color: white;
+          background-color: $color-green;
+          border-top-left-radius: 20px;
+          border-bottom-left-radius: 20px;
+          @include font(17px, $fw-light);
+        }
+
+        .change-photo {
+          width: 40px;
+          height: 40px;
+          position: absolute;
+          bottom: 40px;
+          margin-left: auto;
+          margin-right: auto;
+          z-index: 1;
+          left: 0;
+          right: 0;
+          cursor: pointer;
+          padding: 8px;
+          border-radius: 50%;
+          transition: 250ms;
+
+          img {
+            width: 100%;
+          }
+
+          &:hover {
+            transition: 250ms;
+            background: rgba(0, 0, 0, 0.2);
+          }
+        }
+      }
+
+      .premium {
+        @include flex($align-items: center);
+        padding: 10px 20px;
+        background-color: $color-yellow-light;
+        border-radius: 30px;
+        align-self: center;
+        position: absolute;
+        top: -20px;
+        z-index: 1;
+
+        img {
+          height: 25px;
+          width: 25px;
+        }
+
+        .divider {
+          width: 1px;
+          height: 20px;
+          background-color: black;
+          opacity: 0.05;
+          display: block;
+          margin-left: 18px;
+          margin-right: 18px;
+        }
+
+        .text {
+          display: block;
+          color: white;
+          @include font(16px, 400);
+        }
+      }
+    }
+
+    .bottom {
+      padding: 25px;
+    }
+  }
+
+  .settings-wrapper {
+    @include flex(stretch, center, column);
+    max-width: 270px;
+    margin-left: auto;
+    margin-right: auto;
+
+    & > * {
+      width: 100%;
+    }
+  }
+
+  .language-item {
+    width: 130px;
+    padding: 14px 20px;
+    border-radius: 30px;
+    @include simple-shadow;
+    @include flex($align-items: center);
+
+    .circle {
+      height: 6px;
+      width: 6px;
+      border-radius: 50%;
+      background-color: $color-primary;
+      display: block;
+      margin-right: 15px;
+    }
+
+    .text {
+      @include font(16px, $fw-light);
+      color: $color-dark-gray;
+    }
+  }
+
+  .toggle-buttons {
+    hr {
+      border-top-color: #ededed;
+    }
+  }
+
+  .main-box-title {
+    @include font(18px, $fw-bold);
+    @include clear-spacing;
+  }
+
+  .btn-verify-payment {
+    padding: 6px;
+    font-size: 14px;
+  }
+
+  .circular-icon {
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    @include flex(center, center);
+
+    &.check {
+      background-color: $color-green;
+    }
+
+    &.x {
+      background-color: $color-gray;
+    }
+
+    img {
+      width: 45%;
+    }
+  }
+
+  .social-media-options {
+    @include flex(center, center);
+    margin-top: -40px;
+
+    .item {
+      @include simple-shadow;
+      border-radius: 8px;
+      padding: 8px;
+      height: 40px;
+      width: 40px;
+      margin: 0 5px;
+      background-color: white;
+      cursor: pointer;
+      transition: 300ms;
+
+      &:hover {
+        opacity: 0.8;
+        transition: 300ms;
+      }
+
+      img {
+        width: 100%;
+      }
+    }
+  }
+}

@@ -1,0 +1,492 @@
+@import './abstract/variables';
+@import './abstract/mixins';
+@import './abstract/breakpoint';
+
+.layout-content.careers {
+  padding-top: 0;
+  padding-bottom: 400px;
+
+  @include media-breakpoint-down(lg) {
+    padding-bottom: 250px;
+  }
+
+  @include media-breakpoint-down(sm) {
+    padding-bottom: 150px;
+  }
+
+  @include media-breakpoint-down(xs) {
+    .left-main-background,
+    .right-main-background {
+      display: none;
+    }
+  }
+
+  .left-main-background {
+    top: 160vh;
+  }
+
+  .right-main-background {
+    top: 90vh;
+  }
+
+  .container.max-width {
+    max-width: 1600px;
+  }
+
+  .landing {
+    min-height: 90vh;
+    background-image: url('/images/career-bg.jpg');
+    background-size: cover;
+    background-position: top;
+    background-repeat: no-repeat;
+    background-blend-mode: darken;
+    background-color: rgba(0, 0, 0, 0.1);
+    position: relative;
+    @include flex(center, center, column);
+
+    div.content {
+      @include flex(flex-start, flex-start, column);
+
+      .title {
+        @include font(5rem, bold);
+        color: white;
+
+        @include media-breakpoint-down(md) {
+          font-size: 4.5rem;
+        }
+
+        @include media-breakpoint-down(sm) {
+          font-size: 3rem;
+        }
+      }
+
+      .subtitle {
+        @include flex;
+
+        @include font(4rem, bold);
+        color: white;
+
+        @include media-breakpoint-down(md) {
+          font-size: 3.5rem;
+        }
+
+        @include media-breakpoint-down(sm) {
+          font-size: 2.5rem;
+        }
+
+        .alt {
+          font-family: $font-secondary;
+          color: $color-primary;
+          margin-right: 8px;
+        }
+      }
+    }
+
+    .scroll-down {
+      @include flex();
+      position: absolute;
+      width: 100%;
+      bottom: 0;
+
+      .scroll-down-wrapper {
+        flex-shrink: 0;
+        position: relative;
+
+        .scroll-down-space {
+          margin-left: -1px;
+          margin-right: -1px;
+          margin-bottom: -1px;
+        }
+
+        .scroll-down {
+          width: 35px;
+          height: 35px;
+          padding: 8px;
+          position: absolute;
+          top: 10px;
+          left: 0;
+          right: 0;
+          margin-left: auto;
+          margin-right: auto;
+          border-radius: 40px;
+          cursor: pointer;
+
+          &:hover {
+            background-color: rgba(255, 255, 255, 0.25);
+          }
+        }
+      }
+
+      .white-space {
+        flex: 1;
+        background-color: white;
+        margin-bottom: -1px;
+      }
+    }
+  }
+
+  .main-info {
+    position: relative;
+    margin-top: 150px;
+
+    @include media-breakpoint-down(sm) {
+      margin-top: 100px;
+    }
+
+    .icon {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -35px;
+      margin-left: auto;
+      margin-right: auto;
+
+      @include media-breakpoint-down(md) {
+        bottom: -55px;
+      }
+    }
+  }
+
+  .positions {
+    margin-top: 175px;
+
+    @include media-breakpoint-down(lg) {
+      margin-top: 125px;
+    }
+
+    .subtitle {
+      max-width: 900px;
+    }
+
+    .item {
+      @include flex(stretch, stretch);
+      padding: 20px 25px;
+      margin-bottom: 15px;
+      border-radius: $border-radius;
+      background-color: white;
+      @include simple-shadow;
+
+      @include media-breakpoint-down(xs) {
+        padding: 10px;
+      }
+
+      .role-name {
+        cursor: pointer;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+
+      .main-desc {
+        line-height: 18px;
+
+        @include media-breakpoint-down(sm) {
+          font-size: 15px;
+          line-height: 15px;
+        }
+
+        @include media-breakpoint-down(xs) {
+          font-size: 13px;
+          line-height: 13px;
+        }
+      }
+
+      .column-1 {
+        @include flex(flex-start, center);
+        padding-right: 10px;
+        flex-basis: 30%;
+
+        @include media-breakpoint-down(xs) {
+          padding-left: 10px;
+        }
+      }
+
+      .column-2 {
+        border-left: 1px solid $color-gray3;
+        border-right: 1px solid $color-gray3;
+      }
+
+      .column-3 {
+        border-right: 1px solid $color-gray3;
+      }
+
+      .column-2,
+      .column-3,
+      .column-4 {
+        padding-left: 8px;
+        padding-right: 8px;
+        flex-basis: 23%;
+        @include flex(center, center);
+      }
+    }
+  }
+
+  .benefits {
+    margin-top: 175px;
+
+    @include media-breakpoint-down(lg) {
+      margin-top: 125px;
+    }
+
+    .list {
+      margin-top: 100px;
+      @include flex(center, center);
+
+      @include media-breakpoint-down(sm) {
+        margin-top: 50px;
+      }
+
+      .item {
+        position: relative;
+        padding-left: 15px;
+        padding-right: 15px;
+
+        @include media-breakpoint-down(lg) {
+          padding-left: 10px;
+          padding-right: 10px;
+
+          max-width: 500px;
+          display: block !important;
+          margin-left: auto;
+          margin-right: auto;
+        }
+
+        @include media-breakpoint-down(xs) {
+          padding-left: 0;
+          padding-right: 0;
+          margin-bottom: 15px;
+        }
+
+        .rounded-icon {
+          position: absolute;
+          height: 100px;
+          width: 100px;
+          left: 0;
+          right: 0;
+          z-index: 1;
+
+          @include media-breakpoint-down(lg) {
+            margin-top: -40px;
+          }
+
+          img {
+            width: 45%;
+          }
+        }
+
+        .outer-circle {
+          margin-top: 40px;
+          @include flex(center, center);
+          width: 100%;
+          padding-top: 100%;
+          position: relative;
+          border: 1px solid #c0e8ff;
+          border-radius: 50%;
+          background-color: white;
+
+          @include breakpoint-down(380px) {
+            border-radius: $border-radius;
+          }
+
+          .position-wrapper {
+            @include flex(center, center);
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+
+            .inner-circle {
+              width: calc(100% - 40px);
+              height: calc(100% - 40px);
+              padding: 50px 40px;
+              border: 1px solid #70ccff;
+              border-radius: 50%;
+
+              @include flex(center, center, column);
+
+              @include media-breakpoint-down(lg) {
+                padding: 40px;
+              }
+
+              @include breakpoint-down(380px) {
+                padding: 50px 15px 25px;
+                border-radius: $border-radius;
+                width: calc(100% - 15px);
+                height: calc(100% - 15px);
+              }
+            }
+          }
+
+          .title {
+            @include font(23px, bold);
+
+            @include media-breakpoint-down(lg) {
+              font-size: 20px;
+            }
+
+            @include media-breakpoint-down(sm) {
+              font-size: 16px;
+            }
+          }
+
+          .main-desc {
+            @include media-breakpoint-down(lg) {
+              font-size: 15px;
+              line-height: 22px;
+            }
+
+            @include media-breakpoint-down(sm) {
+              font-size: 14px;
+            }
+          }
+        }
+      }
+
+      .slick-list {
+        margin-left: 25px;
+        margin-right: 25px;
+
+        @include media-breakpoint-down(sm) {
+          margin-left: 0;
+          margin-right: 0;
+        }
+      }
+    }
+  }
+}
+
+#application-form-modal {
+  .modal-content {
+    overflow: hidden;
+  }
+
+  .modal-body {
+    padding: 0;
+    padding-bottom: 30px;
+    position: relative;
+
+    .modal-background {
+      transform: skew(0deg, -5deg);
+      height: 65px;
+      width: 100%;
+      position: absolute;
+      top: -22px;
+      left: 0;
+      background-color: $color-primary-lighter;
+    }
+
+    .main-content {
+      margin-top: -25px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .button-nav {
+      z-index: 3;
+      margin-top: 10px;
+      margin-left: 10px;
+
+      @include media-breakpoint-down(sm) {
+        margin-left: 15px;
+      }
+    }
+  }
+}
+
+#role-modal {
+  .main-content {
+    padding: 25px;
+
+    @include media-breakpoint-down(sm) {
+      padding: 10px;
+    }
+
+    .main-desc {
+      @include font(18px, $fw-light);
+      @include clear-spacing;
+      line-height: 28px;
+      color: $color-dark-gray;
+
+      @include media-breakpoint-down(sm) {
+        font-size: 15px;
+        line-height: 24px;
+      }
+
+      @include media-breakpoint-down(xs) {
+        font-size: 14px;
+        line-height: 20px;
+      }
+
+      &.dark-gray2 {
+        color: $color-dark-gray2;
+      }
+    }
+
+    .header {
+      @include flex(space-between, center);
+
+      .role-information {
+        .badges {
+          @include flex;
+          flex-wrap: wrap;
+        }
+      }
+
+      .controls {
+        @include flex(flex-start, center);
+
+        .btn-apply {
+          margin-right: 8px;
+        }
+
+        @include media-breakpoint-down(sm) {
+          margin-top: 10px;
+        }
+      }
+
+      @include media-breakpoint-down(sm) {
+        @include flex(flex-start, flex-start, column);
+      }
+    }
+
+    .job-description {
+      max-height: 70vh;
+      padding-right: 8px;
+
+      .responsibilities {
+        ul {
+          flex: 1;
+          padding-left: 20px;
+          margin: 0;
+          list-style: none;
+
+          li {
+            &:not(:last-child) {
+              margin-bottom: 10px;
+            }
+
+            p {
+              margin: 0;
+              position: relative;
+              display: inline;
+
+              &::before {
+                content: '●';
+                font-weight: bold;
+                display: inline-block;
+                width: 20px;
+                margin-left: -21px;
+                color: $color-primary !important;
+                font-size: 13px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

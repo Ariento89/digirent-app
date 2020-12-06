@@ -1,0 +1,125 @@
+@import './abstract/variables';
+@import './abstract/mixins';
+@import './abstract/breakpoint';
+
+.layout-content.faq {
+  padding-bottom: 400px;
+
+  @include media-breakpoint-down(lg) {
+    padding-bottom: 250px;
+  }
+
+  @include media-breakpoint-down(sm) {
+    padding-bottom: 150px;
+  }
+
+  .main-subtitle {
+    margin-top: 75px;
+    color: $color-primary;
+  }
+
+  .main-box {
+    max-width: 741px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 25px;
+  }
+
+  .list {
+    margin-top: 100px;
+
+    .item {
+      background-color: white;
+      padding: 25px 20px;
+      border-radius: 10px;
+      @include simple-shadow;
+      position: relative;
+      margin-bottom: 30px;
+      transition: 300ms;
+
+      .rounded-icon {
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .desc-wrapper {
+        height: 140px;
+        @include flex(center, center);
+
+        span {
+          @include font(20px, $fw-light);
+          color: $color-dark-gray;
+          text-align: center;
+          line-height: 30px;
+        }
+      }
+
+      .button-nav {
+        position: absolute;
+        bottom: 15px;
+        right: 15px;
+      }
+    }
+  }
+}
+
+#faq-modal {
+  .modal-content {
+    overflow: hidden;
+  }
+
+  .modal-body {
+    padding: 0;
+    padding-bottom: 30px;
+    position: relative;
+
+    .modal-background {
+      transform: skew(0deg, -5deg);
+      height: 65px;
+      width: 100%;
+      position: absolute;
+      top: -22px;
+      left: 0;
+      background-color: $color-primary-lighter;
+    }
+
+    .main-content {
+      margin-top: -25px;
+      position: relative;
+      z-index: 2;
+
+      .title {
+        max-width: 260px;
+        display: block;
+        margin-top: 45px;
+        @include font(18px, 400);
+        color: $color-dark-gray;
+        text-align: center;
+        line-height: 25px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .description {
+        display: block;
+        margin-top: 8px;
+        @include font(18px, $fw-light);
+        color: #b8b8b8;
+        text-align: center;
+        line-height: 30px;
+        padding-left: 25px;
+        padding-right: 25px;
+      }
+    }
+
+    .button-nav {
+      z-index: 3;
+      margin-top: 10px;
+      margin-left: 10px;
+
+      @include media-breakpoint-down(sm) {
+        margin-left: 15px;
+      }
+    }
+  }
+}

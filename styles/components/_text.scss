@@ -1,0 +1,46 @@
+@import "../abstract/variables";
+@import "../abstract/mixins";
+
+.header {
+  margin: 0;
+  color: $color-text;
+  @include font(2.3rem, $fw-medium);
+  line-height: 40px;
+
+  &.header-46 {
+    @include font(1.5rem, $fw-medium);
+    line-height: 40px;
+  }
+}
+
+.description {
+  margin: 0;
+  color: $color-text;
+  @include font(1.3rem, $fw-light);
+  line-height: 30px;
+
+  &.description-42 {
+    @include font(1.4rem, $fw-light);
+    line-height: 30px;
+  }
+
+  &.description-32 {
+    @include font(1.2rem, $fw-light);
+    line-height: 30px;
+  }
+
+  &.description-30 {
+    @include font(1.15rem, $fw-light);
+    line-height: 30px;
+  }
+
+  &.description-28 {
+    @include font(1.1rem, $fw-light);
+    line-height: 30px;
+  }
+
+  &.description-24 {
+    @include font(0.9rem, $fw-light);
+    line-height: 30px;
+  }
+}

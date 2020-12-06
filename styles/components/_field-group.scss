@@ -1,0 +1,99 @@
+@import '../abstract/mixins';
+@import '../abstract/variables';
+
+.field-group {
+  position: relative;
+  @include flex($align-items: center);
+
+  &.no-icon {
+    input,
+    textarea {
+      padding-left: 20px;
+    }
+  }
+
+  &.right-icon {
+    input,
+    textarea {
+      padding-left: 20px;
+      padding-right: 70px;
+    }
+  }
+
+  .DayPickerInput {
+    width: 100%;
+  }
+
+  input,
+  textarea {
+    width: 100%;
+    padding: 12px 20px 12px 70px;
+    border-radius: 20px;
+    border: 0;
+    color: $color-dark-gray;
+    @include simple-shadow;
+    @include font(16px, $fw-light);
+
+    &.no-icon {
+      padding-left: 20px;
+    }
+
+    &.right-icon {
+      padding-left: 20px;
+      padding-right: 70px;
+    }
+  }
+
+  textarea {
+    height: 100px;
+    border-radius: 15px;
+
+    &::-webkit-input-placeholder {
+      transform: translateY(30px);
+    }
+    &:-moz-placeholder {
+      transform: translateY(30px);
+    }
+    &::-moz-placeholder {
+      transform: translateY(30px);
+    }
+    &:-ms-input-placeholder {
+      transform: translateY(30px);
+    }
+    &::-ms-input-placeholder {
+      transform: translateY(30px);
+    }
+    &::placeholder {
+      transform: translateY(30px);
+    }
+  }
+
+  .field-divider {
+    position: absolute;
+    left: 56px;
+    opacity: 0.1;
+    height: 12px;
+    width: 0.5px;
+    line-height: 100%;
+    background-color: black;
+
+    &.long {
+      height: calc(100% - 24px);
+    }
+  }
+
+  .field-icon {
+    position: absolute;
+    left: 20px;
+
+    img {
+      width: 20px;
+      height: 20px;
+    }
+
+    &.right-icon {
+      left: unset;
+      right: 12px;
+    }
+  }
+}

@@ -1,0 +1,139 @@
+@import '../../components/slick-list';
+
+// Explore our most popular cities
+.layout-content.homepage {
+  .explore-our-most-popular-cities {
+    margin-top: 200px;
+
+    @include media-breakpoint-down(sm) {
+      margin-top: 100px;
+    }
+
+    .cities {
+      margin-top: 100px;
+      @include flex(center, center);
+
+      @include media-breakpoint-down(md) {
+        margin-top: 50px;
+      }
+
+      .item {
+        padding-left: 40px;
+        padding-right: 40px;
+
+        .city {
+          height: 400px;
+          width: 100%;
+          background-position: center;
+          background-size: cover;
+          background-repeat: no-repeat;
+          border-radius: $border-radius;
+
+          padding: 40px;
+          @include flex(center, flex-end, column);
+
+          @include media-breakpoint-down(xs) {
+            align-items: center;
+          }
+
+          .title {
+            @include font(40px, $fw-light);
+          }
+        }
+      }
+
+      .slick-slide {
+        opacity: 0.3;
+        transform: scale(0.8);
+        transition: 400ms;
+
+        @include media-breakpoint-down(md) {
+          transition: 0;
+          transform: scale(1);
+          opacity: 1;
+        }
+
+        .city * {
+          display: none;
+        }
+
+        &.slick-center {
+          opacity: 1;
+          transform: scale(1.3);
+          transition: 400ms;
+
+          @include media-breakpoint-down(md) {
+            transition: 0;
+            transform: scale(1);
+          }
+
+          .item {
+            padding: 0;
+          }
+
+          .city * {
+            display: block;
+          }
+        }
+      }
+
+      .slick-list {
+        margin-left: -50px;
+        margin-right: -50px;
+
+        @include media-breakpoint-down(lg) {
+          margin-left: -40px;
+          margin-right: -40px;
+        }
+
+        @include media-breakpoint-down(md) {
+          margin-left: 20px;
+          margin-right: 20px;
+        }
+
+        @include media-breakpoint-down(sm) {
+          margin-left: 10px;
+          margin-right: 10px;
+        }
+
+        .slick-track {
+          padding: 100px 0;
+
+          @include media-breakpoint-down(md) {
+            padding: 0;
+          }
+
+          & > .slick-active {
+            padding-left: 0;
+            padding-right: 100px;
+
+            @include media-breakpoint-down(xl) {
+              padding-right: 50px;
+            }
+
+            @include media-breakpoint-down(lg) {
+              padding-right: 0;
+            }
+          }
+
+          .slick-active + .slick-active {
+            padding: 0;
+          }
+
+          .slick-active + .slick-active + .slick-active {
+            padding-right: 0;
+            padding-left: 100px;
+
+            @include media-breakpoint-down(xl) {
+              padding-left: 50px;
+            }
+
+            @include media-breakpoint-down(lg) {
+              padding-left: 0;
+            }
+          }
+        }
+      }
+    }
+  }
+}

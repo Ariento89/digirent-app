@@ -1,0 +1,115 @@
+@import './abstract/variables';
+@import './abstract/mixins';
+@import './abstract/breakpoint';
+
+.layout-content.contracts-tenant {
+  padding-bottom: 400px;
+
+  @include media-breakpoint-down(lg) {
+    padding-bottom: 250px;
+  }
+
+  @include media-breakpoint-down(sm) {
+    padding-bottom: 150px;
+  }
+
+  .properties {
+    margin-top: 100px;
+
+    @include media-breakpoint-down(sm) {
+      margin-top: 50px;
+    }
+
+    .property-info {
+      @include media-breakpoint-down(md) {
+        margin-bottom: 30px;
+      }
+
+      @include media-breakpoint-down(sm) {
+        margin-bottom: 50px;
+      }
+    }
+  }
+}
+
+#signed-document-modal {
+  .main-content {
+    margin-top: 30px;
+
+    .document-files {
+      margin-left: 30px;
+      margin-right: 30px;
+      @include simple-shadow;
+      border-radius: $border-radius;
+      position: relative;
+      @include flex(stretch, center);
+      padding: 20px 20px;
+
+      .file-item {
+        flex: 1;
+        text-align: center;
+
+        button {
+          background-color: white;
+          border: 1px solid $color-primary;
+          color: $color-primary !important;
+        }
+      }
+
+      @include media-breakpoint-down(md) {
+        .file-item {
+          @include flex(space-between, center);
+          padding-left: 10px;
+          padding-right: 10px;
+        }
+      }
+
+      @include media-breakpoint-down(sm) {
+        padding-top: 12px;
+        padding-bottom: 12px;
+        flex-wrap: wrap;
+
+        .divider {
+          display: none;
+        }
+
+        .file-item {
+          margin: 8px 0;
+          flex-basis: 100%;
+          @include flex(space-between, center);
+        }
+      }
+
+      @include breakpoint-down(650px) {
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+      }
+
+      @include media-breakpoint-down(xs) {
+        .file-item {
+          flex-direction: column;
+        }
+      }
+    }
+
+    .document-upload {
+      margin-left: 30px;
+      margin-right: 30px;
+
+      .left {
+        .field-group-select {
+          flex: 1;
+        }
+
+        @include media-breakpoint-down(xs) {
+          flex-wrap: wrap;
+          justify-content: center;
+
+          .field-group-select {
+            flex-basis: 100%;
+          }
+        }
+      }
+    }
+  }
+}

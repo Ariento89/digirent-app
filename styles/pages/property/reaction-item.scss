@@ -1,0 +1,158 @@
+.reaction-item {
+  & > .item {
+    margin-left: 30px;
+    margin-right: 30px;
+    position: relative;
+    border-radius: $border-radius;
+    @include simple-shadow;
+    @include flex(stretch, center);
+
+    .flex-1 {
+      flex: 1;
+      text-align: center;
+    }
+
+    .user-photo {
+      height: 80px;
+      width: 150px;
+      background-image: url('/images/student-sample-photo.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      border-top-right-radius: 30px;
+      border-bottom-right-radius: 30px;
+      border-top-left-radius: $border-radius;
+      border-bottom-left-radius: $border-radius;
+      flex-shrink: 0;
+    }
+
+    .profile-completion {
+      color: white;
+      padding: 7px 16px;
+      background-color: $color-primary;
+      border-radius: 18px;
+      display: inline-block;
+      font-size: 12px;
+    }
+
+    .verified {
+      color: white;
+      padding: 7px 16px;
+      background-color: $color-green;
+      border-radius: 18px;
+    }
+
+    .buttons {
+      @include flex(center, center);
+      position: relative;
+
+      .btn-x {
+        img {
+          width: 30%;
+        }
+      }
+
+      .btn-check {
+        img {
+          width: 40%;
+        }
+      }
+
+      .btn-circle {
+        .circle-icon {
+          width: 10px;
+          height: 10px;
+          background-color: white;
+          border-radius: 50%;
+        }
+      }
+    }
+
+    .btn-email,
+    .btn-icon {
+      height: 38px;
+      width: 38px;
+      padding: 0;
+      @include flex(center, center);
+
+      img {
+        width: 50%;
+      }
+    }
+
+    @include media-breakpoint-down(md) {
+      padding: 15px 0;
+
+      .user-photo {
+        display: none;
+      }
+    }
+
+    @include media-breakpoint-down(xs) {
+      margin-left: 0;
+      margin-right: 0;
+    }
+  }
+
+  & > .item.mobile {
+    .verified {
+      @include flex(center, center);
+    }
+
+    .second-row {
+      @include flex(center, stretch);
+    }
+
+    .buttons {
+      @include flex(center, center);
+    }
+  }
+
+  .button-overlay {
+    position: relative;
+    width: 165px;
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    bottom: 50px;
+
+    @include media-breakpoint-down(sm) {
+      display: none;
+    }
+    .item {
+      @include flex(stretch, center);
+      padding: 10px 14px;
+      border-radius: $border-radius;
+      background-color: white;
+      margin-top: 8px;
+      margin-bottom: 8px;
+      @include simple-shadow;
+
+      .circular-icon {
+        height: 8px;
+        width: 8px;
+        border-radius: 50%;
+        flex-shrink: 0;
+
+        &.green {
+          background-color: $color-green;
+        }
+
+        &.yellow {
+          background-color: $color-yellow;
+        }
+
+        &.gray {
+          background-color: $color-gray2;
+        }
+      }
+
+      .text {
+        @include font(10px, 400);
+        color: $color-dark-gray;
+      }
+    }
+  }
+}

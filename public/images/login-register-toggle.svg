@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 326 86" width="326" height="86">
+	<style>
+		tspan { white-space:pre }
+		.shp0 { fill: none;stroke: #d6d6d6 } 
+	</style>
+	<g id="login">
+		<path id="Ellipse 3" class="shp0" d="M163 0C271.25 0 359 87.75 359 196C359 304.25 271.25 392 163 392C54.75 392 -33 304.25 -33 196C-33 87.75 54.75 0 163 0Z" />
+	</g>
+</svg>

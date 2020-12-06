@@ -1,0 +1,211 @@
+@import '../abstract/mixins';
+@import '../abstract/variables';
+@import '../abstract/breakpoint';
+
+.header-background {
+  width: 100%;
+  position: absolute;
+  top: 0;
+
+  @include media-breakpoint-down(xl) {
+    height: 100px;
+  }
+
+  @include media-breakpoint-down(sm) {
+    display: none;
+  }
+}
+
+.layout-header {
+  width: 100%;
+  position: fixed;
+  z-index: 1000;
+
+  .header-logo-user {
+    @include flex($justify-content: space-between);
+    @include rem(padding, 10px 28px);
+    width: 100%;
+    position: absolute;
+    top: 0;
+
+    @include media-breakpoint-down(xl) {
+      top: 40px;
+      @include rem(padding, 10px 25px);
+    }
+
+    @include media-breakpoint-down(sm) {
+      @include rem(padding, 10px 15px);
+    }
+
+    .logo {
+      @include rem(padding, 13px 22px);
+      @include rem(margin-top, 22px);
+      align-self: center;
+      border-radius: 10px;
+      background-color: $color-primary;
+      cursor: pointer;
+
+      .text {
+        color: white;
+        @include clear-spacing;
+        @include font(40px, $fw-bold);
+      }
+    }
+
+    .user-language-container {
+      @include flex(center, center);
+      margin-top: 10px;
+
+      .toggle-switch-language {
+        transition: 300ms;
+        transform: scale(0.75);
+        margin-right: 5px;
+
+        .switch {
+          background-color: white;
+        }
+      }
+
+      .user {
+        @include simple-shadow;
+        background-color: white;
+        height: 60px;
+        width: 60px;
+        border-radius: 50%;
+        background-image: url('/images/landlord-sample-photo.jpg');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+
+        @include media-breakpoint-down(md) {
+          height: 50px;
+          width: 50px;
+        }
+      }
+    }
+
+    @include media-breakpoint-down(xl) {
+      .logo {
+        @include rem(padding, 10px 18px);
+        margin-top: 0px;
+
+        .text {
+          @include font(25px, $fw-bold);
+        }
+      }
+    }
+  }
+
+  .header-menu {
+    @include flex($justify-content: center);
+    width: 100%;
+    position: absolute;
+    top: 0;
+
+    .header-menu-wrapper {
+      @include flex();
+      @include rem(margin-left, -240px);
+
+      @include media-breakpoint-down(sm) {
+        width: 100%;
+      }
+    }
+
+    .main-menu {
+      align-self: center;
+      background-color: $color-primary;
+      border-bottom-left-radius: 18px;
+      border-bottom-right-radius: 18px;
+      @include rem(padding, 10px 18px);
+      @include rem(padding-top, 15px);
+      @include simple-shadow;
+
+      a {
+        text-transform: uppercase;
+        color: white;
+        text-decoration: none;
+        @include font($size: 15px);
+      }
+
+      span {
+        color: #3696ed;
+      }
+
+      @include media-breakpoint-down(sm) {
+        width: 100%;
+        @include flex(center, center);
+
+        a {
+          @include font($size: 12px);
+        }
+      }
+    }
+
+    .note {
+      background-color: white;
+      border-bottom-left-radius: 18px;
+      border-bottom-right-radius: 18px;
+      @include rem(padding, 10px 27px);
+      @include rem(padding-top, 15px);
+      @include rem(margin-right, 126px);
+      @include simple-shadow;
+
+      span {
+        text-transform: uppercase;
+        color: $color-dark;
+        @include font($size: 15px);
+      }
+    }
+
+    @include media-breakpoint-down(xl) {
+      .note {
+        @include rem(margin-right, 50px);
+      }
+    }
+
+    @include media-breakpoint-down(lg) {
+      .note {
+        display: none;
+      }
+
+      .header-menu-wrapper {
+        margin-left: 0;
+      }
+    }
+  }
+
+  .header-back {
+    margin-top: 110px;
+
+    .back {
+      @include flex(center, center);
+      @include simple-shadow;
+      margin-top: 38px;
+      margin-left: 58px;
+      background-color: $color-primary;
+      height: 46px;
+      width: 46px;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: 300ms;
+
+      @include media-breakpoint-down(sm) {
+        margin-left: 15px;
+      }
+
+      @include media-breakpoint-down(xs) {
+        height: 30px;
+        width: 30px;
+      }
+
+      img {
+        width: 50%;
+      }
+
+      &:hover {
+        transition: 300ms;
+        opacity: 0.8;
+      }
+    }
+  }
+}

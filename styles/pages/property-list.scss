@@ -1,0 +1,293 @@
+@import './abstract/variables';
+@import './abstract/mixins';
+@import './abstract/breakpoint';
+
+.layout-content.property-list {
+  padding-top: 0;
+  padding-bottom: 400px;
+
+  @include media-breakpoint-down(lg) {
+    padding-bottom: 250px;
+  }
+
+  @include media-breakpoint-down(sm) {
+    padding-bottom: 150px;
+  }
+
+  @include media-breakpoint-down(xs) {
+    .left-main-background,
+    .right-main-background {
+      display: none;
+    }
+  }
+
+  .left-main-background {
+    top: 160vh;
+  }
+
+  .right-main-background {
+    top: 100vh;
+  }
+
+  .container.max-width {
+    max-width: 1500px;
+  }
+
+  .landing {
+    min-height: 90vh;
+    padding: 150px 0;
+    background-image: url('/images/property-landlord-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-blend-mode: darken;
+    background-color: rgba(255, 255, 255, 0.1);
+    position: relative;
+    @include flex(center, center, column);
+
+    div.content {
+      width: 100%;
+      margin-top: 25px;
+      padding: 0 25px;
+      @include flex(center, center);
+
+      @include media-breakpoint-down(md) {
+        flex-direction: column;
+        margin-top: 0;
+      }
+
+      @include media-breakpoint-down(sm) {
+        padding: 0 15px;
+      }
+
+      .left {
+        flex-basis: 50%;
+        padding-right: 60px;
+        @include flex(flex-end, flex-end, column);
+
+        .title {
+          @include font(6rem, bold);
+          color: white;
+
+          @include media-breakpoint-down(md) {
+            font-size: 4.5rem;
+            text-align: center;
+          }
+
+          @include media-breakpoint-down(sm) {
+            font-size: 3rem;
+          }
+
+          @include media-breakpoint-down(xs) {
+            font-size: 2.75rem;
+          }
+        }
+
+        .subtitle {
+          @include font(75px, $fw-light);
+          font-family: $font-secondary;
+          color: $color-primary;
+
+          @include media-breakpoint-down(md) {
+            font-size: 60px;
+          }
+
+          @include media-breakpoint-down(sm) {
+            font-size: 45px;
+          }
+
+          @include media-breakpoint-down(xs) {
+            font-size: 32px;
+          }
+        }
+      }
+
+      .right {
+        flex-basis: 50%;
+      }
+
+      @include breakpoint-down(1350px) {
+        flex-direction: column;
+        margin-top: 0;
+
+        .left {
+          padding-right: 0;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .right {
+          margin-top: 50px;
+        }
+      }
+    }
+
+    .scroll-down {
+      @include flex();
+      position: absolute;
+      width: 100%;
+      bottom: 0;
+
+      .scroll-down-wrapper {
+        flex-shrink: 0;
+        position: relative;
+
+        .scroll-down-space {
+          margin-left: -1px;
+          margin-right: -1px;
+          margin-bottom: -1px;
+        }
+
+        .scroll-down {
+          width: 35px;
+          height: 35px;
+          padding: 8px;
+          position: absolute;
+          top: 10px;
+          left: 0;
+          right: 0;
+          margin-left: auto;
+          margin-right: auto;
+          border-radius: 40px;
+          cursor: pointer;
+
+          &:hover {
+            background-color: rgba(255, 255, 255, 0.25);
+          }
+        }
+      }
+
+      .white-space {
+        flex: 1;
+        background-color: white;
+        margin-bottom: -1px;
+      }
+    }
+  }
+
+  .container {
+    max-width: 1300px;
+  }
+
+  .rental-houses-table-header {
+    margin-left: 20px;
+    margin-right: 20px;
+
+    @include media-breakpoint-down(md) {
+      margin-left: 15px;
+      margin-right: 15px;
+    }
+
+    @include media-breakpoint-down(sm) {
+      margin-left: 0;
+      margin-right: 0;
+    }
+  }
+
+  .rental-houses {
+    margin-top: 150px;
+
+    @include media-breakpoint-down(sm) {
+      margin-top: 100px;
+    }
+
+    .list {
+      margin-top: 50px;
+
+      .item {
+        margin-bottom: 30px;
+
+        @include media-breakpoint-down(sm) {
+          margin-bottom: unset;
+        }
+      }
+    }
+  }
+
+  .recommendations {
+    margin-top: 150px;
+
+    @include media-breakpoint-down(sm) {
+      margin-top: 100px;
+    }
+
+    .list {
+      margin-top: 100px;
+      @include flex(center, center);
+
+      @include media-breakpoint-down(md) {
+        margin-top: 50px;
+      }
+
+      @include media-breakpoint-down(xs) {
+        margin-top: 25px;
+      }
+
+      .item {
+        padding-left: 35px;
+        padding-right: 35px;
+
+        .property-info {
+          margin: 0 0 15px 0;
+        }
+
+        @include media-breakpoint-only(sm) {
+          padding-left: 60px;
+          padding-right: 60px;
+        }
+
+        @include media-breakpoint-only(xs) {
+          padding: 5px;
+        }
+      }
+
+      .slick-list {
+        margin-left: 25px;
+        margin-right: 25px;
+
+        @include media-breakpoint-down(sm) {
+          margin-left: 0;
+          margin-right: 0;
+        }
+      }
+    }
+
+    @include media-breakpoint-up(xl) {
+      .slick-track {
+        .slick-slide,
+        .slick-active,
+        .slick-active + .slick-active + .slick-active {
+          opacity: 0.5;
+          transition: 300ms;
+
+          .monthly-payment,
+          .rooms-toilet {
+            display: none;
+            transition: 300ms;
+          }
+        }
+
+        .slick-active + .slick-active {
+          opacity: 1;
+          transition: 300ms;
+
+          .monthly-payment,
+          .rooms-toilet {
+            display: flex;
+          }
+        }
+      }
+    }
+
+    @include media-breakpoint-up(lg) {
+      .slick-active,
+      .slick-active + .slick-active + .slick-active {
+        pointer-events: none;
+      }
+
+      .slick-active + .slick-active {
+        pointer-events: unset;
+      }
+    }
+  }
+}

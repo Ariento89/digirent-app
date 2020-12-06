@@ -1,0 +1,460 @@
+@import './abstract/variables';
+@import './abstract/mixins';
+@import './abstract/breakpoint';
+
+.layout-content.payments-tenant {
+  padding-bottom: 400px;
+
+  @include media-breakpoint-down(lg) {
+    padding-bottom: 250px;
+  }
+
+  @include media-breakpoint-down(sm) {
+    padding-bottom: 150px;
+  }
+
+  .payments {
+    .header {
+      @include simple-shadow;
+      @include flex(stretch, center);
+      border-radius: $border-radius;
+      padding: 20px 20px;
+      background-color: white;
+
+      @include media-breakpoint-down(sm) {
+        display: none;
+      }
+
+      p {
+        @include clear-spacing;
+        @include font(15px, $fw-bold);
+        @include flex(center, center);
+        min-height: 34px;
+        padding-left: 5px;
+        padding-right: 5px;
+        text-align: center;
+        max-height: 100%;
+
+        &.text-escrow {
+          justify-content: flex-start;
+          flex-basis: 25%;
+        }
+
+        &.text-paid {
+          align-self: stretch;
+          flex-basis: 20%;
+          border-left: 1px solid $color-gray;
+          border-right: 1px solid $color-gray;
+          margin-left: 5px;
+          margin-right: 5px;
+        }
+
+        &.text-keys {
+          flex-basis: 55%;
+          flex-wrap: wrap;
+
+          .subtitle {
+            @include font(12px, $fw-light);
+            color: #adadad;
+            flex-basis: 100%;
+            text-align: center;
+            margin-top: 5px;
+          }
+        }
+
+        @include media-breakpoint-down(md) {
+          &.text-escrow {
+            flex-basis: 25%;
+          }
+
+          &.text-paid {
+            flex-basis: 30%;
+          }
+
+          &.text-keys {
+            flex-basis: 45%;
+          }
+        }
+      }
+    }
+
+    .item {
+      @include simple-shadow;
+      @include flex(center, center);
+      border-radius: $border-radius;
+      padding: 20px 20px;
+      background-color: white;
+
+      @include media-breakpoint-down(sm) {
+        flex-wrap: wrap;
+      }
+
+      & > * {
+        &.escrow {
+          @include clear-spacing;
+          flex-basis: 25%;
+
+          .text {
+            @include font(15px, $fw-light);
+          }
+        }
+
+        &.paid {
+          @include flex(center, center);
+          flex-basis: 20%;
+          border-left: 1px solid $color-gray;
+          border-right: 1px solid $color-gray;
+          margin-left: 5px;
+          margin-right: 5px;
+
+          .button-wrapper {
+            @include flex(center, center);
+
+            button {
+              font-size: 12px !important;
+            }
+          }
+        }
+
+        &.keys {
+          flex-basis: 55%;
+          @include flex(center, center);
+
+          .buttons {
+            @include flex(center, center);
+
+            .button {
+              margin: 0 5px;
+              flex-shrink: 0;
+            }
+          }
+        }
+
+        .column-label {
+          @include clear-spacing;
+          @include font(12px, bold);
+          flex-basis: 40%;
+          line-height: 15px;
+        }
+
+        @include media-breakpoint-down(md) {
+          &.escrow {
+            flex-basis: 25%;
+          }
+
+          &.paid {
+            flex-basis: 30%;
+          }
+
+          &.keys {
+            flex-basis: 45%;
+          }
+        }
+
+        @include media-breakpoint-down(sm) {
+          @include flex(space-between, center);
+          flex-basis: 100% !important;
+          justify-content: space-between !important;
+
+          &:not(:last-child) {
+            padding-bottom: 10px;
+            margin-bottom: 10px;
+            border-bottom: 1px dashed $color-gray;
+          }
+
+          &.paid {
+            margin-left: 0;
+            margin-right: 0;
+            border-left: 0;
+            border-right: 0;
+          }
+        }
+
+        @include media-breakpoint-down(xs) {
+          &.paid {
+            flex-wrap: wrap;
+
+            .button-wrapper {
+              width: 100%;
+            }
+
+            .column-label {
+              text-align: center;
+              flex-basis: 100%;
+              margin-bottom: 10px;
+            }
+          }
+
+          &.keys {
+            flex-wrap: wrap;
+
+            .buttons {
+              flex-basis: 100%;
+            }
+
+            .column-label {
+              text-align: center;
+              flex-basis: 100%;
+              margin-bottom: 10px;
+            }
+          }
+        }
+      }
+    }
+
+    .item.no-keys {
+      max-width: 45.5%;
+
+      @include media-breakpoint-down(md) {
+        max-width: 56%;
+      }
+
+      @include media-breakpoint-down(sm) {
+        max-width: 100%;
+      }
+
+      & > * {
+        &.escrow {
+          flex-basis: 59%;
+        }
+
+        &.paid {
+          padding-left: 20px;
+          flex-basis: 42%;
+          border-right: 0 !important;
+        }
+
+        @include media-breakpoint-down(md) {
+          &.escrow {
+            flex-basis: 48%;
+          }
+
+          &.paid {
+            padding-left: 10px;
+            flex-basis: 53%;
+          }
+        }
+
+        @include media-breakpoint-down(sm) {
+          &.paid {
+            padding-left: 0;
+          }
+        }
+      }
+    }
+  }
+
+  .monthly-payments-subtitle {
+    margin-top: 150px;
+  }
+
+  .sort {
+    @include flex(stretch, center);
+    margin-top: 50px;
+
+    .select {
+      width: 180px;
+    }
+  }
+
+  .monthly-payments {
+    margin-top: 50px;
+
+    .header {
+      @include simple-shadow;
+      @include flex(stretch, center);
+      border-radius: $border-radius;
+      padding: 20px 20px;
+      background-color: white;
+
+      @include media-breakpoint-down(sm) {
+        display: none;
+      }
+
+      p {
+        @include clear-spacing;
+        @include font(15px, $fw-bold);
+        @include flex(center, center);
+        min-height: 34px;
+        padding-left: 5px;
+        padding-right: 5px;
+        text-align: center;
+        max-height: 100%;
+
+        &.text-escrow {
+          justify-content: flex-start;
+          flex-basis: 25%;
+        }
+
+        &.text-paid {
+          align-self: stretch;
+          flex-basis: 20%;
+          border-left: 1px solid $color-gray;
+          border-right: 1px solid $color-gray;
+          margin-left: 5px;
+          margin-right: 5px;
+        }
+
+        &.text-keys {
+          flex-basis: 55%;
+          flex-wrap: wrap;
+
+          .subtitle {
+            @include font(12px, $fw-light);
+            color: #adadad;
+            flex-basis: 100%;
+            text-align: center;
+            margin-top: 5px;
+          }
+        }
+
+        @include media-breakpoint-down(md) {
+          &.text-escrow {
+            flex-basis: 25%;
+          }
+
+          &.text-paid {
+            flex-basis: 30%;
+          }
+
+          &.text-keys {
+            flex-basis: 45%;
+          }
+        }
+      }
+    }
+
+    & > .item {
+      @include simple-shadow;
+      @include flex(center, center);
+      border-radius: $border-radius;
+      padding: 20px 20px;
+      background-color: white;
+
+      @include media-breakpoint-down(sm) {
+        flex-wrap: wrap;
+      }
+
+      & > * {
+        &.escrow {
+          @include clear-spacing;
+          flex-basis: 25%;
+
+          .text {
+            @include font(15px, $fw-light);
+          }
+        }
+
+        &.paid {
+          @include flex(center, center);
+          flex-basis: 20%;
+          border-left: 1px solid $color-gray;
+          border-right: 1px solid $color-gray;
+          margin-left: 5px;
+          margin-right: 5px;
+
+          .button-icon {
+            margin: 0 5px;
+            flex-shrink: 0;
+            position: relative;
+
+            .question-icon {
+              @include flex(center, center);
+              @include font(12px, $fw-light);
+              @include simple-shadow;
+              width: 15px;
+              height: 15px;
+              background-color: white;
+              border-radius: 50%;
+              position: absolute;
+              top: -5px;
+              right: -5px;
+              color: $color-dark-gray;
+            }
+          }
+        }
+
+        &.keys {
+          flex-basis: 55%;
+          @include flex(center, center);
+        }
+
+        .column-label {
+          @include clear-spacing;
+          @include font(12px, bold);
+          flex-basis: 40%;
+          line-height: 15px;
+        }
+
+        @include media-breakpoint-down(md) {
+          &.escrow {
+            flex-basis: 25%;
+          }
+
+          &.paid {
+            flex-basis: 30%;
+          }
+
+          &.keys {
+            flex-basis: 45%;
+          }
+        }
+
+        @include media-breakpoint-down(sm) {
+          flex-basis: 100% !important;
+
+          &:not(:last-child) {
+            @include flex(space-between, center);
+            padding-bottom: 10px;
+            margin-bottom: 10px;
+            border-bottom: 1px dashed $color-gray;
+          }
+
+          &.paid {
+            justify-content: space-between !important;
+            margin-left: 0;
+            margin-right: 0;
+            border-left: 0;
+            border-right: 0;
+          }
+        }
+      }
+    }
+  }
+}
+
+.payments-reminder {
+  position: relative;
+  width: 225px;
+  background-color: white;
+  border-radius: $border-radius;
+  @include simple-shadow;
+  padding: 8px 14px;
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  bottom: 50px;
+
+  @include media-breakpoint-down(sm) {
+    display: none;
+  }
+  .item {
+    padding-top: 5px;
+    padding-bottom: 5px;
+
+    .circular-icon {
+      height: 10px;
+      width: 10px;
+      background-color: $color-primary;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .text {
+      @include font(12px, $fw-light);
+      color: $color-dark-gray;
+    }
+  }
+}

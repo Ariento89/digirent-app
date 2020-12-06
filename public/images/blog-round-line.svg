@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 324 91" width="324" height="91">
+	<style>
+		tspan { white-space:pre }
+		.shp0 { fill: none;stroke: #a3d4ff } 
+	</style>
+	<path id="round line" class="shp0" d="M162 -289C266.93 -289 352 -203.93 352 -99C352 5.93 266.93 91 162 91C57.07 91 -28 5.93 -28 -99C-28 -203.93 57.07 -289 162 -289Z" />
+</svg>

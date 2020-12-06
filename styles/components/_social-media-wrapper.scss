@@ -1,0 +1,103 @@
+@import '../abstract/breakpoint';
+@import '../abstract/variables';
+
+.social-medias-wrapper {
+  position: relative;
+
+  .active-icon {
+    display: none;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #7f7f7f;
+  }
+
+  &.active {
+    .active-icon {
+      display: block;
+    }
+
+    .inactive-icon {
+      display: none;
+    }
+
+    .social-medias {
+      display: block;
+    }
+  }
+
+  .icon-share {
+    cursor: pointer;
+
+    @include media-breakpoint-down(xs) {
+      width: 35px;
+      height: 35px;
+    }
+  }
+
+  .social-medias {
+    display: none;
+    @include simple-shadow;
+    border-radius: 50px;
+    overflow: hidden;
+    position: absolute;
+    top: -20px;
+    z-index: 100;
+
+    &.left {
+      left: 65px;
+    }
+
+    &.right {
+      right: 65px;
+    }
+
+    .icons {
+      @include flex();
+      background-color: white;
+      border-top-right-radius: 50px;
+      border-bottom-right-radius: 50px;
+      padding: 20px 15px;
+
+      @include media-breakpoint-down(xs) {
+        padding: 10px;
+      }
+
+      .icon {
+        height: 40px;
+        width: 40px;
+        margin-left: 8px;
+        margin-right: 8px;
+        border-radius: 50%;
+
+        &.icon-link {
+          @include simple-shadow;
+        }
+      }
+    }
+
+    @include media-breakpoint-down(xs) {
+      top: 0;
+      transform: translate(-40%, 100%);
+
+      &.left {
+        left: unset;
+      }
+
+      &.right {
+        right: unset;
+      }
+
+      .icons {
+        padding: 10px;
+
+        .icon {
+          height: 25px;
+          width: 25px;
+          margin-left: 4px;
+          margin-right: 4px;
+        }
+      }
+    }
+  }
+}

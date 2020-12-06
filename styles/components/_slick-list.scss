@@ -1,0 +1,22 @@
+@import './abstract/variables';
+
+.slick-dots li {
+  background-color: $color-gray;
+  margin: 0 6px;
+  border-radius: 15px;
+  transition: 300ms;
+  width: 15px;
+  height: 8px;
+
+  &.slick-active {
+    transition: 300ms;
+    width: 50px;
+    background-color: $color-primary;
+  }
+
+  button {
+    &::before {
+      content: '';
+    }
+  }
+}

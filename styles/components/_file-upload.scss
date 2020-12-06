@@ -1,0 +1,60 @@
+@import '../abstract/mixins';
+@import '../abstract/variables';
+
+.file-upload,
+.FileUpload {
+  @include flex(space-between, center);
+
+  .file-select {
+    position: relative;
+    max-width: 70%;
+    @include flex($align-items: center);
+  }
+
+  .btn-browse {
+    background-color: white !important;
+    color: $color-dark-gray !important;
+  }
+
+  .filename {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-left: 8px;
+  }
+
+  input[type='file'] {
+    z-index: 100;
+    cursor: pointer;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    filter: alpha(opacity=0);
+  }
+
+  @include media-breakpoint-down(xs) {
+    &.responsive {
+      flex-wrap: wrap;
+
+      .file-select {
+        flex-wrap: wrap;
+        flex-basis: 100%;
+        max-width: 100%;
+
+        .filename {
+          margin-left: 0;
+          width: 100%;
+          text-align: center;
+        }
+      }
+
+      .button {
+        margin-top: 10px;
+        width: 100%;
+      }
+    }
+  }
+}

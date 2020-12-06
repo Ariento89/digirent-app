@@ -1,0 +1,138 @@
+@import '../../components/slick-list';
+
+// Areas of expertise
+.layout-content.homepage {
+  .areas-of-expertise {
+    margin-top: 150px;
+
+    .expertise {
+      margin-top: 50px;
+      @include flex(center, center);
+
+      .item {
+        position: relative;
+        padding-left: 45px;
+        padding-right: 45px;
+
+        @include media-breakpoint-down(lg) {
+          padding-left: 10px;
+          padding-right: 10px;
+
+          max-width: 500px;
+          display: block !important;
+          margin-left: auto;
+          margin-right: auto;
+        }
+
+        @include media-breakpoint-down(xs) {
+          padding-left: 0;
+          padding-right: 0;
+          margin-bottom: 15px;
+        }
+
+        .rounded-icon {
+          position: absolute;
+          height: 100px;
+          width: 100px;
+          left: 0;
+          right: 0;
+          z-index: 1;
+
+          @include media-breakpoint-down(lg) {
+            margin-top: -40px;
+          }
+
+          @include breakpoint-down(425px) {
+            margin-top: -35px;
+            height: 80px;
+            width: 80px;
+          }
+
+          img {
+            width: 60%;
+          }
+        }
+
+        .outer-circle {
+          margin-top: 40px;
+          @include flex(center, center);
+          width: 100%;
+          padding-top: 100%;
+          position: relative;
+          border: 1px solid #c0e8ff;
+          border-radius: 50%;
+          background-color: white;
+
+          @include breakpoint-down(425px) {
+            border-radius: $border-radius;
+          }
+
+          .position-wrapper {
+            @include flex(center, center);
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+
+            .inner-circle {
+              width: calc(100% - 40px);
+              height: calc(100% - 40px);
+              padding: 50px;
+              border: 1px solid #70ccff;
+              border-radius: 50%;
+
+              @include flex(center, center, column);
+
+              @include media-breakpoint-down(lg) {
+                padding: 40px;
+              }
+
+              @include breakpoint-down(425px) {
+                padding: 50px 15px 25px;
+                border-radius: $border-radius;
+                width: calc(100% - 15px);
+                height: calc(100% - 15px);
+              }
+            }
+          }
+
+          .title {
+            @include font(23px, bold);
+
+            @include media-breakpoint-down(lg) {
+              font-size: 20px;
+            }
+
+            @include media-breakpoint-down(sm) {
+              font-size: 16px;
+            }
+          }
+
+          .main-desc {
+            @include media-breakpoint-down(lg) {
+              font-size: 15px;
+              line-height: 22px;
+            }
+
+            @include media-breakpoint-down(sm) {
+              font-size: 14px;
+            }
+          }
+        }
+      }
+
+      .slick-list {
+        margin-left: 25px;
+        margin-right: 25px;
+
+        @include media-breakpoint-down(sm) {
+          margin-left: 0;
+          margin-right: 0;
+        }
+      }
+    }
+  }
+}

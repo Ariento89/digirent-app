@@ -1,0 +1,422 @@
+@import './abstract/variables';
+@import './abstract/mixins';
+@import './abstract/breakpoint';
+
+@import './reaction-item';
+
+.layout-content.property {
+  padding-top: 0;
+  padding-bottom: 400px;
+
+  @include media-breakpoint-down(lg) {
+    padding-bottom: 250px;
+  }
+
+  @include media-breakpoint-down(sm) {
+    padding-bottom: 150px;
+  }
+
+  @include media-breakpoint-down(xs) {
+    .left-main-background,
+    .right-main-background {
+      display: none;
+    }
+  }
+
+  .left-main-background {
+    top: 140vh;
+  }
+
+  .right-main-background {
+    top: 90vh;
+  }
+
+  .landing {
+    min-height: 90vh;
+    background-image: url('/images/property-tenants-bg.jpg');
+    background-size: cover;
+    background-position: top;
+    background-repeat: no-repeat;
+    background-blend-mode: darken;
+    background-color: rgba(255, 255, 255, 0.1);
+    position: relative;
+    @include flex(center, center, column);
+
+    div.content {
+      margin-top: 50px;
+      @include flex(stretch, center);
+
+      @include media-breakpoint-down(md) {
+        flex-direction: column;
+        margin-top: 0;
+      }
+
+      @include media-breakpoint-down(sm) {
+        padding: 0 15px;
+      }
+
+      .left {
+        .title {
+          @include font(6rem, bold);
+          color: white;
+
+          @include media-breakpoint-down(md) {
+            font-size: 4.5rem;
+            text-align: center;
+          }
+
+          @include media-breakpoint-down(sm) {
+            font-size: 3rem;
+          }
+
+          @include media-breakpoint-down(xs) {
+            font-size: 2.75rem;
+          }
+        }
+
+        .subtitle {
+          @include flex;
+
+          span {
+            @include font(30px, $fw-light);
+            color: white;
+            line-height: 35px;
+
+            @include media-breakpoint-down(md) {
+              font-size: 25px;
+              line-height: 30px;
+            }
+
+            @include media-breakpoint-down(sm) {
+              font-size: 18px;
+              line-height: 20px;
+            }
+
+            @include media-breakpoint-down(xs) {
+              font-size: 16px;
+              line-height: 16px;
+            }
+
+            @include breakpoint-down(350px) {
+              br {
+                display: none;
+              }
+            }
+          }
+
+          .add-text {
+            @include font(75px, $fw-light);
+            font-family: $font-secondary;
+            color: $color-primary;
+            margin-right: 8px;
+            line-height: 100%;
+
+            @include media-breakpoint-down(md) {
+              font-size: 60px;
+            }
+
+            @include media-breakpoint-down(sm) {
+              font-size: 45px;
+            }
+
+            @include media-breakpoint-down(xs) {
+              font-size: 32px;
+            }
+          }
+        }
+      }
+
+      .right {
+        margin-left: 60px;
+
+        @include media-breakpoint-down(md) {
+          margin-top: 25px;
+          margin-left: 0;
+        }
+
+        .outer-circle {
+          width: 180px;
+          height: 180px;
+          padding: 5px;
+          border: 1px solid white;
+          border-radius: 50%;
+
+          @include media-breakpoint-down(sm) {
+            width: 130px;
+            height: 130px;
+          }
+
+          .inner-circle {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background-color: white;
+            @include flex(center, center, column);
+          }
+        }
+
+        .button {
+          flex-shrink: 0;
+          padding: 0;
+          width: 60px;
+          height: 60px;
+          border-radius: 50%;
+          @include simple-shadow;
+
+          @include media-breakpoint-down(sm) {
+            width: 40px;
+            height: 40px;
+          }
+
+          img {
+            width: 40%;
+          }
+        }
+
+        span {
+          @include font(15px, $fw-light);
+          color: $color-dark-gray;
+        }
+      }
+    }
+
+    .scroll-down {
+      @include flex();
+      position: absolute;
+      width: 100%;
+      bottom: 0;
+
+      .scroll-down-wrapper {
+        flex-shrink: 0;
+        position: relative;
+
+        .scroll-down-space {
+          margin-left: -1px;
+          margin-right: -1px;
+          margin-bottom: -1px;
+        }
+
+        .scroll-down {
+          width: 35px;
+          height: 35px;
+          padding: 8px;
+          position: absolute;
+          top: 10px;
+          left: 0;
+          right: 0;
+          margin-left: auto;
+          margin-right: auto;
+          border-radius: 40px;
+          cursor: pointer;
+
+          &:hover {
+            background-color: rgba(255, 255, 255, 0.25);
+          }
+        }
+      }
+
+      .white-space {
+        flex: 1;
+        background-color: white;
+        margin-bottom: -1px;
+      }
+    }
+  }
+
+  .container {
+    max-width: 1300px;
+  }
+
+  .added-properties {
+    margin-top: 150px;
+
+    @include media-breakpoint-down(sm) {
+      margin-top: 100px;
+    }
+
+    .properties {
+      margin-top: 100px;
+
+      @include media-breakpoint-down(sm) {
+        margin-top: 50px;
+      }
+
+      .property-info {
+        margin-bottom: 40px;
+
+        @include media-breakpoint-down(sm) {
+          margin-bottom: 30px;
+        }
+      }
+    }
+  }
+}
+
+.add-property-modal {
+  .modal-dialog {
+    max-width: 560px !important;
+  }
+  button {
+    font-size: 14px;
+  }
+}
+
+#see-reactions-modal {
+  .main-content {
+    margin-top: 30px;
+
+    & > .table-header {
+      @include flex(space-between, center);
+      margin-left: 30px;
+      margin-right: 30px;
+      margin-bottom: 15px;
+
+      .sort {
+        @include flex(stretch, center);
+
+        .select {
+          width: 180px;
+        }
+      }
+
+      @include media-breakpoint-down(xs) {
+        flex-direction: column;
+        margin-left: 0;
+        margin-right: 0;
+
+        .sort {
+          margin-top: 10px;
+        }
+      }
+    }
+
+    .reaction-item {
+      margin-bottom: 8px;
+    }
+
+    .divider {
+      width: 1px;
+      height: 40px;
+      background-color: black;
+      opacity: 0.05;
+      display: block;
+    }
+  }
+}
+
+#property-selection {
+  .modal-body {
+    padding: 0;
+    position: relative;
+
+    .modal-background {
+      width: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+    }
+
+    .main-content {
+      padding: 90px 25px 30px 25px;
+
+      .description {
+        padding: 0 25px;
+        text-align: center;
+        @include font(18px, $fw-light);
+        line-height: 25px;
+
+        @include media-breakpoint-down(xs) {
+          font-size: 16px;
+        }
+      }
+
+      .property-selection {
+        position: relative;
+        margin-left: 15px;
+        margin-right: 15px;
+
+        @include media-breakpoint-down(xs) {
+          margin-left: 0;
+          margin-right: 0;
+        }
+
+        .item {
+          border-radius: $border-radius;
+          background-color: white;
+          cursor: pointer;
+          @include simple-shadow;
+          @include flex(stretch, center);
+
+          .house-info {
+            flex: 1;
+            @include flex(center, center, column);
+
+            .title {
+              @include font(18px, $fw-bold);
+            }
+          }
+
+          .house-photo {
+            height: 80px;
+            width: 150px;
+            background-image: url('/images/house-sample-1.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            border-top-right-radius: 30px;
+            border-bottom-right-radius: 30px;
+            border-top-left-radius: $border-radius;
+            border-bottom-left-radius: $border-radius;
+            flex-shrink: 0;
+
+            @include media-breakpoint-down(xs) {
+              width: 100px;
+            }
+          }
+        }
+
+        .initial-value {
+          @include flex(stretch, center);
+
+          .item {
+            flex: 1;
+            margin-right: 15px;
+          }
+
+          .btn-dropdown {
+            flex-shrink: 0;
+            border-radius: 50%;
+            height: 32px;
+            width: 32px;
+            border: 0;
+            background-color: $color-primary;
+
+            img {
+              width: 100%;
+              height: 12px;
+              width: 12px;
+              margin-bottom: -2px;
+            }
+          }
+        }
+
+        .property-list {
+          width: 100%;
+          margin-top: 12px;
+          max-height: 260px;
+          overflow-y: auto;
+
+          .item {
+            margin-bottom: 5px;
+
+            &:hover {
+              background-color: $color-primary-lighter;
+            }
+          }
+        }
+      }
+    }
+  }
+}

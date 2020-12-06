@@ -1,0 +1,257 @@
+@import './abstract/variables';
+@import './abstract/mixins';
+@import './abstract/breakpoint';
+
+.layout-content.messages-tenant {
+  padding-bottom: 400px;
+
+  @include media-breakpoint-down(lg) {
+    padding-bottom: 250px;
+  }
+
+  @include media-breakpoint-down(sm) {
+    padding-bottom: 150px;
+  }
+
+  .container-lg {
+    max-width: 1700px;
+  }
+
+  .ps__thumb-y {
+    background-color: $color-primary !important;
+  }
+
+  .search-bar {
+    margin-left: 25px;
+    margin-right: 25px;
+  }
+
+  .message-icon {
+    @include flex(center, center);
+    @include simple-shadow;
+    position: absolute;
+    background-color: $color-primary;
+    border-radius: 15px;
+    width: 85px;
+    height: 80px;
+    z-index: 1;
+    left: -70px;
+
+    img {
+      width: 50%;
+    }
+
+    @include breakpoint-down(1800px) {
+      display: none;
+    }
+  }
+
+  .user-messages {
+    position: relative;
+    height: 610px;
+    width: 100%;
+    overflow-y: auto;
+    padding: 25px;
+    border-radius: 35px;
+
+    .item {
+      padding: 18px 20px;
+      @include simple-shadow;
+      @include flex(stretch, center);
+      border-radius: $border-radius;
+
+      .user-photo {
+        flex-shrink: 0;
+        width: 65px;
+        height: 65px;
+        margin-right: 15px;
+        border-radius: 50%;
+
+        background-image: url('/images/message-user-sample.jpg');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+
+        @include media-breakpoint-down(xs) {
+          width: 50px;
+          height: 50px;
+        }
+      }
+
+      .information {
+        width: calc(100% - 65px - 20px);
+
+        .name-date {
+          @include flex(space-between, center);
+
+          .name {
+            @include font(18px, $fw-bold);
+            @include clear-spacing;
+          }
+
+          .date-wrapper {
+            min-height: 35px;
+
+            p {
+              @include clear-spacing;
+            }
+
+            .time {
+              @include font(12px, $fw-light);
+              color: #9f9f9f;
+            }
+
+            .messages-count {
+              @include flex(center, center);
+              @include font(10px, $fw-light);
+              width: 18px;
+              height: 18px;
+              background-color: $color-primary;
+              color: white;
+              border-radius: 50%;
+              padding: 0;
+              margin-left: auto;
+              margin-top: 5px;
+
+              &.empty {
+                background-color: white;
+              }
+            }
+          }
+        }
+
+        .message {
+          @include clear-spacing;
+          color: #9f9f9f;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          width: 97%;
+        }
+      }
+    }
+  }
+
+  .user-header {
+    padding: 15px 20px;
+    border-radius: 35px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    @include simple-shadow;
+    @include flex(stretch, stretch);
+    background-color: white;
+
+    .user-photo {
+      flex-shrink: 0;
+      width: 65px;
+      height: 65px;
+      margin-right: 15px;
+      border-radius: 50%;
+      align-self: center;
+
+      background-image: url('/images/message-user-sample.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+
+      @include media-breakpoint-down(xs) {
+        width: 50px;
+        height: 50px;
+      }
+    }
+
+    .user-info {
+      padding-right: 40px;
+      max-height: 100%;
+      @include flex(center, stretch, column);
+
+      .name {
+        @include font(18px, $fw-bold);
+        @include clear-spacing;
+      }
+
+      .role {
+        @include font(14px, $fw-light);
+        @include clear-spacing;
+        color: $color-primary;
+        margin-top: 8px;
+      }
+    }
+  }
+
+  .main-message {
+    @include simple-shadow;
+    padding: 15px 15px;
+    padding-top: 25px;
+    border-radius: 35px;
+    background-color: white;
+
+    .content {
+      padding-left: 15px;
+      padding-right: 15px;
+      height: 357px;
+      margin-bottom: 15px;
+      position: relative;
+      @include flex(stretch, stretch, column);
+
+      @include media-breakpoint-down(md) {
+        height: 500px;
+        padding-left: 0;
+        padding-right: 10px;
+      }
+
+      .message {
+        @include font(17px, $fw-light);
+        padding: 15px 20px;
+        border-radius: 15px;
+        max-width: 80%;
+        display: inline-block;
+        line-height: 28px;
+
+        &.person {
+          background-color: #f4f4f4;
+          color: #666666;
+          border-top-left-radius: 0;
+          border-bottom-left-radius: 25px;
+          align-self: flex-start;
+        }
+
+        &.you {
+          background-color: $color-primary;
+          color: white;
+          border-bottom-right-radius: 0;
+          border-top-right-radius: 25px;
+          align-self: flex-end;
+        }
+      }
+    }
+
+    .footer {
+      @include flex(stretch, center);
+
+      textarea {
+        flex: 1;
+        @include simple-shadow;
+        @include font(18px, $fw-light);
+        color: $color-dark;
+        padding: 20px;
+        border: 0;
+        height: 87px;
+        border-radius: 20px;
+        margin-right: 15px;
+        resize: none;
+      }
+
+      .button {
+        width: 100px;
+        height: 70px;
+        border-radius: 20px;
+        @include flex(center, center);
+
+        img {
+          width: 40%;
+        }
+      }
+    }
+  }
+}

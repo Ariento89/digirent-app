@@ -1,0 +1,24 @@
+@import '../abstract/variables';
+@import '../abstract/mixins';
+
+.TableHeader {
+  @include flex(space-between, center);
+
+  .sort {
+    @include flex(stretch, center);
+
+    .select {
+      width: 180px;
+    }
+  }
+
+  @include media-breakpoint-down(xs) {
+    flex-direction: column;
+    margin-left: 0;
+    margin-right: 0;
+
+    .sort {
+      margin-top: 10px;
+    }
+  }
+}

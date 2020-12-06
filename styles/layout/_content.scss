@@ -1,0 +1,99 @@
+@import '../abstract/mixins';
+@import '../abstract/variables';
+@import '../abstract/breakpoint';
+
+.layout-content {
+  padding-top: 160px;
+
+  .main-title {
+    @include font(30px, $fw-light);
+    @include clear-spacing;
+    text-align: center;
+
+    @include media-breakpoint-down(md) {
+      font-size: 27px;
+    }
+
+    @include media-breakpoint-down(xs) {
+      font-size: 25px;
+    }
+  }
+
+  .main-title-2 {
+    @include font(24px, $fw-light);
+    @include clear-spacing;
+    text-align: center;
+    line-height: 25px;
+
+    @include media-breakpoint-down(md) {
+      font-size: 23px;
+    }
+
+    @include media-breakpoint-down(xs) {
+      font-size: 20px;
+    }
+  }
+
+  .main-subtitle {
+    @include clear-spacing;
+    @include font(20px, $fw-light);
+    text-align: center;
+    line-height: 28px;
+
+    @include media-breakpoint-down(md) {
+      font-size: 18px;
+    }
+
+    @include media-breakpoint-down(xs) {
+      font-size: 16px;
+    }
+
+    &.dark-gray {
+      color: $color-dark-gray;
+    }
+
+    &.primary {
+      color: $color-primary;
+    }
+  }
+
+  .main-box {
+    @include simple-shadow;
+    border-radius: $border-radius;
+    background-color: white;
+    padding: 20px 25px;
+
+    &.radius-25 {
+      border-radius: 25px;
+    }
+
+    &.radius-30 {
+      border-radius: 30px;
+    }
+  }
+
+  .main-desc {
+    @include font(18px, $fw-light);
+    @include clear-spacing;
+    line-height: 28px;
+    color: $color-dark-gray;
+
+    @include media-breakpoint-down(md) {
+      font-size: 16px;
+    }
+
+    @include media-breakpoint-down(sm) {
+      font-size: 15px;
+      line-height: 24px;
+    }
+
+    @include media-breakpoint-down(xs) {
+      font-size: 14px;
+      line-height: 20px;
+    }
+
+    &.dark-gray2 {
+      color: $color-dark-gray2;
+    }
+  }
+}

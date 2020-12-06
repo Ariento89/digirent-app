@@ -1,0 +1,79 @@
+// Section Divider
+.layout-content.homepage {
+  .section-divider {
+    margin-top: 200px;
+    @include flex;
+
+    @include media-breakpoint-down(md) {
+      margin-top: 150px;
+      align-items: center;
+    }
+
+    @include media-breakpoint-down(xs) {
+      flex-wrap: wrap;
+    }
+
+    .title {
+      @include flex(flex-end, center);
+      background-color: $color-primary;
+      color: white;
+      padding: 12px 35px;
+      border-top-right-radius: 30px;
+      border-bottom-right-radius: 30px;
+      width: 35vw;
+
+      @include media-breakpoint-down(md) {
+        width: auto;
+      }
+
+      @include media-breakpoint-down(xs) {
+        margin-right: 25px;
+        flex-basis: 100%;
+        justify-content: center;
+      }
+    }
+
+    .action {
+      @include simple-shadow;
+      @include flex(space-between, center);
+      margin-left: 50px;
+      margin-right: 25px;
+      padding: 12px 25px;
+      border-radius: 40px;
+      background-color: white;
+
+      @include media-breakpoint-down(sm) {
+        margin-left: 20px;
+      }
+
+      @include media-breakpoint-down(xs) {
+        margin: 10px 25px 0;
+        flex-basis: 100%;
+        flex-wrap: wrap;
+      }
+
+      & > p {
+        flex: 1;
+
+        @include media-breakpoint-down(xs) {
+          flex-basis: 100%;
+          text-align: center;
+        }
+      }
+
+      .button {
+        flex-shrink: 0;
+        margin-left: 100px;
+
+        @include media-breakpoint-down(sm) {
+          margin-left: 10px;
+        }
+
+        @include media-breakpoint-down(xs) {
+          margin: 10px 0 0 0;
+          flex-basis: 100%;
+        }
+      }
+    }
+  }
+}

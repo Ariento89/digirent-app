@@ -1,0 +1,25 @@
+@import '../abstract/mixins';
+@import '../abstract/variables';
+
+.toggle-switch.toggle-switch-language {
+  .switch {
+    input[type='radio'].toggle {
+      &.toggle-left {
+        &:checked + label {
+          &:after {
+            content: 'EN';
+          }
+        }
+      }
+
+      &.toggle-right {
+        &:checked + label {
+          &:after {
+            content: 'NL';
+            background: $color-primary !important;
+          }
+        }
+      }
+    }
+  }
+}

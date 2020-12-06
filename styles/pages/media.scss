@@ -1,0 +1,105 @@
+@import './abstract/variables';
+@import './abstract/mixins';
+@import './abstract/breakpoint';
+
+.layout-content.media {
+  padding-bottom: 400px;
+
+  @include media-breakpoint-down(lg) {
+    padding-bottom: 250px;
+  }
+
+  @include media-breakpoint-down(sm) {
+    padding-bottom: 150px;
+  }
+
+  .main-desc {
+    max-width: 860px;
+  }
+
+  .medias {
+    margin-top: 50px;
+    padding-left: 50px;
+    padding-right: 50px;
+
+    @include media-breakpoint-down(sm) {
+      margin-top: 20px;
+      padding-left: 0;
+      padding-right: 0;
+    }
+
+    .media-item {
+      margin-top: 80px;
+
+      @include media-breakpoint-down(md) {
+        margin-top: 50px;
+      }
+
+      .thumbnail {
+        height: 450px;
+        width: 100%;
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
+        position: relative;
+        border-radius: 5px;
+        @include flex(center, center);
+
+        .icon-play-button {
+          width: 45px;
+          height: 45px;
+          cursor: pointer;
+        }
+
+        @include breakpoint-down(1600px) {
+          height: 400px;
+        }
+
+        @include breakpoint-down(1300px) {
+          height: 350px;
+        }
+
+        @include breakpoint-down(1000px) {
+          height: 300px;
+        }
+
+        @include media-breakpoint-only(md) {
+          height: 500px;
+        }
+
+        @include media-breakpoint-only(sm) {
+          height: 600px;
+        }
+      }
+
+      .information {
+        @include flex(space-between, center);
+
+        .title {
+          @include clear-spacing;
+          @include font(20px, $fw-light);
+          color: #606060;
+        }
+
+        @include media-breakpoint-down(sm) {
+          flex-wrap: wrap;
+
+          .title {
+            flex-basis: 100%;
+            margin-bottom: 10px;
+            text-align: center;
+            order: 1;
+          }
+
+          & > .rounded-icon {
+            order: 2;
+          }
+
+          .reaction {
+            order: 3;
+          }
+        }
+      }
+    }
+  }
+}

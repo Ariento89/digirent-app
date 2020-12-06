@@ -1,0 +1,369 @@
+@import './abstract/variables';
+@import './abstract/mixins';
+@import './abstract/breakpoint';
+
+.layout-content.blog-article-inside {
+  padding-bottom: 400px;
+
+  @include media-breakpoint-down(lg) {
+    padding-bottom: 250px;
+  }
+
+  @include media-breakpoint-down(sm) {
+    padding-bottom: 150px;
+  }
+
+  .container-lg {
+    max-width: 1700px;
+  }
+
+  .blog-content-wrapper {
+    position: relative;
+
+    .blog-header {
+      @include flex(space-between, center);
+
+      .statistics {
+        @include flex(center, center);
+
+        .item {
+          margin-left: 25px;
+          img {
+            width: 25px;
+          }
+
+          span {
+            margin-top: 5px;
+            display: block;
+            text-align: center;
+            @include font(14px, $fw-light);
+          }
+        }
+      }
+
+      @include breakpoint-down(500px) {
+        align-items: flex-start;
+
+        .statistics {
+          display: block;
+
+          .item {
+            margin-left: 0;
+            margin-bottom: 15px;
+          }
+        }
+      }
+    }
+
+    .blog-image {
+      position: absolute;
+      top: -100px;
+      width: 320px;
+      height: 320px;
+      border-radius: 50%;
+      @include simple-shadow;
+      margin-left: auto;
+      margin-right: auto;
+      left: 0;
+      right: 0;
+
+      .bottom-design {
+        position: absolute;
+        bottom: -11px;
+        width: 320px;
+        height: 83px;
+        margin-left: auto;
+        margin-right: auto;
+        left: 0;
+        right: 0;
+      }
+
+      .overlay {
+        position: relative;
+        z-index: 3;
+        width: 100%;
+        height: 100%;
+        background-image: url('/images/house-sample-1.jpg');
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
+        border-radius: 50%;
+      }
+
+      .date {
+        z-index: 1;
+        width: 80px;
+        padding-top: 20px;
+        padding-bottom: 5px;
+        background-color: $color-primary;
+        position: absolute;
+        display: block;
+        bottom: -30px;
+        left: 0;
+        right: 0;
+        margin-left: auto;
+        margin-right: auto;
+        color: white;
+        text-align: center;
+        border-bottom-left-radius: 8px;
+        border-bottom-right-radius: 8px;
+        @include font(18px, $fw-light);
+
+        .year {
+          position: absolute;
+          right: -50px;
+          color: #cbcbcb;
+        }
+      }
+
+      @include breakpoint-down(600px) {
+        width: 225px;
+        height: 225px;
+
+        .bottom-design {
+          width: 225px;
+          height: 58px;
+        }
+      }
+
+      @include breakpoint-down(420px) {
+        top: -30px;
+        width: 150px;
+        height: 150px;
+
+        .bottom-design {
+          width: 150px;
+          height: 39px;
+        }
+      }
+    }
+
+    .blog-texts {
+      margin-top: 250px;
+
+      @include breakpoint-down(600px) {
+        margin-top: 140px;
+      }
+
+      @include breakpoint-down(500px) {
+        margin-top: 50px;
+      }
+    }
+
+    .add-comment {
+      @include flex(center, center);
+      width: 54px;
+      height: 65px;
+      border-bottom-left-radius: 27px;
+      border-bottom-right-radius: 27px;
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -65px;
+      margin: 0 auto;
+      background-color: $color-primary;
+      cursor: pointer;
+
+      img {
+        width: 30px;
+      }
+    }
+  }
+
+  .sidebar {
+    @include media-breakpoint-down(md) {
+      margin-top: 200px;
+    }
+
+    .recent-blogs {
+      margin-top: 100px;
+
+      @include media-breakpoint-down(xs) {
+        margin-top: 50px;
+      }
+
+      .main-subtitle {
+        font-size: 22px;
+        color: #5d5d5d;
+        padding-left: 40px;
+      }
+
+      .list {
+        margin-top: 40px;
+
+        @include media-breakpoint-down(xs) {
+          margin-top: 20px;
+        }
+
+        .item {
+          padding: 25px 40px;
+          margin-bottom: 20px;
+          position: relative;
+          border-radius: 37px;
+          @include flex(stretch, center);
+
+          .content {
+            margin: 0 20px;
+            padding-top: 30px;
+
+            .title {
+              font-size: 20px;
+            }
+
+            .date {
+              z-index: 1;
+              width: 80px;
+              padding-top: 20px;
+              padding-bottom: 5px;
+              background-color: $color-primary;
+              position: absolute;
+              display: block;
+              top: 0;
+              color: white;
+              text-align: center;
+              border-bottom-left-radius: 8px;
+              border-bottom-right-radius: 8px;
+              @include font(18px, $fw-light);
+
+              .year {
+                position: absolute;
+                right: -50px;
+                color: #cbcbcb;
+              }
+            }
+          }
+
+          .image {
+            flex-shrink: 0;
+            height: 100px;
+            width: 100px;
+            background-image: url('/images/house-sample-1.jpg');
+            background-position: center;
+            background-size: cover;
+            background-repeat: no-repeat;
+            border-radius: 50%;
+          }
+
+          .button {
+            margin-left: auto;
+            flex-shrink: 0;
+            padding: 0;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+
+            img {
+              width: 40%;
+            }
+          }
+
+          @include media-breakpoint-down(xs) {
+            padding: 25px;
+
+            .image {
+              height: 60px;
+              width: 60px;
+            }
+          }
+        }
+      }
+    }
+
+    .archives {
+      margin-top: 100px;
+
+      @include media-breakpoint-down(xs) {
+        margin-top: 50px;
+      }
+
+      .main-subtitle {
+        font-size: 22px;
+        color: #5d5d5d;
+        padding-left: 40px;
+      }
+
+      .list {
+        margin-top: 40px;
+        border-radius: 37px;
+        padding: 25px 40px;
+
+        .item {
+          margin-bottom: 15px;
+          @include flex;
+
+          &:last-child {
+            margin-bottom: 0;
+
+            .content {
+              border-bottom: 0;
+            }
+          }
+
+          .button {
+            flex-shrink: 0;
+            padding: 0;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            align-self: center;
+
+            img {
+              width: 40%;
+            }
+          }
+
+          .content {
+            @include flex(space-between, center);
+            padding: 8px 0;
+            margin-left: 20px;
+            flex: 1;
+            border-bottom: 1px solid $color-gray;
+          }
+        }
+
+        @include media-breakpoint-down(xs) {
+          margin-top: 20px;
+          padding: 25px;
+        }
+      }
+    }
+  }
+}
+
+#comment-modal {
+  .modal-content {
+    overflow: hidden;
+  }
+
+  .modal-body {
+    padding: 0;
+    padding-bottom: 30px;
+    position: relative;
+
+    .modal-background {
+      transform: skew(0deg, -5deg);
+      height: 65px;
+      width: 100%;
+      position: absolute;
+      top: -22px;
+      left: 0;
+      background-color: $color-primary-lighter;
+    }
+
+    .main-content {
+      margin-top: -25px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .button-nav {
+      z-index: 3;
+      margin-top: 10px;
+      margin-left: 10px;
+
+      @include media-breakpoint-down(sm) {
+        margin-left: 15px;
+      }
+    }
+  }
+}

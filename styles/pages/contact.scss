@@ -1,0 +1,79 @@
+@import './abstract/variables';
+@import './abstract/mixins';
+@import './abstract/breakpoint';
+
+.layout-content.contact {
+  padding-bottom: 400px;
+
+  @include media-breakpoint-down(lg) {
+    padding-bottom: 250px;
+  }
+
+  @include media-breakpoint-down(sm) {
+    padding-bottom: 150px;
+  }
+
+  .main-subtitle {
+    line-height: 30px;
+  }
+
+  .main-box {
+    margin-top: 25px;
+  }
+
+  .btn-visit-faq {
+    margin-top: 30px;
+  }
+
+  .contacts {
+    margin-top: 100px;
+
+    @include media-breakpoint-down(sm) {
+      margin-top: 50px;
+    }
+
+    .item {
+      .footer {
+        @include flex(space-between, center);
+      }
+    }
+  }
+}
+
+#contact-modal {
+  .modal-content {
+    overflow: hidden;
+  }
+
+  .modal-body {
+    padding: 0;
+    padding-bottom: 30px;
+    position: relative;
+
+    .modal-background {
+      transform: skew(0deg, -5deg);
+      height: 65px;
+      width: 100%;
+      position: absolute;
+      top: -22px;
+      left: 0;
+      background-color: $color-primary-lighter;
+    }
+
+    .main-content {
+      margin-top: -25px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .button-nav {
+      z-index: 3;
+      margin-top: 10px;
+      margin-left: 10px;
+
+      @include media-breakpoint-down(sm) {
+        margin-left: 15px;
+      }
+    }
+  }
+}

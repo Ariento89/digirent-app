@@ -1,0 +1,22 @@
+@import "../abstract/mixins";
+
+.reaction {
+  @include flex(center, center);
+
+  &.no-shadow {
+    .item {
+      box-shadow: none !important;
+    }
+  }
+
+  .item {
+    cursor: pointer;
+
+    img {
+      width: 60%;
+      &.icon-dislike {
+        margin-top: 5px;
+      }
+    }
+  }
+}

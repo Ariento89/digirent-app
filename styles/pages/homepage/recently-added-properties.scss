@@ -1,0 +1,53 @@
+@import '../../components/slick-list';
+
+// Recently Added Properties
+.layout-content.homepage {
+  .recently-added-properties {
+    margin-top: 150px;
+
+    @include media-breakpoint-down(sm) {
+      margin-top: 100px;
+    }
+
+    .properties {
+      margin-top: 100px;
+      @include flex(center, center);
+
+      @include media-breakpoint-down(md) {
+        margin-top: 50px;
+      }
+
+      @include media-breakpoint-down(xs) {
+        margin-top: 25px;
+      }
+
+      .item {
+        padding-left: 30px;
+        padding-right: 30px;
+
+        .property-info {
+          margin: 0 0 15px 0;
+        }
+
+        @include media-breakpoint-only(sm) {
+          padding-left: 60px;
+          padding-right: 60px;
+        }
+
+        @include media-breakpoint-only(xs) {
+          padding: 5px;
+        }
+      }
+
+      .slick-list {
+        margin-left: 25px;
+        margin-right: 25px;
+
+        @include media-breakpoint-down(sm) {
+          margin-left: 0;
+          margin-right: 0;
+        }
+      }
+    }
+  }
+}

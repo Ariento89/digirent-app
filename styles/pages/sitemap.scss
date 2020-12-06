@@ -1,0 +1,36 @@
+@import './abstract/variables';
+@import './abstract/mixins';
+@import './abstract/breakpoint';
+
+.layout-content.sitemap {
+  padding-bottom: 400px;
+
+  @include media-breakpoint-down(lg) {
+    padding-bottom: 250px;
+  }
+
+  @include media-breakpoint-down(sm) {
+    padding-bottom: 150px;
+  }
+
+  .sitemaps {
+    margin-top: 100px;
+
+    @include media-breakpoint-down(sm) {
+      margin-top: 50px;
+    }
+
+    a {
+      @include font(20px, $fw-light);
+      color: $color-dark-gray;
+      display: block;
+      padding: 8px 15px;
+      margin: 8px 0;
+      border-radius: $border-radius;
+
+      &:nth-child(odd) {
+        background-color: #f1f9ff;
+      }
+    }
+  }
+}

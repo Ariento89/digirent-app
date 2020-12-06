@@ -1,0 +1,176 @@
+// How Does It Work
+.layout-content.homepage {
+  .how-does-it-work {
+    margin-top: 150px;
+
+    @include media-breakpoint-down(sm) {
+      margin-top: 125px;
+    }
+
+    .homepage-user-select {
+      margin-top: 75px;
+
+      @include media-breakpoint-down(md) {
+        margin-top: 50px;
+      }
+    }
+
+    .steps {
+      margin-top: 100px;
+      @include flex();
+
+      @include media-breakpoint-down(sm) {
+        margin-top: 75px;
+      }
+
+      @include media-breakpoint-down(xs) {
+        display: none;
+      }
+
+      .steps-left,
+      .steps-right {
+        flex: 1;
+      }
+
+      .steps-divider {
+        width: 120px;
+        margin-top: -5px;
+        @include flex(flex-start, center, column);
+
+        .line {
+          width: 1px;
+          background-color: $color-gray2;
+          position: absolute;
+        }
+
+        .circle {
+          width: 12px;
+          height: 12px;
+          border-radius: 50%;
+          flex-shrink: 0;
+          background-color: $color-gray2;
+        }
+
+        @include media-breakpoint-down(sm) {
+          width: 80px;
+        }
+      }
+
+      .item {
+        position: relative;
+        @include flex(stretch, center);
+
+        &.space-top {
+          margin-top: 175px;
+        }
+
+        &.left {
+          .main-box {
+            margin-left: 50px;
+            padding-left: 65px;
+          }
+
+          .step-count {
+            right: -20px;
+          }
+        }
+
+        &.right {
+          .main-box {
+            margin-right: 50px;
+            padding-right: 65px;
+          }
+
+          .rounded-icon {
+            right: 0;
+          }
+
+          .step-count {
+            left: -20px;
+          }
+        }
+
+        .rounded-icon {
+          position: absolute;
+          border-radius: $border-radius;
+          height: 90px;
+          width: 90px;
+
+          img {
+            width: 60%;
+          }
+        }
+
+        .step-count {
+          @include flex(center, center);
+          width: 40px;
+          height: 40px;
+          position: absolute;
+          top: -20px;
+          background-color: $color-primary;
+          color: white;
+          border-radius: 50%;
+          @include font(18px, bold);
+          @include simple-shadow;
+        }
+
+        @include media-breakpoint-down(sm) {
+          .title {
+            font-size: 16px !important;
+            padding-bottom: 5px;
+          }
+
+          .main-desc {
+            font-size: 14px;
+            line-height: 22px;
+          }
+
+          .main-box {
+            margin: 0 !important;
+            padding: 20px 25px !important;
+          }
+
+          .rounded-icon {
+            display: none;
+          }
+        }
+
+        @include media-breakpoint-down(xs) {
+          .main-box {
+            margin-left: 0;
+            margin-top: 60px;
+            padding-top: 40px;
+            padding-left: 25px;
+          }
+
+          .rounded-icon {
+            top: 20px;
+            right: 0;
+            left: 0;
+            margin-left: auto;
+            margin-right: auto;
+          }
+        }
+      }
+    }
+
+    .steps.mobile {
+      display: none;
+
+      @include media-breakpoint-down(xs) {
+        display: block;
+      }
+
+      .item {
+        margin-bottom: 40px;
+      }
+
+      .step-count {
+        left: 0;
+        right: 0;
+        margin-left: auto;
+        margin-right: auto;
+      }
+    }
+  }
+}

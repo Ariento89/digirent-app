@@ -1,0 +1,193 @@
+// Why choose digirent over any agency
+
+@mixin first-column {
+  flex-basis: 60%;
+
+  @include media-breakpoint-down(sm) {
+    flex-basis: 40%;
+  }
+
+  @include breakpoint-down(410px) {
+    flex-basis: 30%;
+  }
+}
+
+@mixin other-columns {
+  flex-basis: 20%;
+
+  @include media-breakpoint-down(sm) {
+    flex-basis: 30%;
+  }
+
+  @include breakpoint-down(410px) {
+    flex-basis: 35%;
+  }
+}
+
+.layout-content.homepage {
+  .why-choose-digirent-over-any-agency {
+    margin-top: 150px;
+
+    .reasons {
+      margin-top: 75px;
+
+      @include media-breakpoint-down(xs) {
+        margin-top: 25px;
+      }
+
+      .item {
+        @include flex(stretch, stretch);
+        padding: 20px 0;
+        margin-bottom: 15px;
+        border-radius: $border-radius;
+        @include simple-shadow;
+        background-color: white;
+
+        .main-desc {
+          line-height: 20px;
+
+          @include breakpoint-down(410px) {
+            font-size: 12px;
+            line-height: 13px;
+          }
+
+          &.digirent-fee {
+            font-size: 35px;
+
+            @include media-breakpoint-down(sm) {
+              font-size: 30px;
+            }
+
+            @include media-breakpoint-down(xs) {
+              font-size: 18px;
+            }
+          }
+
+          &.traditional-fee {
+            font-size: 25px;
+
+            @include media-breakpoint-down(sm) {
+              font-size: 20px;
+            }
+
+            @include media-breakpoint-down(xs) {
+              font-size: 15px;
+            }
+          }
+        }
+
+        .column-1 {
+          padding-left: 30px;
+          padding-right: 10px;
+          @include first-column;
+
+          @include media-breakpoint-down(xs) {
+            padding-left: 10px;
+          }
+        }
+
+        .column-2 {
+          border-left: 1px solid $color-gray3;
+          border-right: 1px solid $color-gray3;
+        }
+
+        .column-2,
+        .column-3 {
+          padding-left: 10px;
+          padding-right: 10px;
+          @include other-columns;
+          @include flex(center, center);
+        }
+      }
+
+      .header {
+        @include flex(stretch, stretch);
+        padding: 20px 0;
+        margin-bottom: 15px;
+
+        .column-1 {
+          @include first-column;
+        }
+
+        .column-2,
+        .column-3 {
+          padding-left: 10px;
+          padding-right: 10px;
+          @include other-columns;
+          @include flex(center, center);
+        }
+
+        .logo {
+          padding: 12px 15px;
+          border-radius: $border-radius;
+          background-color: $color-primary;
+
+          .text {
+            color: white;
+            @include clear-spacing;
+            @include font(22px, $fw-bold);
+          }
+
+          @include media-breakpoint-down(xs) {
+            padding: 10px;
+            .text {
+              font-size: 14px;
+            }
+          }
+
+          @include breakpoint-down(390px) {
+            .text {
+              font-size: 10px;
+            }
+          }
+        }
+
+        .agency {
+          padding: 7px 10px;
+          border-radius: $border-radius;
+          background-color: white;
+          @include simple-shadow;
+          @include flex(center, center);
+
+          img {
+            width: 25px;
+            margin-right: 7px;
+          }
+
+          .text {
+            @include clear-spacing;
+            @include font(14px, $fw-bold);
+          }
+
+          @include media-breakpoint-down(xs) {
+            flex-wrap: wrap;
+
+            .text {
+              margin-top: 5px;
+              text-align: center;
+            }
+          }
+
+          @include breakpoint-down(430px) {
+            padding: 5px;
+
+            img {
+              width: 18px;
+              margin: 0;
+            }
+
+            .text {
+              font-size: 12px;
+            }
+          }
+
+          @include breakpoint-down(390px) {
+            .text {
+              font-size: 12px;
+            }
+          }
+        }
+      }
+    }
+  }
+}

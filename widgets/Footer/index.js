@@ -80,22 +80,22 @@ const index = () => (
           <div className="col-6 col-md-4 col-lg header-column">
             <h3>Cities</h3>
             <div className="list">
-              <Link href="#">
+              <Link href="/property-list">
                 <a>Amsterdam</a>
               </Link>
-              <Link href="#">
+              <Link href="/property-list">
                 <a>Den Haag</a>
               </Link>
-              <Link href="#">
+              <Link href="/property-list">
                 <a>Rotterdam</a>
               </Link>
-              <Link href="#">
+              <Link href="/property-list">
                 <a>Eindhoven</a>
               </Link>
-              <Link href="#">
+              <Link href="/property-list">
                 <a>Utrecht</a>
               </Link>
-              <Link href="#">
+              <Link href="/property-list">
                 <a>Arnhem</a>
               </Link>
             </div>
@@ -126,7 +126,7 @@ const index = () => (
           <div className="col-6 col-md-4 col-lg header-column">
             <h3>Tenants</h3>
             <div className="list">
-              <Link href="#">
+              <Link href="/#for-tenants">
                 <a>How to rent</a>
               </Link>
               <Link href="/pricing">
@@ -138,12 +138,15 @@ const index = () => (
               <Link href={`/rental-tips#${userTypes.TENANT}`}>
                 <a>Rental Tips</a>
               </Link>
+              <Link href="/blog">
+                <a>Blog</a>
+              </Link>
             </div>
           </div>
           <div className="col-6 col-md-4 col-lg header-column">
             <h3>Landlords</h3>
             <div className="list">
-              <Link href="#">
+              <Link href="/#for-landlords">
                 <a>How to rent out</a>
               </Link>
               <Link href="/pricing">
@@ -151,6 +154,9 @@ const index = () => (
               </Link>
               <Link href={`/rental-tips#${userTypes.LANDLORD}`}>
                 <a>Rental Tips</a>
+              </Link>
+              <Link href="/blog">
+                <a>Blog</a>
               </Link>
             </div>
           </div>

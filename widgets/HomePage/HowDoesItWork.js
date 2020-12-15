@@ -113,125 +113,127 @@ const HowDoesItWork = ({ selectedUserType, setSelectedUserType }) => {
   }, [router]);
 
   return (
-    <div className="how-does-it-work container">
+    <>
       <div id="for-landlords" />
       <div id="for-tenants" />
-      <h3 className="main-title">
-        HOW DOES IT <span className="text-primary font-weight-bold">WORK?</span>
-      </h3>
-      <p className="main-subtitle mt-2 mt-md-4 dark-gray">
-        FIND YOUR NEW HOME <span className="font-weight-bold">4 EASY STEPS</span>
-      </p>
-      <p className="main-subtitle mt-1 mt-md-2 dark-gray">
-        Find your ideal house and apply to your perfect home Digi Rent is fast, easy and safe!
-      </p>
+      <div className="how-does-it-work container">
+        <h3 className="main-title">
+          HOW DOES IT <span className="text-primary font-weight-bold">WORK?</span>
+        </h3>
+        <p className="main-subtitle mt-2 mt-md-4 dark-gray">
+          FIND YOUR NEW HOME <span className="font-weight-bold">4 EASY STEPS</span>
+        </p>
+        <p className="main-subtitle mt-1 mt-md-2 dark-gray">
+          Find your ideal house and apply to your perfect home Digi Rent is fast, easy and safe!
+        </p>
 
-      <UserSelect
-        classNames="homepage-user-select"
-        selected={selectedUserType}
-        onSelect={onSelectUserType}
-      />
+        <UserSelect
+          classNames="homepage-user-select"
+          selected={selectedUserType}
+          onSelect={onSelectUserType}
+        />
 
-      <div className="steps">
-        <div className="steps-left">
-          <div className="item left">
-            <span className="step-count" ref={step1}>
-              1
-            </span>
-            <div className="rounded-icon not-responsive">
-              <img src={data.step1.src} alt="item icon" />
+        <div className="steps">
+          <div className="steps-left">
+            <div className="item left">
+              <span className="step-count" ref={step1}>
+                1
+              </span>
+              <div className="rounded-icon not-responsive">
+                <img src={data.step1.src} alt="item icon" />
+              </div>
+              <div className="main-box">
+                <p className="main-desc font-weight-bold title">{data.step1.title}</p>
+                <p className="main-desc">{data.step1.description}</p>
+              </div>
             </div>
+
+            <div className="item left space-top">
+              <span className="step-count" ref={step3}>
+                3
+              </span>
+              <div className="rounded-icon not-responsive">
+                <img src={data.step3.src} alt="item icon" />
+              </div>
+              <div className="main-box">
+                <p className="main-desc font-weight-bold title">{data.step3.title}</p>
+                <p className="main-desc">{data.step3.description}</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="steps-divider">
+            <div className="circle" ref={divider1} />
+            <div className="circle" ref={divider2} />
+            <div className="circle" ref={divider3} />
+            <div className="circle" ref={divider4} />
+            <div className="line" ref={line} />
+          </div>
+
+          <div className="steps-right">
+            <div className="item right space-top">
+              <span className="step-count" ref={step2}>
+                2
+              </span>
+              <div className="main-box">
+                <p className="main-desc font-weight-bold title">{data.step2.title}</p>
+                <p className="main-desc">{data.step2.description}</p>
+              </div>
+              <div className="rounded-icon not-responsive">
+                <img src={data.step2.src} alt="item icon" />
+              </div>
+            </div>
+
+            <div className="item right space-top">
+              <span className="step-count" ref={step4}>
+                4
+              </span>
+              <div className="main-box">
+                <p className="main-desc font-weight-bold title">{data.step4.title}</p>
+                <p className="main-desc">{data.step4.description}</p>
+              </div>
+              <div className="rounded-icon not-responsive">
+                <img src={data.step4.src} alt="item icon" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="steps mobile">
+          <div className="item">
+            <span className="step-count">1</span>
             <div className="main-box">
               <p className="main-desc font-weight-bold title">{data.step1.title}</p>
               <p className="main-desc">{data.step1.description}</p>
             </div>
           </div>
 
-          <div className="item left space-top">
-            <span className="step-count" ref={step3}>
-              3
-            </span>
-            <div className="rounded-icon not-responsive">
-              <img src={data.step3.src} alt="item icon" />
+          <div className="item">
+            <span className="step-count">2</span>
+            <div className="main-box">
+              <p className="main-desc font-weight-bold title">{data.step2.title}</p>
+              <p className="main-desc">{data.step2.description}</p>
             </div>
+          </div>
+
+          <div className="item">
+            <span className="step-count">3</span>
             <div className="main-box">
               <p className="main-desc font-weight-bold title">{data.step3.title}</p>
               <p className="main-desc">{data.step3.description}</p>
             </div>
           </div>
-        </div>
 
-        <div className="steps-divider">
-          <div className="circle" ref={divider1} />
-          <div className="circle" ref={divider2} />
-          <div className="circle" ref={divider3} />
-          <div className="circle" ref={divider4} />
-          <div className="line" ref={line} />
-        </div>
-
-        <div className="steps-right">
-          <div className="item right space-top">
-            <span className="step-count" ref={step2}>
-              2
-            </span>
-            <div className="main-box">
-              <p className="main-desc font-weight-bold title">{data.step2.title}</p>
-              <p className="main-desc">{data.step2.description}</p>
-            </div>
-            <div className="rounded-icon not-responsive">
-              <img src={data.step2.src} alt="item icon" />
-            </div>
-          </div>
-
-          <div className="item right space-top">
-            <span className="step-count" ref={step4}>
-              4
-            </span>
+          <div className="item">
+            <span className="step-count">4</span>
             <div className="main-box">
               <p className="main-desc font-weight-bold title">{data.step4.title}</p>
               <p className="main-desc">{data.step4.description}</p>
             </div>
-            <div className="rounded-icon not-responsive">
-              <img src={data.step4.src} alt="item icon" />
-            </div>
           </div>
         </div>
       </div>
-
-      <div className="steps mobile">
-        <div className="item">
-          <span className="step-count">1</span>
-          <div className="main-box">
-            <p className="main-desc font-weight-bold title">{data.step1.title}</p>
-            <p className="main-desc">{data.step1.description}</p>
-          </div>
-        </div>
-
-        <div className="item">
-          <span className="step-count">2</span>
-          <div className="main-box">
-            <p className="main-desc font-weight-bold title">{data.step2.title}</p>
-            <p className="main-desc">{data.step2.description}</p>
-          </div>
-        </div>
-
-        <div className="item">
-          <span className="step-count">3</span>
-          <div className="main-box">
-            <p className="main-desc font-weight-bold title">{data.step3.title}</p>
-            <p className="main-desc">{data.step3.description}</p>
-          </div>
-        </div>
-
-        <div className="item">
-          <span className="step-count">4</span>
-          <div className="main-box">
-            <p className="main-desc font-weight-bold title">{data.step4.title}</p>
-            <p className="main-desc">{data.step4.description}</p>
-          </div>
-        </div>
-      </div>
-    </div>
+    </>
   );
 };
 

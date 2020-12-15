@@ -179,6 +179,9 @@ const Page = () => {
                 <div className="item">
                   <img src="/images/social-media/google.png" alt="icon" />
                 </div>
+                <div className="item">
+                  <img src="/images/social-media/apple.png" alt="icon" />
+                </div>
               </div>
 
               <div className="row mt-3">

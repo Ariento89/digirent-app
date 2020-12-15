@@ -86,11 +86,14 @@ const LoginModal = ({ onClose, isVisible }) => {
 
           <div className="login-button mt-3">
             <div className="social-media-options">
-              <div className="item mr-3">
+              <div className="item mr-2">
                 <img src="/images/social-media/facebook-square.png" alt="facebook icon" />
               </div>
-              <div className="item">
+              <div className="item mr-2">
                 <img src="/images/social-media/google.png" alt="google icon" />
+              </div>
+              <div className="item">
+                <img src="/images/social-media/apple.png" alt="apple icon" />
               </div>
             </div>
             <button type="button" className="button btn-login min-width">

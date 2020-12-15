@@ -1,11 +1,6 @@
 import cn from 'classnames';
 import { useState } from 'react';
 
-export const reactionType = {
-  LIKE: 'like',
-  DISLIKE: 'dislike',
-};
-
 export const socialMediaDirection = {
   LEFT: 'left',
   RIGHT: 'right',

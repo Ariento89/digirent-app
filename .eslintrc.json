@@ -30,10 +30,12 @@
       "alias": {
         "map": [
           ["components", "./components"],
-          ["shared", "./shared"],
-          ["widgets", "./widgets"],
           ["ducks", "./ducks"],
-          ["hooks", "./hooks"]
+          ["hooks", "./hooks"],
+          ["sagas", "./sagas"],
+          ["services", "./services"],
+          ["shared", "./shared"],
+          ["widgets", "./widgets"]
         ],
         "extensions": [".ts", ".js", ".jsx", ".json"]
       }

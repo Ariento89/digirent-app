@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/no-noninteractive-tabindex */
 import cn from 'classnames';
-import { ToggleSwitch } from 'components/ToggleSwitch/';
+import ToggleSwitch from 'components/ToggleSwitch/index';
 import { useLanguage } from 'hooks/useLanguage';
 import Link from 'next/link';
 import { useState } from 'react';

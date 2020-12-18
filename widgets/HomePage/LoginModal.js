@@ -9,6 +9,8 @@ const LoginModal = ({ onClose, isVisible }) => {
   const [rememberMeActive, setRememberMeActive] = useState(false);
   const [termsAndPolicyActive, setTermsAndPolicyActive] = useState(false);
 
+  // const { login, status, errors } = useAuthentication();
+
   const toggleRememberMe = () => setRememberMeActive((value) => !value);
   const toggleTermsAndPolicyActive = () => setTermsAndPolicyActive((value) => !value);
 

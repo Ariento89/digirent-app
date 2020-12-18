@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { userTypes } from 'shared/types';
-import CookieOverlay from 'widgets/CookieOverlay/CookieOverlay';
+import CookieOverlay from 'widgets/CookieOverlay/index';
 import AreasOfExpertise from 'widgets/HomePage/AreasOfExpertise';
 import Blog from 'widgets/HomePage/Blog';
 import ExploreOurMosePopularCities from 'widgets/HomePage/ExploreOurMosePopularCities';

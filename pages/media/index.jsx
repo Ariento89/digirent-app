@@ -1,8 +1,9 @@
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import { useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import PageWrapper from 'widgets/PageWrapper';
-import { Reaction } from 'widgets/Reaction';
-import { SocialMedias } from 'widgets/SocialMedias/index';
+import Reaction from 'widgets/Reaction';
+import SocialMedias from 'widgets/SocialMedias/index';
 
 const data = [
   { id: 1, image: '/images/house-sample-1.jpg', description: 'Sample' },
@@ -96,14 +97,15 @@ const Page = () => {
         centered
       >
         <Modal.Body>
-          <div class="embed-responsive embed-responsive-16by9">
+          <div className="embed-responsive embed-responsive-16by9">
             <iframe
-              class="embed-responsive-item"
+              title="house video"
+              className="embed-responsive-item"
               src="https://www.youtube.com/embed/r0awq8AyI3g?autoplay=1&amp;modestbranding=1&amp;showinfo=0"
               id="video"
               allowscriptaccess="always"
               allow="autoplay"
-            ></iframe>
+            />
           </div>
         </Modal.Body>
       </Modal>

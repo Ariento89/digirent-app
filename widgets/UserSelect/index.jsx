@@ -1,7 +1,7 @@
 import cn from 'classnames';
 import { userTypes } from 'shared/types';
 
-export const UserSelect = ({ selected, onSelect, classNames }) => (
+const UserSelect = ({ selected, onSelect, classNames }) => (
   <div className={cn('user-select', classNames)}>
     <div className={cn('item for-tenants', { active: selected === userTypes.TENANT })}>
       <div onClick={() => onSelect(userTypes.TENANT)}>
@@ -24,3 +24,5 @@ export const UserSelect = ({ selected, onSelect, classNames }) => (
     </div>
   </div>
 );
+
+export default UserSelect;

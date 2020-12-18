@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
+import Select from 'components/Select';
+import ToggleSwitch from 'components/ToggleSwitch';
 import { useState } from 'react';
-import { Select } from 'components/Select';
-import { ToggleSwitch } from 'components/ToggleSwitch';
 import PageWrapper from 'widgets/PageWrapper';
 
 const languageOptions = [

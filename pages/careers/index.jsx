@@ -9,7 +9,7 @@ import Modal from 'react-bootstrap/Modal';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import Slider from 'react-slick';
 import PageWrapper from 'widgets/PageWrapper';
-import { SocialMedias, socialMediaDirection } from 'widgets/SocialMedias';
+import SocialMedias, { socialMediaDirection } from 'widgets/SocialMedias';
 
 const benefits = [
   {
@@ -279,9 +279,9 @@ const Page = () => {
                       <p className="main-desc dark-gray2">
                         Partner with the internal Celtra team members (Product Management,
                         Engineering, Solutions) to align the company’s activities with the
-                        customer's business case and strategy. Advocate on behalf of the customer
-                        and collect feedback to drive continuous improvement across all areas
-                        including product
+                        customer&apos;s business case and strategy. Advocate on behalf of the
+                        customer and collect feedback to drive continuous improvement across all
+                        areas including product
                       </p>
                     </li>
                     <li>

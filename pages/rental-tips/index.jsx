@@ -5,9 +5,9 @@ import { useEffect, useState } from 'react';
 import Slider from 'react-slick';
 import { userTypes } from 'shared/types';
 import PageWrapper from 'widgets/PageWrapper';
-import { Reaction } from 'widgets/Reaction';
-import { SocialMedias } from 'widgets/SocialMedias';
-import { UserSelect } from 'widgets/UserSelect';
+import Reaction from 'widgets/Reaction';
+import SocialMedias from 'widgets/SocialMedias';
+import UserSelect from 'widgets/UserSelect';
 
 const data = [
   {

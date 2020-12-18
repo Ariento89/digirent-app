@@ -1,4 +1,4 @@
-import { Select } from 'components/Select/index';
+import Select from 'components/Select/index';
 import { useState } from 'react';
 
 const options = [
@@ -8,13 +8,13 @@ const options = [
   { name: 'Option 4', value: 4 },
 ];
 
-const SearchFormPropertyList = () => {
+const SearchFormTenantList = () => {
   const [location, setLocation] = useState(null);
   const [typeOfHouse, setTypeOfHouse] = useState(null);
-  const [rentalPrice, setRentalPrice] = useState(null);
-  const [availability, setAvailability] = useState(null);
-  const [amenities, setAmenities] = useState(null);
-  const [sqft, setSqft] = useState(null);
+  const [maxBudget, setMaxBudget] = useState(null);
+  const [gender, setGender] = useState(null);
+  const [age, setAge] = useState(null);
+  const [tenantType, setTenantType] = useState(null);
 
   return (
     <div className="SearchForm">
@@ -44,39 +44,39 @@ const SearchFormPropertyList = () => {
               />
             </div>
             <div className="col-12 col-sm-6 col-lg-4 mt-3 mt-lg-0">
-              <p className="main-desc pb-2">Rental Price</p>
+              <p className="main-desc pb-2">Max budget</p>
               <Select
-                value={rentalPrice}
-                onChange={(value) => setRentalPrice(value)}
+                value={maxBudget}
+                onChange={(value) => setMaxBudget(value)}
                 options={options}
-                placeholder="Rental Price"
+                placeholder="Max budget"
               />
             </div>
             <div className="col-12 col-sm-6 col-lg-4 mt-3 mt-lg-4">
-              <p className="main-desc pb-2">Availability</p>
+              <p className="main-desc pb-2">Gender</p>
               <Select
-                value={availability}
-                onChange={(value) => setAvailability(value)}
+                value={gender}
+                onChange={(value) => setGender(value)}
                 options={options}
-                placeholder="Availability"
+                placeholder="Gender"
               />
             </div>
             <div className="col-12 col-sm-6 col-lg-4 mt-3 mt-lg-4">
-              <p className="main-desc pb-2">Amenities</p>
+              <p className="main-desc pb-2">Age</p>
               <Select
-                value={amenities}
-                onChange={(value) => setAmenities(value)}
+                value={age}
+                onChange={(value) => setAge(value)}
                 options={options}
-                placeholder="Amenities"
+                placeholder="Age"
               />
             </div>
             <div className="col-12 col-sm-6 col-lg-4 mt-3 mt-lg-4">
-              <p className="main-desc pb-2">Sqft</p>
+              <p className="main-desc pb-2">Tenant type</p>
               <Select
-                value={sqft}
-                onChange={(value) => setSqft(value)}
+                value={tenantType}
+                onChange={(value) => setTenantType(value)}
                 options={options}
-                placeholder="Sqft"
+                placeholder="Tenant type"
               />
             </div>
           </div>
@@ -88,4 +88,4 @@ const SearchFormPropertyList = () => {
   );
 };
 
-export default SearchFormPropertyList;
+export default SearchFormTenantList;

@@ -1,6 +1,6 @@
 import { NextArrow, PrevArrow } from 'components/SlickArrows';
 import Slider from 'react-slick';
-import { BlogCard } from 'widgets/BlogCard';
+import BlogCard from 'widgets/BlogCard/index';
 
 const blogs = [
   {

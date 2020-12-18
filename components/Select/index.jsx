@@ -2,7 +2,7 @@ import cn from 'classnames';
 import { useState } from 'react';
 import { findOptions } from 'shared/functions';
 
-export const Select = ({ value, onChange, options, placeholder, classNames, icon }) => {
+const Select = ({ value, onChange, options, placeholder, classNames, icon }) => {
   const [isActive, setIsActive] = useState(false);
 
   const toggleActive = () => setIsActive((isActiveValue) => !isActiveValue);
@@ -38,3 +38,5 @@ export const Select = ({ value, onChange, options, placeholder, classNames, icon
     </div>
   );
 };
+
+export default Select;

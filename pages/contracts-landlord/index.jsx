@@ -1,10 +1,10 @@
 import cn from 'classnames';
-import { Select } from 'components/Select';
+import Select from 'components/Select';
 import { useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import { moveInScenarioTypes } from 'shared/types';
-import { PropertyInfo } from 'widgets/PropertyInfo';
 import PageWrapper from 'widgets/PageWrapper';
+import PropertyInfo from 'widgets/PropertyInfo';
 
 const typeOptions = [
   { name: 'Type 1', value: 1 },

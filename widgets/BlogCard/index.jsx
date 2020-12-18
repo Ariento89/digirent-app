@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import cn from 'classnames';
 
-export const BlogCard = ({ classNames, day, month, title, description, link }) => (
+const BlogCard = ({ classNames, day, month, title, description, link }) => (
   <div className={cn('blog-card main-box', classNames)}>
     <div className="blog-image">
       <img className="bottom-design" src="/images/blog-round-line.svg" alt="outline" />
@@ -21,3 +21,5 @@ export const BlogCard = ({ classNames, day, month, title, description, link }) =
     </Link>
   </div>
 );
+
+export default BlogCard;

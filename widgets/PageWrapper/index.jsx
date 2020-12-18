@@ -1,3 +1,6 @@
+/* eslint-disable react/jsx-closing-tag-location */
+/* eslint-disable react/no-danger */
+/* eslint-disable react/self-closing-comp */
 import cn from 'classnames';
 import { useLanguage } from 'hooks/useLanguage';
 import Head from 'next/head';
@@ -5,14 +8,15 @@ import { useEffect } from 'react';
 import Footer from 'widgets/Footer';
 import Header from 'widgets/Header';
 
-const index = ({ title, pageName, children }) => {
-  const { language, setLanguage } = useLanguage();
+const PageWrapper = ({ title, pageName, children }) => {
+  const { language } = useLanguage();
 
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   useEffect(() => {
     if (window.initWeglot) {
       window.initWeglot();
     }
-  }, [window, title, language]);
+  }, [title, language]);
 
   return (
     <div className="page-wrapper">
@@ -85,4 +89,4 @@ const index = ({ title, pageName, children }) => {
   );
 };
 
-export default index;
+export default PageWrapper;

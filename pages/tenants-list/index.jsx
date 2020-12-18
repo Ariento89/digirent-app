@@ -1,7 +1,7 @@
 import Badge from 'components/Badge/index';
 import PageWrapper from 'widgets/PageWrapper';
 import SearchFormTenantList from 'widgets/SearchForm/SearchFormTenantList';
-import TableHeader from 'widgets/TableHeader/TableHeader';
+import TableHeader from 'widgets/TableHeader/index';
 import Modal from 'react-bootstrap/Modal';
 import { useState } from 'react';
 

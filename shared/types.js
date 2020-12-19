@@ -20,3 +20,10 @@ export const languageSwitchOptions = {
   EN: 'en',
   NL: 'nl',
 };
+
+export const toastTypes = {
+  SUCCESS: { appearance: 'success' },
+  WARNING: { appearance: 'warning' },
+  ERROR: { appearance: 'error' },
+  INFO: { appearance: 'info' },
+};

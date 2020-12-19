@@ -12,10 +12,11 @@ export const useAuthentication = () => {
   const [recentRequest, setRecentRequest] = useState();
 
   // SELECTORS
-  const accessToken = useSelector(selectors.selectAccessToken);
+  const accessToken = useSelector(selectors.selectAccessToken());
 
   // ACTIONS
   const loginAction = useActionDispatch(actions.login);
+  const logoutAction = useActionDispatch(actions.logout);
 
   // GENERAL METHODS
   const resetError = () => setErrors([]);
@@ -48,6 +49,7 @@ export const useAuthentication = () => {
   return {
     accessToken,
     login,
+    logout: logoutAction,
     status,
     errors,
     recentRequest,

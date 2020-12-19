@@ -14,10 +14,18 @@ import SectionDivider from 'widgets/HomePage/SectionDivider';
 import WhyChooseDigiRentOverAnyAgency from 'widgets/HomePage/WhyChooseDigiRentOverAnyAgency';
 
 const Page = () => {
+  // STATES
   const [loginModalVisible, setLoginModalVisible] = useState(false);
   const [registerModalVisible, setRegisterModalVisible] = useState(false);
   const [selectedUserType, setSelectedUserType] = useState(userTypes.TENANT);
   const [isCookieAccepted, setIsCookieAccepted] = useState(false);
+  const [initialUserType, setInitialUserType] = useState(null);
+
+  // METHODS
+  const onSelectRegister = (userType) => {
+    setInitialUserType(userType);
+    setRegisterModalVisible(true);
+  };
 
   return (
     <HomePageWrapper
@@ -29,8 +37,13 @@ const Page = () => {
         <img src="/images/wheel.svg" className="left-main-background" alt="left bg" />
         <img src="/images/main-right-bg-2.svg" className="right-main-background" alt="right bg" />
 
-        <LoginModal isVisible={loginModalVisible} onClose={() => setLoginModalVisible(false)} />
+        <LoginModal
+          isVisible={loginModalVisible}
+          onRegister={onSelectRegister}
+          onClose={() => setLoginModalVisible(false)}
+        />
         <RegisterModal
+          initialUserType={initialUserType}
           isVisible={registerModalVisible}
           onClose={() => setRegisterModalVisible(false)}
         />

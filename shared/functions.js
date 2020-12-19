@@ -1,6 +1,8 @@
 import { request } from './types';
 
 // UI FUNCTIONS
+export const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+
 export const findOptions = (value, options) => options?.find((option) => option.value === value);
 
 export const getDistance = (rect1, rect2) => {

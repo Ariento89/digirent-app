@@ -1,7 +1,8 @@
 import axios from 'axios';
+import qs from 'qs';
 
 export const service = {
-  auth: async (body) => axios.post('/auth/', body),
+  login: async (body) => axios.post('/auth/', qs.stringify(body)),
   forgotPassword: async (body) => axios.post('/auth/forgot-password/', body),
   resetPassword: async (body) => axios.post('/auth/reset-password/', body),
 

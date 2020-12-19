@@ -212,3 +212,7 @@ textarea {
 .ps__thumb-y {
   background-color: $color-primary !important;
 }
+
+.react-toast-notifications__container {
+  z-index: 9999 !important;
+}

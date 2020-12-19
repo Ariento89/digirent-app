@@ -4,7 +4,8 @@ import { createAction, handleActions } from 'redux-actions';
 export const key = 'AUTHENTICATION';
 
 export const types = {
-  SAVE: `${key}/LOGIN`,
+  SAVE: `${key}/SAVE`,
+  LOGOUT: `${key}/LOGOUT`,
   LOGIN: `${key}/LOGIN`,
   FORGOT_PASSWORD: `${key}/FORGOT_PASSWORD`,
   RESET_PASSWORD: `${key}/RESET_PASSWORD`,
@@ -34,6 +35,8 @@ const reducer = handleActions(
 
       return { ...state, ...newData };
     },
+
+    [types.LOGOUT]: () => initialState,
   },
   initialState,
 );
@@ -41,6 +44,7 @@ const reducer = handleActions(
 export const actions = {
   save: createAction(types.SAVE),
   login: createAction(types.LOGIN),
+  logout: createAction(types.LOGOUT),
 };
 
 const selectState = (state) => state[key] || initialState;

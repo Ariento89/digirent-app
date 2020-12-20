@@ -80,7 +80,7 @@ const Page = () => {
                   <span className="main-desc text-primary">Get directions</span>
                   <button type="button" className="button-nav">
                     <a
-                      href="https://goo.gl/maps/V6yK5aLSr3jP4ZUo6"
+                      href="https://goo.gl/maps/AWGpYVQa4nZRG5xr6"
                       target="_blank"
                       rel="noreferrer"
                     >

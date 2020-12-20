@@ -1,4 +1,9 @@
-/* eslint-disable import/prefer-default-export */
+export const request = {
+  NONE: 0,
+  REQUESTING: 1,
+  SUCCESS: 2,
+  ERROR: 3,
+};
 
 export const userTypes = {
   TENANT: 'tenant',
@@ -14,4 +19,11 @@ export const moveInScenarioTypes = {
 export const languageSwitchOptions = {
   EN: 'en',
   NL: 'nl',
+};
+
+export const toastTypes = {
+  SUCCESS: { appearance: 'success' },
+  WARNING: { appearance: 'warning' },
+  ERROR: { appearance: 'error' },
+  INFO: { appearance: 'info' },
 };

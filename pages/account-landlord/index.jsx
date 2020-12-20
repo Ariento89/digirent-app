@@ -1,8 +1,8 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import { Select } from 'components/Select';
+import Select from 'components/Select';
+import ToggleSwitch from 'components/ToggleSwitch';
 import { useState } from 'react';
 import PageWrapper from 'widgets/PageWrapper';
-import { ToggleSwitch } from 'components/ToggleSwitch';
 
 const languageOptions = [
   { name: 'Language 1', value: 1 },
@@ -178,6 +178,9 @@ const Page = () => {
                 </div>
                 <div className="item">
                   <img src="/images/social-media/google.png" alt="icon" />
+                </div>
+                <div className="item">
+                  <img src="/images/social-media/apple.png" alt="icon" />
                 </div>
               </div>
 

@@ -5,13 +5,7 @@ export const reactionType = {
   DISLIKE: 'dislike',
 };
 
-export const Reaction = ({
-  reaction,
-  onReact,
-  classNames,
-  likeIconClassNames,
-  dislikeIconClassNames,
-}) => (
+const Reaction = ({ reaction, onReact, classNames, likeIconClassNames, dislikeIconClassNames }) => (
   <div className={cn('reaction', classNames)}>
     <div
       className={cn('item rounded-icon small', likeIconClassNames)}
@@ -35,3 +29,5 @@ export const Reaction = ({
     </div>
   </div>
 );
+
+export default Reaction;

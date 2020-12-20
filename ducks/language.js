@@ -14,9 +14,7 @@ const initialState = {
 
 const reducer = handleActions(
   {
-    [types.SET_LANGUAGE]: (state, { payload }) => {
-      return { ...state, language: payload };
-    },
+    [types.SET_LANGUAGE]: (state, { payload }) => ({ ...state, language: payload }),
   },
   initialState,
 );

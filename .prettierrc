@@ -6,7 +6,7 @@
 	"singleQuote": true,
 	"trailingComma": "all",
 	"endOfLine": "auto",
-	"prettier.overrides": [
+	"overrides": [
 		{
 			"files": ["*.css", "*.scss", ".prettierrc"],
 			"options": {
@@ -17,6 +17,12 @@
 			"files": ["*.tsx", "*.js", "*.jsx"],
 			"options": {
 				"tabWidth": 2
+			}
+		},
+		{
+			"files": ["services/*"],
+			"options": {
+				"printWidth": 1000
 			}
 		}
 	]

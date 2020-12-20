@@ -1,3 +1,6 @@
+/* eslint-disable react/jsx-closing-tag-location */
+/* eslint-disable react/no-danger */
+/* eslint-disable react/self-closing-comp */
 /* eslint-disable no-undef */
 import { useLanguage } from 'hooks/useLanguage';
 import Head from 'next/head';

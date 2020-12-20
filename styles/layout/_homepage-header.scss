@@ -61,7 +61,8 @@
     }
 
     .portal-choices {
-      .login {
+      .login,
+      .logout {
         color: $color-primary !important;
       }
     }

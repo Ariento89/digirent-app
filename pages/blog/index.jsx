@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { BlogCard } from 'widgets/BlogCard';
+import BlogCard from 'widgets/BlogCard';
 import PageWrapper from 'widgets/PageWrapper';
 
 const blogs = [

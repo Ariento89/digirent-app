@@ -1,0 +1,18 @@
+@import '../abstract/mixins';
+@import '../abstract/variables';
+
+.FieldError {
+  @include flex($align-items: center);
+  margin-top: 8px;
+  margin-bottom: 5px;
+
+  .icon {
+    width: 13px;
+  }
+
+  .text {
+    margin-left: 5px;
+    color: $color-red;
+    @include font(0.75rem);
+  }
+}

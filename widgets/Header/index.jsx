@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { ToggleSwitch } from 'components/ToggleSwitch/index';
+import ToggleSwitch from 'components/ToggleSwitch/index';
 import { useLanguage } from 'hooks/useLanguage';
 import Link from 'next/link';
 import { languageSwitchOptions } from 'shared/types';

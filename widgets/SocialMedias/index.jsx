@@ -1,17 +1,12 @@
 import cn from 'classnames';
 import { useState } from 'react';
 
-export const reactionType = {
-  LIKE: 'like',
-  DISLIKE: 'dislike',
-};
-
 export const socialMediaDirection = {
   LEFT: 'left',
   RIGHT: 'right',
 };
 
-export const SocialMedias = ({ direction, classNames }) => {
+const SocialMedias = ({ direction, classNames }) => {
   const [isActive, setIsActive] = useState(false);
 
   return (
@@ -52,3 +47,5 @@ export const SocialMedias = ({ direction, classNames }) => {
 SocialMedias.defaultProps = {
   direction: socialMediaDirection.LEFT,
 };
+
+export default SocialMedias;

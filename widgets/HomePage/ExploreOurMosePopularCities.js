@@ -1,7 +1,7 @@
-import { PrevArrow } from 'components/SlickArrows';
-import { NextArrow } from 'components/SlickArrows';
-import Slider from 'react-slick';
+/* eslint-disable react/no-array-index-key */
+import { NextArrow, PrevArrow } from 'components/SlickArrows';
 import Link from 'next/link';
+import Slider from 'react-slick';
 
 const cities = [
   '/images/city-1.jpg',
@@ -47,7 +47,7 @@ const ExploreOurMosePopularCities = () => (
 
     <Slider {...citiesSlickSettings} className="cities">
       {cities.map((cityImage, index) => (
-        <div key={index} className="item">
+        <div key={`city-${index}`} className="item">
           <div className="city" style={{ backgroundImage: `url(${cityImage})` }}>
             <h3 className="title text-white">THE CITY</h3>
             <Link href="/property-list">

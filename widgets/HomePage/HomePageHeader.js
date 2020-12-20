@@ -1,20 +1,33 @@
 /* eslint-disable jsx-a11y/no-noninteractive-tabindex */
 import cn from 'classnames';
-import { ToggleSwitch } from 'components/ToggleSwitch/';
+import ToggleSwitch from 'components/ToggleSwitch/index';
+import { useAuthentication } from 'hooks/useAuthentication';
 import { useLanguage } from 'hooks/useLanguage';
 import Link from 'next/link';
 import { useState } from 'react';
+import { useToasts } from 'react-toast-notifications';
 import { useScrollData } from 'scroll-data-hook';
-import { languageSwitchOptions } from 'shared/types';
+import { languageSwitchOptions, toastTypes } from 'shared/types';
 import HomePageMenu from './HomePageMenu';
 
 const SCROLL_THRESHOLD = 100;
 
 const HomePageHeader = ({ onLoginClick, onRegisterClick }) => {
+  // STATES
   const [menuVisible, setMenuVisible] = useState(false);
   const [isInformationVisible, setIsInformationVisible] = useState(false);
+
+  // CUSTOM HOOKS
   const { position } = useScrollData();
   const { language, setLanguage } = useLanguage();
+  const { addToast } = useToasts();
+  const { accessToken, logout } = useAuthentication();
+
+  // METHODS
+  const onLogout = () => {
+    addToast('Successfully logged out.', toastTypes.SUCCESS);
+    logout();
+  };
 
   return (
     <>
@@ -91,12 +104,20 @@ const HomePageHeader = ({ onLoginClick, onRegisterClick }) => {
           </div>
 
           <div className="portal-choices">
-            <button onClick={onLoginClick}>
-              <p className="links login mr-3">LOGIN</p>
-            </button>
-            <button onClick={onRegisterClick}>
-              <p className="links sign-up">SIGN UP</p>
-            </button>
+            {accessToken ? (
+              <button onClick={onLogout}>
+                <p className="links logout mx-5">LOGOUT</p>
+              </button>
+            ) : (
+              <>
+                <button onClick={onLoginClick}>
+                  <p className="links login mr-3">LOGIN</p>
+                </button>
+                <button onClick={onRegisterClick}>
+                  <p className="links sign-up">SIGN UP</p>
+                </button>
+              </>
+            )}
           </div>
         </div>
 

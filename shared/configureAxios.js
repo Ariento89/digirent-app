@@ -1,5 +1,6 @@
 import axios from 'axios';
-import { API_TIMEOUT, API_URL } from 'services/index';
+import { key as AUTH_KEY } from 'ducks/authentication';
+import { API_TIMEOUT, API_URL, NO_VERIFICATION_NEEDED } from 'services/index';
 
 export default function configureAxios(store) {
   axios.defaults.baseURL = API_URL;
@@ -13,17 +14,17 @@ export default function configureAxios(store) {
     // eslint-disable-next-line func-names
     (config) => {
       // // if there's no verification needed, just exit immediately
-      // if (NO_VERIFICATION_NEEDED === config.params) {
-      //   return config;
-      // }
+      if (NO_VERIFICATION_NEEDED === config.params) {
+        return config;
+      }
 
-      // // since there's no `connect` HOC, this is how we
-      // // access the store (or reducer)
-      // const state = store.getState();
-      // const { accessToken } = state[AUTH_KEY];
+      // since there's no `connect` HOC, this is how we
+      // access the store (or reducer)
+      const { accessToken } = store?.getState()?.[AUTH_KEY];
 
-      // // Get access token from store for every api request
-      // config.headers.authorization = accessToken ? `Bearer ${accessToken}` : null;
+      // Get access token from store for every api request
+      // eslint-disable-next-line no-param-reassign
+      config.headers.authorization = accessToken ? `Bearer ${accessToken}` : null;
 
       return config;
     },

@@ -1,8 +1,8 @@
 import axios from 'axios';
 
 export const service = {
-  me: async () => axios.get('/me/'),
-  updateProfileInformation: async (body) => axios.put('/me/', body),
+  me: async () => axios.get('/me'),
+  updateProfileInformation: async (body) => axios.put('/me', body),
 
   setTenantLookingFor: async (body) => axios.post('/me/looking-for/', body),
   setUserBankDetails: async (body) => axios.post('/me/bank/', body),

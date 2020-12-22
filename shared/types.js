@@ -5,6 +5,12 @@ export const request = {
   ERROR: 3,
 };
 
+export const role = {
+  ADMIN: 'admin',
+  TENANT: 'tenant',
+  LANDLORD: 'landlord',
+};
+
 export const userTypes = {
   TENANT: 'tenant',
   LANDLORD: 'landlords',
@@ -26,4 +32,10 @@ export const toastTypes = {
   WARNING: { appearance: 'warning' },
   ERROR: { appearance: 'error' },
   INFO: { appearance: 'info' },
+};
+
+export const fbStatusTypes = {
+  CONNECTED: 'connected',
+  NOT_AUTHORIZED: 'not_authorized',
+  UNKNOWN: 'unknown',
 };

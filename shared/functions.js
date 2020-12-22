@@ -37,11 +37,13 @@ export const modifiedCallback = (callback, successMessage, errorMessage, extraCa
 export const onCallback = (callback, onSuccess = null, onError = null) => (response) => {
   callback(response);
 
+  console.log('response', response);
+
   if (onSuccess && response?.status === request.SUCCESS) {
     onSuccess(response);
   }
 
   if (onError && response?.status === request.ERROR) {
-    onSuccess(response);
+    onError(response);
   }
 };

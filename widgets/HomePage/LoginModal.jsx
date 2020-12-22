@@ -8,7 +8,7 @@ import { useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import { useToasts } from 'react-toast-notifications';
 import { sleep } from 'shared/functions';
-import { request, toastTypes, userTypes } from 'shared/types';
+import { fbStatusTypes, request, toastTypes, userTypes } from 'shared/types';
 import * as Yup from 'yup';
 import AuthField from './widgets/AuthField';
 import AuthUserSelection from './widgets/AuthUserSelection';
@@ -65,6 +65,28 @@ const LoginModal = ({ onClose, isVisible, onRegister }) => {
         toastTypes.WARNING,
       );
     }
+  };
+
+  const onLoginFacebook = () => {
+    // eslint-disable-next-line no-undef
+    FB.login(
+      (response) => {
+        console.log(response);
+      },
+      { scope: 'public_profile,email' },
+    );
+
+    // FB.getLoginStatus((response) => {
+
+    //   switch (response?.status) {
+    //     case fbStatusTypes.NOT_AUTHORIZED: {
+
+    //       break;
+    //     }
+    //   }
+
+    //   console.log('response', response);
+    // });
   };
 
   return (
@@ -125,7 +147,7 @@ const LoginModal = ({ onClose, isVisible, onRegister }) => {
 
                 <div className="login-button mt-3">
                   <div className="social-media-options">
-                    <div className="item mr-2">
+                    <div className="item mr-2" onClick={onLoginFacebook}>
                       <img src="/images/social-media/facebook-square.png" alt="facebook icon" />
                     </div>
                     <div className="item mr-2">

@@ -68,6 +68,32 @@ const HomePageWrapper = ({ title, onLoginClick, onRegisterClick, children }) => 
             `,
           }}
         ></script>
+
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.fbAsyncInit = function() {
+                FB.init({
+                  appId      : '2661750024122124',
+                  cookie     : true,
+                  xfbml      : true,
+                  version    : 'v9.0'
+                });
+                  
+                FB.AppEvents.logPageView();   
+                  
+              };
+
+              (function(d, s, id){
+                var js, fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id)) {return;}
+                js = d.createElement(s); js.id = id;
+                js.src = "https://connect.facebook.net/en_US/sdk.js";
+                fjs.parentNode.insertBefore(js, fjs);
+              }(document, 'script', 'facebook-jssdk'));
+            `,
+          }}
+        ></script>
       </Head>
 
       <HomePageHeader onLoginClick={onLoginClick} onRegisterClick={onRegisterClick} />

@@ -1,42 +1,101 @@
-import FileUpload from '@blaze-react/file-upload/src/FileInputs/index';
+/* eslint-disable react-hooks/exhaustive-deps */
+import FieldError from 'components/FieldError/FieldError';
+import FormFileUpload from 'components/FormFileUpload/index';
+import { Form, Formik } from 'formik';
+import { useMe } from 'hooks/useMe';
+import { useCallback, useState } from 'react';
+import { useToasts } from 'react-toast-notifications';
+import { MAX_FILE_SIZE, SUPPORTED_FILE_UPLOAD_FORMATS } from 'shared/constants';
+import { sleep } from 'shared/functions';
+import { request, toastTypes } from 'shared/types';
+import * as Yup from 'yup';
 
-const AccountCopyId = () => (
-  <div className="main-box mt-4">
-    <div className="d-flex align-items-center">
-      <h3 className="main-box-title">Copy ID</h3>
-      <span className="circular-icon x ml-3">
-        <img src="/images/icon/icon-cancel-dark-gray.svg" alt="icon" />
-      </span>
+const AccountCopyId = () => {
+  // STATES
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-      <span className="circular-icon check ml-1">
-        <img src="/images/icon/icon-check-white.svg" alt="icon" />
-      </span>
-    </div>
+  // CUSTOM HOOKS
+  const { addToast } = useToasts();
+  const { me, uploadCopyId, status, errors } = useMe();
 
-    <FileUpload
-      handleDrop={({ event, base64, files, canceled }) => {
-        console.log('event', event);
-        console.log('base64', base64);
-        console.log('files', files);
-        console.log('canceled', canceled);
-      }}
-    />
+  // METHODS
+  const getFormDetails = useCallback(
+    () => ({
+      defaultValues: {
+        file: null, // TODO: Update if there's value
+      },
+      schema: Yup.object().shape({
+        file: Yup.mixed()
+          .nullable()
+          .required('A file is required')
+          .test('fileSize', 'File too large', (value) => value && value.size <= MAX_FILE_SIZE)
+          .test(
+            'fileFormat',
+            'Unsupported Format',
+            (value) => value && SUPPORTED_FILE_UPLOAD_FORMATS.includes(value.type),
+          ),
+      }),
+    }),
+    [me],
+  );
 
-    <div className="file-upload mt-4">
-      <div className="file-select">
-        <button type="button" className="button btn-browse" id="fileName">
-          Browse...
-        </button>
-        <div className="main-description font-weight-light ml-3 text-primary filename">
-          No document selected
-        </div>
-        <input type="file" />
+  const onSuccess = () => {
+    addToast('Successfully uploaded Copy ID.', toastTypes.SUCCESS);
+  };
+
+  const onError = () => {
+    addToast('An error occurred while uploading Copy ID.', toastTypes.ERROR);
+  };
+
+  const onSubmit = (data) => {
+    uploadCopyId(data, { onSuccess, onError });
+  };
+
+  return (
+    <div className="main-box mt-4">
+      <div className="d-flex align-items-center">
+        <h3 className="main-box-title">Copy ID</h3>
+        <span className="circular-icon x ml-3">
+          <img src="/images/icon/icon-cancel-dark-gray.svg" alt="icon" />
+        </span>
+
+        <span className="circular-icon check ml-1">
+          <img src="/images/icon/icon-check-white.svg" alt="icon" />
+        </span>
       </div>
-      <button type="button" className="button">
-        UPLOAD
-      </button>
+
+      {!!errors?.length && (
+        <div className="mt-2">
+          {errors?.map((error) => (
+            <FieldError error={error} />
+          ))}
+        </div>
+      )}
+
+      <Formik
+        initialValues={getFormDetails().defaultValues}
+        validationSchema={getFormDetails().schema}
+        onSubmit={async (values) => {
+          setIsSubmitting(true);
+          await sleep(500);
+          setIsSubmitting(false);
+
+          onSubmit(values);
+        }}
+      >
+        {({ errors: formErrors, touched }) => (
+          <Form>
+            <FormFileUpload
+              classNames="mt-4"
+              name="file"
+              loading={isSubmitting || status === request.REQUESTING}
+            />
+            {formErrors.file && touched.file ? <FieldError error={formErrors.file} /> : null}
+          </Form>
+        )}
+      </Formik>
     </div>
-  </div>
-);
+  );
+};
 
 export default AccountCopyId;

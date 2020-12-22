@@ -238,6 +238,7 @@ const RegisterModal = ({ initialUserType, onClose, isVisible }) => {
                 </div>
 
                 <Button
+                  type="submit"
                   className="btn-register min-width d-block mx-auto mt-4"
                   loading={isSubmitting || status === request.REQUESTING}
                 >

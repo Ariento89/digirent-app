@@ -158,6 +158,7 @@ const LoginModal = ({ onClose, isVisible, onRegister }) => {
                     </div>
                   </div>
                   <Button
+                    type="submit"
                     className="btn-login min-width"
                     loading={isSubmitting || status === request.REQUESTING}
                   >

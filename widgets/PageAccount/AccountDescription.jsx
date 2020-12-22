@@ -85,6 +85,7 @@ const AccountDescription = () => {
               ) : null}
 
               <Button
+                type="submit"
                 className="mt-4 mx-auto d-block min-width"
                 loading={isSubmitting || status === request.REQUESTING}
               >

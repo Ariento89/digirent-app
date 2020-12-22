@@ -97,6 +97,7 @@ const AccountBankDetails = () => {
 
             <div className="d-flex justify-content-center mt-4">
               <Button
+                type="submit"
                 className="min-width mr-3"
                 loading={isSubmitting || status === request.REQUESTING}
               >

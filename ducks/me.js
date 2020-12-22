@@ -10,6 +10,10 @@ export const types = {
   UPDATE_PASSWORD: `${key}/UPDATE_PASSWORD`,
   SET_USER_BANK_DETAILS: `${key}/SET_USER_BANK_DETAILS`,
   SET_TENANT_LOOKING_FOR: `${key}/SET_TENANT_LOOKING_FOR`,
+  UPLOAD_COPY_ID: `${key}/UPLOAD_COPY_ID`,
+  UPLOAD_PROOF_OF_INCOME: `${key}/UPLOAD_PROOF_OF_INCOME`,
+  UPLOAD_PROOF_OF_ENROLMENT: `${key}/UPLOAD_PROOF_OF_ENROLMENT`,
+  UPLOAD_PROFILE_PHOTO: `${key}/UPLOAD_PROFILE_PHOTO`,
 };
 
 const initialState = {
@@ -46,6 +50,10 @@ export const actions = {
   updatePassword: createAction(types.UPDATE_PASSWORD),
   setUserBankDetails: createAction(types.SET_USER_BANK_DETAILS),
   setTenantLookingFor: createAction(types.SET_TENANT_LOOKING_FOR),
+  uploadCopyId: createAction(types.UPLOAD_COPY_ID),
+  uploadProofOfIncome: createAction(types.UPLOAD_PROOF_OF_INCOME),
+  uploadProofOfEnrolment: createAction(types.UPLOAD_PROOF_OF_ENROLMENT),
+  uploadProfilePhoto: createAction(types.UPLOAD_PROFILE_PHOTO),
 };
 
 const selectState = (state) => state[key] || initialState;

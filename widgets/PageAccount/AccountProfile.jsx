@@ -1,5 +1,6 @@
 import Select from 'components/Select/index';
 import ToggleSwitch from 'components/ToggleSwitch/index';
+import { useMe } from 'hooks/useMe';
 import { useState } from 'react';
 
 const languageOptions = [
@@ -15,11 +16,8 @@ const toggleSwitchOptions = {
 };
 
 const AccountProfile = () => {
-  const [language, setLanguage] = useState(null);
-
-  const [toggle1, setToggle1] = useState(toggleSwitchOptions.ON);
-  const [toggle2, setToggle2] = useState(toggleSwitchOptions.ON);
-  const [toggle3, setToggle3] = useState(toggleSwitchOptions.OFF);
+  // CUSTOM HOOKS
+  const { me } = useMe();
 
   return (
     <>
@@ -60,17 +58,21 @@ const AccountProfile = () => {
         </div>
 
         <div className="bottom mt-1">
-          <h3 className="name text-center text-md font-weight-bold">Tim Burton</h3>
+          <h3 className="name text-center text-md font-weight-bold">{`${me?.firstName} ${me?.lastName}`}</h3>
           <span className="main-description text-dark-gray text-center d-block">
-            Speaks Duthch, English
+            Speaks Dutch, English
           </span>
 
           <div className="progress-wrapper mt-4">
             <span className="main-description text-center d-block text-primary">
-              Completed profile: <span className="font-weight-bold">80%</span>
+              Completed profile: <span className="font-weight-bold">{me?.profilePercentage}%</span>
             </span>
             <div className="progress">
-              <div className="progress-bar w-75" role="progressbar">
+              <div
+                className="progress-bar"
+                role="progressbar"
+                style={{ width: `${me?.profilePercentage}%` }}
+              >
                 <span className="progress-point" />
               </div>
             </div>
@@ -82,69 +84,87 @@ const AccountProfile = () => {
         </div>
       </div>
 
-      <div className="settings-wrapper my-5">
-        <button type="button" className="button btn-icon-text d-flex">
-          <img src="/images/icon/icon-settings-white.svg" alt="icon" />
-          <span className="divider" />
-          <span className="text">Settings</span>
-        </button>
+      <AccountProfileSettings />
 
-        <Select
-          classNames="mt-3"
-          value={language}
-          onChange={(value) => setLanguage(value)}
-          options={languageOptions}
-          placeholder="Language"
-          icon="icon-languages-primary"
-        />
-
-        <div className="mt-4">
-          <div className="language-item mx-auto">
-            <span className="circle" />
-            <span className="text">English</span>
-          </div>
-
-          <div className="language-item mt-2 mx-auto">
-            <span className="circle" />
-            <span className="text">Dutch</span>
-          </div>
-        </div>
-      </div>
-
-      <div className="toggle-buttons main-box">
-        <ToggleSwitch
-          name="toggle-1"
-          label="Email messages notifications"
-          onValue={toggleSwitchOptions.ON}
-          offValue={toggleSwitchOptions.OFF}
-          value={toggle1}
-          onChange={setToggle1}
-        />
-
-        <hr />
-
-        <ToggleSwitch
-          name="toggle-2"
-          label="Monthly newsletter"
-          onValue={toggleSwitchOptions.ON}
-          offValue={toggleSwitchOptions.OFF}
-          value={toggle2}
-          onChange={setToggle2}
-        />
-
-        <hr />
-
-        <ToggleSwitch
-          name="toggle-3"
-          label="Weekly update new tenants"
-          onValue={toggleSwitchOptions.ON}
-          offValue={toggleSwitchOptions.OFF}
-          value={toggle3}
-          onChange={setToggle3}
-        />
-      </div>
+      <AccountProfileConfigurations />
     </>
   );
 };
 
 export default AccountProfile;
+
+const AccountProfileSettings = () => {
+  const [language, setLanguage] = useState(null);
+
+  return (
+    <div className="settings-wrapper my-5">
+      <button type="button" className="button btn-icon-text d-flex">
+        <img src="/images/icon/icon-settings-white.svg" alt="icon" />
+        <span className="divider" />
+        <span className="text">Settings</span>
+      </button>
+
+      <Select
+        classNames="mt-3"
+        value={language}
+        onChange={(value) => setLanguage(value)}
+        options={languageOptions}
+        placeholder="Language"
+        icon="icon-languages-primary"
+      />
+
+      <div className="mt-4">
+        <div className="language-item mx-auto">
+          <span className="circle" />
+          <span className="text">English</span>
+        </div>
+
+        <div className="language-item mt-2 mx-auto">
+          <span className="circle" />
+          <span className="text">Dutch</span>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const AccountProfileConfigurations = () => {
+  const [toggle1, setToggle1] = useState(toggleSwitchOptions.ON);
+  const [toggle2, setToggle2] = useState(toggleSwitchOptions.ON);
+  const [toggle3, setToggle3] = useState(toggleSwitchOptions.OFF);
+
+  return (
+    <div className="toggle-buttons main-box">
+      <ToggleSwitch
+        name="toggle-1"
+        label="Email messages notifications"
+        onValue={toggleSwitchOptions.ON}
+        offValue={toggleSwitchOptions.OFF}
+        value={toggle1}
+        onChange={setToggle1}
+      />
+
+      <hr />
+
+      <ToggleSwitch
+        name="toggle-2"
+        label="Monthly newsletter"
+        onValue={toggleSwitchOptions.ON}
+        offValue={toggleSwitchOptions.OFF}
+        value={toggle2}
+        onChange={setToggle2}
+      />
+
+      <hr />
+
+      <ToggleSwitch
+        name="toggle-3"
+        label="Weekly update new tenants"
+        onValue={toggleSwitchOptions.ON}
+        offValue={toggleSwitchOptions.OFF}
+        value={toggle3}
+        onChange={setToggle3}
+      />
+    </div>
+  );
+};

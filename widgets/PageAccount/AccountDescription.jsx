@@ -28,7 +28,7 @@ const AccountDescription = () => {
         phoneNumber: me?.phoneNumber,
         city: me?.city,
         gender: me?.gender,
-        description: me?.description,
+        description: me?.description || '',
       },
       schema: Yup.object().shape({
         description: Yup.string().required().nullable().label('Description'),

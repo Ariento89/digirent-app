@@ -4,6 +4,7 @@
 import cn from 'classnames';
 import Button from 'components/Button/index';
 import FieldError from 'components/FieldError/FieldError';
+import FormDatePicker from 'components/FormDatePicker/index';
 import { Form, Formik } from 'formik';
 import { useUsers } from 'hooks/useUsers';
 import moment from 'moment';
@@ -164,7 +165,14 @@ const RegisterModal = ({ initialUserType, onClose, isVisible }) => {
                   <div className="row mt-3">
                     <div className="col-12 col-sm-6">
                       <div className="field-group block">
-                        <AuthFieldDatePicker name="dob" placeholder="Date of Birth" />
+                        <FormDatePicker
+                          name="dob"
+                          placeholder="Date of Birth"
+                          icon="icon-calendar-primary"
+                          pickerProps={{
+                            disabledDays: { after: new Date() },
+                          }}
+                        />
                         {formErrors.dob && touched.dob ? (
                           <FieldError error={formErrors.dob} />
                         ) : null}

@@ -1,31 +1,23 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable consistent-return */
 import { useMe } from 'hooks/useMe';
-import { useRouter } from 'next/router';
 import AccountLandlord from 'pages/account/AccountLandlord';
 import AccountTenant from 'pages/account/AccountTenant';
-import { useCallback, useEffect } from 'react';
+import { useCallback } from 'react';
 import { role } from 'shared/types';
 import PageWrapper from 'widgets/PageWrapper/index';
 
 const Page = () => {
   // CUSTOM HOOKS
-  const router = useRouter();
   const { me } = useMe();
 
   // METHODS
-  useEffect(() => {
-    if (!me) {
-      router.replace('/404');
-    }
-  }, [me]);
-
   const getData = useCallback(() => {
     switch (me?.role) {
       case role.TENANT: {
         return {
           title: 'TENANT',
-          pageName: 'account-tenant',
+          pageName: 'account',
           component: <AccountTenant />,
         };
       }
@@ -33,7 +25,7 @@ const Page = () => {
       case role.LANDLORD: {
         return {
           title: 'LANDLORD',
-          pageName: 'account-landlord',
+          pageName: 'account',
           component: <AccountLandlord />,
         };
       }

@@ -4,6 +4,7 @@ import BlogCard from 'widgets/BlogCard/index';
 
 const blogs = [
   {
+    id: 1,
     day: '18',
     month: 'AUG',
     title: 'FUN FACTS ABOUT NETHERLANDS',
@@ -12,6 +13,7 @@ const blogs = [
     link: 'blog-article-inside',
   },
   {
+    id: 2,
     day: '18',
     month: 'AUG',
     title: 'FUN FACTS ABOUT NETHERLANDS',
@@ -20,6 +22,7 @@ const blogs = [
     link: 'blog-article-inside',
   },
   {
+    id: 3,
     day: '18',
     month: 'AUG',
     title: 'FUN FACTS ABOUT NETHERLANDS',
@@ -28,6 +31,7 @@ const blogs = [
     link: 'blog-article-inside',
   },
   {
+    id: 4,
     day: '18',
     month: 'AUG',
     title: 'FUN FACTS ABOUT NETHERLANDS',
@@ -73,7 +77,7 @@ const Blog = () => (
 
     <Slider {...blogsSlickSettings} className="blogs">
       {blogs.map((blog) => (
-        <div className="item">
+        <div key={blog.id} className="item">
           <BlogCard
             day={blog.day}
             month={blog.month}

@@ -45,14 +45,8 @@ const AccountPassword = () => {
   };
 
   return (
-    <>
-      {!!errors?.length && (
-        <div className="mt-2">
-          {errors?.map((error) => (
-            <FieldError error={error} />
-          ))}
-        </div>
-      )}
+    <div className="mt-3">
+      {!!errors?.length && errors?.map((error) => <FieldError error={error} />)}
 
       <Formik
         initialValues={formDetails.defaultValues}
@@ -67,7 +61,7 @@ const AccountPassword = () => {
       >
         {({ errors: formErrors, touched }) => (
           <Form>
-            <div className="row mt-3">
+            <div className="row">
               <div className="col-12 col-sm-6 mt-3">
                 <FormInputIcon
                   name="oldPassword"
@@ -100,7 +94,7 @@ const AccountPassword = () => {
           </Form>
         )}
       </Formik>
-    </>
+    </div>
   );
 };
 

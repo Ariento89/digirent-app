@@ -37,8 +37,6 @@ export const modifiedCallback = (callback, successMessage, errorMessage, extraCa
 export const onCallback = (callback, onSuccess = null, onError = null) => (response) => {
   callback(response);
 
-  console.log('response', response);
-
   if (onSuccess && response?.status === request.SUCCESS) {
     onSuccess(response);
   }
@@ -46,4 +44,19 @@ export const onCallback = (callback, onSuccess = null, onError = null) => (respo
   if (onError && response?.status === request.ERROR) {
     onError(response);
   }
+};
+
+const toBase64Promise = (file) =>
+  // eslint-disable-next-line implicit-arrow-linebreak
+  new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = (error) => reject(error);
+  });
+
+export const toBase64 = async (file) => {
+  // eslint-disable-next-line no-return-await
+  const base64 = await toBase64Promise(file);
+  return base64;
 };

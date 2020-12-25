@@ -64,36 +64,34 @@ const AccountCopyId = () => {
         </span>
       </div>
 
-      {!!errors?.length && (
-        <div className="mt-2">
-          {errors?.map((error) => (
-            <FieldError error={error} />
-          ))}
-        </div>
-      )}
-
-      <Formik
-        initialValues={getFormDetails().defaultValues}
-        validationSchema={getFormDetails().schema}
-        onSubmit={async (values) => {
-          setIsSubmitting(true);
-          await sleep(500);
-          setIsSubmitting(false);
-
-          onSubmit(values);
-        }}
-      >
-        {({ errors: formErrors, touched }) => (
-          <Form>
-            <FormFileUpload
-              classNames="mt-4"
-              name="file"
-              loading={isSubmitting || status === request.REQUESTING}
-            />
-            {formErrors.file && touched.file ? <FieldError error={formErrors.file} /> : null}
-          </Form>
+      <div className="mt-4">
+        {!!errors?.length && (
+          <div className="mb-2">
+            {errors?.map((error) => (
+              <FieldError error={error} />
+            ))}
+          </div>
         )}
-      </Formik>
+
+        <Formik
+          initialValues={getFormDetails().defaultValues}
+          validationSchema={getFormDetails().schema}
+          onSubmit={async (values) => {
+            setIsSubmitting(true);
+            await sleep(500);
+            setIsSubmitting(false);
+
+            onSubmit(values);
+          }}
+        >
+          {({ errors: formErrors, touched }) => (
+            <Form>
+              <FormFileUpload name="file" loading={isSubmitting || status === request.REQUESTING} />
+              {formErrors.file && touched.file ? <FieldError error={formErrors.file} /> : null}
+            </Form>
+          )}
+        </Formik>
+      </div>
     </div>
   );
 };

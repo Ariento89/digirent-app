@@ -81,11 +81,14 @@ function* setUserBankDetails({ payload }) {
 }
 
 function* uploadCopyId({ payload }) {
-  const { callback, ...data } = payload;
+  const { callback, file } = payload;
   callback({ status: request.REQUESTING });
 
+  const formData = new FormData();
+  formData.append('file', file);
+
   try {
-    const response = yield call(service.uploadCopyId, data);
+    const response = yield call(service.uploadCopyId, formData);
     yield put(
       actions.save({
         type: types.UPLOAD_COPY_ID,
@@ -100,11 +103,14 @@ function* uploadCopyId({ payload }) {
 }
 
 function* uploadProofOfIncome({ payload }) {
-  const { callback, ...data } = payload;
+  const { callback, file } = payload;
   callback({ status: request.REQUESTING });
 
+  const formData = new FormData();
+  formData.append('file', file);
+
   try {
-    const response = yield call(service.uploadProofOfIncome, data);
+    const response = yield call(service.uploadProofOfIncome, formData);
     yield put(
       actions.save({
         type: types.UPLOAD_PROOF_OF_INCOME,
@@ -119,11 +125,14 @@ function* uploadProofOfIncome({ payload }) {
 }
 
 function* uploadProofOfEnrollment({ payload }) {
-  const { callback, ...data } = payload;
+  const { callback, file } = payload;
   callback({ status: request.REQUESTING });
 
+  const formData = new FormData();
+  formData.append('file', file);
+
   try {
-    const response = yield call(service.uploadProofOfEnrollment, data);
+    const response = yield call(service.uploadProofOfEnrollment, formData);
     yield put(
       actions.save({
         type: types.UPLOAD_PROOF_OF_ENROLMENT,
@@ -138,11 +147,14 @@ function* uploadProofOfEnrollment({ payload }) {
 }
 
 function* uploadProfilePhoto({ payload }) {
-  const { callback, ...data } = payload;
+  const { callback, file } = payload;
   callback({ status: request.REQUESTING });
 
+  const formData = new FormData();
+  formData.append('file', file);
+
   try {
-    const response = yield call(service.uploadProfilePhoto, data);
+    const response = yield call(service.uploadProfilePhoto, formData);
     yield put(
       actions.save({
         type: types.UPLOAD_PROFILE_PHOTO,

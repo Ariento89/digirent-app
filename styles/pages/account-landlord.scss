@@ -102,6 +102,10 @@
           border-radius: 50%;
           transition: 250ms;
 
+          .image-file-upload {
+            display: none;
+          }
+
           img {
             width: 100%;
           }

@@ -1,3 +1,5 @@
+export const PRIVATE_ROUTES = ['/account'];
+
 export const SUPPORTED_FILE_UPLOAD_FORMATS = [
   'image/jpg',
   'image/jpeg',
@@ -5,4 +7,4 @@ export const SUPPORTED_FILE_UPLOAD_FORMATS = [
   'application/pdf',
 ];
 
-export const MAX_FILE_SIZE = 100 * 1024;
+export const MAX_FILE_SIZE = 10000 * 1024;

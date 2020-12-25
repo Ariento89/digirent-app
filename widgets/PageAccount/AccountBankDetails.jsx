@@ -22,8 +22,8 @@ const AccountBankDetails = () => {
   const getFormDetails = useCallback(
     () => ({
       defaultValues: {
-        accountName: null, // TODO: Update if there's value
-        accountNumber: null, // TODO: Update if there's value
+        accountName: '', // TODO: Update if there's value
+        accountNumber: '', // TODO: Update if there's value
       },
       schema: Yup.object().shape({
         accountName: Yup.string().required().nullable().label('Account Name'),

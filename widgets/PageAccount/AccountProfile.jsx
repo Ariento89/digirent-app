@@ -1,7 +1,11 @@
 import Select from 'components/Select/index';
 import ToggleSwitch from 'components/ToggleSwitch/index';
 import { useMe } from 'hooks/useMe';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
+import { useToasts } from 'react-toast-notifications';
+import { toastTypes } from 'shared/types';
+import Loader from 'react-loader-spinner';
+import cn from 'classnames';
 
 const languageOptions = [
   { name: 'Language 1', value: 1 },
@@ -16,8 +20,16 @@ const toggleSwitchOptions = {
 };
 
 const AccountProfile = () => {
+  // STATES
+  const [isUploadingImage, setIsUploadingImage] = useState(false);
+  const [accountImage, setAccountImage] = useState(null);
+
   // CUSTOM HOOKS
   const { me } = useMe();
+
+  const onImageSelect = (imageBase64) => {
+    setAccountImage(imageBase64);
+  };
 
   return (
     <>
@@ -28,7 +40,10 @@ const AccountProfile = () => {
             <span className="divider" />
             <span className="text">PREMIUM</span>
           </div>
-          <div className="photo-holder">
+          <div
+            className={cn('photo-holder', { loading: isUploadingImage })}
+            style={{ backgroundImage: accountImage ? `url(${accountImage})` : undefined }}
+          >
             <div className="settings">
               <div className="item">
                 <span>B</span>
@@ -46,9 +61,15 @@ const AccountProfile = () => {
             <div className="status-banner">
               ALL <span className="font-weight-bold">OK</span>
             </div>
-            <div className="change-photo">
-              <img src="/images/icon/icon-camera-white.svg" alt="camera icon" />
-            </div>
+
+            {isUploadingImage && (
+              <Loader className="upload-spinner" type="Oval" color="#fff" height={20} width={20} />
+            )}
+
+            <AccountProfileImage
+              onImageSelect={onImageSelect}
+              setIsUploadingImage={setIsUploadingImage}
+            />
             <img
               className="photo-additional-bg"
               src="/images/account-profile-bg.svg"
@@ -92,6 +113,57 @@ const AccountProfile = () => {
 };
 
 export default AccountProfile;
+
+const AccountProfileImage = ({ onImageSelect, setIsUploadingImage }) => {
+  // REFS
+  const imageUploadRef = useRef(null);
+
+  // CUSTOM HOOKS
+  const { addToast } = useToasts();
+  const { uploadProfilePhoto } = useMe();
+
+  // METHODS
+  const onClickImageUpload = () => {
+    imageUploadRef.current.click();
+  };
+
+  const onSuccess = () => {
+    setIsUploadingImage(false);
+    addToast('Successfully updated your profile picture.', toastTypes.SUCCESS);
+  };
+
+  const onError = () => {
+    setIsUploadingImage(false);
+    addToast('An error occurred while updating your profile picture.', toastTypes.ERROR);
+  };
+
+  const onChangeImageUpload = (event) => {
+    setIsUploadingImage(true);
+    event.stopPropagation();
+    event.preventDefault();
+
+    const file = event.target.files[0];
+    const reader = new FileReader();
+    reader.onload = () => {
+      onImageSelect(reader.result);
+      uploadProfilePhoto({ file }, { onSuccess, onError });
+    };
+    reader.readAsDataURL(file);
+  };
+
+  return (
+    <div className="change-photo" onClick={onClickImageUpload}>
+      <img src="/images/icon/icon-camera-white.svg" alt="camera icon" />
+      <input
+        type="file"
+        ref={imageUploadRef}
+        className="image-file-upload"
+        onChange={onChangeImageUpload}
+        accept="image/*"
+      />
+    </div>
+  );
+};
 
 const AccountProfileSettings = () => {
   const [language, setLanguage] = useState(null);

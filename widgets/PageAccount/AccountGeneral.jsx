@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import Button from 'components/Button/index';
 import FieldError from 'components/FieldError/FieldError';
 import FormDatePicker from 'components/FormDatePicker/index';
@@ -5,6 +6,7 @@ import FormInputIcon from 'components/FormInputIcon/index';
 import FormSelect from 'components/FormSelect/index';
 import { Form, Formik } from 'formik';
 import { useMe } from 'hooks/useMe';
+import moment from 'moment';
 import { useCallback, useState } from 'react';
 import { useToasts } from 'react-toast-notifications';
 import { sleep } from 'shared/functions';
@@ -24,13 +26,13 @@ const AccountGeneral = () => {
   const getFormDetails = useCallback(
     () => ({
       defaultValues: {
-        firstName: me?.firstName,
-        lastName: me?.lastName,
-        dob: me?.dob,
-        phoneNumber: me?.phoneNumber,
-        city: me?.city,
-        gender: me?.gender,
-        email: me?.email,
+        firstName: me?.firstName || '',
+        lastName: me?.lastName || '',
+        dob: me?.dob || '',
+        phoneNumber: me?.phoneNumber || '',
+        city: me?.city || '',
+        gender: me?.gender || '',
+        email: me?.email || '',
       },
       schema: Yup.object().shape({
         firstName: Yup.string().required().label('First Name'),
@@ -58,14 +60,18 @@ const AccountGeneral = () => {
   };
 
   return (
-    <>
-      {!!errors?.length && errors?.map((error) => <FieldError error={error} />)}
+    <div className="mt-3">
+      {!!errors?.length && errors?.map((error) => <FieldError key={error} error={error} />)}
 
       <Formik
         initialValues={getFormDetails().defaultValues}
         validationSchema={getFormDetails().schema}
         onSubmit={async (values) => {
           setIsSubmitting(true);
+
+          // Transform
+          values.dob = moment(values.dob).format('YYYY-MM-DD');
+
           await sleep(500);
           setIsSubmitting(false);
 
@@ -74,7 +80,7 @@ const AccountGeneral = () => {
       >
         {({ errors: formErrors, touched }) => (
           <Form>
-            <div className="row mt-3">
+            <div className="row ">
               <div className="col-12 col-sm-6 mt-3">
                 <FormInputIcon name="firstName" placeholder="First Name" icon="icon-user-primary" />
                 {formErrors.firstName && touched.firstName ? (
@@ -93,6 +99,9 @@ const AccountGeneral = () => {
                   name="dob"
                   placeholder="Date of Birth"
                   icon="icon-calendar-primary"
+                  pickerProps={{
+                    disabledDays: { after: new Date() },
+                  }}
                 />
                 {formErrors.dob && touched.dob ? <FieldError error={formErrors.dob} /> : null}
               </div>
@@ -144,7 +153,7 @@ const AccountGeneral = () => {
           </Form>
         )}
       </Formik>
-    </>
+    </div>
   );
 };
 

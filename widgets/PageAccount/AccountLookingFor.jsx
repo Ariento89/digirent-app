@@ -24,9 +24,9 @@ const AccountLookingFor = () => {
   const getFormDetails = useCallback(
     () => ({
       defaultValues: {
-        houseType: null, // TODO: Update if there's value
-        city: null, // TODO: Update if there's value
-        maxBudget: null, // TODO: Update if there's value
+        houseType: '', // TODO: Update if there's value
+        city: '', // TODO: Update if there's value
+        maxBudget: '', // TODO: Update if there's value
       },
       schema: Yup.object().shape({
         houseType: Yup.string().required().nullable().label('House Type'),

@@ -99,7 +99,7 @@ const LoginModal = ({ onClose, isVisible, onRegister }) => {
         />
 
         <div className="main-content mt-4">
-          {!!errors?.length && errors?.map((error) => <FieldError error={error} />)}
+          {!!errors?.length && errors?.map((error) => <FieldError key={error} error={error} />)}
 
           <Formik
             initialValues={formDetails.defaultValues}

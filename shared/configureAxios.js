@@ -1,5 +1,6 @@
 import axios from 'axios';
-import { key as AUTH_KEY } from 'ducks/authentication';
+import { actions, key as AUTH_KEY } from 'ducks/authentication';
+import { isArray, isString } from 'lodash';
 import { API_TIMEOUT, API_URL, NO_VERIFICATION_NEEDED } from 'services/index';
 
 export default function configureAxios(store) {
@@ -35,9 +36,13 @@ export default function configureAxios(store) {
     const modifiedError = { ...error };
 
     if (error.isAxiosError) {
-      if (error.response.data?.detail) {
+      if (error?.response?.data?.detail === 'Could not validate credentials') {
+        store.dispatch(actions.logout());
+      } else if (error.response.data?.detail && isString(error.response.data?.detail)) {
         modifiedError.errors = [error.response.data.detail];
-      } else if (error.response.data?.details) {
+      } else if (error.response.data?.detail && isArray(error.response.data?.detail)) {
+        modifiedError.errors = error.response.data.detail?.map(({ msg }) => msg);
+      } else if (error.response.data?.details && isArray(error.response.data?.details)) {
         modifiedError.errors = error.response.data.details?.map(({ msg }) => msg);
       }
     }

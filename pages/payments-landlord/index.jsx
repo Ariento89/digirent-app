@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/mouse-events-have-key-events */
-import { Select } from 'components/Select';
+import Select from 'components/Select';
 import { useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import PageWrapper from 'widgets/PageWrapper';

@@ -1,7 +1,7 @@
-import { Select } from 'components/Select';
+import Select from 'components/Select';
 import { useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
-import { PropertyInfo } from 'widgets/PropertyInfo';
+import PropertyInfo from 'widgets/PropertyInfo';
 import PageWrapper from 'widgets/PageWrapper';
 
 const typeOptions = [

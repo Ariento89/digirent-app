@@ -1,9 +1,9 @@
 import { NextArrow, PrevArrow } from 'components/SlickArrows/index';
 import PageWrapper from 'widgets/PageWrapper';
-import { PropertyInfo } from 'widgets/PropertyInfo/index';
 import SearchFormPropertyList from 'widgets/SearchForm/SearchFormPropertyList';
-import TableHeader from 'widgets/TableHeader/TableHeader';
+import TableHeader from 'widgets/TableHeader/index';
 import Slider from 'react-slick';
+import PropertyInfo from 'widgets/PropertyInfo/index';
 
 const slickSettings = {
   nextArrow: <NextArrow />,

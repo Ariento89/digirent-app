@@ -1,3 +1,6 @@
+/* eslint-disable react/jsx-closing-tag-location */
+/* eslint-disable react/no-danger */
+/* eslint-disable react/self-closing-comp */
 /* eslint-disable no-undef */
 import { useLanguage } from 'hooks/useLanguage';
 import Head from 'next/head';
@@ -62,6 +65,32 @@ const HomePageWrapper = ({ title, onLoginClick, onRegisterClick, children }) => 
                   Weglot.switchTo('${language}');  
                 }
               }
+            `,
+          }}
+        ></script>
+
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.fbAsyncInit = function() {
+                FB.init({
+                  appId      : '2661750024122124',
+                  cookie     : true,
+                  xfbml      : true,
+                  version    : 'v9.0'
+                });
+                  
+                FB.AppEvents.logPageView();   
+                  
+              };
+
+              (function(d, s, id){
+                var js, fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id)) {return;}
+                js = d.createElement(s); js.id = id;
+                js.src = "https://connect.facebook.net/en_US/sdk.js";
+                fjs.parentNode.insertBefore(js, fjs);
+              }(document, 'script', 'facebook-jssdk'));
             `,
           }}
         ></script>

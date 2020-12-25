@@ -2,10 +2,16 @@ import cn from 'classnames';
 import { useState } from 'react';
 import { findOptions } from 'shared/functions';
 
-export const Select = ({ value, onChange, options, placeholder, classNames, icon }) => {
+const Select = ({ value, onChange, options, placeholder, classNames, icon }) => {
   const [isActive, setIsActive] = useState(false);
 
   const toggleActive = () => setIsActive((isActiveValue) => !isActiveValue);
+
+  const onBlur = () => {
+    setTimeout(() => {
+      setIsActive(false);
+    }, 150);
+  };
 
   return (
     <div className={cn('field-group-select select', classNames, { active: isActive })}>
@@ -18,7 +24,7 @@ export const Select = ({ value, onChange, options, placeholder, classNames, icon
       <span className={cn('value', { selected: value !== null })}>
         {findOptions(value, options)?.name || placeholder}
       </span>
-      <button className="btn-dropdown" onClick={toggleActive}>
+      <button type="button" className="btn-dropdown" onClick={toggleActive} onBlur={onBlur}>
         <img src="/images/icon/icon-caret-down-white.svg" alt="item icon" />
       </button>
       <div className="choices">
@@ -38,3 +44,5 @@ export const Select = ({ value, onChange, options, placeholder, classNames, icon
     </div>
   );
 };
+
+export default Select;

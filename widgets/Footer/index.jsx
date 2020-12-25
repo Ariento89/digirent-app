@@ -2,7 +2,7 @@
 import Link from 'next/link';
 import { userTypes } from 'shared/types';
 
-const index = () => (
+const Footer = () => (
   <footer className="layout-footer">
     <div className="subscriber-bg">
       <img src="/images/subscriber-bg.svg" alt="subscriber" />
@@ -184,4 +184,4 @@ const index = () => (
   </footer>
 );
 
-export default index;
+export default Footer;

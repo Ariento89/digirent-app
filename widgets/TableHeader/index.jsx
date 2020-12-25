@@ -1,6 +1,6 @@
-import { Select } from 'components/Select/index';
-import { useState } from 'react';
 import cn from 'classnames';
+import Select from 'components/Select/index';
+import { useState } from 'react';
 
 const yearOptions = [
   { name: 'OPTION 1', value: 1 },

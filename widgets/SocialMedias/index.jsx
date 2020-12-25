@@ -6,7 +6,7 @@ export const socialMediaDirection = {
   RIGHT: 'right',
 };
 
-export const SocialMedias = ({ direction, classNames }) => {
+const SocialMedias = ({ direction, classNames }) => {
   const [isActive, setIsActive] = useState(false);
 
   return (
@@ -47,3 +47,5 @@ export const SocialMedias = ({ direction, classNames }) => {
 SocialMedias.defaultProps = {
   direction: socialMediaDirection.LEFT,
 };
+
+export default SocialMedias;

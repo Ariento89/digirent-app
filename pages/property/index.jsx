@@ -1,11 +1,11 @@
 import cn from 'classnames';
-import { Select } from 'components/Select/index';
+import Select from 'components/Select/index';
 import Link from 'next/link';
 import { useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import PageWrapper from 'widgets/PageWrapper';
-import ReactionItem from 'widgets/Property/ReactionItem';
-import { PropertyInfo, propertyInfoSelectionType } from 'widgets/PropertyInfo/index';
+import PropertyInfo, { propertyInfoSelectionType } from 'widgets/PropertyInfo/index';
+import ReactionItem from 'widgets/ReactionItem/index';
 
 const yearOptions = [
   { name: 'OPTION 1', value: 1 },

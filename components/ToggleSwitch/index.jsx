@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import cn from 'classnames';
 
-export const ToggleSwitch = ({
+const ToggleSwitch = ({
   name,
   value,
   onChange,
@@ -50,3 +50,5 @@ ToggleSwitch.defaultProps = {
   onLabel: 'ON',
   offLabel: 'OFF',
 };
+
+export default ToggleSwitch;

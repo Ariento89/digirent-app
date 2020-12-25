@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import PageWrapper from 'widgets/PageWrapper';
-import { Select } from 'components/Select';
+import Select from 'components/Select';
 
 const yearOptions = [
   { name: 'YEAR 2021', value: 2021 },

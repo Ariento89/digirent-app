@@ -2,8 +2,8 @@ import { NextArrow, PrevArrow } from 'components/SlickArrows/index';
 import { useRef, useState } from 'react';
 import Slider from 'react-slick';
 import PageWrapper from 'widgets/PageWrapper';
-import { PropertyInfo } from 'widgets/PropertyInfo/index';
-import { SocialMedias } from 'widgets/SocialMedias/index';
+import PropertyInfo from 'widgets/PropertyInfo/index';
+import SocialMedias from 'widgets/SocialMedias/index';
 
 const houseInsides = [
   { id: 1, image: '/images/property-detail-sample.jpg' },
@@ -71,7 +71,7 @@ const PropertyDetail = () => {
     slidesToScroll: 1,
     infinite: true,
     focusOnSelect: true,
-    beforeChange: function (oldIndex, newIndex) {
+    beforeChange: (oldIndex, newIndex) => {
       setMainImage(houseInsides[newIndex].image);
     },
     responsive: [
@@ -113,13 +113,15 @@ const PropertyDetail = () => {
           </div>
 
           <Slider
-            ref={(c) => (slider.current = c)}
+            ref={(c) => {
+              slider.current = c;
+            }}
             {...houseInsidesSettings}
             className="house-insides mt-4"
           >
             {houseInsides.map((item) => (
               <div key={item.id} className="item">
-                <div className="photo" style={{ backgroundImage: `url(${item.image})` }}></div>
+                <div className="photo" style={{ backgroundImage: `url(${item.image})` }} />
               </div>
             ))}
           </Slider>
@@ -255,16 +257,16 @@ const PropertyDetail = () => {
             <div className="divider" />
             <div className="list">
               <span className="item main-desc dark-gray2">
-                Gym <span className="icon"></span>
+                Gym <span className="icon" />
               </span>
               <span className="item main-desc dark-gray2">
-                Wheelchair <span className="icon"></span>
+                Wheelchair <span className="icon" />
               </span>
               <span className="item main-desc dark-gray2">
-                Park <span className="icon"></span>
+                Park <span className="icon" />
               </span>
               <span className="item main-desc dark-gray2">
-                Dogs Allowed <span className="icon"></span>
+                Dogs Allowed <span className="icon" />
               </span>
             </div>
           </div>
@@ -273,7 +275,7 @@ const PropertyDetail = () => {
 
           <div className="main-box landlord-details">
             <div className="landlord-photo">
-              <div className="photo"></div>
+              <div className="photo" />
             </div>
 
             <div className="d-flex align-items-center justify-content-center">
@@ -282,6 +284,7 @@ const PropertyDetail = () => {
                 height="25"
                 width="25"
                 className="mr-2"
+                alt=""
               />
               <p className="main-desc text-primary mt-2">EXCELLENT LANDLORD</p>
             </div>
@@ -306,7 +309,13 @@ const PropertyDetail = () => {
             </div>
 
             <div className="d-flex align-items-center justify-content-center mt-4">
-              <img src="/images/icon/icon-checked.svg" height="20" width="20" className="mr-2" />
+              <img
+                src="/images/icon/icon-checked.svg"
+                height="20"
+                width="20"
+                className="mr-2"
+                alt=""
+              />
               <p className="main-desc dark-gray2">
                 <span className="font-weight-bold text-primary">50 </span>SUCCESSFUL BOOKINGS
               </p>

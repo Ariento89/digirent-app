@@ -32,6 +32,7 @@
           ["components", "./components"],
           ["ducks", "./ducks"],
           ["hooks", "./hooks"],
+          ["pages", "./pages"],
           ["sagas", "./sagas"],
           ["services", "./services"],
           ["shared", "./shared"],
@@ -43,18 +44,26 @@
   },
   "plugins": [],
   "rules": {
-    "indent": [2, 2],
-    "import/no-unresolved": 1,
+    "indent": [2, 2, { "SwitchCase": 1 }],
     "react/jsx-one-expression-per-line": 0,
     "react/button-has-type": 0,
     "react/react-in-jsx-scope": "off",
+    "react/prop-types": 0,
+    "react/jsx-props-no-spreading": 0,
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
     "jsx-a11y/anchor-is-valid": 0,
     "jsx-a11y/click-events-have-key-events": 0,
     "jsx-a11y/no-static-element-interactions": 0,
-    "react/prop-types": 0,
     "object-curly-newline": 0,
-    "import/prefer-default-export": 0,
-    "react/jsx-props-no-spreading": 0
-  }
+    "default-case": 0,
+    "newline-per-chained-call": 0
+  },
+  "overrides": [
+    {
+      "files": ["services/*", "hooks/*"],
+      "rules": {
+        "import/prefer-default-export": 0
+      }
+    }
+  ]
 }

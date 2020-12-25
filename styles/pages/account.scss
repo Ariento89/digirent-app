@@ -2,7 +2,7 @@
 @import './abstract/mixins';
 @import './abstract/breakpoint';
 
-.layout-content.account-tenant {
+.layout-content.account {
   padding-bottom: 400px;
 
   @include media-breakpoint-down(lg) {
@@ -33,6 +33,18 @@
         border-top-left-radius: $border-radius;
         border-top-right-radius: $border-radius;
         position: relative;
+
+        &.loading {
+          opacity: 0.75;
+        }
+
+        .upload-spinner {
+          position: absolute;
+          left: 0;
+          right: 0;
+          display: flex;
+          justify-content: center;
+        }
 
         .photo-additional-bg {
           position: absolute;
@@ -101,6 +113,10 @@
           padding: 8px;
           border-radius: 50%;
           transition: 250ms;
+
+          .image-file-upload {
+            display: none;
+          }
 
           img {
             width: 100%;

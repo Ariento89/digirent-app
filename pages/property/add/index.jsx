@@ -1,7 +1,7 @@
 import Checkbox from 'components/Checkbox/index';
 import Input from 'components/Input';
-import InputDatePicker from 'components/Input/InputDatePicker';
-import { Select } from 'components/Select/index';
+import InputDatePicker from 'components/InputDatePicker/index';
+import Select from 'components/Select/index';
 import Textarea from 'components/Textarea/index';
 import { useEffect, useRef, useState } from 'react';
 import PageWrapper from 'widgets/PageWrapper';

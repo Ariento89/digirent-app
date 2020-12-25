@@ -14,6 +14,7 @@
 @import 'components/rounded-icon';
 @import 'components/button';
 @import 'components/field-group';
+@import 'components/field-error';
 @import 'components/file-upload';
 @import 'components/progress';
 @import 'components/field-group-select';
@@ -26,6 +27,7 @@
 @import 'components/slick-arrows';
 @import 'components/check-box';
 @import 'components/badge';
+@import 'components/datepicker';
 
 // widgets
 @import 'widgets/property-info';
@@ -48,8 +50,7 @@
 @import 'pages/contact';
 @import 'pages/blog-article-inside';
 @import 'pages/international-students-expats';
-@import 'pages/account-tenant';
-@import 'pages/account-landlord';
+@import 'pages/account';
 @import 'pages/contracts-tenant';
 @import 'pages/contracts-landlord';
 @import 'pages/payments-landlord';

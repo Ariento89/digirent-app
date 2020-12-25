@@ -6,7 +6,7 @@ export const propertyInfoSelectionType = {
   STILL_TO_COMMENT: 'STILL_TO_COMMENT',
 };
 
-export const PropertyInfo = ({
+const PropertyInfo = ({
   name,
   location,
   rentFee,
@@ -94,3 +94,5 @@ PropertyInfo.defaultProps = {
   buttonName: '',
   houseImage: '/images/house-sample-1.jpg',
 };
+
+export default PropertyInfo;

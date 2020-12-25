@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useRef, useState } from 'react';
 import { getDistance } from 'shared/functions';
 import { userTypes } from 'shared/types';
-import { UserSelect } from 'widgets/UserSelect';
+import UserSelect from 'widgets/UserSelect';
 
 const landlordData = {
   step1: {

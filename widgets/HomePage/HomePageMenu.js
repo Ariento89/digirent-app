@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
-import { ToggleSwitch } from 'components/ToggleSwitch';
+import ToggleSwitch from 'components/ToggleSwitch/index';
 import Link from 'next/link';
 import { slide as Menu } from 'react-burger-menu';
 import { languageSwitchOptions } from 'shared/types';

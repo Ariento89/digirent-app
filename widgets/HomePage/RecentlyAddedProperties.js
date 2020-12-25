@@ -1,6 +1,6 @@
 import { NextArrow, PrevArrow } from 'components/SlickArrows';
 import Slider from 'react-slick';
-import { PropertyInfo } from 'widgets/PropertyInfo';
+import PropertyInfo from 'widgets/PropertyInfo/index';
 
 const propertiesSlickSettings = {
   nextArrow: <NextArrow />,

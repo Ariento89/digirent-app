@@ -1,7 +1,10 @@
 import 'bootstrap/dist/css/bootstrap.css';
+import PrivateRoute from 'components/PrivateRoute/index';
 import 'react-day-picker/lib/style.css';
+import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
 import 'react-perfect-scrollbar/dist/css/styles.css';
 import { Provider } from 'react-redux';
+import { ToastProvider } from 'react-toast-notifications';
 import { persistStore } from 'redux-persist';
 import { PersistGate } from 'redux-persist/integration/react';
 import configureAxios from 'shared/configureAxios';
@@ -19,7 +22,11 @@ configureAxios(store);
 const App = ({ Component, pageProps }) => (
   <Provider store={store}>
     <PersistGate loading={null} persistor={persistStore(store)}>
-      <Component {...pageProps} />
+      <ToastProvider autoDismiss>
+        <PrivateRoute>
+          <Component {...pageProps} />
+        </PrivateRoute>
+      </ToastProvider>
     </PersistGate>
   </Provider>
 );

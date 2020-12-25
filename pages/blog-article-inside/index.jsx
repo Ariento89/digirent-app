@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import PageWrapper from 'widgets/PageWrapper';
-import { Reaction } from 'widgets/Reaction';
-import { SocialMedias } from 'widgets/SocialMedias';
 import Modal from 'react-bootstrap/Modal';
+import PageWrapper from 'widgets/PageWrapper';
+import Reaction from 'widgets/Reaction';
+import SocialMedias from 'widgets/SocialMedias';
 
 const archives = [
   { date: 'March 2018', number: 20 },

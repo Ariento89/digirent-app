@@ -4,8 +4,7 @@ import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import createSagaMiddleware from 'redux-saga';
 import rootSaga from 'sagas';
-
-export const STORAGE_KEY = 'digirent';
+import { STORAGE_KEY } from './storage';
 
 export default function configureStore(initialState = {}) {
   const persistConfig = {

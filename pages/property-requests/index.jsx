@@ -1,5 +1,5 @@
 import PageWrapper from 'widgets/PageWrapper';
-import TableHeader from 'widgets/TableHeader/TableHeader';
+import TableHeader from 'widgets/TableHeader/index';
 
 const Page = () => (
   <PageWrapper title="DigiRent - Property Requests" pageName="property-requests">
@@ -10,7 +10,7 @@ const Page = () => (
 
       <TableHeader />
 
-      <div className="main-box mt-5"></div>
+      <div className="main-box mt-5" />
     </div>
   </PageWrapper>
 );

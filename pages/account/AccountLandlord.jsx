@@ -1,10 +1,10 @@
-import AccountBankDetails from 'widgets/PageAccount/AccountBankDetails';
-import AccountCopyId from 'widgets/PageAccount/AccountCopyId';
-import AccountDescription from 'widgets/PageAccount/AccountDescription';
-import AccountGeneral from 'widgets/PageAccount/AccountGeneral';
-import AccountPassword from 'widgets/PageAccount/AccountPassword';
-import AccountProfile from 'widgets/PageAccount/AccountProfile';
-import AccountSocialMedia from 'widgets/PageAccount/AccountSocialMedia';
+import AccountBankDetails from 'widgets/_PageAccount/AccountBankDetails';
+import AccountCopyId from 'widgets/_PageAccount/AccountCopyId';
+import AccountDescription from 'widgets/_PageAccount/AccountDescription';
+import AccountGeneral from 'widgets/_PageAccount/AccountGeneral';
+import AccountPassword from 'widgets/_PageAccount/AccountPassword';
+import AccountProfile from 'widgets/_PageAccount/AccountProfile';
+import AccountSocialMedia from 'widgets/_PageAccount/AccountSocialMedia';
 
 const Page = () => (
   <div className="row mt-5">

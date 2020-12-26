@@ -13,10 +13,12 @@ export const useAuthentication = () => {
 
   // SELECTORS
   const accessToken = useSelector(selectors.selectAccessToken());
+  const sessionTimedOut = useSelector(selectors.selectSessionTimedOut());
 
   // ACTIONS
   const loginAction = useActionDispatch(actions.login);
-  const logoutAction = useActionDispatch(actions.logout);
+  const logout = useActionDispatch(actions.logout);
+  const clearSessionTimeOut = useActionDispatch(actions.clearSessionTimeOut);
 
   // GENERAL METHODS
   const resetError = () => setErrors([]);
@@ -48,8 +50,10 @@ export const useAuthentication = () => {
 
   return {
     accessToken,
+    sessionTimedOut,
     login,
-    logout: logoutAction,
+    logout,
+    clearSessionTimeOut,
     status,
     errors,
     recentRequest,

@@ -5,7 +5,7 @@
 import { useLanguage } from 'hooks/useLanguage';
 import Head from 'next/head';
 import Footer from 'widgets/Footer';
-import HomePageHeader from 'widgets/HomePage/HomePageHeader';
+import HomePageHeader from 'widgets/_PageHome/HomePageHeader';
 
 const HomePageWrapper = ({ title, onLoginClick, onRegisterClick, children }) => {
   const { language } = useLanguage();

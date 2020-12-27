@@ -6,12 +6,13 @@ import React from 'react';
 const FormDatePicker = ({ ...props }) => {
   const { setFieldValue } = useFormikContext();
   const [field] = useField(props);
+
   return (
     <DatePicker
       {...field}
       {...props}
       selectedDay={(field.value && new Date(field.value)) || null}
-      onDayChange={(selectedDay, _modifiers, _dayPickerInput) => {
+      onDayChange={(selectedDay, _, __) => {
         setFieldValue(field.name, selectedDay);
       }}
     />

@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { useField, useFormikContext } from 'formik';
+import cn from 'classnames';
 import React, { useState } from 'react';
 import DayPickerInput from 'react-day-picker/DayPickerInput';
 import { formatDate, parseDate } from 'react-day-picker/moment';
@@ -23,7 +23,7 @@ export const YearMonthCaption = ({ date, localeUtils, onChange }) => {
   };
 
   return (
-    <form className="DayPicker-Caption">
+    <div className="DayPicker-Caption">
       <select name="month" onChange={handleChange} value={date.getMonth()}>
         {months.map((month, i) => (
           <option key={month} value={i}>
@@ -38,23 +38,27 @@ export const YearMonthCaption = ({ date, localeUtils, onChange }) => {
           </option>
         ))}
       </select>
-    </form>
+    </div>
   );
 };
 
-const DatePicker = ({ pickerProps, ...props }) => {
-  const [month, setMonth] = useState(fromMonth);
+const DatePicker = ({ classNames, icon, rightIcon, pickerProps, ...props }) => {
+  const [month, setMonth] = useState(toMonth);
 
   const handleYearMonthChange = (selectedMonth) => {
     setMonth(selectedMonth);
   };
 
   return (
-    <div className="field-group">
-      <div className="field-icon">
-        <img src="/images/icon/icon-calendar-primary.svg" alt="item icon" />
-      </div>
-      <span className="field-divider" />
+    <div className={cn('field-group', classNames)}>
+      {icon && (
+        <>
+          <div className="field-icon">
+            <img src={`/images/icon/${icon}.svg`} alt="icon" />
+          </div>
+          <span className="field-divider" />
+        </>
+      )}
       <DayPickerInput
         {...props}
         dayPickerProps={{
@@ -75,6 +79,14 @@ const DatePicker = ({ pickerProps, ...props }) => {
         parseDate={parseDate}
         format="YYYY-MM-DD"
       />
+      {rightIcon && (
+        <>
+          <div className="field-icon right-icon">
+            <img src={`/images/icon/${rightIcon}.svg`} alt="icon" />
+          </div>
+          <span className="field-divider" />
+        </>
+      )}
     </div>
   );
 };

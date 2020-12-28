@@ -5,7 +5,6 @@ import FormSelect from 'components/FormSelect/index';
 import { furnishTypeOptions, houseTypeOptions } from 'shared/options';
 
 const options = [
-  { name: '0', value: 0 },
   { name: '1', value: 1 },
   { name: '2', value: 2 },
   { name: '3', value: 3 },
@@ -57,32 +56,30 @@ const PropertyAddQuantities = ({ errors, touched }) => (
     </div>
 
     <div>
-      <FormInputIcon type="number" classNames="field-item" name="sqft" placeholder="Sqft" />
-      {errors.sqft && touched.sqft ? <FieldError error={errors.sqft} /> : null}
+      <FormInputIcon type="number" classNames="field-item" name="size" placeholder="Sqft" />
+      {errors.size && touched.size ? <FieldError error={errors.size} /> : null}
     </div>
 
     <div>
       <FormDatePicker
         classNames="field-item"
-        name="availabilityFrom"
+        name="availableFrom"
         placeholder="Availability Per (Date) From"
         rightIcon="icon-calendar-gray"
       />
-      {errors.availabilityFrom && touched.availabilityFrom ? (
-        <FieldError error={errors.availabilityFrom} />
+      {errors.availableFrom && touched.availableFrom ? (
+        <FieldError error={errors.availableFrom} />
       ) : null}
     </div>
 
     <div>
       <FormDatePicker
         classNames="field-item"
-        name="availabilityTo"
+        name="availableTo"
         placeholder="Availability Per (Date) To"
         rightIcon="icon-calendar-gray"
       />
-      {errors.availabilityTo && touched.availabilityTo ? (
-        <FieldError error={errors.availabilityTo} />
-      ) : null}
+      {errors.availableTo && touched.availableTo ? <FieldError error={errors.availableTo} /> : null}
     </div>
   </div>
 );

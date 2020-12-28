@@ -4,8 +4,9 @@ import Link from 'next/link';
 import { useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import PageWrapper from 'widgets/PageWrapper';
-import PropertyInfo, { propertyInfoSelectionType } from 'widgets/PropertyInfo/index';
 import ReactionItem from 'widgets/ReactionItem/index';
+import PropertyAddedProperties from 'widgets/_PageProperty/PropertyAddedProperties';
+import PropertyLanding from 'widgets/_PageProperty/PropertyLanding';
 
 const yearOptions = [
   { name: 'OPTION 1', value: 1 },
@@ -38,85 +39,18 @@ const Page = () => {
     setPropertySelectionDropdownVisible((value) => !value);
   };
 
-  const getSelectionType = (number) => {
-    if ([1, 4].includes(number)) return propertyInfoSelectionType.NOT_SELECTED;
-    if ([2, 5].includes(number)) return propertyInfoSelectionType.SELECTED;
-    if ([3, 6].includes(number)) return propertyInfoSelectionType.STILL_TO_COMMENT;
-    return null;
-  };
   return (
     <>
       <PageWrapper title="DigiRent - Property" pageName="property">
         <img src="/images/main-left-bg.svg" className="left-main-background" alt="left bg" />
         <img src="/images/main-right-bg.svg" className="right-main-background" alt="right bg" />
 
-        <div className="landing">
-          <div className="content">
-            <div className="left">
-              <div className="title">LET&apos;S START!</div>
-              <div className="subtitle">
-                <span className="add-text">ADD</span>
-                <span>
-                  YOUR PROPERTIES AND ATTRACT
-                  <br /> QUALITY TENANTS
-                </span>
-              </div>
-            </div>
+        <PropertyLanding onAddProperty={onAddProperty} />
 
-            <div className="right">
-              <div className="outer-circle">
-                <div className="inner-circle">
-                  <button type="button" className="button" onClick={onAddProperty}>
-                    <img src="/images/icon/icon-plus-white.svg" alt="icon" />
-                  </button>
-                  <span className="mt-2 mt-md-3">Add Property</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="scroll-down">
-            <div className="white-space" />
-            <div className="scroll-down-wrapper">
-              <img
-                src="/images/scroll-down-space.svg"
-                className="scroll-down-space"
-                alt="icon space"
-              />
-              <img
-                src="/images/icon/icon-caret-down-white.svg"
-                className="scroll-down"
-                alt="icon"
-              />
-            </div>
-            <div className="white-space" />
-          </div>
-        </div>
-
-        <div className="container added-properties">
-          <h3 className="main-title">
-            ADDED <span className="text-primary font-weight-bold">PROPERTIES</span>
-          </h3>
-
-          <div className="row properties">
-            {[1, 2, 3, 4, 5, 6].map((key) => (
-              <div key={key} className="col-12 col-md-6 col-xl-4">
-                <PropertyInfo
-                  houseImage={`/images/house-sample-${(key % 3) + 1}.jpg`}
-                  name="Pahvale Villa"
-                  location="Indore, Madhya Pradesh, India"
-                  rentFee="246"
-                  bedCount="4"
-                  crCount="2"
-                  buttonName="SEE REACTIONS"
-                  onClick={onSeeReaction}
-                  onDelete={onDeleteProperty}
-                  selectionType={getSelectionType(key)}
-                />
-              </div>
-            ))}
-          </div>
-        </div>
+        <PropertyAddedProperties
+          onSeeReaction={onSeeReaction}
+          onDeleteProperty={onDeleteProperty}
+        />
       </PageWrapper>
 
       <Modal

@@ -13,13 +13,14 @@
   bottom: 0;
   right: 0;
   left: 0;
+  border-radius: 50px;
   @include flex(center, center, column);
 
-  background-color: rgba(255, 255, 255, 0.4);
+  background-color: rgba(255, 255, 255, 0.6);
   z-index: 9999;
 
   .loading-text {
-    margin-top: 10px;
+    margin-top: 15px;
     color: $color-primary;
     @include font(20px, $fw-light);
   }

@@ -8,10 +8,10 @@ export const propertyInfoSelectionType = {
 
 const PropertyInfo = ({
   name,
-  location,
+  address,
   rentFee,
-  bedCount,
-  crCount,
+  bedrooms,
+  bathrooms,
   selectionType,
   houseImage,
   buttonName,
@@ -31,7 +31,7 @@ const PropertyInfo = ({
         <h3 className="main-subtitle font-weight-bold text-left">{name}</h3>
         <div className="d-flex align-items-center mt-2">
           <img src="/images/icon/icon-map-marker-primary.svg" height="20" width="20" alt="icon" />
-          <p className="ml-2 main-desc">{location}</p>
+          <p className="ml-2 main-desc">{address}</p>
         </div>
       </div>
 
@@ -47,11 +47,11 @@ const PropertyInfo = ({
         <div className="rooms-toilet">
           <div className="d-flex align-items-center justify-content-between">
             <img src="/images/icon/icon-bed-primary.svg" height="16" width="16" alt="icon" />
-            <p className="ml-1 main-desc">{bedCount}</p>
+            <p className="ml-1 main-desc">{bedrooms}</p>
           </div>
           <div className="d-flex align-items-center justify-content-between mt-3">
             <img src="/images/icon/icon-bath-tub-primary.svg" height="16" width="16" alt="icon" />
-            <p className="ml-1 main-desc">{crCount}</p>
+            <p className="ml-1 main-desc">{bathrooms}</p>
           </div>
         </div>
 

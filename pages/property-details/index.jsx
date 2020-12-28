@@ -342,10 +342,10 @@ const RecentlyViewed = () => (
           <div key={key} className="item">
             <PropertyInfo
               name="Pahvale Villa"
-              location="Indore, Madhya Pradesh, India"
+              address="Indore, Madhya Pradesh, India"
               rentFee="246"
-              bedCount="4"
-              crCount="2"
+              bedrooms="4"
+              bathrooms="2"
               houseImage={`/images/house-sample-${(index % 3) + 1}.jpg`}
               link="/property-details"
             />

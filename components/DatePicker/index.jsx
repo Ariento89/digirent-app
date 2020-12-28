@@ -4,10 +4,12 @@ import React, { useState } from 'react';
 import DayPickerInput from 'react-day-picker/DayPickerInput';
 import { formatDate, parseDate } from 'react-day-picker/moment';
 
-const MAX_AGE = 90;
+const MAX_AGE = 75;
+const MAX_FUTURE_AGE = 10;
 const currentYear = new Date().getFullYear();
 const fromMonth = new Date(currentYear - MAX_AGE, 0);
-const toMonth = new Date(currentYear, 11);
+const toMonth = new Date(currentYear + MAX_FUTURE_AGE, 11);
+const today = new Date(currentYear, 11);
 
 export const YearMonthCaption = ({ date, localeUtils, onChange }) => {
   const months = localeUtils.getMonths();
@@ -43,8 +45,7 @@ export const YearMonthCaption = ({ date, localeUtils, onChange }) => {
 };
 
 const DatePicker = ({ classNames, icon, rightIcon, pickerProps, ...props }) => {
-  const [month, setMonth] = useState(toMonth);
-
+  const [month, setMonth] = useState(today);
   const handleYearMonthChange = (selectedMonth) => {
     setMonth(selectedMonth);
   };

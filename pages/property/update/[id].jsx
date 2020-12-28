@@ -1,6 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import { types } from 'ducks/apartments';
 import { useAmenities } from 'hooks/useAmenities';
 import { useApartments } from 'hooks/useApartments';
+import { useRouter } from 'next/router';
 import { useCallback, useEffect, useState } from 'react';
 import { useToasts } from 'react-toast-notifications';
 import { request, toastTypes } from 'shared/types';
@@ -9,14 +11,19 @@ import PropertyAddForm from 'widgets/_PagePropertyAdd/PropertyAddForm';
 
 const Page = () => {
   // STATES
+  const [apartment, setApartment] = useState(null);
   const [amenities, setAmenities] = useState([]);
 
   // CUSTOM HOOKS
+  const router = useRouter();
+  const { id: apartmentId } = router.query;
   const { addToast } = useToasts();
   const {
-    createApartment,
+    getApartment,
+    updateApartment,
     status: apartmentsRequestStatus,
     errors: apartmentsRequestErrors,
+    recentRequest: apartmentsRecentRequest,
   } = useApartments();
   const {
     fetchAmenities,
@@ -34,6 +41,14 @@ const Page = () => {
     );
   };
 
+  const onGetApartmentSuccess = ({ response }) => {
+    setApartment(response);
+  };
+
+  const onGetApartmentError = () => {
+    router.replace('/404');
+  };
+
   useEffect(() => {
     fetchAmenities({
       onSuccess: onFetchAmenitiesSuccess,
@@ -41,36 +56,55 @@ const Page = () => {
     });
   }, []);
 
+  useEffect(() => {
+    if (apartmentId) {
+      getApartment(
+        { apartmentId },
+        {
+          onSuccess: onGetApartmentSuccess,
+          onError: onGetApartmentError,
+        },
+      );
+    }
+  }, [apartmentId]);
+
   const getLoadingText = useCallback(() => {
     let loadingText = '';
 
     if (apartmentsRequestStatus === request.REQUESTING) {
-      loadingText = 'Creating apartment...';
+      if (apartmentsRecentRequest === types.UPDATE_APARTMENT) {
+        loadingText = 'Updating apartment...';
+      } else if (apartmentsRecentRequest === types.GET_APARTMENT) {
+        loadingText = 'Fetching apartment...';
+      }
     } else if (amenitiesRequestStatus === request.REQUESTING) {
       loadingText = 'Fetching amenities...';
     }
 
     return loadingText;
-  }, [apartmentsRequestStatus, amenitiesRequestStatus]);
+  }, [apartmentsRequestStatus, apartmentsRecentRequest, amenitiesRequestStatus]);
 
   const isLoading = useCallback(
     () => [apartmentsRequestStatus, amenitiesRequestStatus].includes(request.REQUESTING),
     [apartmentsRequestStatus, amenitiesRequestStatus],
   );
 
-  const onCreateSuccess = () => {
-    addToast('Successfully created apartment.', toastTypes.SUCCESS);
+  const onUpdateSuccess = () => {
+    addToast('Successfully updated apartment.', toastTypes.SUCCESS);
   };
 
-  const onCreateError = () => {
-    addToast('An error occurred while creating your apartment.', toastTypes.ERROR);
+  const onUpdateError = () => {
+    addToast('An error occurred while updating your apartment.', toastTypes.ERROR);
   };
 
   const onSubmit = (data) => {
-    createApartment(data, {
-      onSuccess: onCreateSuccess,
-      onError: onCreateError,
-    });
+    updateApartment(
+      { apartmentId, ...data },
+      {
+        onSuccess: onUpdateSuccess,
+        onError: onUpdateError,
+      },
+    );
   };
 
   return (
@@ -82,7 +116,7 @@ const Page = () => {
           <div className="col-12 col-md-4 col-xl-3" />
           <div className="col-12 col-md-8 col-xl-9">
             <p className="main-info-title text-white font-weight-bold">
-              <span className="alt text-primary font-weight-light">ADD</span>
+              <span className="alt text-primary font-weight-light">UPDATE</span>
               <br />
               PROPERTY
             </p>
@@ -91,7 +125,7 @@ const Page = () => {
 
         <PropertyAddForm
           amenities={amenities}
-          apartment={null}
+          apartment={apartment}
           onSubmit={onSubmit}
           isLoading={isLoading()}
           loadingText={getLoadingText()}

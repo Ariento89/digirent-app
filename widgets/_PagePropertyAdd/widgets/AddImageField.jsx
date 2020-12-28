@@ -21,7 +21,7 @@ const AddImageField = ({ ...props }) => {
         <img src="/images/icon/icon-plus-white.svg" alt="icon" />
       </button>
       <span className="text-center">Add Image</span>
-      <input type="file" ref={inputRef} className="d-none" onChange={onChange} />
+      <input type="file" ref={inputRef} className="d-none" onChange={onChange} accept="image/*" />
     </>
   );
 };

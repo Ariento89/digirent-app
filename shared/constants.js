@@ -1,5 +1,3 @@
-export const PRIVATE_ROUTES = ['/account'];
-
 export const SUPPORTED_FILE_UPLOAD_FORMATS = [
   'image/jpg',
   'image/jpeg',

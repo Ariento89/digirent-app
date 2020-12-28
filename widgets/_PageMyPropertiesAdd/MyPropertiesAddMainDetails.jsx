@@ -3,7 +3,7 @@ import FieldError from 'components/FieldError/FieldError';
 import FormInputIcon from 'components/FormInputIcon/index';
 import FormTextarea from 'components/FormTextarea/index';
 
-const PropertyAddMainDetails = ({ errors, touched, requestErrors }) => (
+const MyPropertiesAddMainDetails = ({ errors, touched, requestErrors }) => (
   <>
     {!!requestErrors?.length &&
       requestErrors?.map((error) => <FieldError key={error} error={error} />)}
@@ -104,4 +104,4 @@ const PropertyAddMainDetails = ({ errors, touched, requestErrors }) => (
   </>
 );
 
-export default PropertyAddMainDetails;
+export default MyPropertiesAddMainDetails;

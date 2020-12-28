@@ -1,7 +1,7 @@
 import FieldError from 'components/FieldError/FieldError';
 import AddImageField from './widgets/AddImageField';
 
-const PropertyAddImages = ({ errors, touched }) => (
+const MyPropertiesAddImages = ({ errors, touched }) => (
   <>
     <div className="add-images mt-5">
       <div>
@@ -28,4 +28,4 @@ const PropertyAddImages = ({ errors, touched }) => (
   </>
 );
 
-export default PropertyAddImages;
+export default MyPropertiesAddImages;

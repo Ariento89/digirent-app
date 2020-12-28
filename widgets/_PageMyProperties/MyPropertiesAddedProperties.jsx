@@ -7,7 +7,7 @@ import { useToasts } from 'react-toast-notifications';
 import { request, toastTypes } from 'shared/types';
 import PropertyInfo from 'widgets/PropertyInfo/index';
 
-const PropertyAddedProperties = ({ onSeeReaction, onDeleteProperty }) => {
+const MyPropertiesAddedProperties = ({ onSeeReaction, onDeleteProperty }) => {
   // STATES
   const [addedProperties, setAddedProperties] = useState([]);
 
@@ -66,4 +66,4 @@ const PropertyAddedProperties = ({ onSeeReaction, onDeleteProperty }) => {
   );
 };
 
-export default PropertyAddedProperties;
+export default MyPropertiesAddedProperties;

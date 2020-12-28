@@ -7,13 +7,20 @@ import moment from 'moment';
 import { useCallback, useState } from 'react';
 import { MAX_FILE_SIZE, SUPPORTED_IMAGE_UPLOAD_FORMATS } from 'shared/constants';
 import { sleep } from 'shared/functions';
-import PropertyAddAmenities from 'widgets/_PagePropertyAdd/PropertyAddAmenities';
-import PropertyAddMainDetails from 'widgets/_PagePropertyAdd/PropertyAddMainDetails';
-import PropertyAddQuantities from 'widgets/_PagePropertyAdd/PropertyAddQuantities';
 import * as Yup from 'yup';
-import PropertyAddImages from './PropertyAddImages';
+import MyPropertiesAddAmenities from './MyPropertiesAddAmenities';
+import MyPropertiesAddImages from './MyPropertiesAddImages';
+import MyPropertiesAddMainDetails from './MyPropertiesAddMainDetails';
+import MyPropertiesAddQuantities from './MyPropertiesAddQuantities';
 
-const PropertyAddForm = ({ errors, amenities, apartment, onSubmit, isLoading, loadingText }) => {
+const MyPropertiesAddForm = ({
+  errors,
+  amenities,
+  apartment,
+  onSubmit,
+  isLoading,
+  loadingText,
+}) => {
   // STATES
   const [isSponsorChecked, setIsSponsorChecked] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -134,9 +141,13 @@ const PropertyAddForm = ({ errors, amenities, apartment, onSubmit, isLoading, lo
           <Form>
             <div className="row">
               <div className="col-12 col-md-4 col-xl-3">
-                <PropertyAddQuantities errors={formErrors} touched={touched} />
+                <MyPropertiesAddQuantities errors={formErrors} touched={touched} />
 
-                <PropertyAddAmenities amenities={amenities} errors={formErrors} touched={touched} />
+                <MyPropertiesAddAmenities
+                  amenities={amenities}
+                  errors={formErrors}
+                  touched={touched}
+                />
               </div>
               <div className="col-12 col-md-8 col-xl-9">
                 <div className="main-box main-info mt-5 mt-md-0">
@@ -145,13 +156,13 @@ const PropertyAddForm = ({ errors, amenities, apartment, onSubmit, isLoading, lo
                   </div>
 
                   <div className="main-form">
-                    <PropertyAddMainDetails
+                    <MyPropertiesAddMainDetails
                       errors={formErrors}
                       touched={touched}
                       requestErrors={errors}
                     />
 
-                    <PropertyAddImages errors={formErrors} touched={touched} />
+                    <MyPropertiesAddImages errors={formErrors} touched={touched} />
 
                     <hr className="mt-5 mb-5" />
 
@@ -203,4 +214,4 @@ const PropertyAddForm = ({ errors, amenities, apartment, onSubmit, isLoading, lo
   );
 };
 
-export default PropertyAddForm;
+export default MyPropertiesAddForm;

@@ -5,7 +5,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { useToasts } from 'react-toast-notifications';
 import { request, toastTypes } from 'shared/types';
 import PageWrapper from 'widgets/PageWrapper';
-import PropertyAddForm from 'widgets/_PagePropertyAdd/PropertyAddForm';
+import MyPropertiesAddForm from 'widgets/_PageMyPropertiesAdd/MyPropertiesAddForm';
 
 const Page = () => {
   // STATES
@@ -74,7 +74,7 @@ const Page = () => {
   };
 
   return (
-    <PageWrapper title="DigiRent - Property" pageName="property-add">
+    <PageWrapper title="DigiRent - Add Property" pageName="property-add">
       <img src="/images/add-property-bg.jpg" className="main-background" alt="background" />
 
       <div className="container-lg mt-5">
@@ -89,7 +89,7 @@ const Page = () => {
           </div>
         </div>
 
-        <PropertyAddForm
+        <MyPropertiesAddForm
           amenities={amenities}
           apartment={null}
           onSubmit={onSubmit}

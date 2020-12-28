@@ -1,7 +1,7 @@
 import FormCheckbox from 'components/FormCheckbox/index';
 import { useState } from 'react';
 
-const PropertyAddAmenities = ({ amenities }) => {
+const MyPropertiesAddAmenities = ({ amenities }) => {
   const [moreAmenitiesValue, setMoreAmenitiesValue] = useState({});
   const [moreAmenitiesVisible, setMoreAmenitiesVisible] = useState(false);
 
@@ -54,4 +54,4 @@ const PropertyAddAmenities = ({ amenities }) => {
   );
 };
 
-export default PropertyAddAmenities;
+export default MyPropertiesAddAmenities;

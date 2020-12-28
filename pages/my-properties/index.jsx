@@ -5,8 +5,8 @@ import { useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import PageWrapper from 'widgets/PageWrapper';
 import ReactionItem from 'widgets/ReactionItem/index';
-import PropertyAddedProperties from 'widgets/_PageProperty/PropertyAddedProperties';
-import PropertyLanding from 'widgets/_PageProperty/PropertyLanding';
+import MyPropertiesAddedProperties from 'widgets/_PageMyProperties/MyPropertiesAddedProperties';
+import MyPropertiesLanding from 'widgets/_PageMyProperties/MyPropertiesLanding';
 
 const yearOptions = [
   { name: 'OPTION 1', value: 1 },
@@ -41,13 +41,13 @@ const Page = () => {
 
   return (
     <>
-      <PageWrapper title="DigiRent - Property" pageName="property">
+      <PageWrapper title="DigiRent - My Properties" pageName="property">
         <img src="/images/main-left-bg.svg" className="left-main-background" alt="left bg" />
         <img src="/images/main-right-bg.svg" className="right-main-background" alt="right bg" />
 
-        <PropertyLanding onAddProperty={onAddProperty} />
+        <MyPropertiesLanding onAddProperty={onAddProperty} />
 
-        <PropertyAddedProperties
+        <MyPropertiesAddedProperties
           onSeeReaction={onSeeReaction}
           onDeleteProperty={onDeleteProperty}
         />

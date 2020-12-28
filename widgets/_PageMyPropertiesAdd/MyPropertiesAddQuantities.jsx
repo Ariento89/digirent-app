@@ -13,7 +13,7 @@ const options = [
   { name: '6', value: 6 },
 ];
 
-const PropertyAddQuantities = ({ errors, touched }) => (
+const MyPropertiesAddQuantities = ({ errors, touched }) => (
   <div className="main-box info-quantity">
     <div>
       <FormSelect
@@ -84,4 +84,4 @@ const PropertyAddQuantities = ({ errors, touched }) => (
   </div>
 );
 
-export default PropertyAddQuantities;
+export default MyPropertiesAddQuantities;

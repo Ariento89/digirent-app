@@ -4,8 +4,9 @@ export const HOME_ROUTE = '/';
 
 const ROUTES = {
   '/account': [role.LANDLORD, role.TENANT],
-  '/property': [role.LANDLORD],
-  '/property/add': [role.LANDLORD],
+  '/my-properties': [role.LANDLORD],
+  '/my-properties/add': [role.LANDLORD],
+  '/my-properties/update/[id]': [role.LANDLORD],
 };
 
 export default ROUTES;

@@ -14,7 +14,7 @@ const PrivateRoute = ({ children }) => {
 
   useEffect(() => {
     setLoading(false);
-
+    console.log(router.pathname);
     if (router.pathname === HOME_ROUTE) {
       setLoading(true);
       return;

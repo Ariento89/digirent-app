@@ -1,4 +1,4 @@
-const PropertyLanding = ({ onAddProperty }) => (
+const MyPropertiesLanding = ({ onAddProperty }) => (
   <div className="landing">
     <div className="content">
       <div className="left">
@@ -35,4 +35,4 @@ const PropertyLanding = ({ onAddProperty }) => (
   </div>
 );
 
-export default PropertyLanding;
+export default MyPropertiesLanding;

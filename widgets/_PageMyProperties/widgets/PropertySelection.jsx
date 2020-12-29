@@ -1,11 +1,26 @@
-import { useState } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
 import cn from 'classnames';
+import { useEffect, useState } from 'react';
 
-const PropertySelection = () => {
+// TODO: Display photo of properties
+const PropertySelection = ({ selectedProperty, properties, onSelect }) => {
+  // STATES
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
+
+  // METHODS
+  useEffect(() => {
+    if (properties.length && !selectedProperty) {
+      onSelect(properties?.[0]);
+    }
+  }, [selectedProperty, properties]);
 
   const toggleDropdown = () => {
     setIsDropdownVisible((value) => !value);
+  };
+
+  const onSelectProperty = (property) => {
+    onSelect(property);
+    setIsDropdownVisible(false);
   };
 
   return (
@@ -14,7 +29,7 @@ const PropertySelection = () => {
         <div className="item">
           <div className="house-photo" />
           <div className="house-info">
-            <span className="title">Pahvale Villa</span>
+            <span className="title">{selectedProperty?.name}</span>
             <span className="main-desc text-primary font-weight-light mt-1">LANDLORD</span>
           </div>
         </div>
@@ -24,11 +39,15 @@ const PropertySelection = () => {
       </div>
 
       <div className={cn('property-list', { 'd-none': !isDropdownVisible })}>
-        {[1, 2, 3].map((key) => (
-          <div key={key} className="item" onClick={toggleDropdown}>
+        {properties.map((property) => (
+          <div
+            key={property.id}
+            className={cn('item', { selected: selectedProperty?.id === property.id })}
+            onClick={() => onSelectProperty(property)}
+          >
             <div className="house-photo" />
             <div className="house-info">
-              <span className="title">Pahvale Villa</span>
+              <span className="title">{property.name}</span>
               <span className="main-desc text-primary font-weight-light mt-1">LANDLORD</span>
             </div>
           </div>

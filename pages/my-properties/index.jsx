@@ -1,4 +1,8 @@
-import { useState } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useApartments } from 'hooks/useApartments';
+import { useEffect, useState } from 'react';
+import { useToasts } from 'react-toast-notifications';
+import { request, toastTypes } from 'shared/types';
 import PageWrapper from 'widgets/PageWrapper';
 import MyPropertiesAddedProperties from 'widgets/_PageMyProperties/MyPropertiesAddedProperties';
 import MyPropertiesAddPropertyModal from 'widgets/_PageMyProperties/MyPropertiesAddPropertyModal';
@@ -9,13 +13,33 @@ import MyPropertiesSeeReactionsModal from 'widgets/_PageMyProperties/MyPropertie
 
 const Page = () => {
   // STATES
+  const [properties, setProperties] = useState([]);
   const [deleteConfirmationModalVisible, setDeleteConfirmationModalVisible] = useState(false);
   const [addPropertyModalVisible, setAddPropertyModalVisible] = useState(false);
   const [propertySelectionModalVisible, setPropertySelectionModalVisible] = useState(false);
   const [seeReactionModalVisible, setSeeReactionModalVisible] = useState(false);
   const [selectedProperty, setSelectedProperty] = useState(null);
 
+  // CUSTOM HOOKS
+  const { addToast } = useToasts();
+  const { fetchApartments, status, errors } = useApartments();
+
   // METHODS
+  const onFetchSuccess = ({ response }) => {
+    setProperties(response);
+  };
+
+  const onFetchError = () => {
+    addToast('An error occurred while fetching properties.', toastTypes.ERROR);
+  };
+
+  useEffect(() => {
+    fetchApartments(null, {
+      onSuccess: onFetchSuccess,
+      onError: onFetchError,
+    });
+  }, []);
+
   const onDeleteProperty = (property) => {
     setSelectedProperty(property);
     setDeleteConfirmationModalVisible(true);
@@ -34,6 +58,9 @@ const Page = () => {
         <MyPropertiesLanding onAddProperty={onAddProperty} />
 
         <MyPropertiesAddedProperties
+          properties={properties}
+          loading={status === request.REQUESTING}
+          errors={errors}
           onSeeReaction={onSeeReaction}
           onDeleteProperty={onDeleteProperty}
         />
@@ -51,12 +78,14 @@ const Page = () => {
       />
 
       <MyPropertiesAddPropertyModal
+        properties={properties}
         isVisible={addPropertyModalVisible}
         onClose={() => setAddPropertyModalVisible(false)}
         showPropertySelection={() => setPropertySelectionModalVisible(true)}
       />
 
       <MyPropertiesPropertySelectionModal
+        properties={properties}
         isVisible={propertySelectionModalVisible}
         onClose={() => setPropertySelectionModalVisible(false)}
       />

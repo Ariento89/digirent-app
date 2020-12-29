@@ -1,3 +1,4 @@
+import Button from 'components/Button/index';
 import Link from 'next/link';
 
 export const propertyInfoSelectionType = {
@@ -75,9 +76,15 @@ const PropertyInfo = ({
           </>
         )}
         {!!onClick && (
-          <button type="button" className="button" onClick={onClick}>
+          <Button
+            onClick={(event) => {
+              event.stopPropagation();
+              event.preventDefault();
+              onClick();
+            }}
+          >
             {buttonName}
-          </button>
+          </Button>
         )}
       </div>
     </div>

@@ -5,7 +5,6 @@ import Spinner from 'components/Spinner/index';
 import { Form, Formik } from 'formik';
 import moment from 'moment';
 import { useCallback, useState } from 'react';
-import { MAX_FILE_SIZE, SUPPORTED_IMAGE_UPLOAD_FORMATS } from 'shared/constants';
 import { sleep } from 'shared/functions';
 import * as Yup from 'yup';
 import MyPropertiesAddAmenities from './MyPropertiesAddAmenities';
@@ -54,9 +53,9 @@ const MyPropertiesAddForm = ({
         amenities: [],
 
         // Images
-        image1: null,
-        image2: null,
-        image3: null,
+        // image1: null,
+        // image2: null,
+        // image3: null,
       },
       schema: Yup.object().shape({
         // Main
@@ -87,33 +86,33 @@ const MyPropertiesAddForm = ({
         amenities: Yup.array().label('Amenities'),
 
         // Images
-        image1: Yup.mixed()
-          .nullable()
-          .required('An image is required')
-          .test('fileSize', 'File too large', (value) => value && value.size <= MAX_FILE_SIZE)
-          .test(
-            'fileFormat',
-            'Unsupported Format',
-            (value) => value && SUPPORTED_IMAGE_UPLOAD_FORMATS.includes(value.type),
-          ),
-        image2: Yup.mixed()
-          .nullable()
-          .required('An image is required')
-          .test('fileSize', 'File too large', (value) => value && value.size <= MAX_FILE_SIZE)
-          .test(
-            'fileFormat',
-            'Unsupported Format',
-            (value) => value && SUPPORTED_IMAGE_UPLOAD_FORMATS.includes(value.type),
-          ),
-        image3: Yup.mixed()
-          .nullable()
-          .required('An image is required')
-          .test('fileSize', 'File too large', (value) => value && value.size <= MAX_FILE_SIZE)
-          .test(
-            'fileFormat',
-            'Unsupported Format',
-            (value) => value && SUPPORTED_IMAGE_UPLOAD_FORMATS.includes(value.type),
-          ),
+        // image1: Yup.mixed()
+        //   .nullable()
+        //   .required('An image is required')
+        //   .test('fileSize', 'File too large', (value) => value && value.size <= MAX_FILE_SIZE)
+        //   .test(
+        //     'fileFormat',
+        //     'Unsupported Format',
+        //     (value) => value && SUPPORTED_IMAGE_UPLOAD_FORMATS.includes(value.type),
+        //   ),
+        // image2: Yup.mixed()
+        //   .nullable()
+        //   .required('An image is required')
+        //   .test('fileSize', 'File too large', (value) => value && value.size <= MAX_FILE_SIZE)
+        //   .test(
+        //     'fileFormat',
+        //     'Unsupported Format',
+        //     (value) => value && SUPPORTED_IMAGE_UPLOAD_FORMATS.includes(value.type),
+        //   ),
+        // image3: Yup.mixed()
+        //   .nullable()
+        //   .required('An image is required')
+        //   .test('fileSize', 'File too large', (value) => value && value.size <= MAX_FILE_SIZE)
+        //   .test(
+        //     'fileFormat',
+        //     'Unsupported Format',
+        //     (value) => value && SUPPORTED_IMAGE_UPLOAD_FORMATS.includes(value.type),
+        //   ),
       }),
     }),
     [apartment],

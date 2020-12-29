@@ -2,8 +2,12 @@ import Modal from 'react-bootstrap/Modal';
 import Link from 'next/link';
 import Button from 'components/Button/index';
 
-const MyPropertiesAddPropertyModal = ({ isVisible, onClose, showPropertySelection }) => {
-  // METHODS
+const MyPropertiesAddPropertyModal = ({
+  properties,
+  isVisible,
+  onClose,
+  showPropertySelection,
+}) => {
   const onDuplicate = () => {
     onClose();
     showPropertySelection();
@@ -29,14 +33,16 @@ const MyPropertiesAddPropertyModal = ({ isVisible, onClose, showPropertySelectio
           </p>
 
           <div className="mt-4 buttons">
-            <Link href="/property/add">
+            <Link href="/my-properties/add">
               <Button className="btn-yes">
                 <span className="font-weight-bold">ADD</span> NEW PROPERTY
               </Button>
             </Link>
-            <Button className="gray2 btn-no" onClick={onDuplicate}>
-              <span className="font-weight-bold">DUPLICATE</span> EXISTING PROPERTY
-            </Button>
+            {!!properties.length && (
+              <Button className="gray2 btn-no" onClick={onDuplicate}>
+                <span className="font-weight-bold">DUPLICATE</span> EXISTING PROPERTY
+              </Button>
+            )}
           </div>
         </div>
       </Modal.Body>

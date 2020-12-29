@@ -1,6 +1,8 @@
 /* eslint-disable no-unused-vars */
 import createWebStorage from 'redux-persist/lib/storage/createWebStorage';
 
+export const STORAGE_KEY = 'digirent';
+
 const createNoopStorage = () => ({
   getItem(_key) {
     return Promise.resolve(null);

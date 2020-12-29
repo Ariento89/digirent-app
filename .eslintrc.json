@@ -32,6 +32,7 @@
           ["components", "./components"],
           ["ducks", "./ducks"],
           ["hooks", "./hooks"],
+          ["pages", "./pages"],
           ["sagas", "./sagas"],
           ["services", "./services"],
           ["shared", "./shared"],
@@ -54,7 +55,8 @@
     "jsx-a11y/click-events-have-key-events": 0,
     "jsx-a11y/no-static-element-interactions": 0,
     "object-curly-newline": 0,
-    "default-case": 0
+    "default-case": 0,
+    "newline-per-chained-call": 0
   },
   "overrides": [
     {

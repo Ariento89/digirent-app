@@ -1,0 +1,11 @@
+@import '../abstract/mixins';
+@import '../abstract/variables';
+
+.DatePicker {
+  .DayPicker-Caption {
+    select {
+      color: $color-dark-gray;
+      @include font(16px, $fw-light);
+    }
+  }
+}

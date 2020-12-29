@@ -1,0 +1,11 @@
+.LoadingPage {
+  @include flex(center, center, column);
+  height: 100vh;
+  width: 100vw;
+
+  .loading-text {
+    margin-top: 15px;
+    color: $color-primary;
+    @include font(20px, $fw-light);
+  }
+}

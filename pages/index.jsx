@@ -1,17 +1,20 @@
-import { useState } from 'react';
-import { userTypes } from 'shared/types';
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useAuthentication } from 'hooks/useAuthentication';
+import { useEffect, useState } from 'react';
+import { useToasts } from 'react-toast-notifications';
+import { toastTypes, userTypes } from 'shared/types';
 import CookieOverlay from 'widgets/CookieOverlay/index';
-import AreasOfExpertise from 'widgets/HomePage/AreasOfExpertise';
-import Blog from 'widgets/HomePage/Blog';
-import ExploreOurMosePopularCities from 'widgets/HomePage/ExploreOurMosePopularCities';
-import HomePageWrapper from 'widgets/HomePage/HomePageWrapper';
-import HowDoesItWork from 'widgets/HomePage/HowDoesItWork';
-import Landing from 'widgets/HomePage/Landing';
-import LoginModal from 'widgets/HomePage/LoginModal';
-import RecentlyAddedProperties from 'widgets/HomePage/RecentlyAddedProperties';
-import RegisterModal from 'widgets/HomePage/RegisterModal';
-import SectionDivider from 'widgets/HomePage/SectionDivider';
-import WhyChooseDigiRentOverAnyAgency from 'widgets/HomePage/WhyChooseDigiRentOverAnyAgency';
+import AreasOfExpertise from 'widgets/_PageHome/AreasOfExpertise';
+import Blog from 'widgets/_PageHome/Blog';
+import ExploreOurMosePopularCities from 'widgets/_PageHome/ExploreOurMosePopularCities';
+import HomePageWrapper from 'widgets/_PageHome/HomePageWrapper';
+import HowDoesItWork from 'widgets/_PageHome/HowDoesItWork';
+import Landing from 'widgets/_PageHome/Landing';
+import LoginModal from 'widgets/_PageHome/LoginModal';
+import RecentlyAddedProperties from 'widgets/_PageHome/RecentlyAddedProperties';
+import RegisterModal from 'widgets/_PageHome/RegisterModal';
+import SectionDivider from 'widgets/_PageHome/SectionDivider';
+import WhyChooseDigiRentOverAnyAgency from 'widgets/_PageHome/WhyChooseDigiRentOverAnyAgency';
 
 const Page = () => {
   // STATES
@@ -21,7 +24,18 @@ const Page = () => {
   const [isCookieAccepted, setIsCookieAccepted] = useState(false);
   const [initialUserType, setInitialUserType] = useState(null);
 
+  // CUSTOM HOOKS
+  const { addToast } = useToasts();
+  const { sessionTimedOut, clearSessionTimeOut } = useAuthentication();
+
   // METHODS
+  useEffect(() => {
+    if (sessionTimedOut) {
+      addToast('Session timed out. Please login again.', toastTypes.WARNING);
+      clearSessionTimeOut();
+    }
+  }, [sessionTimedOut]);
+
   const onSelectRegister = (userType) => {
     setInitialUserType(userType);
     setRegisterModalVisible(true);

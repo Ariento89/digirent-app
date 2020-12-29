@@ -1,7 +1,3 @@
-@import './abstract/variables';
-@import './abstract/mixins';
-@import './abstract/breakpoint';
-
 .layout-content.account-landlord {
   padding-bottom: 400px;
 
@@ -101,6 +97,10 @@
           padding: 8px;
           border-radius: 50%;
           transition: 250ms;
+
+          .image-file-upload {
+            display: none;
+          }
 
           img {
             width: 100%;

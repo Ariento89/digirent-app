@@ -1,22 +1,18 @@
-/* eslint-disable react/jsx-closing-tag-location */
-/* eslint-disable react/no-danger */
-/* eslint-disable react/self-closing-comp */
 import cn from 'classnames';
-import { useLanguage } from 'hooks/useLanguage';
 import Head from 'next/head';
-import { useEffect } from 'react';
+import Loader from 'react-loader-spinner';
 import Footer from 'widgets/Footer';
 import Header from 'widgets/Header';
 
 const PageWrapper = ({ title, pageName, children }) => {
-  const { language } = useLanguage();
+  // const { language } = useLanguage();
 
   // eslint-disable-next-line react-hooks/rules-of-hooks
-  useEffect(() => {
-    if (window.initWeglot) {
-      window.initWeglot();
-    }
-  }, [title, language]);
+  // useEffect(() => {
+  //   if (window.initWeglot) {
+  //     window.initWeglot();
+  //   }
+  // }, [title, language]);
 
   return (
     <div className="page-wrapper">
@@ -45,7 +41,7 @@ const PageWrapper = ({ title, pageName, children }) => {
         <meta name="theme-color" content="#ffffff" />
         <title>{title}</title>
 
-        <script
+        {/* <script
           dangerouslySetInnerHTML={{
             __html: `
               window.Widget = { key: '5f89dd860307c' };
@@ -58,11 +54,11 @@ const PageWrapper = ({ title, pageName, children }) => {
               })(document, 'script');
                   `,
           }}
-        ></script>
+        ></script> */}
 
-        <script type="text/javascript" src="https://cdn.weglot.com/weglot.min.js"></script>
+        {/* <script type="text/javascript" src="https://cdn.weglot.com/weglot.min.js"></script> */}
 
-        <script
+        {/* <script
           dangerouslySetInnerHTML={{
             __html: `
               window.initWeglot = function() {
@@ -79,7 +75,7 @@ const PageWrapper = ({ title, pageName, children }) => {
               window.initWeglot()
             `,
           }}
-        ></script>
+        ></script> */}
       </Head>
 
       <Header />

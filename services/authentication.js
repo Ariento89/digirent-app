@@ -1,8 +1,9 @@
 import axios from 'axios';
 import qs from 'qs';
+import { NO_VERIFICATION_CONFIG } from 'services';
 
 export const service = {
-  login: async (body) => axios.post('/auth/', qs.stringify(body)),
+  login: async (body) => axios.post('/auth/', qs.stringify(body), NO_VERIFICATION_CONFIG),
   forgotPassword: async (body) => axios.post('/auth/forgot-password/', body),
   resetPassword: async (body) => axios.post('/auth/reset-password/', body),
 

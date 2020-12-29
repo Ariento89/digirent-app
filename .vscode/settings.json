@@ -1,3 +1,7 @@
 {
-  "typescript.suggest.paths": false
+  "typescript.suggest.paths": false,
+  "npm-intellisense.importES6": true,
+  "npm-intellisense.importQuotes": "'",
+  "npm-intellisense.importLinebreak": ";\r\n",
+  "npm-intellisense.importDeclarationType": "const"
 }

@@ -36,8 +36,12 @@ export default function configureAxios(store) {
     const modifiedError = { ...error };
 
     if (error.isAxiosError) {
-      if (error?.response?.data?.detail === 'Could not validate credentials') {
-        store.dispatch(actions.logout());
+      if (
+        ['Could not validate credentials', 'Not authenticated'].includes(
+          error?.response?.data?.detail,
+        )
+      ) {
+        store.dispatch(actions.logout({ sessionTimedOut: true }));
       } else if (error.response.data?.detail && isString(error.response.data?.detail)) {
         modifiedError.errors = [error.response.data.detail];
       } else if (error.response.data?.detail && isArray(error.response.data?.detail)) {

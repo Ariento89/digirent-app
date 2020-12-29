@@ -1,14 +1,14 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import AccountBankDetails from 'widgets/PageAccount/AccountBankDetails';
-import AccountCopyId from 'widgets/PageAccount/AccountCopyId';
-import AccountDescription from 'widgets/PageAccount/AccountDescription';
-import AccountGeneral from 'widgets/PageAccount/AccountGeneral';
-import AccountLookingFor from 'widgets/PageAccount/AccountLookingFor';
-import AccountPassword from 'widgets/PageAccount/AccountPassword';
-import AccountProfile from 'widgets/PageAccount/AccountProfile';
-import AccountProofOfEnrolment from 'widgets/PageAccount/AccountProofOfEnrolment';
-import AccountProofOfIncome from 'widgets/PageAccount/AccountProofOfIncome';
-import AccountSocialMedia from 'widgets/PageAccount/AccountSocialMedia';
+import AccountBankDetails from 'widgets/_PageAccount/AccountBankDetails';
+import AccountCopyId from 'widgets/_PageAccount/AccountCopyId';
+import AccountDescription from 'widgets/_PageAccount/AccountDescription';
+import AccountGeneral from 'widgets/_PageAccount/AccountGeneral';
+import AccountLookingFor from 'widgets/_PageAccount/AccountLookingFor';
+import AccountPassword from 'widgets/_PageAccount/AccountPassword';
+import AccountProfile from 'widgets/_PageAccount/AccountProfile';
+import AccountProofOfEnrolment from 'widgets/_PageAccount/AccountProofOfEnrolment';
+import AccountProofOfIncome from 'widgets/_PageAccount/AccountProofOfIncome';
+import AccountSocialMedia from 'widgets/_PageAccount/AccountSocialMedia';
 
 const Page = () => (
   <div className="row mt-5">

@@ -80,10 +80,10 @@ const Page = () => (
             <div key={key} className="col-12 col-md-6 col-lg-4 item">
               <PropertyInfo
                 name="Pahvale Villa"
-                location="Indore, Madhya Pradesh, India"
+                address="Indore, Madhya Pradesh, India"
                 rentFee="246"
-                bedCount="4"
-                crCount="2"
+                bedrooms="4"
+                bathrooms="2"
                 link="/property-details"
               />
             </div>
@@ -120,10 +120,10 @@ const Page = () => (
             <div key={key} className="item">
               <PropertyInfo
                 name="Pahvale Villa"
-                location="Indore, Madhya Pradesh, India"
+                address="Indore, Madhya Pradesh, India"
                 rentFee="246"
-                bedCount="4"
-                crCount="2"
+                bedrooms="4"
+                bathrooms="2"
                 houseImage={`/images/house-sample-${(index % 3) + 1}.jpg`}
                 link="/property-details"
               />

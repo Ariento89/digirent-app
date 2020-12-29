@@ -16,3 +16,8 @@ export const houseTypeOptions = [
   { name: 'Bungalow', value: 'bungalow' },
   { name: 'Flat', value: 'flat' },
 ];
+
+export const furnishTypeOptions = [
+  { name: 'Furnished', value: 'furnished' },
+  { name: 'Unfurnished', value: 'unfurnished' },
+];

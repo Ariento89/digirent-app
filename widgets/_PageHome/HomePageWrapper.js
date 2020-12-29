@@ -5,10 +5,10 @@
 import { useLanguage } from 'hooks/useLanguage';
 import Head from 'next/head';
 import Footer from 'widgets/Footer';
-import HomePageHeader from 'widgets/HomePage/HomePageHeader';
+import HomePageHeader from 'widgets/_PageHome/HomePageHeader';
 
 const HomePageWrapper = ({ title, onLoginClick, onRegisterClick, children }) => {
-  const { language } = useLanguage();
+  // const { language } = useLanguage();
 
   return (
     <div className="page-wrapper">
@@ -37,7 +37,7 @@ const HomePageWrapper = ({ title, onLoginClick, onRegisterClick, children }) => 
         <meta name="theme-color" content="#ffffff" />
         <title>{title}</title>
 
-        <script
+        {/* <script
           dangerouslySetInnerHTML={{
             __html: `
               window.Widget = { key: '5f89dd860307c' };
@@ -50,10 +50,11 @@ const HomePageWrapper = ({ title, onLoginClick, onRegisterClick, children }) => 
               })(document, 'script');
                   `,
           }}
-        ></script>
+        ></script> */}
 
-        <script type="text/javascript" src="https://cdn.weglot.com/weglot.min.js"></script>
-        <script
+        {/* <script type="text/javascript" src="https://cdn.weglot.com/weglot.min.js"></script> */}
+
+        {/* <script
           dangerouslySetInnerHTML={{
             __html: `
               if(typeof Weglot !== 'undefined') {
@@ -67,9 +68,9 @@ const HomePageWrapper = ({ title, onLoginClick, onRegisterClick, children }) => 
               }
             `,
           }}
-        ></script>
+        ></script> */}
 
-        <script
+        {/* <script
           dangerouslySetInnerHTML={{
             __html: `
               window.fbAsyncInit = function() {
@@ -93,7 +94,7 @@ const HomePageWrapper = ({ title, onLoginClick, onRegisterClick, children }) => 
               }(document, 'script', 'facebook-jssdk'));
             `,
           }}
-        ></script>
+        ></script> */}
       </Head>
 
       <HomePageHeader onLoginClick={onLoginClick} onRegisterClick={onRegisterClick} />

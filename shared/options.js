@@ -21,3 +21,10 @@ export const furnishTypeOptions = [
   { name: 'Furnished', value: 'furnished' },
   { name: 'Unfurnished', value: 'unfurnished' },
 ];
+
+export const yearOptions = [
+  { name: 'OPTION 1', value: 1 },
+  { name: 'OPTION 2', value: 2 },
+  { name: 'OPTION 3', value: 3 },
+  { name: 'OPTION 4', value: 4 },
+];

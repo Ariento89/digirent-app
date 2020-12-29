@@ -1,5 +1,4 @@
 import axios from 'axios';
-import qs from 'qs';
 import { HEADER_MULTIPART_FORM_DATA } from './index';
 
 export const service = {

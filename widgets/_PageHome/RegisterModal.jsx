@@ -1,6 +1,3 @@
-/* eslint-disable function-paren-newline */
-/* eslint-disable implicit-arrow-linebreak */
-/* eslint-disable indent */
 import cn from 'classnames';
 import Button from 'components/Button/index';
 import FieldError from 'components/FieldError/FieldError';
@@ -16,7 +13,6 @@ import { sleep } from 'shared/functions';
 import { request, toastTypes, userTypes } from 'shared/types';
 import * as Yup from 'yup';
 import AuthField from './widgets/AuthField';
-import AuthFieldDatePicker from './widgets/AuthFieldDatePicker';
 import AuthUserSelection from './widgets/AuthUserSelection';
 
 const RegisterModal = ({ initialUserType, onClose, isVisible }) => {

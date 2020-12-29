@@ -411,6 +411,10 @@
             &:hover {
               background-color: $color-primary-lighter;
             }
+
+            &.selected {
+              background-color: $color-primary-lighter !important;
+            }
           }
         }
       }

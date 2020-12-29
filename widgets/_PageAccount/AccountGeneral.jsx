@@ -30,8 +30,8 @@ const AccountGeneral = () => {
         lastName: me?.lastName || '',
         dob: me?.dob || '',
         phoneNumber: me?.phoneNumber || '',
-        city: me?.city || '',
-        gender: me?.gender || '',
+        city: me?.city || null,
+        gender: me?.gender || null,
         email: me?.email || '',
       },
       schema: Yup.object().shape({

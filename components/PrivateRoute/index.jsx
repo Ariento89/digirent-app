@@ -2,6 +2,7 @@ import LoadingPage from 'components/LoadingPage/index';
 import { useMe } from 'hooks/useMe';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import { FALLBACK_LINK } from 'shared/constants';
 import PRIVATE_ROUTES, { HOME_ROUTE } from 'shared/routes';
 
 const PrivateRoute = ({ children }) => {
@@ -14,7 +15,6 @@ const PrivateRoute = ({ children }) => {
 
   useEffect(() => {
     setLoading(false);
-    console.log(router.pathname);
     if (router.pathname === HOME_ROUTE) {
       setLoading(true);
       return;
@@ -22,7 +22,7 @@ const PrivateRoute = ({ children }) => {
 
     const route = PRIVATE_ROUTES?.[router.pathname];
     if (route && !route?.includes(me?.role)) {
-      router.replace('/').then(() => {
+      router.replace(FALLBACK_LINK).then(() => {
         setLoading(true);
       });
     } else {

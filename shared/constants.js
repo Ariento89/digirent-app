@@ -1,3 +1,5 @@
+export const FALLBACK_LINK = '/';
+
 export const SUPPORTED_FILE_UPLOAD_FORMATS = [
   'image/jpg',
   'image/jpeg',

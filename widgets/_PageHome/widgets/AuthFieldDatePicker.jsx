@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { useField, useFormikContext } from 'formik';
-import React from 'react';
+
 import DayPickerInput from 'react-day-picker/DayPickerInput';
 import { formatDate, parseDate } from 'react-day-picker/moment';
 

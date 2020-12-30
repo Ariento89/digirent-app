@@ -7,6 +7,9 @@ const ROUTES = {
   '/my-properties': [role.LANDLORD],
   '/my-properties/add': [role.LANDLORD],
   '/my-properties/update/[id]': [role.LANDLORD],
+  '/my-properties/duplicate/[id]': [role.LANDLORD],
+  '/properties': [role.LANDLORD, role.TENANT],
+  '/properties/[id]': [role.LANDLORD, role.TENANT],
 };
 
 export default ROUTES;

@@ -8,7 +8,7 @@ import { useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import { useToasts } from 'react-toast-notifications';
 import { sleep } from 'shared/functions';
-import { fbStatusTypes, request, toastTypes, userTypes } from 'shared/types';
+import { request, toastTypes, userTypes } from 'shared/types';
 import * as Yup from 'yup';
 import AuthField from './widgets/AuthField';
 import AuthUserSelection from './widgets/AuthUserSelection';
@@ -71,6 +71,7 @@ const LoginModal = ({ onClose, isVisible, onRegister }) => {
     // eslint-disable-next-line no-undef
     FB.login(
       (response) => {
+        // eslint-disable-next-line no-console
         console.log(response);
       },
       { scope: 'public_profile,email' },

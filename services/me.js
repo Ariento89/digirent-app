@@ -15,5 +15,5 @@ export const service = {
   uploadProofOfEnrollment: async (body) => axios.post('/me/upload/proof-of-enrollment', body, HEADER_MULTIPART_FORM_DATA),
   uploadProfilePhoto: async (body) => axios.post('/me/upload/profile-image', body, HEADER_MULTIPART_FORM_DATA),
 
-  fetchMyApartmentApplications: async () => axios.get('/me/applciations'), // TODO: Tell Shai to fix spelling
+  fetchMyPropertyApplications: async () => axios.get('/me/applciations'), // TODO: Tell Shai to fix spelling
 };

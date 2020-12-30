@@ -12,14 +12,7 @@ import MyPropertiesAddImages from './MyPropertiesAddImages';
 import MyPropertiesAddMainDetails from './MyPropertiesAddMainDetails';
 import MyPropertiesAddQuantities from './MyPropertiesAddQuantities';
 
-const MyPropertiesAddForm = ({
-  errors,
-  amenities,
-  apartment,
-  onSubmit,
-  isLoading,
-  loadingText,
-}) => {
+const MyPropertiesAddForm = ({ errors, amenities, property, onSubmit, isLoading, loadingText }) => {
   // STATES
   const [isSponsorChecked, setIsSponsorChecked] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -29,25 +22,25 @@ const MyPropertiesAddForm = ({
     () => ({
       defaultValues: {
         // Main
-        name: apartment?.name || '',
-        monthlyPrice: apartment?.monthlyPrice || '',
-        utilitiesPrice: apartment?.utilitiesPrice || '',
-        address: apartment?.address || '',
-        country: apartment?.country || '',
-        state: apartment?.state || '',
-        city: apartment?.city || '',
-        description: apartment?.description || '',
-        latitude: apartment?.latitude || '',
-        longitude: apartment?.longitude || '',
+        name: property?.name || '',
+        monthlyPrice: property?.monthlyPrice || '',
+        utilitiesPrice: property?.utilitiesPrice || '',
+        address: property?.address || '',
+        country: property?.country || '',
+        state: property?.state || '',
+        city: property?.city || '',
+        description: property?.description || '',
+        latitude: property?.latitude || '',
+        longitude: property?.longitude || '',
 
         // Quantities
-        houseType: apartment?.houseType || null,
-        bedrooms: apartment?.bedrooms || null,
-        bathrooms: apartment?.bathrooms || null,
-        furnishType: apartment?.furnishType || null,
-        size: apartment?.size || '',
-        availableFrom: apartment?.availableFrom || '',
-        availableTo: apartment?.availableTo || '',
+        houseType: property?.houseType || null,
+        bedrooms: property?.bedrooms || null,
+        bathrooms: property?.bathrooms || null,
+        furnishType: property?.furnishType || null,
+        size: property?.size || '',
+        availableFrom: property?.availableFrom || '',
+        availableTo: property?.availableTo || '',
 
         // Amenities
         amenities: [],
@@ -115,7 +108,7 @@ const MyPropertiesAddForm = ({
         //   ),
       }),
     }),
-    [apartment],
+    [property],
   );
   return (
     <Spinner loadingText={loadingText} isLoading={isLoading}>

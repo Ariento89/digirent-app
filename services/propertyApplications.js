@@ -3,8 +3,8 @@ import axios from 'axios';
 export const service = {
   signRequestContractCallback: async (body) => axios.post('/applications/contract', body),
 
-  fetchApplicationsForApartments: async (apartmentId) => axios.get(`/applications/${apartmentId}`),
-  apply: async (apartmentId) => axios.post(`/applications/${apartmentId}`),
+  fetchApplicationsForProperties: async (propertyId) => axios.get(`/applications/${propertyId}`),
+  apply: async (propertyId) => axios.post(`/applications/${propertyId}`),
   rejectApplication: async (applicationId) => axios.post(`/applications/${applicationId}/reject`),
   considerApplication: async (applicationId) => axios.post(`/applications/${applicationId}/consider`),
   processApplication: async (applicationId) => axios.post(`/applications/${applicationId}/process`),

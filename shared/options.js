@@ -1,8 +1,10 @@
 export const cityOptions = [
-  { name: 'City 1', value: 'city 1' },
-  { name: 'City 2', value: 'city 2' },
-  { name: 'City 3', value: 'city 3' },
-  { name: 'City 4', value: 'city 4' },
+  { name: 'Amsterdam', value: 'Amsterdam' },
+  { name: 'Den', value: 'Den' },
+  { name: 'Rotterdam', value: 'Rotterdam' },
+  { name: 'Eindhoven', value: 'Eindhoven' },
+  { name: 'Utrecht', value: 'Utrecht' },
+  { name: 'Arnhem', value: 'Arnhem' },
 ];
 
 export const genderOptions = [
@@ -27,4 +29,16 @@ export const yearOptions = [
   { name: 'OPTION 2', value: 2 },
   { name: 'OPTION 3', value: 3 },
   { name: 'OPTION 4', value: 4 },
+];
+
+export const availabilityOptions = [
+  { name: 'Temporary', value: 'temporary' },
+  { name: 'Permanent', value: 'permanent' },
+];
+
+export const locationOptions = [
+  { name: 'India', value: 'India' },
+  { name: 'Netherland', value: 'Netherland' },
+  { name: 'Japan', value: 'Japan' },
+  { name: 'USA', value: 'USA' },
 ];

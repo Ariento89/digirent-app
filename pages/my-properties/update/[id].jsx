@@ -1,8 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import LoadingPage from 'components/LoadingPage/index';
-import { types } from 'ducks/apartments';
+import { types } from 'ducks/properties';
 import { useAmenities } from 'hooks/useAmenities';
-import { useApartments } from 'hooks/useApartments';
+import { useProperties } from 'hooks/useProperties';
 import { useRouter } from 'next/router';
 import { useCallback, useEffect, useState } from 'react';
 import { useToasts } from 'react-toast-notifications';
@@ -12,20 +12,20 @@ import MyPropertiesAddForm from 'widgets/_PageMyPropertiesAdd/MyPropertiesAddFor
 
 const Page = () => {
   // STATES
-  const [apartment, setApartment] = useState(null);
+  const [property, setProperty] = useState(null);
   const [amenities, setAmenities] = useState([]);
 
   // CUSTOM HOOKS
   const router = useRouter();
-  const { id: apartmentId } = router.query;
+  const { id: propertyId } = router.query;
   const { addToast } = useToasts();
   const {
-    getApartment,
-    updateApartment,
-    status: apartmentsRequestStatus,
-    errors: apartmentsRequestErrors,
-    recentRequest: apartmentsRecentRequest,
-  } = useApartments();
+    getProperty,
+    updateProperty,
+    status: propertiesRequestStatus,
+    errors: propertiesRequestErrors,
+    recentRequest: propertiesRecentRequest,
+  } = useProperties();
   const {
     fetchAmenities,
     status: amenitiesRequestStatus,
@@ -42,11 +42,11 @@ const Page = () => {
     );
   };
 
-  const onGetApartmentSuccess = ({ response }) => {
-    setApartment(response);
+  const onGetPropertySuccess = ({ response }) => {
+    setProperty(response);
   };
 
-  const onGetApartmentError = () => {
+  const onGetPropertyError = () => {
     router.replace('/404');
   };
 
@@ -58,49 +58,49 @@ const Page = () => {
   }, []);
 
   useEffect(() => {
-    if (apartmentId) {
-      getApartment(
-        { apartmentId },
+    if (propertyId) {
+      getProperty(
+        { propertyId },
         {
-          onSuccess: onGetApartmentSuccess,
-          onError: onGetApartmentError,
+          onSuccess: onGetPropertySuccess,
+          onError: onGetPropertyError,
         },
       );
     }
-  }, [apartmentId]);
+  }, [propertyId]);
 
   const getLoadingText = useCallback(() => {
     let loadingText = '';
 
-    if (apartmentsRequestStatus === request.REQUESTING) {
-      if (apartmentsRecentRequest === types.UPDATE_APARTMENT) {
-        loadingText = 'Updating apartment...';
-      } else if (apartmentsRecentRequest === types.GET_APARTMENT) {
-        loadingText = 'Fetching apartment...';
+    if (propertiesRequestStatus === request.REQUESTING) {
+      if (propertiesRecentRequest === types.UPDATE_PROPERTY) {
+        loadingText = 'Updating property...';
+      } else if (propertiesRecentRequest === types.GET_PROPERTY) {
+        loadingText = 'Fetching property...';
       }
     } else if (amenitiesRequestStatus === request.REQUESTING) {
       loadingText = 'Fetching amenities...';
     }
 
     return loadingText;
-  }, [apartmentsRequestStatus, apartmentsRecentRequest, amenitiesRequestStatus]);
+  }, [propertiesRequestStatus, propertiesRecentRequest, amenitiesRequestStatus]);
 
   const isLoading = useCallback(
-    () => [apartmentsRequestStatus, amenitiesRequestStatus].includes(request.REQUESTING),
-    [apartmentsRequestStatus, amenitiesRequestStatus],
+    () => [propertiesRequestStatus, amenitiesRequestStatus].includes(request.REQUESTING),
+    [propertiesRequestStatus, amenitiesRequestStatus],
   );
 
   const onUpdateSuccess = () => {
-    addToast('Successfully updated apartment.', toastTypes.SUCCESS);
+    addToast('Successfully updated property.', toastTypes.SUCCESS);
   };
 
   const onUpdateError = () => {
-    addToast('An error occurred while updating your apartment.', toastTypes.ERROR);
+    addToast('An error occurred while updating your property.', toastTypes.ERROR);
   };
 
   const onSubmit = (data) => {
-    updateApartment(
-      { apartmentId, ...data },
+    updateProperty(
+      { propertyId, ...data },
       {
         onSuccess: onUpdateSuccess,
         onError: onUpdateError,
@@ -108,8 +108,8 @@ const Page = () => {
     );
   };
 
-  return apartment ? (
-    <PageWrapper title="DigiRent - Update Property" pageName="property-add">
+  return property ? (
+    <PageWrapper title="DigiRent - Update Property" pageName="my-properties-add">
       <img src="/images/add-property-bg.jpg" className="main-background" alt="background" />
 
       <div className="container-lg mt-5">
@@ -126,11 +126,11 @@ const Page = () => {
 
         <MyPropertiesAddForm
           amenities={amenities}
-          apartment={apartment}
+          property={property}
           onSubmit={onSubmit}
           isLoading={isLoading()}
           loadingText={getLoadingText()}
-          errors={[...apartmentsRequestErrors, ...amenitiesRequestErrors]}
+          errors={[...propertiesRequestErrors, ...amenitiesRequestErrors]}
         />
       </div>
     </PageWrapper>

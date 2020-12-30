@@ -46,7 +46,7 @@ const HomePageHeader = ({ onLoginClick, onRegisterClick }) => {
           </div>
 
           <div className="main-menu">
-            <Link href="/property-list">
+            <Link href="/properties">
               <p className="links">RENTALS</p>
             </Link>
 

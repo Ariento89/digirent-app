@@ -1,4 +1,4 @@
-.layout-content.property-list {
+.layout-content.properties {
   padding-top: 0;
   padding-bottom: 400px;
 
@@ -181,10 +181,10 @@
   }
 
   .rental-houses {
-    margin-top: 150px;
+    padding-top: 150px;
 
     @include media-breakpoint-down(sm) {
-      margin-top: 100px;
+      padding-top: 100px;
     }
 
     .list {

@@ -10,7 +10,6 @@ const MyPropertiesDeleteConfirmationModal = ({ property, isVisible, onClose }) =
   // METHODS
   const onDelete = () => {
     // TODO: Implement delete functionality once there is an endpoint.
-    console.log(property);
     addToast('No backend endpoint for this yet...', toastTypes.WARNING);
   };
 

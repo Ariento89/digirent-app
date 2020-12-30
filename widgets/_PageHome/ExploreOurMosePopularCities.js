@@ -50,7 +50,7 @@ const ExploreOurMosePopularCities = () => (
         <div key={`city-${index}`} className="item">
           <div className="city" style={{ backgroundImage: `url(${cityImage})` }}>
             <h3 className="title text-white">THE CITY</h3>
-            <Link href="/property-list">
+            <Link href="/properties">
               <button className="button min-width">VIEW</button>
             </Link>
           </div>

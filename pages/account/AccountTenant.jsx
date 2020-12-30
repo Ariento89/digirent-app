@@ -24,15 +24,10 @@ const Page = () => (
       </div>
 
       <AccountDescription />
-
       <AccountLookingFor />
-
       <AccountBankDetails />
-
       <AccountCopyId />
-
       <AccountProofOfIncome />
-
       <AccountProofOfEnrolment />
     </div>
   </div>

@@ -1,3 +1,5 @@
+import { memoize } from 'lodash';
+import moment from 'moment';
 import { request } from './types';
 
 // UI FUNCTIONS
@@ -22,6 +24,8 @@ export const showMessage = (status, successMessage, errorMessage) => {
     console.error('ERROR: ', errorMessage);
   }
 };
+
+export const formatDate = memoize((datetime) => moment(datetime).format('MM/DD/YYYY'));
 
 // SERVICE FUNCTIONS
 export const modifiedCallback = (callback, successMessage, errorMessage, extraCallback = null) => (

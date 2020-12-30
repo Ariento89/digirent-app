@@ -38,13 +38,13 @@ const Header = () => {
         <div className="header-menu">
           <div className="header-menu-wrapper">
             <div className="note">
-              <Link href="/property">
+              <Link href="/properties">
                 <span>List a property</span>
               </Link>
             </div>
 
             <div className="main-menu">
-              <Link href="/property">
+              <Link href="/properties">
                 <a className="px-2 uppercase text-white">Properties</a>
               </Link>
               <span>|</span>

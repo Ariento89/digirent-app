@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import LoadingPage from 'components/LoadingPage/index';
-import { useApartments } from 'hooks/useApartments';
+import { useProperties } from 'hooks/useProperties';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import PageWrapper from 'widgets/PageWrapper';
@@ -9,40 +9,40 @@ import PropertiesDetailsRecentlyViewed from 'widgets/_PagePropertiesDetails/Prop
 
 const Page = () => {
   // STATES
-  const [apartment, setApartment] = useState(null);
+  const [property, setProperty] = useState(null);
 
   // CUSTOM HOOKS
   const router = useRouter();
-  const { id: apartmentId } = router.query;
-  const { getApartment } = useApartments();
+  const { id: propertyId } = router.query;
+  const { getProperty } = useProperties();
 
   // METHODS
-  const onGetApartmentSuccess = ({ response }) => {
-    setApartment(response);
+  const onGetPropertySuccess = ({ response }) => {
+    setProperty(response);
   };
 
-  const onGetApartmentError = () => {
+  const onGetPropertyError = () => {
     router.replace('/404');
   };
 
   useEffect(() => {
-    if (apartmentId) {
-      getApartment(
-        { apartmentId },
+    if (propertyId) {
+      getProperty(
+        { propertyId },
         {
-          onSuccess: onGetApartmentSuccess,
-          onError: onGetApartmentError,
+          onSuccess: onGetPropertySuccess,
+          onError: onGetPropertyError,
         },
       );
     }
-  }, [apartmentId]);
+  }, [propertyId]);
 
-  return apartment ? (
+  return property ? (
     <PageWrapper title="DigiRent - Property Details" pageName="property-details">
       <img src="/images/main-left-bg.svg" className="left-main-background" alt="left bg" />
       <img src="/images/main-right-bg.svg" className="right-main-background" alt="right bg" />
 
-      <PropertiesDetailsMain apartment={apartment} />
+      <PropertiesDetailsMain property={property} />
       <PropertiesDetailsRecentlyViewed />
     </PageWrapper>
   ) : (

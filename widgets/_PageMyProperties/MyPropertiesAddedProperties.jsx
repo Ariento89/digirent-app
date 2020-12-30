@@ -28,8 +28,8 @@ const MyPropertiesAddedProperties = ({
               rentFee={property.monthlyPrice}
               bedrooms={property.bedrooms}
               bathrooms={property.bathrooms}
-              buttonName="SEE REACTIONS"
-              onClick={onSeeReaction}
+              buttonName="SEE APPLICATIONS"
+              onClick={() => onSeeReaction(property)}
               onDelete={onDeleteProperty}
               selectionType={null}
             />

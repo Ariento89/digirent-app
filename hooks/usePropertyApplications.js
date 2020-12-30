@@ -1,18 +1,18 @@
-import { actions, types } from 'ducks/apartmentApplications';
+import { actions, types } from 'ducks/propertyApplications';
 import { useState } from 'react';
 import { onCallback } from 'shared/functions';
 import { request } from 'shared/types';
 import { useActionDispatch } from './useActionDispatch';
 
-export const useApartmentApplications = () => {
+export const usePropertyApplications = () => {
   // STATES
   const [status, setStatus] = useState(request.NONE);
   const [errors, setErrors] = useState([]);
   const [recentRequest, setRecentRequest] = useState();
 
   // ACTIONS
-  const fetchApplicationsForApartmentsAction = useActionDispatch(
-    actions.fetchApplicationsForApartments,
+  const fetchApplicationsForPropertiesAction = useActionDispatch(
+    actions.fetchApplicationsForProperties,
   );
   const applyAction = useActionDispatch(actions.apply);
   const rejectApplicationAction = useActionDispatch(actions.rejectApplication);
@@ -46,12 +46,12 @@ export const useApartmentApplications = () => {
   };
 
   // REQUEST METHODS
-  const fetchApplicationsForApartments = (data, callback = {}) => {
+  const fetchApplicationsForProperties = (data, callback = {}) => {
     executeRequest(
       data,
       callback,
-      fetchApplicationsForApartmentsAction,
-      types.FETCH_APPLICATIONS_FOR_APARTMENTS,
+      fetchApplicationsForPropertiesAction,
+      types.FETCH_APPLICATIONS_FOR_PROPERTIES,
     );
   };
 
@@ -89,7 +89,7 @@ export const useApartmentApplications = () => {
   };
 
   return {
-    fetchApplicationsForApartments,
+    fetchApplicationsForProperties,
     apply,
     rejectApplication,
     considerApplication,

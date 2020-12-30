@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useApartments } from 'hooks/useApartments';
+import { useProperties } from 'hooks/useProperties';
 import { useEffect, useState } from 'react';
 import { useToasts } from 'react-toast-notifications';
 import { request, toastTypes } from 'shared/types';
@@ -9,7 +9,7 @@ import MyPropertiesAddPropertyModal from 'widgets/_PageMyProperties/MyProperties
 import MyPropertiesDeleteConfirmationModal from 'widgets/_PageMyProperties/MyPropertiesDeleteConfirmationModal';
 import MyPropertiesLanding from 'widgets/_PageMyProperties/MyPropertiesLanding';
 import MyPropertiesPropertySelectionModal from 'widgets/_PageMyProperties/MyPropertiesPropertySelectionModal';
-import MyPropertiesSeeReactionsModal from 'widgets/_PageMyProperties/MyPropertiesSeeReactionsModal';
+import MyPropertiesApplicationsModal from 'widgets/_PageMyProperties/MyPropertiesApplicationsModal';
 
 const Page = () => {
   // STATES
@@ -22,7 +22,7 @@ const Page = () => {
 
   // CUSTOM HOOKS
   const { addToast } = useToasts();
-  const { fetchApartments, status, errors } = useApartments();
+  const { fetchProperties, status, errors } = useProperties();
 
   // METHODS
   const onFetchSuccess = ({ response }) => {
@@ -34,7 +34,7 @@ const Page = () => {
   };
 
   useEffect(() => {
-    fetchApartments(null, {
+    fetchProperties(null, {
       onSuccess: onFetchSuccess,
       onError: onFetchError,
     });
@@ -47,7 +47,10 @@ const Page = () => {
 
   const onAddProperty = () => setAddPropertyModalVisible(true);
 
-  const onSeeReaction = () => setSeeReactionModalVisible(true);
+  const onSeeReaction = (property) => {
+    setSelectedProperty(property);
+    setSeeReactionModalVisible(true);
+  };
 
   return (
     <>
@@ -66,7 +69,8 @@ const Page = () => {
         />
       </PageWrapper>
 
-      <MyPropertiesSeeReactionsModal
+      <MyPropertiesApplicationsModal
+        property={selectedProperty}
         isVisible={seeReactionModalVisible}
         onClose={() => setSeeReactionModalVisible(false)}
       />

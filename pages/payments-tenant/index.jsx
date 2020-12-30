@@ -34,7 +34,7 @@ const Page = () => {
               <p className="text-escrow">UPLOAD PAYMENT TO ESCROW</p>
               <p className="text-paid">PAID</p>
               <p className="text-keys">
-                RECEIVED KEYS AND APARTMENT AS PROMISED?
+                RECEIVED KEYS AND PROPERTY AS PROMISED?
                 <span className="subtitle">TO RELEASE THE PAYMENTS</span>
               </p>
             </div>
@@ -55,7 +55,7 @@ const Page = () => {
               </div>
               <div className="keys">
                 <p className="column-label d-block d-md-none">
-                  RECEIVED KEYS AND APARTMENT AS PROMISED?
+                  RECEIVED KEYS AND PROPERTY AS PROMISED?
                 </p>
                 <div className="buttons">
                   <button className="button min-width-100" onClick={onShowKeysModal}>

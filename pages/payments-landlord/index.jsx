@@ -39,7 +39,7 @@ const Page = () => {
               <p className="text-escrow">UPLOAD PAYMENT TO ESCROW</p>
               <p className="text-paid">PAID</p>
               <p className="text-keys">
-                HANDED THE KEYS AND DELIVERED APARTMENT AS PROMISED?
+                HANDED THE KEYS AND DELIVERED PROPERTIE AS PROMISED?
                 <span className="subtitle">TO RELEASE THE PAYMENTS</span>
               </p>
             </div>
@@ -64,7 +64,7 @@ const Page = () => {
               </div>
               <div className="keys">
                 <p className="column-label d-block d-md-none">
-                  HANDED THE KEYS AND DELIVERED APARTMENT AS PROMISED?
+                  HANDED THE KEYS AND DELIVERED PROPERTIE AS PROMISED?
                 </p>
                 <div className="buttons">
                   <button className="button min-width-100" onClick={onShowKeysModal}>
@@ -197,7 +197,7 @@ const Page = () => {
 
           <div className="main-content">
             <p className="description">
-              DID YOU HANDED THE KEYS AND DELIVER APARTMENTS AS PROMISED?
+              DID YOU HANDED THE KEYS AND DELIVER PROPERTIES AS PROMISED?
             </p>
 
             <div className="mt-4 buttons">

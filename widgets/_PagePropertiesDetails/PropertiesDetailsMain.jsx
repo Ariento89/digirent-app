@@ -1,7 +1,7 @@
 /* eslint-disable implicit-arrow-linebreak */
 import Button from 'components/Button/index';
 import FieldError from 'components/FieldError/FieldError';
-import { useApartmentApplications } from 'hooks/useApartmentApplications';
+import { usePropertyApplications } from 'hooks/usePropertyApplications';
 import { useMe } from 'hooks/useMe';
 import { useToasts } from 'react-toast-notifications';
 import { request, role, toastTypes } from 'shared/types';
@@ -12,17 +12,16 @@ import PropertiesDetailsLandlord from 'widgets/_PagePropertiesDetails/Properties
 import PropertiesDetailsName from 'widgets/_PagePropertiesDetails/PropertiesDetailsName';
 import PropertiesDetailsQuantities from 'widgets/_PagePropertiesDetails/PropertiesDetailsQuantities';
 
-const PropertiesDetailsMain = ({ apartment }) => {
-  // STATES
+const PropertiesDetailsMain = ({ property }) => {
   // CUSTOM HOOKS
   const { addToast } = useToasts();
   const { me } = useMe();
-  const { apply, status, errors } = useApartmentApplications();
+  const { apply, status, errors } = usePropertyApplications();
 
   // MEHODS
   const onApply = () => {
     apply(
-      { apartmentId: apartment.id },
+      { propertyId: property.id },
       {
         onSuccess: () => addToast('Successfully applied for the property.', toastTypes.SUCCESS),
         onError: () =>
@@ -37,15 +36,15 @@ const PropertiesDetailsMain = ({ apartment }) => {
         <div className="col-12 col-xl-7">
           <PropertiesDetailsImages />
 
-          <PropertiesDetailsDescription apartment={apartment} />
+          <PropertiesDetailsDescription property={property} />
         </div>
 
         <div className="col-12 col-xl-5 mt-5 mt-xl-0">
-          <PropertiesDetailsName apartment={apartment} />
+          <PropertiesDetailsName property={property} />
 
-          <PropertiesDetailsQuantities apartment={apartment} />
+          <PropertiesDetailsQuantities property={property} />
 
-          <PropertiesDetailsAmenities apartment={apartment} />
+          <PropertiesDetailsAmenities property={property} />
 
           {me?.role === role.TENANT && (
             <Button

@@ -1,10 +1,10 @@
-const PropertiesDetailsName = ({ apartment }) => (
+const PropertiesDetailsName = ({ property }) => (
   <div className="property-name">
     <span className="apartment-text">APARTMENT</span>
-    <p className="name">{apartment?.name}</p>
+    <p className="name">{property?.name}</p>
     <div className="d-flex align-items-center">
       <img src="/images/icon/icon-map-marker-primary.svg" height="20" width="20" alt="icon" />
-      <p className="ml-2 main-desc">{apartment?.address}</p>
+      <p className="ml-2 main-desc">{property?.address}</p>
     </div>
 
     <button className="btn-open-map">

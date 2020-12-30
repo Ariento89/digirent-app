@@ -1,8 +1,10 @@
 export const cityOptions = [
-  { name: 'City 1', value: 'city 1' },
-  { name: 'City 2', value: 'city 2' },
-  { name: 'City 3', value: 'city 3' },
-  { name: 'City 4', value: 'city 4' },
+  { name: 'Amsterdam', value: 'Amsterdam' },
+  { name: 'Den', value: 'Den' },
+  { name: 'Rotterdam', value: 'Rotterdam' },
+  { name: 'Eindhoven', value: 'Eindhoven' },
+  { name: 'Utrecht', value: 'Utrecht' },
+  { name: 'Arnhem', value: 'Arnhem' },
 ];
 
 export const genderOptions = [

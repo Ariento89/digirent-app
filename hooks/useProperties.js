@@ -1,20 +1,20 @@
-import { actions, types } from 'ducks/apartments';
+import { actions, types } from 'ducks/properties';
 import { useState } from 'react';
 import { onCallback } from 'shared/functions';
 import { request } from 'shared/types';
 import { useActionDispatch } from './useActionDispatch';
 
-export const useApartments = () => {
+export const useProperties = () => {
   // STATES
   const [status, setStatus] = useState(request.NONE);
   const [errors, setErrors] = useState([]);
   const [recentRequest, setRecentRequest] = useState();
 
   // ACTIONS
-  const fetchApartmentsAction = useActionDispatch(actions.fetchApartments);
-  const createApartmentAction = useActionDispatch(actions.createApartment);
-  const getApartmentAction = useActionDispatch(actions.getApartment);
-  const updateApartmentAction = useActionDispatch(actions.updateApartment);
+  const fetchPropertiesAction = useActionDispatch(actions.fetchProperties);
+  const createPropertyAction = useActionDispatch(actions.createProperty);
+  const getPropertyAction = useActionDispatch(actions.getProperty);
+  const updatePropertyAction = useActionDispatch(actions.updateProperty);
   const uploadImageAction = useActionDispatch(actions.uploadImage);
   const uploadVideosAction = useActionDispatch(actions.uploadVideos);
 
@@ -42,20 +42,20 @@ export const useApartments = () => {
   };
 
   // REQUEST METHODS
-  const fetchApartments = (data, callback = {}) => {
-    executeRequest(data, callback, fetchApartmentsAction, types.FETCH_APARTMENTS);
+  const fetchProperties = (data, callback = {}) => {
+    executeRequest(data, callback, fetchPropertiesAction, types.FETCH_PROPERTIES);
   };
 
-  const createApartment = (data, callback = {}) => {
-    executeRequest(data, callback, createApartmentAction, types.CREATE_APARTMENT);
+  const createProperty = (data, callback = {}) => {
+    executeRequest(data, callback, createPropertyAction, types.CREATE_PROPERTY);
   };
 
-  const getApartment = (data, callback = {}) => {
-    executeRequest(data, callback, getApartmentAction, types.GET_APARTMENT);
+  const getProperty = (data, callback = {}) => {
+    executeRequest(data, callback, getPropertyAction, types.GET_PROPERTY);
   };
 
-  const updateApartment = (data, callback = {}) => {
-    executeRequest(data, callback, updateApartmentAction, types.UPDATE_APARTMENT);
+  const updateProperty = (data, callback = {}) => {
+    executeRequest(data, callback, updatePropertyAction, types.UPDATE_PROPERTY);
   };
 
   const uploadImage = (data, callback = {}) => {
@@ -67,10 +67,10 @@ export const useApartments = () => {
   };
 
   return {
-    fetchApartments,
-    createApartment,
-    getApartment,
-    updateApartment,
+    fetchProperties,
+    createProperty,
+    getProperty,
+    updateProperty,
     uploadImage,
     uploadVideos,
     status,

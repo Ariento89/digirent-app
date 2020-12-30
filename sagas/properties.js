@@ -1,51 +1,51 @@
-import { types } from 'ducks/apartments';
+import { types } from 'ducks/properties';
 import { call, takeLatest } from 'redux-saga/effects';
-import { service } from 'services/apartments';
+import { service } from 'services/properties';
 import { request } from 'shared/types';
 
 /* WORKERS */
-function* fetchApartments({ payload }) {
+function* fetchProperties({ payload }) {
   const { callback, ...data } = payload;
   callback({ status: request.REQUESTING });
 
   try {
-    const response = yield call(service.fetchApartments, data);
+    const response = yield call(service.fetchProperties, data);
     callback({ status: request.SUCCESS, response: response.data });
   } catch (e) {
     callback({ status: request.ERROR, errors: e.errors });
   }
 }
 
-function* createApartment({ payload }) {
+function* createProperty({ payload }) {
   const { callback, ...data } = payload;
   callback({ status: request.REQUESTING });
 
   try {
-    const response = yield call(service.createApartment, data);
+    const response = yield call(service.createProperty, data);
     callback({ status: request.SUCCESS, response: response.data });
   } catch (e) {
     callback({ status: request.ERROR, errors: e.errors });
   }
 }
 
-function* getApartment({ payload }) {
-  const { callback, apartmentId } = payload;
+function* getProperty({ payload }) {
+  const { callback, propertyId } = payload;
   callback({ status: request.REQUESTING });
 
   try {
-    const response = yield call(service.getApartment, apartmentId);
+    const response = yield call(service.getProperty, propertyId);
     callback({ status: request.SUCCESS, response: response.data });
   } catch (e) {
     callback({ status: request.ERROR, errors: e.errors });
   }
 }
 
-function* updateApartment({ payload }) {
-  const { callback, apartmentId, ...data } = payload;
+function* updateProperty({ payload }) {
+  const { callback, propertyId, ...data } = payload;
   callback({ status: request.REQUESTING });
 
   try {
-    const response = yield call(service.updateApartment, apartmentId, data);
+    const response = yield call(service.updateProperty, propertyId, data);
     callback({ status: request.SUCCESS, response: response.data });
   } catch (e) {
     callback({ status: request.ERROR, errors: e.errors });
@@ -53,14 +53,14 @@ function* updateApartment({ payload }) {
 }
 
 function* uploadImage({ payload }) {
-  const { callback, apartmentId, file } = payload;
+  const { callback, propertyId, file } = payload;
   callback({ status: request.REQUESTING });
 
   const formData = new FormData();
   formData.append('file', file);
 
   try {
-    const response = yield call(service.uploadImage, apartmentId, formData);
+    const response = yield call(service.uploadImage, propertyId, formData);
     callback({ status: request.SUCCESS, response: response.data });
   } catch (e) {
     callback({ status: request.ERROR, errors: e.errors });
@@ -68,14 +68,14 @@ function* uploadImage({ payload }) {
 }
 
 function* uploadVideos({ payload }) {
-  const { callback, apartmentId, file } = payload;
+  const { callback, propertyId, file } = payload;
   callback({ status: request.REQUESTING });
 
   const formData = new FormData();
   formData.append('file', file);
 
   try {
-    const response = yield call(service.uploadVideos, apartmentId, formData);
+    const response = yield call(service.uploadVideos, propertyId, formData);
     callback({ status: request.SUCCESS, response: response.data });
   } catch (e) {
     callback({ status: request.ERROR, errors: e.errors });
@@ -83,20 +83,20 @@ function* uploadVideos({ payload }) {
 }
 
 /* WATCHERS */
-const fetchApartmentsWatcherSaga = function* fetchApartmentsWatcherSaga() {
-  yield takeLatest(types.FETCH_APARTMENTS, fetchApartments);
+const fetchPropertiesWatcherSaga = function* fetchPropertiesWatcherSaga() {
+  yield takeLatest(types.FETCH_PROPERTIES, fetchProperties);
 };
 
-const createApartmentWatcherSaga = function* createApartmentWatcherSaga() {
-  yield takeLatest(types.CREATE_APARTMENT, createApartment);
+const createPropertyWatcherSaga = function* createPropertyWatcherSaga() {
+  yield takeLatest(types.CREATE_PROPERTY, createProperty);
 };
 
-const getApartmentWatcherSaga = function* getApartmentWatcherSaga() {
-  yield takeLatest(types.GET_APARTMENT, getApartment);
+const getPropertyWatcherSaga = function* getPropertyWatcherSaga() {
+  yield takeLatest(types.GET_PROPERTY, getProperty);
 };
 
-const updateApartmentWatcherSaga = function* updateApartmentWatcherSaga() {
-  yield takeLatest(types.UPDATE_APARTMENT, updateApartment);
+const updatePropertyWatcherSaga = function* updatePropertyWatcherSaga() {
+  yield takeLatest(types.UPDATE_PROPERTY, updateProperty);
 };
 
 const uploadImageWatcherSaga = function* uploadImageWatcherSaga() {
@@ -108,10 +108,10 @@ const uploadVideosWatcherSaga = function* uploadVideosWatcherSaga() {
 };
 
 export default [
-  fetchApartmentsWatcherSaga(),
-  createApartmentWatcherSaga(),
-  getApartmentWatcherSaga(),
-  updateApartmentWatcherSaga(),
+  fetchPropertiesWatcherSaga(),
+  createPropertyWatcherSaga(),
+  getPropertyWatcherSaga(),
+  updatePropertyWatcherSaga(),
   uploadImageWatcherSaga(),
   uploadVideosWatcherSaga(),
 ];

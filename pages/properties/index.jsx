@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useApartments } from 'hooks/useApartments';
+import { useProperties } from 'hooks/useProperties';
 import { useEffect, useRef, useState } from 'react';
 import { useToasts } from 'react-toast-notifications';
 import { request, toastTypes } from 'shared/types';
@@ -15,7 +15,7 @@ const Page = () => {
 
   // CUSTOM HOOKS
   const { addToast } = useToasts();
-  const { fetchApartments, status, errors } = useApartments();
+  const { fetchProperties, status, errors } = useProperties();
 
   // METHODS
   const onFetchSuccess = ({ response }) => {
@@ -31,7 +31,7 @@ const Page = () => {
       searchResultRef.current.scrollIntoView();
     }
 
-    fetchApartments(data, {
+    fetchProperties(data, {
       onSuccess: onFetchSuccess,
       onError: onFetchError,
     });

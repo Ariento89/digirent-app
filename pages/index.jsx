@@ -74,7 +74,7 @@ const Page = () => {
         <SectionDivider
           title="TENANTS"
           description="Find your new home online"
-          link="/property-list"
+          link="/properties"
         />
 
         <AreasOfExpertise />

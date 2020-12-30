@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useAmenities } from 'hooks/useAmenities';
-import { useApartments } from 'hooks/useApartments';
+import { useProperties } from 'hooks/useProperties';
 import { useCallback, useEffect, useState } from 'react';
 import { useToasts } from 'react-toast-notifications';
 import { request, toastTypes } from 'shared/types';
@@ -14,10 +14,10 @@ const Page = () => {
   // CUSTOM HOOKS
   const { addToast } = useToasts();
   const {
-    createApartment,
-    status: apartmentsRequestStatus,
-    errors: apartmentsRequestErrors,
-  } = useApartments();
+    createProperty,
+    status: propertiesRequestStatus,
+    errors: propertiesRequestErrors,
+  } = useProperties();
   const {
     fetchAmenities,
     status: amenitiesRequestStatus,
@@ -44,30 +44,30 @@ const Page = () => {
   const getLoadingText = useCallback(() => {
     let loadingText = '';
 
-    if (apartmentsRequestStatus === request.REQUESTING) {
-      loadingText = 'Creating apartment...';
+    if (propertiesRequestStatus === request.REQUESTING) {
+      loadingText = 'Creating property...';
     } else if (amenitiesRequestStatus === request.REQUESTING) {
       loadingText = 'Fetching amenities...';
     }
 
     return loadingText;
-  }, [apartmentsRequestStatus, amenitiesRequestStatus]);
+  }, [propertiesRequestStatus, amenitiesRequestStatus]);
 
   const isLoading = useCallback(
-    () => [apartmentsRequestStatus, amenitiesRequestStatus].includes(request.REQUESTING),
-    [apartmentsRequestStatus, amenitiesRequestStatus],
+    () => [propertiesRequestStatus, amenitiesRequestStatus].includes(request.REQUESTING),
+    [propertiesRequestStatus, amenitiesRequestStatus],
   );
 
   const onCreateSuccess = () => {
-    addToast('Successfully created apartment.', toastTypes.SUCCESS);
+    addToast('Successfully created property.', toastTypes.SUCCESS);
   };
 
   const onCreateError = () => {
-    addToast('An error occurred while creating your apartment.', toastTypes.ERROR);
+    addToast('An error occurred while creating your property.', toastTypes.ERROR);
   };
 
   const onSubmit = (data) => {
-    createApartment(data, {
+    createProperty(data, {
       onSuccess: onCreateSuccess,
       onError: onCreateError,
     });
@@ -91,11 +91,11 @@ const Page = () => {
 
         <MyPropertiesAddForm
           amenities={amenities}
-          apartment={null}
+          property={null}
           onSubmit={onSubmit}
           isLoading={isLoading()}
           loadingText={getLoadingText()}
-          errors={[...apartmentsRequestErrors, ...amenitiesRequestErrors]}
+          errors={[...propertiesRequestErrors, ...amenitiesRequestErrors]}
         />
       </div>
     </PageWrapper>

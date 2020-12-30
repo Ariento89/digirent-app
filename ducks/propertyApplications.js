@@ -1,9 +1,9 @@
 import { createAction } from 'redux-actions';
 
-export const key = 'APARTMENT_APPLICATIONS';
+export const key = 'PROPERTY_APPLICATIONS';
 
 export const types = {
-  FETCH_APPLICATIONS_FOR_APARTMENTS: `${key}/FETCH_APPLICATIONS_FOR_APARTMENTS`,
+  FETCH_APPLICATIONS_FOR_PROPERTIES: `${key}/FETCH_APPLICATIONS_FOR_PROPERTIES`,
   APPLY: `${key}/APPLY`,
   REJECT_APPLICATION: `${key}/REJECT_APPLICATION`,
   CONSIDER_APPLICATION: `${key}/CONSIDER_APPLICATION`,
@@ -14,7 +14,7 @@ export const types = {
 };
 
 export const actions = {
-  fetchApplicationsForApartments: createAction(types.FETCH_APPLICATIONS_FOR_APARTMENTS),
+  fetchApplicationsForProperties: createAction(types.FETCH_APPLICATIONS_FOR_PROPERTIES),
   apply: createAction(types.APPLY),
   rejectApplication: createAction(types.REJECT_APPLICATION),
   considerApplication: createAction(types.CONSIDER_APPLICATION),

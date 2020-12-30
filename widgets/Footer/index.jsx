@@ -80,22 +80,22 @@ const Footer = () => (
           <div className="col-6 col-md-4 col-lg header-column">
             <h3>Cities</h3>
             <div className="list">
-              <Link href="/property-list">
+              <Link href="/properties">
                 <a>Amsterdam</a>
               </Link>
-              <Link href="/property-list">
+              <Link href="/properties">
                 <a>Den Haag</a>
               </Link>
-              <Link href="/property-list">
+              <Link href="/properties">
                 <a>Rotterdam</a>
               </Link>
-              <Link href="/property-list">
+              <Link href="/properties">
                 <a>Eindhoven</a>
               </Link>
-              <Link href="/property-list">
+              <Link href="/properties">
                 <a>Utrecht</a>
               </Link>
-              <Link href="/property-list">
+              <Link href="/properties">
                 <a>Arnhem</a>
               </Link>
             </div>

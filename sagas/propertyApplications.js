@@ -1,16 +1,16 @@
 /* eslint-disable max-len */
-import { types } from 'ducks/apartmentApplications';
+import { types } from 'ducks/propertyApplications';
 import { call, takeLatest } from 'redux-saga/effects';
-import { service } from 'services/apartmentApplications';
+import { service } from 'services/propertyApplications';
 import { request } from 'shared/types';
 
 /* WORKERS */
-function* fetchApplicationsForApartments({ payload }) {
-  const { callback, apartmentId } = payload;
+function* fetchApplicationsForProperties({ payload }) {
+  const { callback, propertyId } = payload;
   callback({ status: request.REQUESTING });
 
   try {
-    const response = yield call(service.fetchApplicationsForApartments, apartmentId);
+    const response = yield call(service.fetchApplicationsForProperties, propertyId);
     callback({ status: request.SUCCESS, response: response.data });
   } catch (e) {
     callback({ status: request.ERROR, errors: e.errors });
@@ -18,11 +18,11 @@ function* fetchApplicationsForApartments({ payload }) {
 }
 
 function* apply({ payload }) {
-  const { callback, apartmentId } = payload;
+  const { callback, propertyId } = payload;
   callback({ status: request.REQUESTING });
 
   try {
-    const response = yield call(service.apply, apartmentId);
+    const response = yield call(service.apply, propertyId);
     callback({ status: request.SUCCESS, response: response.data });
   } catch (e) {
     callback({ status: request.ERROR, errors: e.errors });
@@ -102,8 +102,8 @@ function* fetchTenantApplications({ payload }) {
 }
 
 /* WATCHERS */
-const fetchApplicationsForApartmentsWatcherSaga = function* fetchApplicationsForApartmentsWatcherSaga() {
-  yield takeLatest(types.FETCH_APPLICATIONS_FOR_APARTMENTS, fetchApplicationsForApartments);
+const fetchApplicationsForPropertiesWatcherSaga = function* fetchApplicationsForPropertiesWatcherSaga() {
+  yield takeLatest(types.FETCH_APPLICATIONS_FOR_PROPERTIES, fetchApplicationsForProperties);
 };
 
 const applyWatcherSaga = function* applyWatcherSaga() {
@@ -135,7 +135,7 @@ const fetchTenantApplicationsWatcherSaga = function* fetchTenantApplicationsWatc
 };
 
 export default [
-  fetchApplicationsForApartmentsWatcherSaga(),
+  fetchApplicationsForPropertiesWatcherSaga(),
   applyWatcherSaga(),
   rejectApplicationWatcherSaga(),
   considerApplicationWatcherSaga(),

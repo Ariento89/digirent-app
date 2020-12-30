@@ -1,7 +1,12 @@
 import axios from 'axios';
 import { actions, key as AUTH_KEY } from 'ducks/authentication';
 import { isArray, isString } from 'lodash';
-import { API_TIMEOUT, API_URL, NO_VERIFICATION_NEEDED } from 'services/index';
+import {
+  API_TIMEOUT,
+  API_URL,
+  NO_VERIFICATION_NEEDED,
+  UNAUTHORIZED_RESPONSE,
+} from 'services/index';
 
 export default function configureAxios(store) {
   axios.defaults.baseURL = API_URL;
@@ -36,11 +41,7 @@ export default function configureAxios(store) {
     const modifiedError = { ...error };
 
     if (error.isAxiosError) {
-      if (
-        ['Could not validate credentials', 'Not authenticated'].includes(
-          error?.response?.data?.detail,
-        )
-      ) {
+      if (UNAUTHORIZED_RESPONSE.includes(error?.response?.data?.detail)) {
         store.dispatch(actions.logout({ sessionTimedOut: true }));
       } else if (error.response.data?.detail && isString(error.response.data?.detail)) {
         modifiedError.errors = [error.response.data.detail];

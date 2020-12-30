@@ -1,6 +1,5 @@
 import Checkbox from 'components/Checkbox/index';
 import { useField, useFormikContext } from 'formik';
-import React from 'react';
 
 const FormCheckbox = ({ classNames, options, value: initialValue, label, icon, ...props }) => {
   const { setFieldValue } = useFormikContext();

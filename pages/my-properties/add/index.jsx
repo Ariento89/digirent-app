@@ -74,7 +74,7 @@ const Page = () => {
   };
 
   return (
-    <PageWrapper title="DigiRent - Add Property" pageName="property-add">
+    <PageWrapper title="DigiRent - Add Property" pageName="my-properties-add">
       <img src="/images/add-property-bg.jpg" className="main-background" alt="background" />
 
       <div className="container-lg mt-5">

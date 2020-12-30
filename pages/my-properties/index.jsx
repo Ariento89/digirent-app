@@ -51,7 +51,7 @@ const Page = () => {
 
   return (
     <>
-      <PageWrapper title="DigiRent - My Properties" pageName="property">
+      <PageWrapper title="DigiRent - My Properties" pageName="my-properties">
         <img src="/images/main-left-bg.svg" className="left-main-background" alt="left bg" />
         <img src="/images/main-right-bg.svg" className="right-main-background" alt="right bg" />
 

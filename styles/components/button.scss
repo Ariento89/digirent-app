@@ -41,6 +41,10 @@
     pointer-events: none;
   }
 
+  &.not-transparent {
+    opacity: 1 !important;
+  }
+
   &.outline {
     border: 1px solid $color-primary;
     color: $color-primary !important;

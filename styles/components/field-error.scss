@@ -6,6 +6,10 @@
   margin-top: 8px;
   margin-bottom: 5px;
 
+  &.center {
+    @include flex(center, center);
+  }
+
   .icon {
     width: 13px;
   }

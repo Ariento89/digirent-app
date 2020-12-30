@@ -109,7 +109,7 @@ const Page = () => {
   };
 
   return apartment ? (
-    <PageWrapper title="DigiRent - Update Property" pageName="property-add">
+    <PageWrapper title="DigiRent - Update Property" pageName="my-properties-add">
       <img src="/images/add-property-bg.jpg" className="main-background" alt="background" />
 
       <div className="container-lg mt-5">

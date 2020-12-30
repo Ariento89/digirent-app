@@ -1,7 +1,6 @@
 /* eslint-disable no-unused-vars */
 import DatePicker from 'components/DatePicker/index';
 import { useField, useFormikContext } from 'formik';
-import React from 'react';
 
 const FormDatePicker = ({ ...props }) => {
   const { setFieldValue } = useFormikContext();

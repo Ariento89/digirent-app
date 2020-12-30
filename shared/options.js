@@ -28,3 +28,15 @@ export const yearOptions = [
   { name: 'OPTION 3', value: 3 },
   { name: 'OPTION 4', value: 4 },
 ];
+
+export const availabilityOptions = [
+  { name: 'Temporary', value: 'temporary' },
+  { name: 'Permanent', value: 'permanent' },
+];
+
+export const locationOptions = [
+  { name: 'India', value: 'India' },
+  { name: 'Netherland', value: 'Netherland' },
+  { name: 'Japan', value: 'Japan' },
+  { name: 'USA', value: 'USA' },
+];

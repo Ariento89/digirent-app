@@ -1,5 +1,5 @@
 import { memoize } from 'lodash';
-import moment from 'node_modules/moment/moment';
+import moment from 'moment';
 import { request } from './types';
 
 // UI FUNCTIONS

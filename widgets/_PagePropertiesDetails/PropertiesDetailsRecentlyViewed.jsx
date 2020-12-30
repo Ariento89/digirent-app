@@ -40,7 +40,7 @@ const settings = {
   ],
 };
 
-const PropertiesDetailsRecentlyViewed = ({ properties }) => (
+const PropertiesDetailsRecentlyViewed = () => (
   <div className="container max-width">
     <div className="recently-viewed">
       <h3 className="main-title">

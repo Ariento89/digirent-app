@@ -6,7 +6,7 @@ const MyPropertiesAddedProperties = ({
   properties,
   loading,
   errors,
-  onSeeReaction,
+  onViewApplications,
   onDeleteProperty,
 }) => (
   <div className="container added-properties">
@@ -28,8 +28,8 @@ const MyPropertiesAddedProperties = ({
               rentFee={property.monthlyPrice}
               bedrooms={property.bedrooms}
               bathrooms={property.bathrooms}
-              buttonName="SEE APPLICATIONS"
-              onClick={() => onSeeReaction(property)}
+              buttonName="VIEW APPLICATIONS"
+              onClick={() => onViewApplications(property)}
               onDelete={onDeleteProperty}
               selectionType={null}
             />

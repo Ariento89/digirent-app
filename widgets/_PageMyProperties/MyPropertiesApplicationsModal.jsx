@@ -8,39 +8,43 @@ import { useToasts } from 'react-toast-notifications';
 import { yearOptions } from 'shared/options';
 import { request, toastTypes } from 'shared/types';
 import Pagination from 'widgets/Pagination/index';
-import ReactionItem from './widgets/ReactionItem';
+import PropertyApplication from './widgets/PropertyApplication';
 
 const MyPropertiesApplicationsModal = ({ property, isVisible, onClose }) => {
   // STATES
-  const [year, setYear] = useState(null);
   const [applications, setApplications] = useState([]);
   const [list, setList] = useState([]);
+  const [paginationData, setPaginationData] = useState({});
 
   // CUSTOM HOOKS
   const { addToast } = useToasts();
   const { fetchApplicationsForProperties, status, errors } = usePropertyApplications();
 
   // METHODS
-  const onFetchSuccess = ({ response }) => {
-    setApplications(response);
-    console.log('response', response);
-  };
-
-  const onFetchError = () => {
-    addToast("An error occurred while fetching apartment's applications.", toastTypes.ERROR);
-  };
-
   useEffect(() => {
-    if (property) {
+    if (isVisible && property) {
       fetchApplicationsForProperties(
-        { apartmentId: property.id },
+        { propertyId: property.id },
         {
           onSuccess: onFetchSuccess,
           onError: onFetchError,
         },
       );
     }
-  }, [property]);
+  }, [isVisible, property]);
+
+  const onFetchSuccess = ({ response }) => {
+    setApplications(response);
+  };
+
+  const onFetchError = () => {
+    addToast("An error occurred while fetching property's applications.", toastTypes.ERROR);
+  };
+
+  const onPageChange = (newList, pagination) => {
+    setList(newList);
+    setPaginationData(pagination);
+  };
 
   return (
     <Modal
@@ -57,33 +61,44 @@ const MyPropertiesApplicationsModal = ({ property, isVisible, onClose }) => {
           </button>
 
           <div className="main-content pb-4">
-            <div className="table-header">
-              <span className="main-desc">Results 1 - 2 of 2</span>
+            <TableHeader
+              currentPage={paginationData.currentPage}
+              maxPage={paginationData.currentPage}
+            />
 
-              <div className="sort">
-                <span className="main-desc mr-2 mr-sm-4">Sort by:</span>
+            {list.map((propertyApplication) => (
+              <PropertyApplication key={propertyApplication.id} />
+            ))}
 
-                <Select
-                  classNames="primary"
-                  value={year}
-                  onChange={(value) => setYear(value)}
-                  options={yearOptions}
-                  placeholder="DATE (NEW-OLD)"
-                />
-              </div>
-            </div>
-
-            {/* <ReactionItem />
-            <ReactionItem />
-            <ReactionItem />
-            <ReactionItem />
-            <ReactionItem />
-
-            <Pagination className="mt-5" /> */}
+            <Pagination className="mt-5" list={applications} onPageChange={onPageChange} />
           </div>
         </Spinner>
       </Modal.Body>
     </Modal>
+  );
+};
+
+const TableHeader = ({ currentPage, maxPage }) => {
+  const [year, setYear] = useState(null);
+
+  return (
+    <div className="table-header">
+      <span className="main-desc">
+        Results {currentPage} - {maxPage} of {maxPage}
+      </span>
+
+      <div className="sort">
+        <span className="main-desc mr-2 mr-sm-4">Sort by:</span>
+
+        <Select
+          classNames="primary"
+          value={year}
+          onChange={(value) => setYear(value)}
+          options={yearOptions}
+          placeholder="DATE (NEW-OLD)"
+        />
+      </div>
+    </div>
   );
 };
 

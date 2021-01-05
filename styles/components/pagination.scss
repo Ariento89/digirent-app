@@ -1,5 +1,5 @@
-@import "../abstract/mixins";
-@import "../abstract/variables";
+@import '../abstract/mixins';
+@import '../abstract/variables';
 
 .pagination {
   @include flex(center, center);
@@ -26,16 +26,17 @@
 
     .number {
       @include flex(center, flex-end);
-      @include font(14px, $fw-light);
+      @include font(16px, $fw-light);
       color: $color-dark-gray;
       margin: 0 5px;
       cursor: pointer;
 
       &.active {
-        @include font(16px, 400);
+        color: $color-primary;
       }
 
       .line {
+        display: none;
         width: 40px;
         height: 1px;
         margin-bottom: 2px;

@@ -47,7 +47,7 @@ const Page = () => {
 
   const onAddProperty = () => setAddPropertyModalVisible(true);
 
-  const onSeeReaction = (property) => {
+  const onViewApplications = (property) => {
     setSelectedProperty(property);
     setSeeReactionModalVisible(true);
   };
@@ -64,7 +64,7 @@ const Page = () => {
           properties={properties}
           loading={status === request.REQUESTING}
           errors={errors}
-          onSeeReaction={onSeeReaction}
+          onViewApplications={onViewApplications}
           onDeleteProperty={onDeleteProperty}
         />
       </PageWrapper>

@@ -1,11 +1,11 @@
 /* eslint-disable jsx-a11y/mouse-events-have-key-events */
 import { useState } from 'react';
 
-const ReactionItem = () => {
+const PropertyApplication = () => {
   const [buttonOverlayVisible, setButtonOverlayVisible] = useState(false);
 
   return (
-    <div className="reaction-item">
+    <div className="PropertyApplication">
       <div className="item d-none d-md-flex">
         <div className="user-photo" />
 
@@ -148,4 +148,4 @@ const ReactionItem = () => {
   );
 };
 
-export default ReactionItem;
+export default PropertyApplication;

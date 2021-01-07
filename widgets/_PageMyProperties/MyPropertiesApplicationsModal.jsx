@@ -1,46 +1,29 @@
+/* eslint-disable implicit-arrow-linebreak */
 /* eslint-disable react-hooks/exhaustive-deps */
+import FieldError from 'components/FieldError/FieldError';
 import Select from 'components/Select/index';
 import Spinner from 'components/Spinner/index';
-import { usePropertyApplications } from 'hooks/usePropertyApplications';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
-import { useToasts } from 'react-toast-notifications';
 import { yearOptions } from 'shared/options';
-import { request, toastTypes } from 'shared/types';
+import { request } from 'shared/types';
 import Pagination from 'widgets/Pagination/index';
+import StateList, { StateListTypes } from 'widgets/StateList/index';
 import PropertyApplication from './widgets/PropertyApplication';
 
-const MyPropertiesApplicationsModal = ({ property, isVisible, onClose }) => {
+const MyPropertiesApplicationsModal = ({
+  applications,
+  status,
+  errors,
+  isVisible,
+  onClose,
+  onUpdateApplication,
+}) => {
   // STATES
-  const [applications, setApplications] = useState([]);
   const [list, setList] = useState([]);
   const [paginationData, setPaginationData] = useState({});
 
-  // CUSTOM HOOKS
-  const { addToast } = useToasts();
-  const { fetchApplicationsForProperties, status, errors } = usePropertyApplications();
-
   // METHODS
-  useEffect(() => {
-    if (isVisible && property) {
-      fetchApplicationsForProperties(
-        { propertyId: property.id },
-        {
-          onSuccess: onFetchSuccess,
-          onError: onFetchError,
-        },
-      );
-    }
-  }, [isVisible, property]);
-
-  const onFetchSuccess = ({ response }) => {
-    setApplications(response);
-  };
-
-  const onFetchError = () => {
-    addToast("An error occurred while fetching property's applications.", toastTypes.ERROR);
-  };
-
   const onPageChange = (newList, pagination) => {
     setList(newList);
     setPaginationData(pagination);
@@ -60,18 +43,55 @@ const MyPropertiesApplicationsModal = ({ property, isVisible, onClose }) => {
             <img src="/images/icon/icon-arrow-left-white.svg" alt="icon user" />
           </button>
 
-          <div className="main-content pb-4">
-            <TableHeader
-              currentPage={paginationData.currentPage}
-              maxPage={paginationData.currentPage}
+          {!!errors?.length && (
+            <div className="my-3">
+              {errors?.map((error) => (
+                <FieldError error={error} />
+              ))}
+            </div>
+          )}
+
+          {/* LIST */}
+          {status === request.SUCCESS && applications?.length > 0 && (
+            <div className="main-content pb-4">
+              <TableHeader
+                currentPage={paginationData.currentPage}
+                maxPage={paginationData.currentPage}
+              />
+
+              {list.map((application, index) => (
+                <PropertyApplication
+                  key={application.id}
+                  application={application}
+                  onUpdateApplication={(updatedApplication) => {
+                    onUpdateApplication(index, updatedApplication);
+                  }}
+                />
+              ))}
+
+              <Pagination className="mt-5" list={applications} onPageChange={onPageChange} />
+            </div>
+          )}
+
+          {/* EMPTY LIST */}
+          {status === request.SUCCESS && applications?.length === 0 && (
+            <StateList
+              className="mx-auto"
+              title="EMPTY LIST"
+              description="There are no applications on this property yet."
+              type={StateListTypes.EMPTY}
             />
+          )}
 
-            {list.map((propertyApplication) => (
-              <PropertyApplication key={propertyApplication.id} />
-            ))}
-
-            <Pagination className="mt-5" list={applications} onPageChange={onPageChange} />
-          </div>
+          {/* ERROR LIST */}
+          {status === request.ERROR && (
+            <StateList
+              className="mx-auto"
+              title="OOPS!"
+              description="An error ocurred while applications of your property."
+              type={StateListTypes.ERROR}
+            />
+          )}
         </Spinner>
       </Modal.Body>
     </Modal>

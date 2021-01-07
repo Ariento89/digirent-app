@@ -1,5 +1,6 @@
 import Button from 'components/Button/index';
 import Link from 'next/link';
+import cn from 'classnames';
 
 export const propertyInfoSelectionType = {
   NOT_SELECTED: 'NOT_SELECTED',
@@ -21,9 +22,16 @@ const PropertyInfo = ({
   link,
 }) => {
   const getContent = () => (
-    <div className="property-info main-box p-0">
+    <div className={cn('property-info main-box p-0', { clickable: !!link })}>
       {!!onDelete && (
-        <button className="button-icon btn-delete gray2" onClick={onDelete}>
+        <button
+          className="button-icon btn-delete gray2"
+          onClick={(event) => {
+            event.stopPropagation();
+            event.preventDefault();
+            onDelete();
+          }}
+        >
           <img src="/images/icon/icon-cancel-dark-gray.svg" alt="icon" />
         </button>
       )}

@@ -2,7 +2,7 @@
 import { useProperties } from 'hooks/useProperties';
 import { useEffect, useRef, useState } from 'react';
 import { useToasts } from 'react-toast-notifications';
-import { request, toastTypes } from 'shared/types';
+import { toastTypes } from 'shared/types';
 import PageWrapper from 'widgets/PageWrapper';
 import PropertiesLanding from 'widgets/_PageProperties/PropertiesLanding';
 import PropertiesRecommended from 'widgets/_PageProperties/PropertiesRecommended';
@@ -51,7 +51,7 @@ const Page = () => {
       <PropertiesSearchResult
         searchResultRef={searchResultRef}
         properties={properties}
-        loading={status === request.REQUESTING}
+        status={status}
         errors={errors}
       />
 

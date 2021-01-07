@@ -155,4 +155,21 @@
       }
     }
   }
+
+  .application-status {
+    color: white;
+    padding: 7px 16px;
+    background-color: $color-gray2;
+    border-radius: 18px;
+    text-transform: uppercase;
+
+    &.considered {
+      background-color: $color-yellow;
+    }
+
+    &.awarded,
+    &.completed {
+      background-color: $color-green;
+    }
+  }
 }

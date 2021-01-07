@@ -1,19 +1,22 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useProperties } from 'hooks/useProperties';
+import { usePropertyApplications } from 'hooks/usePropertyApplications';
+import { cloneDeep } from 'lodash';
 import { useEffect, useState } from 'react';
 import { useToasts } from 'react-toast-notifications';
-import { request, toastTypes } from 'shared/types';
+import { toastTypes } from 'shared/types';
 import PageWrapper from 'widgets/PageWrapper';
 import MyPropertiesAddedProperties from 'widgets/_PageMyProperties/MyPropertiesAddedProperties';
 import MyPropertiesAddPropertyModal from 'widgets/_PageMyProperties/MyPropertiesAddPropertyModal';
+import MyPropertiesApplicationsModal from 'widgets/_PageMyProperties/MyPropertiesApplicationsModal';
 import MyPropertiesDeleteConfirmationModal from 'widgets/_PageMyProperties/MyPropertiesDeleteConfirmationModal';
 import MyPropertiesLanding from 'widgets/_PageMyProperties/MyPropertiesLanding';
 import MyPropertiesPropertySelectionModal from 'widgets/_PageMyProperties/MyPropertiesPropertySelectionModal';
-import MyPropertiesApplicationsModal from 'widgets/_PageMyProperties/MyPropertiesApplicationsModal';
 
 const Page = () => {
   // STATES
   const [properties, setProperties] = useState([]);
+  const [applications, setApplications] = useState([]);
   const [deleteConfirmationModalVisible, setDeleteConfirmationModalVisible] = useState(false);
   const [addPropertyModalVisible, setAddPropertyModalVisible] = useState(false);
   const [propertySelectionModalVisible, setPropertySelectionModalVisible] = useState(false);
@@ -22,23 +25,28 @@ const Page = () => {
 
   // CUSTOM HOOKS
   const { addToast } = useToasts();
-  const { fetchProperties, status, errors } = useProperties();
+  const { fetchProperties, status: propertiesStatus, errors: propertiesErrors } = useProperties();
+  const {
+    fetchApplicationsForProperties,
+    status: applicationsStatus,
+    errors: applicationsErrors,
+  } = usePropertyApplications();
 
   // METHODS
-  const onFetchSuccess = ({ response }) => {
+  useEffect(() => {
+    fetchProperties(null, {
+      onSuccess: onFetchPropertiesSuccess,
+      onError: onFetchPropertiesError,
+    });
+  }, []);
+
+  const onFetchPropertiesSuccess = ({ response }) => {
     setProperties(response);
   };
 
-  const onFetchError = () => {
+  const onFetchPropertiesError = () => {
     addToast('An error occurred while fetching properties.', toastTypes.ERROR);
   };
-
-  useEffect(() => {
-    fetchProperties(null, {
-      onSuccess: onFetchSuccess,
-      onError: onFetchError,
-    });
-  }, []);
 
   const onDeleteProperty = (property) => {
     setSelectedProperty(property);
@@ -50,6 +58,32 @@ const Page = () => {
   const onViewApplications = (property) => {
     setSelectedProperty(property);
     setSeeReactionModalVisible(true);
+
+    setApplications([]);
+    fetchApplicationsForProperties(
+      { propertyId: property.id },
+      {
+        onSuccess: onFetchApplicationsSuccess,
+        onError: onFetchApplicationsError,
+      },
+    );
+  };
+
+  const onFetchApplicationsSuccess = ({ response }) => {
+    setApplications(response);
+  };
+
+  const onFetchApplicationsError = () => {
+    addToast("An error occurred while fetching property's applications.", toastTypes.ERROR);
+  };
+
+  const onUpdateApplication = (index, application) => {
+    setApplications((previousApplications) => {
+      const newApplications = cloneDeep(previousApplications);
+      newApplications[index] = application;
+
+      return newApplications;
+    });
   };
 
   return (
@@ -62,15 +96,18 @@ const Page = () => {
 
         <MyPropertiesAddedProperties
           properties={properties}
-          loading={status === request.REQUESTING}
-          errors={errors}
+          status={propertiesStatus}
+          errors={propertiesErrors}
           onViewApplications={onViewApplications}
           onDeleteProperty={onDeleteProperty}
         />
       </PageWrapper>
 
       <MyPropertiesApplicationsModal
-        property={selectedProperty}
+        applications={applications}
+        status={applicationsStatus}
+        errors={applicationsErrors}
+        onUpdateApplication={onUpdateApplication}
         isVisible={seeReactionModalVisible}
         onClose={() => setSeeReactionModalVisible(false)}
       />

@@ -5,6 +5,7 @@
   margin-left: 20px;
   margin-right: 20px;
   position: relative;
+  transition: 300ms;
 
   @include media-breakpoint-down(md) {
     margin-left: 15px;
@@ -16,6 +17,14 @@
     margin-top: 0;
     margin-left: 0;
     margin-right: 0;
+  }
+
+  &.clickable {
+    cursor: pointer;
+
+    &:hover {
+      opacity: 0.75;
+    }
   }
 
   .house-bg {

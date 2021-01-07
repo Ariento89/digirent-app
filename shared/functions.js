@@ -25,6 +25,12 @@ export const showMessage = (status, successMessage, errorMessage) => {
   }
 };
 
+export const showErrorsMessage = (toast, errors) => {
+  errors.forEach((error) => {
+    toast(error);
+  });
+};
+
 export const formatDate = memoize((datetime) => moment(datetime).format('MM/DD/YYYY'));
 
 // SERVICE FUNCTIONS

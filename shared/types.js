@@ -39,3 +39,13 @@ export const fbStatusTypes = {
   NOT_AUTHORIZED: 'not_authorized',
   UNKNOWN: 'unknown',
 };
+
+export const applicationStatusTypes = {
+  NEW: 'new',
+  REJECTED: 'rejected',
+  CONSIDERED: 'considered',
+  PROCESSING: 'processing',
+  AWARDED: 'awarded',
+  FAILED: 'failed',
+  COMPLETED: 'completed',
+};

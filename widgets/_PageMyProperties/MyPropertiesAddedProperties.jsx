@@ -1,16 +1,18 @@
 import FieldError from 'components/FieldError/FieldError';
 import Spinner from 'components/Spinner/index';
+import { request } from 'shared/types';
+import StateList, { StateListTypes } from 'widgets/StateList/index';
 import PropertyInfo from 'widgets/PropertyInfo/index';
 
 const MyPropertiesAddedProperties = ({
   properties,
-  loading,
+  status,
   errors,
   onViewApplications,
   onDeleteProperty,
 }) => (
   <div className="container added-properties">
-    <Spinner loadingText="Fetching properties..." isLoading={loading}>
+    <Spinner loadingText="Fetching properties..." isLoading={status === request.REQUESTING}>
       <h3 className="main-title">
         ADDED <span className="text-primary font-weight-bold">PROPERTIES</span>
       </h3>
@@ -35,6 +37,26 @@ const MyPropertiesAddedProperties = ({
             />
           </div>
         ))}
+
+        {/* EMPTY LIST */}
+        {status === request.SUCCESS && properties?.length === 0 && (
+          <StateList
+            className="mx-auto"
+            title="EMPTY LIST"
+            description="You have not added properties yet."
+            type={StateListTypes.EMPTY}
+          />
+        )}
+
+        {/* ERROR LIST */}
+        {status === request.ERROR && (
+          <StateList
+            className="mx-auto"
+            title="OOPS!"
+            description="An error ocurred while fetching your properties."
+            type={StateListTypes.ERROR}
+          />
+        )}
       </div>
     </Spinner>
   </div>

@@ -1,12 +1,14 @@
 import FieldError from 'components/FieldError/FieldError';
 import Spinner from 'components/Spinner/index';
+import { request } from 'shared/types';
 import Pagination from 'widgets/Pagination/index';
 import PropertyInfo from 'widgets/PropertyInfo/index';
+import StateList, { StateListTypes } from 'widgets/StateList/index';
 import TableHeader from 'widgets/TableHeader/index';
 
-const PropertiesSearchResult = ({ searchResultRef, properties, loading, errors }) => (
+const PropertiesSearchResult = ({ searchResultRef, properties, status, errors }) => (
   <div className="container">
-    <Spinner loadingText="Searching properties..." isLoading={loading}>
+    <Spinner loadingText="Searching properties..." isLoading={status === request.REQUESTING}>
       <div ref={searchResultRef} className="rental-houses">
         <h3 className="main-title">
           RENTAL HOUSE IN <span className="text-primary font-weight-bold">INDIA</span>
@@ -15,7 +17,7 @@ const PropertiesSearchResult = ({ searchResultRef, properties, loading, errors }
           {properties.length} NEW RENTAL PROPERTIES IN INDIA IN THE LAST 30 DAYS
         </p>
 
-        <TableHeader classNames="rental-houses-table-header mt-5" />
+        {status === request.SUCCESS && <TableHeader classNames="rental-houses-table-header mt-5" />}
 
         {!!errors?.length && errors?.map((error) => <FieldError key={error} error={error} />)}
 
@@ -33,6 +35,26 @@ const PropertiesSearchResult = ({ searchResultRef, properties, loading, errors }
               />
             </div>
           ))}
+
+          {/* EMPTY LIST */}
+          {status === request.SUCCESS && properties?.length === 0 && (
+            <StateList
+              className="mx-auto"
+              title="EMPTY LIST"
+              description="No properies found."
+              type={StateListTypes.EMPTY}
+            />
+          )}
+
+          {/* ERROR LIST */}
+          {status === request.ERROR && (
+            <StateList
+              className="mx-auto"
+              title="OOPS!"
+              description="An error ocurred while fetching properties."
+              type={StateListTypes.ERROR}
+            />
+          )}
         </div>
 
         <Pagination className="mt-5" />

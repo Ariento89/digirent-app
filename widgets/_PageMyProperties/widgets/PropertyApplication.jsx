@@ -1,8 +1,94 @@
+/* eslint-disable implicit-arrow-linebreak */
 /* eslint-disable jsx-a11y/mouse-events-have-key-events */
-import { useState } from 'react';
+import cn from 'classnames';
+import Button from 'components/Button/index';
+import { types } from 'ducks/propertyApplications';
+import { usePropertyApplications } from 'hooks/usePropertyApplications';
+import { useEffect, useState } from 'react';
+import { useToasts } from 'react-toast-notifications';
+import { showErrorsMessage } from 'shared/functions';
+import { applicationStatusTypes, request, toastTypes } from 'shared/types';
 
-const PropertyApplication = () => {
+const PropertyApplication = ({ application: propertyApplication, onUpdateApplication }) => {
+  // STATES
+  const [application, setApplication] = useState(null);
   const [buttonOverlayVisible, setButtonOverlayVisible] = useState(false);
+
+  // CUSTOM HOOKS
+  const { addToast } = useToasts();
+  const {
+    processApplication,
+    considerApplication,
+    rejectApplication,
+    status,
+    errors,
+    recentRequest,
+  } = usePropertyApplications();
+
+  // METHODS
+  useEffect(() => {
+    setApplication(propertyApplication);
+  }, [propertyApplication]);
+
+  const onProcess = () => {
+    processApplication(
+      { applicationId: application.id },
+      {
+        onSuccess: ({ response }) => {
+          setApplication(response);
+          onUpdateApplication(response);
+          addToast("Successfully processed the tenant's property application.", toastTypes.SUCCESS);
+        },
+        onError: () => {
+          showErrorsMessage(addToast, errors);
+          addToast(
+            "An error occurred while processing the tenant's property application.",
+            toastTypes.ERROR,
+          );
+        },
+      },
+    );
+  };
+
+  const onReject = () => {
+    rejectApplication(
+      { applicationId: application.id },
+      {
+        onSuccess: ({ response }) => {
+          setApplication(response);
+          onUpdateApplication(response);
+          addToast("Succesfully rejected the tenant's property application.", toastTypes.SUCCESS);
+        },
+        onError: () => {
+          showErrorsMessage(addToast, errors);
+          addToast(
+            "An error occurred while rejecting the tenant's property application.",
+            toastTypes.ERROR,
+          );
+        },
+      },
+    );
+  };
+
+  const onConsider = () => {
+    considerApplication(
+      { applicationId: application.id },
+      {
+        onSuccess: ({ response }) => {
+          setApplication(response);
+          onUpdateApplication(response);
+          addToast("Successfully reserved the tenant's property application.", toastTypes.SUCCESS);
+        },
+        onError: () => {
+          showErrorsMessage(addToast, errors);
+          addToast(
+            "An error occurred while reserving the tenant's property application.",
+            toastTypes.ERROR,
+          );
+        },
+      },
+    );
+  };
 
   return (
     <div className="PropertyApplication">
@@ -46,32 +132,95 @@ const PropertyApplication = () => {
           onMouseOver={() => setButtonOverlayVisible(true)}
           onMouseOut={() => setButtonOverlayVisible(false)}
         >
-          {buttonOverlayVisible && (
-            <div className="button-overlay">
-              <div className="item">
-                <span className="circular-icon green mr-2" />
-                <span className="text">SELECTED TO BE PICKED</span>
-              </div>
-              <div className="item">
-                <span className="circular-icon gray mr-2" />
-                <span className="text">REJECTED</span>
-              </div>
-              <div className="item">
-                <span className="circular-icon yellow mr-2" />
-                <span className="text">SELECTED AS RESERVE</span>
-              </div>
-            </div>
+          {application?.status === applicationStatusTypes.NEW && (
+            <>
+              {buttonOverlayVisible && (
+                <div className="button-overlay">
+                  <div className="item">
+                    <span className="circular-icon gray mr-2" />
+                    <span className="text">REJECTED</span>
+                  </div>
+                  <div className="item">
+                    <span className="circular-icon yellow mr-2" />
+                    <span className="text">SELECTED AS RESERVE</span>
+                  </div>
+                </div>
+              )}
+
+              <Button
+                className="btn-icon btn-x gray2"
+                onClick={onReject}
+                loading={
+                  recentRequest === types.REJECT_APPLICATION && status === request.REQUESTING
+                }
+                disabled={status === request.REQUESTING}
+              >
+                <img src="/images/icon/icon-cancel-dark-gray.svg" alt="icon" />
+              </Button>
+
+              <Button
+                className="yellow btn-icon btn-circle mx-2"
+                onClick={onConsider}
+                loading={
+                  recentRequest === types.CONSIDER_APPLICATION && status === request.REQUESTING
+                }
+                disabled={status === request.REQUESTING}
+              >
+                <div className="circle-icon" />
+              </Button>
+            </>
           )}
 
-          <button type="button" className="button btn-icon btn-x gray2">
-            <img src="/images/icon/icon-cancel-dark-gray.svg" alt="icon" />
-          </button>
-          <button type="button" className="button yellow btn-icon btn-circle mx-2">
-            <div className="circle-icon" />
-          </button>
-          <button type="button" className="button green btn-icon btn-check">
-            <img src="/images/icon/icon-check-white.svg" alt="icon" />
-          </button>
+          {application?.status === applicationStatusTypes.PROCESSING && (
+            <>
+              {buttonOverlayVisible && (
+                <div className="button-overlay">
+                  <div className="item">
+                    <span className="circular-icon gray mr-2" />
+                    <span className="text">REJECTED</span>
+                  </div>
+                  <div className="item">
+                    <span className="circular-icon green mr-2" />
+                    <span className="text">SELECTED TO BE PICKED</span>
+                  </div>
+                </div>
+              )}
+
+              <Button
+                className="btn-icon btn-x gray2"
+                onClick={onReject}
+                loading={
+                  recentRequest === types.REJECT_APPLICATION && status === request.REQUESTING
+                }
+                disabled={status === request.REQUESTING}
+              >
+                <img src="/images/icon/icon-cancel-dark-gray.svg" alt="icon" />
+              </Button>
+
+              <Button
+                className="green btn-icon btn-check"
+                onClick={onProcess}
+                loading={
+                  recentRequest === types.PROCESS_APPLICATION && status === request.REQUESTING
+                }
+                disabled={status === request.REQUESTING}
+              >
+                <img src="/images/icon/icon-check-white.svg" alt="icon" />
+              </Button>
+            </>
+          )}
+
+          {[
+            applicationStatusTypes.CONSIDERED,
+            applicationStatusTypes.FAILED,
+            applicationStatusTypes.REJECTED,
+            applicationStatusTypes.AWARDED,
+            applicationStatusTypes.COMPLETED,
+          ].includes(application?.status) && (
+            <span className={cn('application-status text-sm', application?.status)}>
+              {application?.status}
+            </span>
+          )}
         </div>
 
         <div className="divider" />

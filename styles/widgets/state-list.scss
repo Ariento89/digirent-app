@@ -1,0 +1,30 @@
+@import '../abstract/variables';
+@import '../abstract/mixins';
+
+.StateList {
+  @include flex(center, center, column);
+  padding-top: 25px;
+  padding-bottom: 50px;
+
+  .icon {
+    width: 100%;
+    max-width: 175px;
+  }
+
+  .title {
+    @include font(20px, $fw-bold);
+    margin-top: 35px;
+    display: block;
+    text-align: center;
+    color: $color-primary;
+    text-transform: uppercase;
+  }
+
+  .message {
+    margin-top: 10px;
+    @include font(15px, $fw-light);
+    text-align: center;
+    display: block;
+    color: $color-dark-gray;
+  }
+}

@@ -1,24 +1,20 @@
-import { actions, selectors, types } from 'ducks/authentication';
+import { actions, types } from 'ducks/chat';
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
 import { onCallback } from 'shared/functions';
 import { request } from 'shared/types';
 import { useActionDispatch } from './useActionDispatch';
 
-export const useAuthentication = () => {
+export const useChat = () => {
   // STATES
   const [status, setStatus] = useState(request.NONE);
   const [errors, setErrors] = useState([]);
   const [recentRequest, setRecentRequest] = useState(null);
 
-  // SELECTORS
-  const accessToken = useSelector(selectors.selectAccessToken());
-  const sessionTimedOut = useSelector(selectors.selectSessionTimedOut());
-
   // ACTIONS
-  const loginAction = useActionDispatch(actions.login);
-  const logout = useActionDispatch(actions.logout);
-  const clearSessionTimeOut = useActionDispatch(actions.clearSessionTimeOut);
+  const fetchChatMessagesAction = useActionDispatch(actions.fetchChatMessages);
+  const fetchChatMessagesBetweenUsersAction = useActionDispatch(
+    actions.fetchChatMessagesBetweenUsers,
+  );
 
   // GENERAL METHODS
   const resetError = () => setErrors([]);
@@ -44,16 +40,22 @@ export const useAuthentication = () => {
   };
 
   // REQUEST METHODS
-  const login = (data, callback = {}) => {
-    executeRequest(data, callback, loginAction, types.LOGIN);
+  const fetchChatMessages = (data, callback = {}) => {
+    executeRequest(data, callback, fetchChatMessagesAction, types.FETCH_CHAT_MESSAGES);
+  };
+
+  const fetchChatMessagesBetweenUsers = (data, callback = {}) => {
+    executeRequest(
+      data,
+      callback,
+      fetchChatMessagesBetweenUsersAction,
+      types.FETCH_CHAT_MESSAGES_BETWEEN_USERS,
+    );
   };
 
   return {
-    accessToken,
-    sessionTimedOut,
-    login,
-    logout,
-    clearSessionTimeOut,
+    fetchChatMessages,
+    fetchChatMessagesBetweenUsers,
     status,
     errors,
     recentRequest,

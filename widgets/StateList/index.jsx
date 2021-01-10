@@ -1,6 +1,6 @@
 import cn from 'classnames';
 
-export const StateListTypes = {
+export const stateListTypes = {
   EMPTY: 'empty',
   ERROR: 'error',
 };
@@ -11,10 +11,10 @@ const errorBoxIcon = '/images/icon/icon-error-box.svg';
 const StateList = ({ title, description, type, className }) => {
   const getIcon = () => {
     switch (type) {
-      case StateListTypes.EMPTY:
+      case stateListTypes.EMPTY:
         return emptyBoxIcon;
 
-      case StateListTypes.ERROR:
+      case stateListTypes.ERROR:
         return errorBoxIcon;
 
       default:

@@ -10,6 +10,7 @@ const ROUTES = {
   '/my-properties/duplicate/[id]': [role.LANDLORD],
   '/properties': [role.LANDLORD, role.TENANT],
   '/properties/[id]': [role.LANDLORD, role.TENANT],
+  '/messages': [role.LANDLORD, role.TENANT],
 };
 
 export default ROUTES;

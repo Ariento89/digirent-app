@@ -3,7 +3,7 @@ import Spinner from 'components/Spinner/index';
 import { request } from 'shared/types';
 import Pagination from 'widgets/Pagination/index';
 import PropertyInfo from 'widgets/PropertyInfo/index';
-import StateList, { StateListTypes } from 'widgets/StateList/index';
+import StateList, { stateListTypes } from 'widgets/StateList/index';
 import TableHeader from 'widgets/TableHeader/index';
 
 const PropertiesSearchResult = ({ searchResultRef, properties, status, errors }) => (
@@ -36,23 +36,23 @@ const PropertiesSearchResult = ({ searchResultRef, properties, status, errors })
             </div>
           ))}
 
-          {/* EMPTY LIST */}
+          {/* EMPTY */}
           {status === request.SUCCESS && properties?.length === 0 && (
             <StateList
               className="mx-auto"
-              title="EMPTY LIST"
+              title="LIST IS EMPTY"
               description="No properies found."
-              type={StateListTypes.EMPTY}
+              type={stateListTypes.EMPTY}
             />
           )}
 
-          {/* ERROR LIST */}
+          {/* ERROR */}
           {status === request.ERROR && (
             <StateList
               className="mx-auto"
               title="OOPS!"
               description="An error ocurred while fetching properties."
-              type={StateListTypes.ERROR}
+              type={stateListTypes.ERROR}
             />
           )}
         </div>

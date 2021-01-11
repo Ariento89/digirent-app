@@ -11,8 +11,8 @@ env:
   GITHUB_USERNAME: ariento89
   IMAGE_REGISTRY: ghcr.io
   IMAGE_NAME: digirent-app
-  IMAGE_TAG: prod
-  IMAGE: ghcr.io/ariento89/digirent-app:prod
+  IMAGE_TAG: staging
+  IMAGE: ghcr.io/ariento89/digirent-app:staging
 
 jobs:
   build:
@@ -48,4 +48,4 @@ jobs:
             cd ~/Digirent
             docker login $IMAGE_REGISTRY -u $GITHUB_USERNAME -p $PAT
             docker pull $IMAGE
-            docker-compose -f docker-compose.prod.yml up -d --force-recreate
+            docker-compose -f docker-compose.staging.yml up --remove-orphans -d --force-recreate

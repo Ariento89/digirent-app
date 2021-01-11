@@ -1,7 +1,7 @@
 # Dockerfile
 
 # base image
-FROM node:alpine
+FROM node:12.16.3
 
 # To build the nextjs app with {API_URL} as env variable
 ARG API_URL

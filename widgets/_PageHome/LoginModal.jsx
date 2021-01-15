@@ -8,7 +8,7 @@ import { useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import { useToasts } from 'react-toast-notifications';
 import { sleep } from 'shared/functions';
-import { request, toastTypes, userTypes } from 'shared/types';
+import { request, role, toastTypes, userTypes } from 'shared/types';
 import * as Yup from 'yup';
 import AuthField from './widgets/AuthField';
 import AuthUserSelection from './widgets/AuthUserSelection';
@@ -26,7 +26,7 @@ const formDetails = {
 
 const LoginModal = ({ onClose, isVisible, onRegister }) => {
   // STATES
-  const [selectedUserType, setSelectedUserType] = useState(userTypes.TENANT);
+  const [selectedUserType, setSelectedUserType] = useState(role.TENANT);
   const [rememberMeActive, setRememberMeActive] = useState(false);
   const [termsAndPolicyActive, setTermsAndPolicyActive] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -49,22 +49,20 @@ const LoginModal = ({ onClose, isVisible, onRegister }) => {
     closeModal();
   };
 
-  const onLoginSuccess = () => {
-    addToast('Successfully logged in.', toastTypes.SUCCESS);
-    closeModal();
-  };
-
   const onSubmit = (data) => {
     if (termsAndPolicyActive) {
-      login(data, {
-        onSuccess: onLoginSuccess,
-      });
+      login({ ...data, role: selectedUserType }, { onSuccess: onLoginSuccess });
     } else {
       addToast(
         'Please agree to the terms and agreement to proceed in logging in.',
         toastTypes.WARNING,
       );
     }
+  };
+
+  const onLoginSuccess = () => {
+    addToast('Successfully logged in.', toastTypes.SUCCESS);
+    closeModal();
   };
 
   const onLoginFacebook = () => {

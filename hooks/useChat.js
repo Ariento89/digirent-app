@@ -11,6 +11,7 @@ export const useChat = () => {
   const [recentRequest, setRecentRequest] = useState(null);
 
   // ACTIONS
+  const fetchUsersChatListAction = useActionDispatch(actions.fetchUsersChatList);
   const fetchChatMessagesAction = useActionDispatch(actions.fetchChatMessages);
   const fetchChatMessagesBetweenUsersAction = useActionDispatch(
     actions.fetchChatMessagesBetweenUsers,
@@ -40,6 +41,10 @@ export const useChat = () => {
   };
 
   // REQUEST METHODS
+  const fetchUsersChatList = (data, callback = {}) => {
+    executeRequest(data, callback, fetchUsersChatListAction, types.FETCH_USERS_CHAT_LIST);
+  };
+
   const fetchChatMessages = (data, callback = {}) => {
     executeRequest(data, callback, fetchChatMessagesAction, types.FETCH_CHAT_MESSAGES);
   };
@@ -55,6 +60,7 @@ export const useChat = () => {
 
   return {
     fetchChatMessages,
+    fetchUsersChatList,
     fetchChatMessagesBetweenUsers,
     status,
     errors,

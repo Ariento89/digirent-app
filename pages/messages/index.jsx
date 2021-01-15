@@ -20,15 +20,18 @@ const Page = () => {
   // STATES
   const [wsStatus, setWsStatus] = useState(request.NONE);
   const [wsError, setWsError] = useState(null);
+  const [wsRecentRequest, setWsRecentRequest] = useState(null);
 
   // STATES: MESSAGE LIST
   const [messageList, setMessageList] = useState([]);
   const [messageListPage, setMessageListPage] = useState(1);
+  const [messageListEndOfList, setMessageListEndOfList] = useState(false);
   const [initialMessageListLoadingStatus, setMessageListInitialLoadingStatus] = useState(
-    request.NONE,
+    request.REQUESTING,
   );
 
   // STATES: MESSAGE MAIN
+  const [talkingTo, setTalkingTo] = useState(null);
   const [conversationList, setConversationList] = useState([]);
   const [conversationListPage, setConversationListPage] = useState(1);
   const [initialConversationListLoadingStatus, setConversationListInitialLoadingStatus] = useState(
@@ -42,21 +45,26 @@ const Page = () => {
   const { addToast } = useToasts();
   const { accessToken } = useAuthentication();
   const { me } = useMe();
-  const { fetchChatMessages, status: messageListStatus } = useChat();
-  const { fetchChatMessagesBetweenUsers, status: conversationListStatus } = useChat();
+  const { fetchUsersChatList, status: messageListStatus } = useChat();
+  const { fetchChatMessages, status: conversationListStatus } = useChat();
 
   // METHODS
   useEffect(() => {
     if (
-      initialMessageListLoadingStatus === request.NONE &&
+      ![request.SUCCESS, request.ERROR].includes(initialMessageListLoadingStatus) &&
       [request.SUCCESS, request.ERROR].includes(messageListStatus)
     ) {
       setMessageListInitialLoadingStatus(messageListStatus);
+
+      if (messageListStatus === request.ERROR) {
+        setConversationListInitialLoadingStatus(request.ERROR);
+      }
     }
   }, [messageListStatus, initialMessageListLoadingStatus]);
 
   // METHODS: WEBSOCKET
   useEffect(() => {
+    setWsRecentRequest(eventTypes.USER_CONNECTED);
     socketRef.current = new WebSocket(`${API_URL_WEBSOCKET}/${accessToken}`);
     socketRef.current.onopen = onOpen;
     socketRef.current.onmessage = onMessage;
@@ -64,13 +72,13 @@ const Page = () => {
     socketRef.current.onclose = onClose;
 
     return () => {
+      setWsRecentRequest(eventTypes.USER_DISCONNECTED);
       socketRef.current.send({ event_type: eventTypes.USER_DISCONNECTED });
       socketRef.current.close();
     };
   }, [accessToken]);
 
-  const onOpen = (event) => {
-    console.log('opened', event);
+  const onOpen = () => {
     setWsStatus(request.SUCCESS);
   };
 
@@ -85,30 +93,18 @@ const Page = () => {
 
   const onError = (error) => {
     console.log('error', error);
-    setWsStatus(request.ERROR);
-    setWsError(error);
+    // setWsStatus(request.ERROR);
+    // setWsError(error);
   };
 
   const onSend = (from, to, message) => {
-    let userTo = null;
-    if (from === '6f6409c7-2480-439d-9f0c-375dac8591ed') {
-      userTo = 'b56e469e-31d6-40dd-aa34-7ae9bf9df9b6';
-    }
-
-    if (from === 'b56e469e-31d6-40dd-aa34-7ae9bf9df9b6') {
-      userTo = '6f6409c7-2480-439d-9f0c-375dac8591ed';
-    }
-
     const data = {
       event_type: eventTypes.MESSAGE,
-      data: { from, to: userTo, message },
+      data: { from, to, message },
     };
 
-    console.log('socketRef.current', socketRef.current);
-    console.log('wsStatus', wsStatus);
-
     if (socketRef.current && wsStatus === request.SUCCESS) {
-      console.log('SENDING');
+      setWsRecentRequest(eventTypes.MESSAGE);
       socketRef.current.send(JSON.stringify(data));
     }
   };
@@ -119,9 +115,8 @@ const Page = () => {
   }, []);
 
   const onFetchMessageList = (onCompleteCallback = null) => {
-    fetchChatMessages(
+    fetchUsersChatList(
       {
-        id: me.id,
         page: messageListPage,
         page_size: MESSAGE_LIST_PAGE_SIZE,
       },
@@ -139,8 +134,9 @@ const Page = () => {
   };
 
   const onFetchMessageListSuccess = ({ response }) => {
-    // setMessageListPage(response.page);
-    setMessageList((value) => [...value, ...response]);
+    setMessageListPage(response.page + 1);
+    setMessageList(response.data);
+    setMessageListEndOfList(!response.data.length);
   };
 
   const onFetchMessageListError = () => {
@@ -155,14 +151,15 @@ const Page = () => {
   const onSelectConversation = (user, onCompleteCallback = null) => {
     setConversationListInitialLoadingStatus(request.REQUESTING);
 
-    fetchChatMessagesBetweenUsers(
+    fetchChatMessages(
       {
-        between: [me.id, user?.id],
+        id: user?.id,
         page: conversationListPage,
         page_size: CONVERATION_LIST_PAGE_SIZE,
       },
       {
         onSuccess: (response) => {
+          setTalkingTo(user);
           onCompleteCallback?.();
           setConversationListInitialLoadingStatus(response.status);
           onFetchConversationListSuccess(response);
@@ -177,8 +174,8 @@ const Page = () => {
   };
 
   const onFetchConversationListSuccess = ({ response }) => {
-    // setMessageListPage(response.page);
-    setConversationList((value) => [...value, ...response]);
+    setConversationListPage(response.page + 1);
+    setConversationList((value) => [...value, ...response.data]);
   };
 
   const onFetchConversationListError = () => {
@@ -202,10 +199,12 @@ const Page = () => {
             list={messageList}
             initialLoadingStatus={initialMessageListLoadingStatus}
             fetchStatus={messageListStatus}
+            isEndOfList={messageListEndOfList}
             onNextPage={onNextPageMessageList}
             onSelectConversation={onSelectConversation}
           />
           <MessagesMain
+            talkingTo={talkingTo}
             list={conversationList}
             initialLoadingStatus={initialConversationListLoadingStatus}
             fetchStatus={conversationListStatus}

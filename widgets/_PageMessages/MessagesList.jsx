@@ -1,6 +1,7 @@
 /* eslint-disable operator-linebreak */
 import cn from 'classnames';
 import Spinner from 'components/Spinner/index';
+import { useMe } from 'hooks/useMe';
 import React, { useCallback, useState } from 'react';
 import { Scrollbars } from 'react-custom-scrollbars';
 import { request } from 'shared/types';
@@ -13,15 +14,25 @@ const MessagesList = ({
   onSelectConversation,
   initialLoadingStatus,
   fetchStatus,
+  isEndOfList,
   list,
   onNextPage,
 }) => {
   // STATES
   const [isFetching, setIsFetching] = useState(false);
 
+  // CUSTOM HOOKS
+  const { me } = useMe();
+
   // METHODS
   const onUpdateScrollbar = (values) => {
-    if (isFetching || fetchStatus === request.ERROR || !list?.length) {
+    if (
+      isFetching ||
+      fetchStatus === request.ERROR ||
+      !list?.length ||
+      list.length <= 6 ||
+      isEndOfList
+    ) {
       return;
     }
 
@@ -64,12 +75,16 @@ const MessagesList = ({
               onUpdate={onUpdateScrollbar}
             >
               {list.map((item, index) => (
-                <div onClick={() => onSelectConversation(item)}>
+                <div
+                  onClick={() => {
+                    onSelectConversation(me.id === item.fromUser.id ? item.toUser : item.fromUser);
+                  }}
+                >
                   <MessagesPerson
-                    name={item.name}
-                    time="01:10pm"
+                    user={me.id === item.fromUser.id ? item.toUser : item.fromUser}
+                    time={item.timestamp}
                     count={item.count}
-                    recentMesage={item.description}
+                    recentMesage={item.message}
                     className={index !== 0 ? 'mt-3' : ''}
                   />
                 </div>

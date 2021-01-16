@@ -9,22 +9,22 @@ import PropertiesRecommended from 'widgets/_PageProperties/PropertiesRecommended
 import PropertiesSearchResult from 'widgets/_PageProperties/PropertiesSearchResult';
 
 const Page = () => {
+  // REFS
+  const searchResultRef = useRef(null);
+
   // STATES
   const [properties, setProperties] = useState([]);
-  const searchResultRef = useRef(null);
+  const [recommendedProperties, setRecommendedProperties] = useState([]);
 
   // CUSTOM HOOKS
   const { addToast } = useToasts();
   const { fetchProperties, status, errors } = useProperties();
 
   // METHODS
-  const onFetchSuccess = ({ response }) => {
-    setProperties(response);
-  };
 
-  const onFetchError = () => {
-    addToast('An error occurred while searching properties.', toastTypes.ERROR);
-  };
+  useEffect(() => {
+    onSearch(null);
+  }, []);
 
   const onSearch = (data) => {
     if (data !== null) {
@@ -37,9 +37,17 @@ const Page = () => {
     });
   };
 
-  useEffect(() => {
-    onSearch(null);
-  }, []);
+  const onFetchSuccess = ({ response }) => {
+    if (!recommendedProperties.length) {
+      setRecommendedProperties(response);
+    }
+
+    setProperties(response);
+  };
+
+  const onFetchError = () => {
+    addToast('An error occurred while searching properties.', toastTypes.ERROR);
+  };
 
   return (
     <PageWrapper title="DigiRent - Properties" pageName="properties">
@@ -55,7 +63,7 @@ const Page = () => {
         errors={errors}
       />
 
-      <PropertiesRecommended />
+      <PropertiesRecommended properties={recommendedProperties} />
     </PageWrapper>
   );
 };

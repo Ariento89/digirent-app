@@ -34,26 +34,28 @@ const slickSettings = {
   ],
 };
 
-const PropertiesRecommended = () => (
+const PropertiesRecommended = ({ properties }) => (
   <div className="container max-width">
     <div className="recommendations">
       <h3 className="main-title">RECOMMENDED FOR YOU</h3>
 
-      <Slider {...slickSettings} className="list">
-        {[1, 2, 3, 4, 5].map((key, index) => (
-          <div key={key} className="item">
-            <PropertyInfo
-              name="Pahvale Villa"
-              address="Indore, Madhya Pradesh, India"
-              rentFee="246"
-              bedrooms="4"
-              bathrooms="2"
-              houseImage={`/images/house-sample-${(index % 3) + 1}.jpg`}
-              link="/property-details"
-            />
-          </div>
-        ))}
-      </Slider>
+      {!!properties?.length && (
+        <Slider {...slickSettings} className="list">
+          {properties.map((property) => (
+            <div key={property.id} className="item">
+              <PropertyInfo
+                link={`properties/${property.id}`}
+                houseImage="/images/house-sample-1.jpg"
+                name={property.name}
+                address={property.address}
+                rentFee={property.monthlyPrice}
+                bedrooms={property.bedrooms}
+                bathrooms={property.bathrooms}
+              />
+            </div>
+          ))}
+        </Slider>
+      )}
     </div>
   </div>
 );

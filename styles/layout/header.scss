@@ -104,10 +104,14 @@
 
     .header-menu-wrapper {
       @include flex();
-      @include rem(margin-left, -240px);
+      margin-left: -240px;
 
       @include media-breakpoint-down(sm) {
         width: 100%;
+      }
+
+      &.no-logged-in {
+        margin-left: 0;
       }
     }
 

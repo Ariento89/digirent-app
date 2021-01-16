@@ -3,9 +3,9 @@ import { NextArrow, PrevArrow } from 'components/SlickArrows';
 import { useProperties } from 'hooks/useProperties';
 import { useEffect, useState } from 'react';
 import Slider from 'react-slick';
-import { useToasts } from 'react-toast-notifications';
-import { toastTypes } from 'shared/types';
+import { request } from 'shared/types';
 import PropertyInfo from 'widgets/PropertyInfo/index';
+import StateList, { stateListTypes } from 'widgets/StateList/index';
 
 const propertiesSlickSettings = {
   nextArrow: <NextArrow />,
@@ -39,28 +39,22 @@ const propertiesSlickSettings = {
   ],
 };
 
-const RecentlyAddedProperties = () => {
+const HomeRecentlyAddedProperties = () => {
   // STATES
   const [properties, setProperties] = useState([]);
 
   // CUSTOM HOOKS
-  const { addToast } = useToasts();
-  const { fetchProperties, status, errors } = useProperties();
+  const { fetchProperties, status } = useProperties();
 
   // METHODS
   useEffect(() => {
     fetchProperties(null, {
       onSuccess: onFetchSuccess,
-      onError: onFetchError,
     });
   }, []);
 
   const onFetchSuccess = ({ response }) => {
     setProperties(response);
-  };
-
-  const onFetchError = () => {
-    addToast('An error occurred while searching properties.', toastTypes.ERROR);
   };
 
   return (
@@ -70,7 +64,7 @@ const RecentlyAddedProperties = () => {
       </h3>
       <p className="main-subtitle mt-1 mt-md-4 dark-gray">FIND YOUR NEW HOME RIGHT HERE</p>
 
-      {!!properties.length && (
+      {status === request.SUCCESS && !!properties.length && (
         <Slider {...propertiesSlickSettings} className="properties">
           {properties.map((property) => (
             <div key={property.id} className="item">
@@ -87,8 +81,26 @@ const RecentlyAddedProperties = () => {
           ))}
         </Slider>
       )}
+
+      {/* EMPTY */}
+      {status === request.SUCCESS && !properties.length && (
+        <StateList
+          title="LIST IS EMPTY"
+          description="No properties added yet."
+          type={stateListTypes.EMPTY}
+        />
+      )}
+
+      {/* ERROR */}
+      {status === request.ERROR && (
+        <StateList
+          title="OOPS!"
+          description="An error ocurred while fetching properties."
+          type={stateListTypes.ERROR}
+        />
+      )}
     </div>
   );
 };
 
-export default RecentlyAddedProperties;
+export default HomeRecentlyAddedProperties;

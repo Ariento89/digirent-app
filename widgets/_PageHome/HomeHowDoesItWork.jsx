@@ -58,7 +58,7 @@ const tenantData = {
   },
 };
 
-const HowDoesItWork = ({ selectedUserType, setSelectedUserType }) => {
+const HomeHowDoesItWork = ({ selectedUserType, setSelectedUserType }) => {
   const router = useRouter();
   const [data, setData] = useState(tenantData);
 
@@ -237,4 +237,4 @@ const HowDoesItWork = ({ selectedUserType, setSelectedUserType }) => {
   );
 };
 
-export default HowDoesItWork;
+export default HomeHowDoesItWork;

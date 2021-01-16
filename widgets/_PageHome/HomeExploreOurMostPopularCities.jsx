@@ -36,7 +36,7 @@ const citiesSlickSettings = {
   ],
 };
 
-const ExploreOurMosePopularCities = () => (
+const HomeExploreOurMostPopularCities = () => (
   <div className="explore-our-most-popular-cities container-fluid">
     <h3 className="main-title">
       EXPLORE OUR MOST <span className="text-primary font-weight-bold">POPULAR CITIES</span>
@@ -60,4 +60,4 @@ const ExploreOurMosePopularCities = () => (
   </div>
 );
 
-export default ExploreOurMosePopularCities;
+export default HomeExploreOurMostPopularCities;

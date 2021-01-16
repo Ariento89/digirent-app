@@ -25,7 +25,7 @@ const expertiseSlickSettings = {
   ],
 };
 
-const AreasOfExpertise = () => (
+const HomeAreasOfExpertise = () => (
   <div className="areas-of-expertise container">
     <h3 className="main-title">
       AREAS OF <span className="text-primary font-weight-bold">EXPERTISE?</span>
@@ -99,4 +99,4 @@ const AreasOfExpertise = () => (
   </div>
 );
 
-export default AreasOfExpertise;
+export default HomeAreasOfExpertise;

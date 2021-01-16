@@ -15,7 +15,7 @@ import * as Yup from 'yup';
 import AuthField from './widgets/AuthField';
 import AuthUserSelection from './widgets/AuthUserSelection';
 
-const RegisterModal = ({ initialUserType, onClose, isVisible }) => {
+const HomeRegisterModal = ({ initialUserType, onClose, isVisible }) => {
   // STATES
   const [selectedUserType, setSelectedUserType] = useState(userTypes.TENANT);
   const [termsAndPolicyActive, setTermsAndPolicyActive] = useState(false);
@@ -257,4 +257,4 @@ const RegisterModal = ({ initialUserType, onClose, isVisible }) => {
   );
 };
 
-export default RegisterModal;
+export default HomeRegisterModal;

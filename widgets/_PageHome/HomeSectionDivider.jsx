@@ -1,6 +1,6 @@
 import Link from 'next/link';
 
-const SectionDivider = ({ title, description, link }) => (
+const HomeSectionDivider = ({ title, description, link }) => (
   <div className="section-divider">
     <div className="title main-desc">{title}</div>
     <div className="action">
@@ -12,4 +12,4 @@ const SectionDivider = ({ title, description, link }) => (
   </div>
 );
 
-export default SectionDivider;
+export default HomeSectionDivider;

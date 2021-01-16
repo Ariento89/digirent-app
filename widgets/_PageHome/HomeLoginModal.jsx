@@ -24,7 +24,7 @@ const formDetails = {
   }),
 };
 
-const LoginModal = ({ onClose, isVisible, onRegister }) => {
+const HomeLoginModal = ({ onClose, isVisible, onRegister }) => {
   // STATES
   const [selectedUserType, setSelectedUserType] = useState(role.TENANT);
   const [rememberMeActive, setRememberMeActive] = useState(false);
@@ -211,4 +211,4 @@ const LoginModal = ({ onClose, isVisible, onRegister }) => {
   );
 };
 
-export default LoginModal;
+export default HomeLoginModal;

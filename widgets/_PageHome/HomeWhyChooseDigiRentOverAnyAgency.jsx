@@ -1,4 +1,4 @@
-const WhyChooseDigiRentOverAnyAgency = () => (
+const HomeWhyChooseDigiRentOverAnyAgency = () => (
   <div className="why-choose-digirent-over-any-agency container-fluid container-lg">
     <h3 className="main-title">
       WHY CHOOSE <span className="text-primary font-weight-bold">DIGI RENT</span> OVER ANY AGENCY?
@@ -98,4 +98,4 @@ const WhyChooseDigiRentOverAnyAgency = () => (
   </div>
 );
 
-export default WhyChooseDigiRentOverAnyAgency;
+export default HomeWhyChooseDigiRentOverAnyAgency;

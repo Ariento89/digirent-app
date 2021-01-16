@@ -1,7 +1,7 @@
 import Input from 'components/Input/index';
 import InputDatePicker from 'components/InputDatePicker/index';
 
-const Landing = () => (
+const HomeLanding = () => (
   <div className="landing">
     <p className="title">
       RENTING DONE <span className="alt">DIGITALLY</span>
@@ -25,4 +25,4 @@ const Landing = () => (
   </div>
 );
 
-export default Landing;
+export default HomeLanding;

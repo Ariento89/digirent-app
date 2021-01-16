@@ -1,14 +1,22 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
+import cn from 'classnames';
 import ToggleSwitch from 'components/ToggleSwitch/index';
 import { useLanguage } from 'hooks/useLanguage';
 import { useMe } from 'hooks/useMe';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { languageSwitchOptions, role } from 'shared/types';
 
 const Header = () => {
   // CUSTOM HOOKS
+  const router = useRouter();
   const { language, setLanguage } = useLanguage();
   const { me } = useMe();
+
+  // METHODS
+  const onBack = () => {
+    router.back();
+  };
 
   return (
     <>
@@ -34,25 +42,27 @@ const Header = () => {
               onChange={setLanguage}
             />
 
-            <div className="user" />
+            {me && <div className="user" />}
           </div>
         </div>
 
         <div className="header-menu">
-          <div className="header-menu-wrapper">
-            <div className="note">
-              {me?.role === role.LANDLORD && (
-                <Link href="/my-properties">
-                  <span>List a property</span>
-                </Link>
-              )}
+          <div className={cn('header-menu-wrapper', { 'no-logged-in': !me })}>
+            {me && (
+              <div className="note">
+                {me?.role === role.LANDLORD && (
+                  <Link href="/my-properties">
+                    <span>List a property</span>
+                  </Link>
+                )}
 
-              {me?.role === role.TENANT && (
-                <Link href="/properties">
-                  <span>Rent a property</span>
-                </Link>
-              )}
-            </div>
+                {me?.role === role.TENANT && (
+                  <Link href="/properties">
+                    <span>Rent a property</span>
+                  </Link>
+                )}
+              </div>
+            )}
 
             <div className="main-menu">
               <Link href="/properties">
@@ -75,7 +85,7 @@ const Header = () => {
         </div>
 
         <div className="header-back">
-          <div className="back">
+          <div className="back" onClick={onBack}>
             <img src="/images/icon/icon-arrow-left-white.svg" alt="icon user" />
           </div>
         </div>

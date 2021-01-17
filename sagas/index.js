@@ -3,6 +3,7 @@ import amenitiesSagas from './amenities';
 import authenticationSagas from './authentication';
 import blogSagas from './blog';
 import chatSagas from './chat';
+import documentsSagas from './documents';
 import meSagas from './me';
 import propertiesSagas from './properties';
 import propertyApplicationsSagas from './propertyApplications';
@@ -14,6 +15,7 @@ export default function* rootSaga() {
     ...authenticationSagas,
     ...blogSagas,
     ...chatSagas,
+    ...documentsSagas,
     ...meSagas,
     ...propertiesSagas,
     ...propertyApplicationsSagas,

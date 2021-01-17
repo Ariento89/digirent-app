@@ -12,13 +12,13 @@ import StateList, { stateListTypes } from 'widgets/StateList/index';
 import MessagesItem from './widgets/MessagesItem';
 
 const MessagesMain = ({
+  talkingTo,
   list,
-  initialLoadingStatus,
+  initialStatus,
   fetchStatus,
+  isEndOfList,
   onNextPage,
   onSend,
-  talkingTo,
-  isEndOfList,
 }) => {
   // STATES
   const [message, setMessage] = useState('');
@@ -33,17 +33,17 @@ const MessagesMain = ({
 
   // METHODS
   useEffect(() => {
-    if (initialLoadingStatus === request.SUCCESS && scrollbarRef.current) {
+    if (initialStatus === request.SUCCESS && scrollbarRef.current && !isReady) {
       setTimeout(() => {
         scrollbarRef?.current?.scrollToBottom();
         setIsReady(true);
       }, 500);
     }
-  }, [initialLoadingStatus, scrollbarRef]);
+  }, [initialStatus, isReady, scrollbarRef]);
 
   const send = () => {
-    if (message.length && talkingTo) {
-      onSend(me?.id, talkingTo?.id, 'adsfadsf');
+    if (message.trim().length && talkingTo) {
+      onSend(me?.id, talkingTo?.id, message.trim());
       setMessage('');
     } else {
       addToast('An error occurred while sending your mesage.', toastTypes.ERROR);
@@ -51,22 +51,26 @@ const MessagesMain = ({
   };
 
   const hideList = useCallback(
-    () =>
-      (initialLoadingStatus === request.SUCCESS && !list.length) ||
-      initialLoadingStatus === request.ERROR,
-    [initialLoadingStatus, list],
+    () => (initialStatus === request.SUCCESS && !list.length) || initialStatus === request.ERROR,
+    [initialStatus, list],
   );
 
   return (
     <div className="col-12 col-lg-7 col-xl-8 mt-5 mt-lg-0">
-      <Spinner isLoading={initialLoadingStatus === request.REQUESTING}>
+      <Spinner isLoading={initialStatus === request.REQUESTING}>
         <div className="user-header">
           <div className="user-photo" />
           <div
             className={cn('user-info', { 'with-border': me?.role === role.LANDLORD && talkingTo })}
           >
-            <p className="name">{talkingTo?.name}</p>
-            <p className="role">{talkingTo?.role} </p>
+            {talkingTo && (
+              <>
+                <p className="name">
+                  {talkingTo?.firstName} {talkingTo?.lastName}
+                </p>
+                <p className="role">ROLE</p>
+              </>
+            )}
           </div>
           {me?.role === role.LANDLORD && talkingTo && (
             <Button className="btn-send-booking-request">
@@ -82,7 +86,7 @@ const MessagesMain = ({
             autoHeightMin="100%"
             autoHeightMax="100%"
             className={cn({ 'd-none': hideList() })}
-            style={{ height: '100%' }}
+            style={{ height: '100%', paddingBottom: 10 }}
           >
             <div className="main-message-content" style={{ opacity: isReady ? 1 : 0 }}>
               {fetchStatus === request.REQUESTING && talkingTo && (
@@ -91,10 +95,17 @@ const MessagesMain = ({
                 </Spinner>
               )}
 
-              {!fetchStatus !== request.REQUESTING && talkingTo && (
-                <span className="user-messages-load-more" onClick={onNextPage}>
-                  Load More Messages...
+              {fetchStatus !== request.REQUESTING && !isEndOfList && talkingTo && (
+                <span
+                  className="user-messages-load-more mb-4"
+                  onClick={() => onNextPage(talkingTo, false)}
+                >
+                  LOAD MORE MESSAGES...
                 </span>
+              )}
+
+              {isEndOfList && talkingTo && (
+                <span className="user-messages-end-conversation mb-4">END OF CONVERSATION</span>
               )}
 
               {list.map((item, index) => (
@@ -108,7 +119,7 @@ const MessagesMain = ({
           </Scrollbars>
 
           {/* EMPTY */}
-          {initialLoadingStatus === request.SUCCESS && !list.length && (
+          {initialStatus === request.SUCCESS && !list.length && (
             <StateList
               className="state-list"
               title="LIST IS EMPTY"
@@ -118,7 +129,7 @@ const MessagesMain = ({
           )}
 
           {/* ERROR */}
-          {initialLoadingStatus === request.ERROR && (
+          {initialStatus === request.ERROR && (
             <StateList
               className="state-list"
               title="OOPS!"
@@ -128,10 +139,15 @@ const MessagesMain = ({
           )}
 
           <div className="footer">
-            <textarea onChange={(event) => setMessage(event.target.value)} placeholder="Message" />
+            <textarea
+              onChange={(event) => setMessage(event.target.value)}
+              value={message}
+              placeholder="Message"
+              disabled={!talkingTo || initialStatus !== request.SUCCESS || !message.length}
+            />
             <Button
               onClick={send}
-              disabled={!talkingTo || initialLoadingStatus !== request.SUCCESS}
+              disabled={!talkingTo || initialStatus !== request.SUCCESS || !message.length}
             >
               <img src="/images/icon/icon-email-outline.svg" alt="email icon" />
             </Button>

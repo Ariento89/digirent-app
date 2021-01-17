@@ -1,19 +1,30 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import cn from 'classnames';
 import ToggleSwitch from 'components/ToggleSwitch/index';
+import { useDocuments } from 'hooks/useDocuments';
 import { useLanguage } from 'hooks/useLanguage';
 import { useMe } from 'hooks/useMe';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 import { languageSwitchOptions, role } from 'shared/types';
 
 const Header = () => {
+  // STATES
+  const [userImage, setUserImage] = useState(null);
+
   // CUSTOM HOOKS
   const router = useRouter();
   const { language, setLanguage } = useLanguage();
   const { me } = useMe();
+  const { profilePhoto } = useDocuments();
 
   // METHODS
+  useEffect(() => {
+    setUserImage(profilePhoto);
+  }, [profilePhoto]);
+
   const onBack = () => {
     router.back();
   };
@@ -42,7 +53,12 @@ const Header = () => {
               onChange={setLanguage}
             />
 
-            {me && <div className="user" />}
+            {me && (
+              <div
+                className="user"
+                style={{ backgroundImage: userImage ? `url(${userImage})` : undefined }}
+              />
+            )}
           </div>
         </div>
 

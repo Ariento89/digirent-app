@@ -1,8 +1,8 @@
 import cn from 'classnames';
 import dayjs from 'dayjs';
 
-const MessagesPerson = ({ user, time, count, recentMesage, className }) => (
-  <div className={cn('item', className)}>
+const MessagesPerson = ({ isActive, user, time, count, recentMesage, className }) => (
+  <div className={cn('item', { active: isActive }, className)}>
     <div className="user-photo" />
     <div className="information">
       <div className="name-date">

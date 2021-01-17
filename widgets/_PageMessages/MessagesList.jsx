@@ -11,12 +11,13 @@ import MessagesPerson from './widgets/MessagesPerson';
 const SCROLLBARS_HEIGHT = 575;
 
 const MessagesList = ({
-  onSelectConversation,
-  initialLoadingStatus,
+  talkingTo,
+  list,
+  initialStatus,
   fetchStatus,
   isEndOfList,
-  list,
   onNextPage,
+  onSelectConversation,
 }) => {
   // STATES
   const [isFetching, setIsFetching] = useState(false);
@@ -49,10 +50,8 @@ const MessagesList = ({
   };
 
   const hideList = useCallback(
-    () =>
-      (initialLoadingStatus === request.SUCCESS && !list.length) ||
-      initialLoadingStatus === request.ERROR,
-    [initialLoadingStatus, list],
+    () => (initialStatus === request.SUCCESS && !list.length) || initialStatus === request.ERROR,
+    [initialStatus, list],
   );
 
   return (
@@ -65,7 +64,7 @@ const MessagesList = ({
         <div className={cn('user-messages main-box', { center: hideList() })}>
           <Spinner
             className={cn({ 'd-none': hideList() })}
-            isLoading={initialLoadingStatus === request.REQUESTING}
+            isLoading={initialStatus === request.REQUESTING}
           >
             <Scrollbars
               autoHeight
@@ -74,21 +73,22 @@ const MessagesList = ({
               style={{ height: SCROLLBARS_HEIGHT }}
               onUpdate={onUpdateScrollbar}
             >
-              {list.map((item, index) => (
-                <div
-                  onClick={() => {
-                    onSelectConversation(me.id === item.fromUser.id ? item.toUser : item.fromUser);
-                  }}
-                >
-                  <MessagesPerson
-                    user={me.id === item.fromUser.id ? item.toUser : item.fromUser}
-                    time={item.timestamp}
-                    count={item.count}
-                    recentMesage={item.message}
-                    className={index !== 0 ? 'mt-3' : ''}
-                  />
-                </div>
-              ))}
+              {list.map((item, index) => {
+                const user = me.id === item.fromUser.id ? item.toUser : item.fromUser;
+
+                return (
+                  <div onClick={() => onSelectConversation(user, true)}>
+                    <MessagesPerson
+                      user={user}
+                      time={item.timestamp}
+                      count={item.count}
+                      recentMesage={item.message}
+                      isActive={talkingTo?.id === user.id}
+                      className={index !== 0 ? 'mt-3' : ''}
+                    />
+                  </div>
+                );
+              })}
 
               {isFetching && (
                 <Spinner isLoading>
@@ -99,7 +99,7 @@ const MessagesList = ({
           </Spinner>
 
           {/* EMPTY */}
-          {initialLoadingStatus === request.SUCCESS && !list.length && (
+          {initialStatus === request.SUCCESS && !list.length && (
             <StateList
               title="LIST IS EMPTY"
               description="You have not talked to anyone yet."
@@ -108,7 +108,7 @@ const MessagesList = ({
           )}
 
           {/* ERROR */}
-          {initialLoadingStatus === request.ERROR && (
+          {initialStatus === request.ERROR && (
             <StateList
               title="OOPS!"
               description="An error ocurred while fetching your messages."

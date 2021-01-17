@@ -26,18 +26,14 @@ const Page = () => {
   const [messageList, setMessageList] = useState([]);
   const [messageListPage, setMessageListPage] = useState(1);
   const [messageListEndOfList, setMessageListEndOfList] = useState(false);
-  const [initialMessageListLoadingStatus, setMessageListInitialLoadingStatus] = useState(
-    request.REQUESTING,
-  );
+  const [messageListInitialStatus, setMessageListInitialStatus] = useState(request.REQUESTING);
 
   // STATES: MESSAGE MAIN
   const [talkingTo, setTalkingTo] = useState(null);
   const [conversationList, setConversationList] = useState([]);
   const [conversationListPage, setConversationListPage] = useState(1);
   const [conversationListEndOfList, setConversationListEndOfList] = useState(false);
-  const [initialConversationListLoadingStatus, setConversationListInitialLoadingStatus] = useState(
-    request.NONE,
-  );
+  const [conversationListInitialStatus, setConversationListInitialStatus] = useState(request.NONE);
 
   // REFS
   const socketRef = useRef(null);
@@ -52,16 +48,16 @@ const Page = () => {
   // METHODS
   useEffect(() => {
     if (
-      ![request.SUCCESS, request.ERROR].includes(initialMessageListLoadingStatus) &&
+      ![request.SUCCESS, request.ERROR].includes(messageListInitialStatus) &&
       [request.SUCCESS, request.ERROR].includes(messageListStatus)
     ) {
-      setMessageListInitialLoadingStatus(messageListStatus);
+      setMessageListInitialStatus(messageListStatus);
 
       if (messageListStatus === request.ERROR) {
-        setConversationListInitialLoadingStatus(request.ERROR);
+        setConversationListInitialStatus(request.ERROR);
       }
     }
-  }, [messageListStatus, initialMessageListLoadingStatus]);
+  }, [messageListStatus, messageListInitialStatus]);
 
   // METHODS: WEBSOCKET
   useEffect(() => {
@@ -149,8 +145,14 @@ const Page = () => {
   };
 
   // METHODS: MESSAGE MAIN
-  const onSelectConversation = (user, onCompleteCallback = null) => {
-    setConversationListInitialLoadingStatus(request.REQUESTING);
+  const onSelectConversation = (user, shouldReset) => {
+    if (shouldReset) {
+      setConversationListInitialStatus(request.REQUESTING);
+
+      setConversationList([]);
+      setConversationListPage(1);
+      setConversationListEndOfList(false);
+    }
 
     fetchChatMessages(
       {
@@ -161,14 +163,18 @@ const Page = () => {
       {
         onSuccess: (response) => {
           setTalkingTo(user);
-          onCompleteCallback?.();
-          setConversationListInitialLoadingStatus(response.status);
           onFetchConversationListSuccess(response);
+
+          if (shouldReset) {
+            setConversationListInitialStatus(response.status);
+          }
         },
         onError: (response) => {
-          onCompleteCallback?.();
-          setConversationListInitialLoadingStatus(response.status);
           onFetchConversationListError(response);
+
+          if (shouldReset) {
+            setConversationListInitialStatus(response.status);
+          }
         },
       },
     );
@@ -176,7 +182,7 @@ const Page = () => {
 
   const onFetchConversationListSuccess = ({ response }) => {
     setConversationListPage(response.page + 1);
-    setConversationList((value) => [...value, ...response.data]);
+    setConversationList((value) => [...response.data.reverse(), ...value]);
     setConversationListEndOfList(!response.data.length);
   };
 
@@ -184,10 +190,10 @@ const Page = () => {
     addToast('An error occurred while fetching conversation.', toastTypes.ERROR);
   };
 
-  const onNextPageConversation = () => {
-    onSelectConversation();
+  const onNextPageConversation = (user) => {
+    onSelectConversation(user);
   };
-
+  console.log('messageList', messageList);
   return (
     <PageWrapper title="DigiRent - Messages" pageName="messages">
       <img src="/images/main-left-bg.svg" className="left-main-background" alt="left bg" />
@@ -198,8 +204,9 @@ const Page = () => {
 
         <div className="row mt-4">
           <MessagesList
+            talkingTo={talkingTo}
             list={messageList}
-            initialLoadingStatus={initialMessageListLoadingStatus}
+            initialStatus={messageListInitialStatus}
             fetchStatus={messageListStatus}
             isEndOfList={messageListEndOfList}
             onNextPage={onNextPageMessageList}
@@ -208,7 +215,7 @@ const Page = () => {
           <MessagesMain
             talkingTo={talkingTo}
             list={conversationList}
-            initialLoadingStatus={initialConversationListLoadingStatus}
+            initialStatus={conversationListInitialStatus}
             fetchStatus={conversationListStatus}
             isEndOfList={conversationListEndOfList}
             onNextPage={onNextPageConversation}

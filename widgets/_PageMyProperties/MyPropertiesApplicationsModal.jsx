@@ -50,7 +50,7 @@ const MyPropertiesApplicationsModal = ({
           )}
 
           {/* LIST */}
-          {status === request.SUCCESS && applications?.length > 0 && (
+          {status === request.SUCCESS && !!applications && (
             <div className="main-content pb-4">
               <TableHeader
                 currentPage={paginationData.currentPage}
@@ -72,7 +72,7 @@ const MyPropertiesApplicationsModal = ({
           )}
 
           {/* EMPTY */}
-          {status === request.SUCCESS && applications?.length === 0 && (
+          {status === request.SUCCESS && !applications?.length && (
             <StateList
               className="mx-auto"
               title="LIST IS EMPTY"

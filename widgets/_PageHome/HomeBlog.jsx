@@ -1,10 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { NextArrow, PrevArrow } from 'components/SlickArrows';
+import dayjs from 'dayjs';
 import { useBlog } from 'hooks/useBlog';
 import { useEffect, useState } from 'react';
 import Slider from 'react-slick';
 import { request } from 'shared/types';
-import BlogCard from 'widgets/BlogCard/index';
+import BlogInfo from 'widgets/BlogInfo/index';
 import StateList, { stateListTypes } from 'widgets/StateList/index';
 
 const blogsSlickSettings = {
@@ -70,24 +71,29 @@ const HomeBlog = () => {
 
       {status === request.SUCCESS && !!blogs.length && (
         <Slider {...blogsSlickSettings} className="blogs">
-          {blogs.map((blog) => (
-            <div key={blog.id} className="item">
-              <BlogCard
-                day={blog.day}
-                month={blog.month}
-                title={blog.title}
-                description={blog.description}
-                link={blog.link}
-              />
-            </div>
-          ))}
+          {blogs.map((blog) => {
+            const date = dayjs(blog.updatedAt);
+
+            return (
+              <div key={blog.id} className="item">
+                <BlogInfo
+                  link={`blog/${blog.id}`}
+                  day={date.format('DD')}
+                  month={date.format('MMM')}
+                  title={blog.title}
+                  content={blog.content}
+                />
+              </div>
+            );
+          })}
         </Slider>
       )}
 
       {/* EMPTY */}
       {status === request.SUCCESS && !blogs.length && (
         <StateList
-          title="LIST IS EMPTY"
+          className="mt-4"
+          title="NO BLOG POSTS"
           description="No blogs posted yet."
           type={stateListTypes.EMPTY}
         />
@@ -96,6 +102,7 @@ const HomeBlog = () => {
       {/* ERROR */}
       {status === request.ERROR && (
         <StateList
+          className="mt-4"
           title="OOPS!"
           description="An error ocurred while fetching blog posts."
           type={stateListTypes.ERROR}

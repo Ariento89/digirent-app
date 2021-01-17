@@ -1,9 +1,10 @@
+/* eslint-disable operator-linebreak */
 /* eslint-disable react/no-array-index-key */
 import cn from 'classnames';
 import Button from 'components/Button/index';
 import Spinner from 'components/Spinner/index';
 import { useMe } from 'hooks/useMe';
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Scrollbars } from 'react-custom-scrollbars';
 import { useToasts } from 'react-toast-notifications';
 import { request, role, toastTypes } from 'shared/types';
@@ -17,20 +18,33 @@ const MessagesMain = ({
   onNextPage,
   onSend,
   talkingTo,
+  isEndOfList,
 }) => {
   // STATES
   const [message, setMessage] = useState('');
-  const [isFetching, setIsFetching] = useState(false);
+  const [isReady, setIsReady] = useState(false);
+
+  // REFS
+  const scrollbarRef = useRef(null);
 
   // CUSTOM HOOKS
   const { addToast } = useToasts();
   const { me } = useMe();
 
   // METHODS
+  useEffect(() => {
+    if (initialLoadingStatus === request.SUCCESS && scrollbarRef.current) {
+      setTimeout(() => {
+        scrollbarRef?.current?.scrollToBottom();
+        setIsReady(true);
+      }, 500);
+    }
+  }, [initialLoadingStatus, scrollbarRef]);
+
   const send = () => {
     if (message.length && talkingTo) {
       onSend(me?.id, talkingTo?.id, 'adsfadsf');
-      // setMessage('');
+      setMessage('');
     } else {
       addToast('An error occurred while sending your mesage.', toastTypes.ERROR);
     }
@@ -63,13 +77,26 @@ const MessagesMain = ({
 
         <div className="main-message mt-3">
           <Scrollbars
+            ref={scrollbarRef}
+            autoHeight
             autoHeightMin="100%"
             autoHeightMax="100%"
-            autoHeight
             className={cn({ 'd-none': hideList() })}
             style={{ height: '100%' }}
           >
-            <div className="main-message-content">
+            <div className="main-message-content" style={{ opacity: isReady ? 1 : 0 }}>
+              {fetchStatus === request.REQUESTING && talkingTo && (
+                <Spinner isLoading>
+                  <div className="user-messages-spinner" />
+                </Spinner>
+              )}
+
+              {!fetchStatus !== request.REQUESTING && talkingTo && (
+                <span className="user-messages-load-more" onClick={onNextPage}>
+                  Load More Messages...
+                </span>
+              )}
+
               {list.map((item, index) => (
                 <MessagesItem
                   key={index}

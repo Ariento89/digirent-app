@@ -115,12 +115,12 @@ const AccountProfile = () => {
 export default AccountProfile;
 
 const AccountProfileImage = ({ onImageSelect, setIsUploadingImage }) => {
-  // REFS
-  const imageUploadRef = useRef(null);
-
   // CUSTOM HOOKS
   const { addToast } = useToasts();
   const { uploadProfilePhoto } = useMe();
+
+  // REFS
+  const imageUploadRef = useRef(null);
 
   // METHODS
   const onClickImageUpload = () => {

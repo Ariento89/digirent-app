@@ -1,7 +1,6 @@
 import Badge from 'components/Badge/index';
 import Button from 'components/Button/index';
 import { truncate } from 'lodash';
-import React from 'react';
 
 const TenantsInfo = ({
   firstName,

@@ -34,17 +34,17 @@ const slickSettings = {
   ],
 };
 
-const PropertiesRecommended = ({ properties }) => (
-  <div className="container max-width">
-    <div className="recommendations">
-      <h3 className="main-title">RECOMMENDED FOR YOU</h3>
+const PropertiesRecommended = ({ properties }) =>
+  !!properties?.length && (
+    <div className="container max-width">
+      <div className="recommendations">
+        <h3 className="main-title">RECOMMENDED FOR YOU</h3>
 
-      {!!properties?.length && (
         <Slider {...slickSettings} className="list">
           {properties.map((property) => (
             <div key={property.id} className="item">
               <PropertyInfo
-                link={`properties/${property.id}`}
+                link={`/properties/${property.id}`}
                 houseImage="/images/house-sample-1.jpg"
                 name={property.name}
                 address={property.address}
@@ -55,9 +55,8 @@ const PropertiesRecommended = ({ properties }) => (
             </div>
           ))}
         </Slider>
-      )}
+      </div>
     </div>
-  </div>
-);
+  );
 
 export default PropertiesRecommended;

@@ -92,7 +92,7 @@ const MessagesList = ({
 
               {isFetching && (
                 <Spinner isLoading>
-                  <div className="user-messages-spinner" />
+                  <div className="user-messages-spinner mt-3" />
                 </Spinner>
               )}
             </Scrollbars>

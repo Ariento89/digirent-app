@@ -9,17 +9,17 @@ import TenantsLanding from 'widgets/_PageTenants/TenantsLanding';
 import TenantsSearchResult from 'widgets/_PageTenants/TenantsSearchResult';
 
 const Page = () => {
-  // REFS
-  const searchResultRef = useRef(null);
-
   // STATES
   const [tenants, setTenants] = useState([]);
   const [aboutMeVisible, setAboutMeVisible] = useState(false);
   const [selectedTenant, setSelectedTenant] = useState(null);
 
+  // REFS
+  const searchResultRef = useRef(null);
+
   // CUSTOM HOOKS
   const { addToast } = useToasts();
-  const { fetchAllTenants, status, errors } = useUsers();
+  const { fetchAllTenants, status } = useUsers();
 
   // METHODS
   useEffect(() => {
@@ -62,7 +62,6 @@ const Page = () => {
           searchResultRef={searchResultRef}
           tenants={tenants}
           status={status}
-          errors={errors}
           onAboutMe={onAboutMe}
         />
       </PageWrapper>

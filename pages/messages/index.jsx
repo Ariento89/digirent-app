@@ -34,6 +34,7 @@ const Page = () => {
   const [talkingTo, setTalkingTo] = useState(null);
   const [conversationList, setConversationList] = useState([]);
   const [conversationListPage, setConversationListPage] = useState(1);
+  const [conversationListEndOfList, setConversationListEndOfList] = useState(false);
   const [initialConversationListLoadingStatus, setConversationListInitialLoadingStatus] = useState(
     request.NONE,
   );
@@ -176,14 +177,15 @@ const Page = () => {
   const onFetchConversationListSuccess = ({ response }) => {
     setConversationListPage(response.page + 1);
     setConversationList((value) => [...value, ...response.data]);
+    setConversationListEndOfList(!response.data.length);
   };
 
   const onFetchConversationListError = () => {
     addToast('An error occurred while fetching conversation.', toastTypes.ERROR);
   };
 
-  const onNextPageConversation = (onCompleteCallback) => {
-    onSelectConversation(onCompleteCallback);
+  const onNextPageConversation = () => {
+    onSelectConversation();
   };
 
   return (
@@ -208,6 +210,7 @@ const Page = () => {
             list={conversationList}
             initialLoadingStatus={initialConversationListLoadingStatus}
             fetchStatus={conversationListStatus}
+            isEndOfList={conversationListEndOfList}
             onNextPage={onNextPageConversation}
             onSend={onSend}
           />

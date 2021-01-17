@@ -37,27 +37,27 @@ const MyPropertiesAddedProperties = ({
             />
           </div>
         ))}
-
-        {/* EMPTY */}
-        {status === request.SUCCESS && properties?.length === 0 && (
-          <StateList
-            className="mx-auto"
-            title="LIST IS EMPTY"
-            description="You have not added properties yet."
-            type={stateListTypes.EMPTY}
-          />
-        )}
-
-        {/* ERROR */}
-        {status === request.ERROR && (
-          <StateList
-            className="mx-auto"
-            title="OOPS!"
-            description="An error ocurred while fetching your properties."
-            type={stateListTypes.ERROR}
-          />
-        )}
       </div>
+
+      {/* EMPTY */}
+      {status === request.SUCCESS && !properties?.length && (
+        <StateList
+          className="mx-auto"
+          title="LIST IS EMPTY"
+          description="You have not added properties yet."
+          type={stateListTypes.EMPTY}
+        />
+      )}
+
+      {/* ERROR */}
+      {status === request.ERROR && (
+        <StateList
+          className="mx-auto"
+          title="OOPS!"
+          description="An error ocurred while fetching your properties."
+          type={stateListTypes.ERROR}
+        />
+      )}
     </Spinner>
   </div>
 );

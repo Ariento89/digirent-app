@@ -18,7 +18,7 @@ const PropertiesDetailsMain = ({ property }) => {
   const { me } = useMe();
   const { apply, status, errors } = usePropertyApplications();
 
-  // MEHODS
+  // METHODS
   const onApply = () => {
     apply(
       { propertyId: property.id },

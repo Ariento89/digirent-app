@@ -9,12 +9,12 @@ import PropertiesRecommended from 'widgets/_PageProperties/PropertiesRecommended
 import PropertiesSearchResult from 'widgets/_PageProperties/PropertiesSearchResult';
 
 const Page = () => {
-  // REFS
-  const searchResultRef = useRef(null);
-
   // STATES
   const [properties, setProperties] = useState([]);
   const [recommendedProperties, setRecommendedProperties] = useState([]);
+
+  // REFS
+  const searchResultRef = useRef(null);
 
   // CUSTOM HOOKS
   const { addToast } = useToasts();

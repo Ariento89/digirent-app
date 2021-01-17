@@ -1,20 +1,23 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import { NextArrow, PrevArrow } from 'components/SlickArrows';
-import { useProperties } from 'hooks/useProperties';
-import { useEffect, useState } from 'react';
+import { NextArrow, PrevArrow } from 'components/SlickArrows/index';
 import Slider from 'react-slick';
 import { request } from 'shared/types';
 import PropertyInfo from 'widgets/PropertyInfo/index';
 import StateList, { stateListTypes } from 'widgets/StateList/index';
 
-const propertiesSlickSettings = {
+const settings = {
   nextArrow: <NextArrow />,
   prevArrow: <PrevArrow />,
-  slidesToShow: 3,
+  slidesToShow: 4,
   slidesToScroll: 1,
   infinite: true,
   swipe: false,
   responsive: [
+    {
+      breakpoint: 1599,
+      settings: {
+        slidesToShow: 3,
+      },
+    },
     {
       breakpoint: 1199,
       settings: {
@@ -39,33 +42,16 @@ const propertiesSlickSettings = {
   ],
 };
 
-const HomeRecentlyAddedProperties = () => {
-  // STATES
-  const [properties, setProperties] = useState([]);
-
-  // CUSTOM HOOKS
-  const { fetchProperties, status } = useProperties();
-
-  // METHODS
-  useEffect(() => {
-    fetchProperties(null, {
-      onSuccess: onFetchSuccess,
-    });
-  }, []);
-
-  const onFetchSuccess = ({ response }) => {
-    setProperties(response);
-  };
-
-  return (
-    <div className="recently-added-properties container">
+const PropertiesDetailsRecentlyViewedProperties = ({ properties, status }) => (
+  <div className="container max-width">
+    <div className="recently-viewed">
       <h3 className="main-title">
-        RECENTLY ADDED <span className="text-primary font-weight-bold">PROPERTIES</span>
+        RECENTLY <span className="text-primary font-weight-bold">VIEWED</span>
       </h3>
-      <p className="main-subtitle mt-1 mt-md-4 dark-gray">FIND YOUR NEW HOME RIGHT HERE</p>
+      <p className="main-subtitle mt-1 mt-md-2 dark-gray">FIND YOUR NEW HOME RIGHT HERE</p>
 
-      {status === request.SUCCESS && !!properties.length && (
-        <Slider {...propertiesSlickSettings} className="properties">
+      {status === request.SUCCESS && !!properties?.length && (
+        <Slider {...settings} className="list">
           {properties.map((property) => (
             <div key={property.id} className="item">
               <PropertyInfo
@@ -83,10 +69,11 @@ const HomeRecentlyAddedProperties = () => {
       )}
 
       {/* EMPTY */}
-      {status === request.SUCCESS && !properties.length && (
+      {status === request.SUCCESS && !properties?.length && (
         <StateList
-          title="NO PROPERTIES"
-          description="No properties added yet."
+          className="mx-auto mt-4"
+          title="LIST IS EMPTY"
+          description="You have not viewed any properties yet."
           type={stateListTypes.EMPTY}
         />
       )}
@@ -94,13 +81,14 @@ const HomeRecentlyAddedProperties = () => {
       {/* ERROR */}
       {status === request.ERROR && (
         <StateList
+          className="mx-auto mt-4"
           title="OOPS!"
-          description="An error ocurred while fetching properties."
+          description="An error ocurred while fetching your recently viewed properties."
           type={stateListTypes.ERROR}
         />
       )}
     </div>
-  );
-};
+  </div>
+);
 
-export default HomeRecentlyAddedProperties;
+export default PropertiesDetailsRecentlyViewedProperties;

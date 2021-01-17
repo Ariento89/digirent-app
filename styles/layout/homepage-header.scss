@@ -35,12 +35,16 @@
     }
 
     @include media-breakpoint-up(2xl) {
+      .note {
+        align-self: flex-start;
+      }
+
       .main-menu {
-        margin-top: 40px;
+        margin-top: 38px;
       }
 
       .portal-choices {
-        margin-top: 40px;
+        margin-top: 32px;
       }
 
       .toggle-switch-language {

@@ -9,7 +9,7 @@ export const useAuthentication = () => {
   // STATES
   const [status, setStatus] = useState(request.NONE);
   const [errors, setErrors] = useState([]);
-  const [recentRequest, setRecentRequest] = useState();
+  const [recentRequest, setRecentRequest] = useState(null);
 
   // SELECTORS
   const accessToken = useSelector(selectors.selectAccessToken());

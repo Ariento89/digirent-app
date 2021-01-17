@@ -9,7 +9,7 @@ export const useMe = () => {
   // STATES
   const [status, setStatus] = useState(request.NONE);
   const [errors, setErrors] = useState([]);
-  const [recentRequest, setRecentRequest] = useState();
+  const [recentRequest, setRecentRequest] = useState(null);
 
   // SELECTORS
   const me = useSelector(selectors.selectMe());
@@ -20,10 +20,6 @@ export const useMe = () => {
   const updatePasswordAction = useActionDispatch(actions.updatePassword);
   const setTenantLookingForAction = useActionDispatch(actions.setTenantLookingFor);
   const setUserBankDetailsAction = useActionDispatch(actions.setUserBankDetails);
-  const uploadCopyIdAction = useActionDispatch(actions.uploadCopyId);
-  const uploadProofOfIncomeAction = useActionDispatch(actions.uploadProofOfIncome);
-  const uploadProofOfEnrolmentAction = useActionDispatch(actions.uploadProofOfEnrolment);
-  const uploadProfilePhotoAction = useActionDispatch(actions.uploadProfilePhoto);
 
   // GENERAL METHODS
   const resetError = () => setErrors([]);
@@ -74,32 +70,12 @@ export const useMe = () => {
     executeRequest(data, callback, setUserBankDetailsAction, types.SET_USER_BANK_DETAILS);
   };
 
-  const uploadCopyId = (data, callback = {}) => {
-    executeRequest(data, callback, uploadCopyIdAction, types.UPLOAD_COPY_ID);
-  };
-
-  const uploadProofOfIncome = (data, callback = {}) => {
-    executeRequest(data, callback, uploadProofOfIncomeAction, types.UPLOAD_PROOF_OF_INCOME);
-  };
-
-  const uploadProofOfEnrolment = (data, callback = {}) => {
-    executeRequest(data, callback, uploadProofOfEnrolmentAction, types.UPLOAD_PROOF_OF_ENROLMENT);
-  };
-
-  const uploadProfilePhoto = (data, callback = {}) => {
-    executeRequest(data, callback, uploadProfilePhotoAction, types.UPLOAD_PROFILE_PHOTO);
-  };
-
   return {
     me,
     updateProfileInformation,
     updatePassword,
     setTenantLookingFor,
     setUserBankDetails,
-    uploadCopyId,
-    uploadProofOfIncome,
-    uploadProofOfEnrolment,
-    uploadProfilePhoto,
     getMe,
     status,
     errors,

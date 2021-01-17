@@ -72,7 +72,7 @@
         height: 60px;
         width: 60px;
         border-radius: 50%;
-        background-image: url('/images/landlord-sample-photo.jpg');
+        background-image: url('/images/photo-placeholder.png');
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
@@ -104,10 +104,14 @@
 
     .header-menu-wrapper {
       @include flex();
-      @include rem(margin-left, -240px);
+      margin-left: -240px;
 
       @include media-breakpoint-down(sm) {
         width: 100%;
+      }
+
+      &.no-logged-in {
+        margin-left: 0;
       }
     }
 
@@ -145,6 +149,8 @@
       background-color: white;
       border-bottom-left-radius: 18px;
       border-bottom-right-radius: 18px;
+      cursor: pointer;
+      z-index: 1000;
       @include rem(padding, 10px 27px);
       @include rem(padding-top, 15px);
       @include rem(margin-right, 126px);

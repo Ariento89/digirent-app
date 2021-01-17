@@ -49,3 +49,9 @@ export const applicationStatusTypes = {
   FAILED: 'failed',
   COMPLETED: 'completed',
 };
+
+export const eventTypes = {
+  USER_CONNECTED: 'USER_CONNECTED',
+  USER_DISCONNECTED: 'USER_DISCONNECTED',
+  MESSAGE: 'MESSAGE',
+};

@@ -5,8 +5,8 @@ export const service = {
   registerLandlord: async (body) => axios.post('/users/landlord/', body),
 
   fetchAllUsers: async () => axios.get('/users/'),
-  fetchAllLandlords: async () => axios.get('/users/landlord'),
-  fetchAllTenants: async () => axios.get('/users/tenant'),
+  fetchAllLandlords: async () => axios.get('/users/landlords'),
+  fetchAllTenants: async () => axios.get('/users/tenants'),
 
   verifyEmail: async (body) => axios.post('/users/verify/', body),
 };

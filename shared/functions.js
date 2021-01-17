@@ -70,3 +70,12 @@ export const toBase64 = async (file) => {
   const base64 = await toBase64Promise(file);
   return base64;
 };
+
+export const blobToBase64 = (blob) =>
+  new Promise((resolve) => {
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      resolve(reader.result);
+    };
+    reader.readAsDataURL(blob);
+  });

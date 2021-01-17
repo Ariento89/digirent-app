@@ -2,6 +2,7 @@
 import FieldError from 'components/FieldError/FieldError';
 import FormFileUpload from 'components/FormFileUpload/index';
 import { Form, Formik } from 'formik';
+import { useDocuments } from 'hooks/useDocuments';
 import { useMe } from 'hooks/useMe';
 import { useCallback, useState } from 'react';
 import { useToasts } from 'react-toast-notifications';
@@ -16,7 +17,8 @@ const AccountCopyId = () => {
 
   // CUSTOM HOOKS
   const { addToast } = useToasts();
-  const { me, uploadCopyId, status, errors } = useMe();
+  const { me } = useMe();
+  const { uploadCopyId, status, errors } = useDocuments();
 
   // METHODS
   const getFormDetails = useCallback(
@@ -55,13 +57,15 @@ const AccountCopyId = () => {
     <div className="main-box mt-4">
       <div className="d-flex align-items-center">
         <h3 className="main-box-title">Copy ID</h3>
-        <span className="circular-icon x ml-3">
-          <img src="/images/icon/icon-cancel-dark-gray.svg" alt="icon" />
-        </span>
-
-        <span className="circular-icon check ml-1">
-          <img src="/images/icon/icon-check-white.svg" alt="icon" />
-        </span>
+        {me?.copyIdUploaded ? (
+          <span className="circular-icon check ml-1">
+            <img src="/images/icon/icon-check-white.svg" alt="icon" />
+          </span>
+        ) : (
+          <span className="circular-icon x ml-3">
+            <img src="/images/icon/icon-cancel-dark-gray.svg" alt="icon" />
+          </span>
+        )}
       </div>
 
       <div className="mt-4">

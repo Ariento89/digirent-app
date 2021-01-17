@@ -77,7 +77,13 @@ const MessagesList = ({
                 const user = me.id === item.fromUser.id ? item.toUser : item.fromUser;
 
                 return (
-                  <div onClick={() => onSelectConversation(user, true)}>
+                  <div
+                    onClick={() => {
+                      if (talkingTo?.id !== user.id) {
+                        onSelectConversation(user, true);
+                      }
+                    }}
+                  >
                     <MessagesPerson
                       user={user}
                       time={item.timestamp}

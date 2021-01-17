@@ -11,7 +11,7 @@ const MessagesPerson = ({ isActive, user, time, count, recentMesage, className }
         </p>
         <div className="date-wrapper">
           <p className="time">{dayjs(time).format('hh:mma')}</p>
-          {count > 0 && <p className="messages-count">{count}</p>}
+          {!!count && <p className="messages-count">{count}</p>}
         </div>
       </div>
       <p className="message main-desc">{recentMesage}</p>

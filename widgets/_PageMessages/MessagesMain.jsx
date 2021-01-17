@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 /* eslint-disable operator-linebreak */
 /* eslint-disable react/no-array-index-key */
 import cn from 'classnames';
@@ -23,6 +24,7 @@ const MessagesMain = ({
   // STATES
   const [message, setMessage] = useState('');
   const [isReady, setIsReady] = useState(false);
+  const [lastMessage, setLastMessage] = useState(null);
 
   // REFS
   const scrollbarRef = useRef(null);
@@ -33,6 +35,10 @@ const MessagesMain = ({
 
   // METHODS
   useEffect(() => {
+    if (isReady && initialStatus === request.REQUESTING) {
+      setIsReady(false);
+    }
+
     if (initialStatus === request.SUCCESS && scrollbarRef.current && !isReady) {
       setTimeout(() => {
         scrollbarRef?.current?.scrollToBottom();
@@ -41,10 +47,28 @@ const MessagesMain = ({
     }
   }, [initialStatus, isReady, scrollbarRef]);
 
+  useEffect(() => {
+    if (list.length && lastMessage === null) {
+      setLastMessage(list?.[list.length - 1]);
+    }
+
+    if (lastMessage !== null && list.length) {
+      if (lastMessage !== list?.[list?.length - 1]) {
+        setTimeout(() => {
+          scrollbarRef?.current?.scrollToBottom();
+        }, 500);
+      }
+    }
+  }, [list, lastMessage]);
+
   const send = () => {
     if (message.trim().length && talkingTo) {
       onSend(me?.id, talkingTo?.id, message.trim());
       setMessage('');
+
+      setTimeout(() => {
+        scrollbarRef?.current?.scrollToBottom();
+      }, 500);
     } else {
       addToast('An error occurred while sending your mesage.', toastTypes.ERROR);
     }
@@ -89,20 +113,25 @@ const MessagesMain = ({
             style={{ height: '100%', paddingBottom: 10 }}
           >
             <div className="main-message-content" style={{ opacity: isReady ? 1 : 0 }}>
-              {fetchStatus === request.REQUESTING && talkingTo && (
-                <Spinner isLoading>
-                  <div className="user-messages-spinner" />
-                </Spinner>
-              )}
+              {initialStatus === request.SUCCESS &&
+                fetchStatus === request.REQUESTING &&
+                talkingTo && (
+                  <Spinner isLoading>
+                    <div className="user-messages-spinner" />
+                  </Spinner>
+                )}
 
-              {fetchStatus !== request.REQUESTING && !isEndOfList && talkingTo && (
-                <span
-                  className="user-messages-load-more mb-4"
-                  onClick={() => onNextPage(talkingTo, false)}
-                >
-                  LOAD MORE MESSAGES...
-                </span>
-              )}
+              {initialStatus === request.SUCCESS &&
+                fetchStatus !== request.REQUESTING &&
+                !isEndOfList &&
+                talkingTo && (
+                  <span
+                    className="user-messages-load-more mb-4"
+                    onClick={() => onNextPage(talkingTo, false)}
+                  >
+                    LOAD MORE MESSAGES...
+                  </span>
+                )}
 
               {isEndOfList && talkingTo && (
                 <span className="user-messages-end-conversation mb-4">END OF CONVERSATION</span>
@@ -143,7 +172,7 @@ const MessagesMain = ({
               onChange={(event) => setMessage(event.target.value)}
               value={message}
               placeholder="Message"
-              disabled={!talkingTo || initialStatus !== request.SUCCESS || !message.length}
+              disabled={!talkingTo || initialStatus !== request.SUCCESS}
             />
             <Button
               onClick={send}

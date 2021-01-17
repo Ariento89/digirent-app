@@ -4,6 +4,8 @@
 import { useAuthentication } from 'hooks/useAuthentication';
 import { useChat } from 'hooks/useChat';
 import { useMe } from 'hooks/useMe';
+import { cloneDeep } from 'lodash';
+import { useRouter } from 'next/router';
 import { useEffect, useRef, useState } from 'react';
 import { useToasts } from 'react-toast-notifications';
 import { API_URL_WEBSOCKET } from 'services/index';
@@ -21,6 +23,7 @@ const Page = () => {
   const [wsStatus, setWsStatus] = useState(request.NONE);
   const [wsError, setWsError] = useState(null);
   const [wsRecentRequest, setWsRecentRequest] = useState(null);
+  const [isDirectMessageDone, setIsDirectMessageDone] = useState(false);
 
   // STATES: MESSAGE LIST
   const [messageList, setMessageList] = useState([]);
@@ -39,6 +42,7 @@ const Page = () => {
   const socketRef = useRef(null);
 
   // CUSTOM HOOKS
+  const router = useRouter();
   const { addToast } = useToasts();
   const { accessToken } = useAuthentication();
   const { me } = useMe();
@@ -59,7 +63,26 @@ const Page = () => {
     }
   }, [messageListStatus, messageListInitialStatus]);
 
+  useEffect(() => {
+    const { isDirect = false, userId, firstName, lastName } = router.query;
+    if (
+      isDirect &&
+      !isDirectMessageDone &&
+      messageList.length &&
+      messageListInitialStatus === request.SUCCESS
+    ) {
+      onSelectConversation({ id: userId, firstName, lastName }, true);
+      setIsDirectMessageDone(true);
+    }
+  }, [router, messageList, messageListInitialStatus]);
+
   // METHODS: WEBSOCKET
+  useEffect(() => {
+    if (socketRef.current) {
+      socketRef.current.onmessage = onMessage;
+    }
+  }, [talkingTo, socketRef]);
+
   useEffect(() => {
     setWsRecentRequest(eventTypes.USER_CONNECTED);
     socketRef.current = new WebSocket(`${API_URL_WEBSOCKET}/${accessToken}`);
@@ -84,18 +107,27 @@ const Page = () => {
   };
 
   const onMessage = (event) => {
-    console.log('onMessage', event);
-    console.log('onMessage Data', JSON.parse(event.data));
+    const { data, eventType } = JSON.parse(event.data);
+    console.log('onMessage', JSON.parse(event.data));
+    if (eventType === eventTypes.MESSAGE) {
+      if (data.from === talkingTo?.id) {
+        onNewChatMessageMain(data.from, data.to, data.message);
+      }
+
+      if (data.from !== talkingTo?.id) {
+        onNewChatMessageFromUsers(data.from, data.message);
+      }
+    }
   };
 
   const onError = (error) => {
-    console.log('error', error);
-    // setWsStatus(request.ERROR);
-    // setWsError(error);
+    setWsStatus(request.ERROR);
+    setWsError(error);
   };
 
   const onSend = (from, to, message) => {
     const data = {
+      messageId: 'test',
       event_type: eventTypes.MESSAGE,
       data: { from, to, message },
     };
@@ -103,6 +135,8 @@ const Page = () => {
     if (socketRef.current && wsStatus === request.SUCCESS) {
       setWsRecentRequest(eventTypes.MESSAGE);
       socketRef.current.send(JSON.stringify(data));
+
+      onNewChatMessageMain(from, to, message);
     }
   };
 
@@ -144,6 +178,47 @@ const Page = () => {
     onFetchMessageList(onCompleteCallback);
   };
 
+  const onNewChatMessageFromUsers = (fromUserId, message) => {
+    setMessageList((list) => {
+      let newList = list;
+
+      const foundIndex = list.findIndex((item) => {
+        const user = me.id === item.fromUser.id ? item.toUser : item.fromUser;
+        return user.id === fromUserId;
+      });
+
+      if (foundIndex !== -1) {
+        newList = cloneDeep(list);
+        const { count = 0 } = newList[foundIndex];
+        newList[foundIndex] = {
+          ...newList[foundIndex],
+          message,
+          count: count + 1,
+        };
+      }
+
+      return newList;
+    });
+  };
+
+  const onSelectMessageListItem = (fromUserId) => {
+    setMessageList((list) => {
+      let newList = list;
+
+      const foundIndex = list.findIndex((item) => {
+        const user = me.id === item.fromUser.id ? item.toUser : item.fromUser;
+        return user.id === fromUserId;
+      });
+
+      if (foundIndex !== -1) {
+        newList = cloneDeep(list);
+        newList[foundIndex].count = 0;
+      }
+
+      return newList;
+    });
+  };
+
   // METHODS: MESSAGE MAIN
   const onSelectConversation = (user, shouldReset) => {
     if (shouldReset) {
@@ -152,12 +227,13 @@ const Page = () => {
       setConversationList([]);
       setConversationListPage(1);
       setConversationListEndOfList(false);
+      onSelectMessageListItem(user.id);
     }
 
     fetchChatMessages(
       {
         id: user?.id,
-        page: conversationListPage,
+        page: shouldReset ? 1 : conversationListPage,
         page_size: CONVERATION_LIST_PAGE_SIZE,
       },
       {
@@ -193,7 +269,19 @@ const Page = () => {
   const onNextPageConversation = (user) => {
     onSelectConversation(user);
   };
-  console.log('messageList', messageList);
+
+  const onNewChatMessageMain = (fromUserId, toUserId, message) => {
+    setConversationList((value) => [
+      ...value,
+      {
+        fromUserId,
+        id: '',
+        message,
+        toUserId,
+      },
+    ]);
+  };
+
   return (
     <PageWrapper title="DigiRent - Messages" pageName="messages">
       <img src="/images/main-left-bg.svg" className="left-main-background" alt="left bg" />

@@ -17,7 +17,7 @@ const Page = () => {
   const { id: propertyId } = router.query;
   const { getProperty, status: getPropertyStatus } = useProperties();
   const { fetchProperties, status: fetchPropertiesStatus } = useProperties();
-
+  console.log('propertyId', propertyId);
   // METHODS
   useEffect(() => {
     if (propertyId) {

@@ -1,5 +1,5 @@
-import { actions, types } from 'ducks/documents';
-import { call, put, takeLatest } from 'redux-saga/effects';
+import { types } from 'ducks/documents';
+import { call, takeLatest } from 'redux-saga/effects';
 import { service } from 'services/documents';
 import { request } from 'shared/types';
 
@@ -40,25 +40,6 @@ function* downloadProofOfEnrollment({ payload }) {
   }
 }
 
-function* downloadProfilePhoto({ payload }) {
-  const { callback } = payload;
-  callback({ status: request.REQUESTING });
-
-  try {
-    const response = yield call(service.downloadProfilePhoto);
-    yield put(
-      actions.save({
-        type: types.DOWNLOAD_PROFILE_PHOTO,
-        profilePhoto: response.data,
-      }),
-    );
-
-    callback({ status: request.SUCCESS, response: response.data });
-  } catch (e) {
-    callback({ status: request.ERROR, errors: e.errors });
-  }
-}
-
 function* uploadCopyId({ payload }) {
   const { callback, file } = payload;
   callback({ status: request.REQUESTING });
@@ -68,12 +49,6 @@ function* uploadCopyId({ payload }) {
 
   try {
     const response = yield call(service.uploadCopyId, formData);
-    yield put(
-      actions.save({
-        type: types.UPLOAD_COPY_ID,
-        me: response.data,
-      }),
-    );
 
     callback({ status: request.SUCCESS, response: response.data });
   } catch (e) {
@@ -90,12 +65,6 @@ function* uploadProofOfIncome({ payload }) {
 
   try {
     const response = yield call(service.uploadProofOfIncome, formData);
-    yield put(
-      actions.save({
-        type: types.UPLOAD_PROOF_OF_INCOME,
-        me: response.data,
-      }),
-    );
 
     callback({ status: request.SUCCESS, response: response.data });
   } catch (e) {
@@ -112,12 +81,6 @@ function* uploadProofOfEnrollment({ payload }) {
 
   try {
     const response = yield call(service.uploadProofOfEnrollment, formData);
-    yield put(
-      actions.save({
-        type: types.UPLOAD_PROOF_OF_ENROLMENT,
-        me: response.data,
-      }),
-    );
 
     callback({ status: request.SUCCESS, response: response.data });
   } catch (e) {
@@ -134,12 +97,6 @@ function* uploadProfilePhoto({ payload }) {
 
   try {
     const response = yield call(service.uploadProfilePhoto, formData);
-    yield put(
-      actions.save({
-        type: types.UPLOAD_PROFILE_PHOTO,
-        me: response.data,
-      }),
-    );
 
     callback({ status: request.SUCCESS, response: response.data });
   } catch (e) {
@@ -158,10 +115,6 @@ const downloadProofOfIncomeWatcherSaga = function* downloadProofOfIncomeWatcherS
 
 const downloadProofOfEnrollmentWatcherSaga = function* downloadProofOfEnrollmentWatcherSaga() {
   yield takeLatest(types.DOWNLOAD_PROOF_OF_ENROLMENT, downloadProofOfEnrollment);
-};
-
-const downloadProfilePhotoWatcherSaga = function* downloadProfilePhotoWatcherSaga() {
-  yield takeLatest(types.DOWNLOAD_PROFILE_PHOTO, downloadProfilePhoto);
 };
 
 const uploadCopyIdWatcherSaga = function* uploadCopyIdWatcherSaga() {
@@ -184,7 +137,6 @@ export default [
   downloadCopyIdWatcherSaga(),
   downloadProofOfIncomeWatcherSaga(),
   downloadProofOfEnrollmentWatcherSaga(),
-  downloadProfilePhotoWatcherSaga(),
   uploadCopyIdWatcherSaga(),
   uploadProofOfIncomeWatcherSaga(),
   uploadProofOfEnrollmentWatcherSaga(),

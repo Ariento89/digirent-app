@@ -1,11 +1,8 @@
 import { actions, types } from 'ducks/authentication';
-import { actions as documentsActions, types as documentsTypes } from 'ducks/documents';
 import { actions as meActions, types as meTypes } from 'ducks/me';
 import { call, put, takeLatest } from 'redux-saga/effects';
 import { service } from 'services/authentication';
-import { service as documentsService } from 'services/documents';
 import { service as meService } from 'services/me';
-import { blobToBase64 } from 'shared/functions';
 import { request } from 'shared/types';
 
 /* WORKERS */
@@ -30,16 +27,6 @@ function* login({ payload }) {
         meActions.save({
           type: meTypes.GET_ME,
           me: meResponse.data,
-        }),
-      );
-
-      const profilePhotoReponse = yield call(documentsService.downloadProfilePhoto);
-      const profilePhoto = yield call(blobToBase64, profilePhotoReponse.data);
-
-      yield put(
-        documentsActions.save({
-          type: documentsTypes.DOWNLOAD_PROFILE_PHOTO,
-          profilePhoto,
         }),
       );
 

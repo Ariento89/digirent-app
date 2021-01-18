@@ -16,6 +16,8 @@ const TenantsAboutMeModal = ({ tenant, isVisible, onClose }) => {
         userId: tenant.id,
         firstName: tenant.firstName,
         lastName: tenant.lastName,
+        profileImageUrl: tenant.profileImageUrl,
+        role: tenant.role,
       },
     });
   };

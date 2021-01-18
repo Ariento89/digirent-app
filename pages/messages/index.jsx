@@ -64,14 +64,14 @@ const Page = () => {
   }, [messageListStatus, messageListInitialStatus]);
 
   useEffect(() => {
-    const { isDirect = false, userId, firstName, lastName } = router.query;
+    const { isDirect = false, userId, firstName, lastName, profileImageUrl, role } = router.query;
     if (
       isDirect &&
       !isDirectMessageDone &&
       messageList.length &&
       messageListInitialStatus === request.SUCCESS
     ) {
-      onSelectConversation({ id: userId, firstName, lastName }, true);
+      onSelectConversation({ id: userId, firstName, lastName, profileImageUrl, role }, true);
       setIsDirectMessageDone(true);
     }
   }, [router, messageList, messageListInitialStatus]);

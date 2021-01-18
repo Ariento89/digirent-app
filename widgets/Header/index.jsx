@@ -2,12 +2,12 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import cn from 'classnames';
 import ToggleSwitch from 'components/ToggleSwitch/index';
-import { useDocuments } from 'hooks/useDocuments';
 import { useLanguage } from 'hooks/useLanguage';
 import { useMe } from 'hooks/useMe';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import { API_ASSET_URL } from 'services/index';
 import { languageSwitchOptions, role } from 'shared/types';
 
 const Header = () => {
@@ -18,12 +18,13 @@ const Header = () => {
   const router = useRouter();
   const { language, setLanguage } = useLanguage();
   const { me } = useMe();
-  const { profilePhoto } = useDocuments();
 
   // METHODS
   useEffect(() => {
-    setUserImage(profilePhoto);
-  }, [profilePhoto]);
+    if (me?.profileImageUrl) {
+      setUserImage(`${API_ASSET_URL}${me.profileImageUrl}`);
+    }
+  }, [me]);
 
   const onBack = () => {
     router.back();

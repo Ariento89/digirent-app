@@ -24,6 +24,14 @@
     }
   }
 
+  .main-title {
+    padding-right: 100px;
+
+    @include media-breakpoint-down(lg) {
+      padding-right: 0;
+    }
+  }
+
   .blogs {
     margin-top: 150px;
     padding-right: 100px;
@@ -33,7 +41,7 @@
       padding-right: 0;
     }
 
-    .item {
+    .item-column {
       margin-bottom: 150px;
 
       @include breakpoint-down(420px) {

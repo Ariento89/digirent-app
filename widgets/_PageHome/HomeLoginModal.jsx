@@ -146,10 +146,10 @@ const HomeLoginModal = ({ onClose, isVisible, onRegister }) => {
 
                 <div className="login-button mt-3">
                   <div className="social-media-options">
-                    <div className="item mr-2" onClick={onLoginFacebook}>
+                    <div className="item" onClick={onLoginFacebook}>
                       <img src="/images/social-media/facebook-square.png" alt="facebook icon" />
                     </div>
-                    <div className="item mr-2">
+                    <div className="item mx-2">
                       <img src="/images/social-media/google.png" alt="google icon" />
                     </div>
                     <div className="item">

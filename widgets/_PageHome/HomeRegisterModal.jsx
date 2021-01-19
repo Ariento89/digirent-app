@@ -146,11 +146,14 @@ const HomeRegisterModal = ({ initialUserType, onClose, isVisible }) => {
           onSelectUser={setSelectedUserType}
         />
         <div className="social-media-options">
-          <div className="item mr-3">
+          <div className="item">
             <img src="/images/social-media/facebook-square.png" alt="fb icon" />
           </div>
-          <div className="item">
+          <div className="item mx-3">
             <img src="/images/social-media/google.png" alt="google icon" />
+          </div>
+          <div className="item">
+            <img src="/images/social-media/apple.png" alt="apple icon" />
           </div>
         </div>
 

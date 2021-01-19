@@ -67,9 +67,11 @@ const AccountProfile = () => {
                 <span>ID</span>
               </div>
             </div>
-            <div className="status-banner">
-              ALL <span className="font-weight-bold">OK</span>
-            </div>
+            {me?.isActive && (
+              <div className="status-banner">
+                ALL <span className="font-weight-bold">OK</span>
+              </div>
+            )}
 
             {isUploadingImage && (
               <Loader className="upload-spinner" type="Oval" color="#fff" height={20} width={20} />

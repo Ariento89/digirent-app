@@ -56,17 +56,17 @@ const BlogMain = () => {
         <div className="blogs">
           {status === request.SUCCESS && !!blogPosts.length && (
             <div className="row">
-              {blogPosts.map((blog) => {
-                const dateCreated = dayjs(blog.createdAt);
+              {blogPosts.map((blogPost) => {
+                const dateCreated = dayjs(blogPost.createdAt);
 
                 return (
                   <div className="col-12 col-md-6 item-column">
                     <BlogInfo
-                      link={`/blog/${blog.id}`}
+                      link={`/blog/${blogPost.id}`}
                       day={dateCreated.format('DD')}
                       month={dateCreated.format('MMM')}
-                      title={blog.title}
-                      content={blog.content}
+                      title={blogPost.title}
+                      content={blogPost.content}
                     />
                   </div>
                 );

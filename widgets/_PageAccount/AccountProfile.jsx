@@ -6,6 +6,7 @@ import { useMe } from 'hooks/useMe';
 import { useEffect, useRef, useState } from 'react';
 import Loader from 'react-loader-spinner';
 import { useToasts } from 'react-toast-notifications';
+import { API_ASSET_URL } from 'services/index';
 import { toastTypes } from 'shared/types';
 
 const languageOptions = [
@@ -27,14 +28,13 @@ const AccountProfile = () => {
 
   // CUSTOM HOOKS
   const { me } = useMe();
-  const { profilePhoto } = useDocuments();
 
   // METHODS
   useEffect(() => {
-    if (profilePhoto) {
-      setAccountImage(profilePhoto);
+    if (me?.profileImageUrl) {
+      setAccountImage(`${API_ASSET_URL}${me.profileImageUrl}`);
     }
-  }, [profilePhoto]);
+  }, [me]);
 
   const onImageSelect = (imageBase64) => {
     setAccountImage(imageBase64);
@@ -67,9 +67,11 @@ const AccountProfile = () => {
                 <span>ID</span>
               </div>
             </div>
-            <div className="status-banner">
-              ALL <span className="font-weight-bold">OK</span>
-            </div>
+            {me?.isActive && (
+              <div className="status-banner">
+                ALL <span className="font-weight-bold">OK</span>
+              </div>
+            )}
 
             {isUploadingImage && (
               <Loader className="upload-spinner" type="Oval" color="#fff" height={20} width={20} />

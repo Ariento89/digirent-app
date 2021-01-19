@@ -1,5 +1,4 @@
 import Spinner from 'components/Spinner/index';
-import { useMe } from 'hooks/useMe';
 import { useState } from 'react';
 import { request } from 'shared/types';
 import Pagination from 'widgets/Pagination/index';
@@ -11,9 +10,6 @@ const TenantsSearchResult = ({ searchResultRef, tenants, status, onAboutMe }) =>
   // STATES
   const [list, setList] = useState([]);
   const [paginationData, setPaginationData] = useState({});
-
-  // CUSTOM HOOKS
-  const { me } = useMe();
 
   // METHODS
   const onPageChange = (newList, pagination) => {
@@ -42,21 +38,20 @@ const TenantsSearchResult = ({ searchResultRef, tenants, status, onAboutMe }) =>
               />
 
               <div className="row list">
-                {list
-                  .filter((tenant) => tenant.id !== me.id)
-                  .map((tenant) => (
-                    <div key={tenant.id} className="col-12 col-md-6 col-xl-4">
-                      <TenantsInfo
-                        firstName={tenant.firstName}
-                        age={12}
-                        profilePercentage={tenant.profilePercentage || 0}
-                        city={tenant.city || 'India'}
-                        houseType={tenant.houseType || 'Apartment'}
-                        maxBudget={tenant.maxBudget || 500}
-                        onAboutMe={() => onAboutMe(tenant)}
-                      />
-                    </div>
-                  ))}
+                {list.map((tenant) => (
+                  <div key={tenant.id} className="col-12 col-md-6 col-xl-4">
+                    <TenantsInfo
+                      firstName={tenant.firstName}
+                      age={12}
+                      profilePercentage={tenant.profilePercentage || 0}
+                      city={tenant.city || 'India'}
+                      houseType={tenant.houseType || 'Apartment'}
+                      maxBudget={tenant.maxBudget || 500}
+                      profileImageUrl={tenant.profileImageUrl}
+                      onAboutMe={() => onAboutMe(tenant)}
+                    />
+                  </div>
+                ))}
               </div>
 
               <Pagination className="mt-5" list={tenants} onPageChange={onPageChange} />

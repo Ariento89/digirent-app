@@ -189,6 +189,7 @@ $color-selected-message: #eef6fd;
         @include clear-spacing;
         color: $color-primary;
         margin-top: 8px;
+        text-transform: uppercase;
       }
     }
 

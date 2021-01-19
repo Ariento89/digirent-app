@@ -8,6 +8,8 @@ import { useMe } from 'hooks/useMe';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Scrollbars } from 'react-custom-scrollbars';
 import { useToasts } from 'react-toast-notifications';
+import { API_ASSET_URL } from 'services/index';
+import { getProfileImage } from 'shared/functions';
 import { request, role, toastTypes } from 'shared/types';
 import StateList, { stateListTypes } from 'widgets/StateList/index';
 import MessagesItem from './widgets/MessagesItem';
@@ -83,7 +85,10 @@ const MessagesMain = ({
     <div className="col-12 col-lg-7 col-xl-8 mt-5 mt-lg-0">
       <Spinner isLoading={initialStatus === request.REQUESTING}>
         <div className="user-header">
-          <div className="user-photo" />
+          <div
+            className="user-photo"
+            style={{ backgroundImage: getProfileImage(talkingTo?.profileImageUrl) }}
+          />
           <div
             className={cn('user-info', { 'with-border': me?.role === role.LANDLORD && talkingTo })}
           >
@@ -92,7 +97,7 @@ const MessagesMain = ({
                 <p className="name">
                   {talkingTo?.firstName} {talkingTo?.lastName}
                 </p>
-                <p className="role">ROLE</p>
+                <p className="role">{talkingTo?.role}</p>
               </>
             )}
           </div>

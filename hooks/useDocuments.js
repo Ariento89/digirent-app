@@ -1,6 +1,5 @@
-import { actions, selectors, types } from 'ducks/documents';
+import { actions, types } from 'ducks/documents';
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
 import { onCallback } from 'shared/functions';
 import { request } from 'shared/types';
 import { useActionDispatch } from './useActionDispatch';
@@ -10,9 +9,6 @@ export const useDocuments = () => {
   const [status, setStatus] = useState(request.NONE);
   const [errors, setErrors] = useState([]);
   const [recentRequest, setRecentRequest] = useState(null);
-
-  // SELECTORS
-  const profilePhoto = useSelector(selectors.selectProfilePhoto());
 
   // ACTIONS
   const uploadCopyIdAction = useActionDispatch(actions.uploadCopyId);
@@ -61,7 +57,6 @@ export const useDocuments = () => {
   };
 
   return {
-    profilePhoto,
     uploadCopyId,
     uploadProofOfIncome,
     uploadProofOfEnrolment,

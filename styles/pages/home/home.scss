@@ -1,14 +1,14 @@
-@import './landing';
-@import './recently-added-properties';
-@import './how-does-it-work';
-@import './section-divider';
-@import './areas-of-expertise';
-@import './why-choose-digirent-over-any-agency';
-@import './explore-our-most-popular-cities';
-@import './blog';
+@import './home-landing';
+@import './home-recently-added-properties';
+@import './home-how-does-it-work';
+@import './home-section-divider';
+@import './home-areas-of-expertise';
+@import './home-why-choose-digirent-over-any-agency';
+@import './home-explore-our-most-popular-cities';
+@import './home-blog';
 
-@import './login';
-@import './register';
+@import './home-login';
+@import './home-register';
 
 // General
 .layout-content.homepage {

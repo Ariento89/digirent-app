@@ -1,6 +1,7 @@
 import Badge from 'components/Badge/index';
 import Button from 'components/Button/index';
 import { truncate } from 'lodash';
+import { getProfileImage } from 'shared/functions';
 
 const TenantsInfo = ({
   firstName,
@@ -9,6 +10,7 @@ const TenantsInfo = ({
   city,
   houseType,
   maxBudget,
+  profileImageUrl,
   onAboutMe,
 }) => (
   <div className="item main-box p-0">
@@ -30,7 +32,7 @@ const TenantsInfo = ({
     </div>
 
     <div className="top">
-      <div className="photo-holder">
+      <div className="photo-holder" style={{ backgroundImage: getProfileImage(profileImageUrl) }}>
         <div className="status">
           <div className="profile-completion">
             <span className="font-weight-bold d-block">{profilePercentage}% PROFILE</span>

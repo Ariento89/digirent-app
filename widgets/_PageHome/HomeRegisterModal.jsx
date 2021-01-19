@@ -1,7 +1,6 @@
 import cn from 'classnames';
 import Button from 'components/Button/index';
 import FieldError from 'components/FieldError/FieldError';
-import FormDatePicker from 'components/FormDatePicker/index';
 import { Form, Formik } from 'formik';
 import { useUsers } from 'hooks/useUsers';
 import moment from 'moment';
@@ -13,7 +12,23 @@ import { sleep } from 'shared/functions';
 import { request, toastTypes, userTypes } from 'shared/types';
 import * as Yup from 'yup';
 import AuthField from './widgets/AuthField';
+import AuthFieldDatePicker from './widgets/AuthFieldDatePicker';
 import AuthUserSelection from './widgets/AuthUserSelection';
+
+const monthOptions = [
+  { label: 'Jan', value: '1' },
+  { label: 'Feb', value: '2' },
+  { label: 'Mar', value: '3' },
+  { label: 'Apr', value: '4' },
+  { label: 'May', value: '5' },
+  { label: 'Jun', value: '6' },
+  { label: 'Jul', value: '7' },
+  { label: 'Aug', value: '8' },
+  { label: 'Sep', value: '9' },
+  { label: 'Oct', value: '10' },
+  { label: 'Nov', value: '11' },
+  { label: 'Dec', value: '12' },
+];
 
 const HomeRegisterModal = ({ initialUserType, onClose, isVisible }) => {
   // STATES
@@ -39,7 +54,9 @@ const HomeRegisterModal = ({ initialUserType, onClose, isVisible }) => {
         lastName: '',
         email: '',
         phoneNumber: '',
-        dob: '',
+        dobMonth: '',
+        dobDay: '',
+        dobYear: '',
         password: '',
         passwordConfirmation: '',
       },
@@ -48,9 +65,17 @@ const HomeRegisterModal = ({ initialUserType, onClose, isVisible }) => {
         lastName: Yup.string().required().label('Last Name'),
         email: Yup.string().required().email().label('Email Address'),
         phoneNumber: Yup.string().required().label('Mobile Number'),
-        dob:
+        dobMonth:
           selectedUserType === userTypes.TENANT
-            ? Yup.string().required().label('Date of Birth')
+            ? Yup.string().required('Required')
+            : Yup.string().optional(),
+        dobDay:
+          selectedUserType === userTypes.TENANT
+            ? Yup.string().required('Required')
+            : Yup.string().optional(),
+        dobYear:
+          selectedUserType === userTypes.TENANT
+            ? Yup.string().required('Required')
             : Yup.string().optional(),
         password: Yup.string().required().label('Password'),
         passwordConfirmation: Yup.string()
@@ -106,6 +131,12 @@ const HomeRegisterModal = ({ initialUserType, onClose, isVisible }) => {
     }
   };
 
+  const onChangeDay = () => {};
+
+  const onChangeMonth = () => {};
+
+  const onChangeYear = () => {};
+
   return (
     <Modal show={isVisible} onHide={closeModal} id="register-modal" centered>
       <Modal.Body>
@@ -136,7 +167,7 @@ const HomeRegisterModal = ({ initialUserType, onClose, isVisible }) => {
               onSubmit(values);
             }}
           >
-            {({ errors: formErrors, touched }) => (
+            {({ errors: formErrors, touched, handleChange }) => (
               <Form className="form mt-2">
                 <div className="row">
                   <div className="col-12 col-sm-6">
@@ -157,40 +188,70 @@ const HomeRegisterModal = ({ initialUserType, onClose, isVisible }) => {
                   </div>
                 </div>
 
-                {selectedUserType === userTypes.TENANT ? (
-                  <div className="row mt-3">
-                    <div className="col-12 col-sm-6">
-                      <div className="field-group block">
-                        <FormDatePicker
-                          name="dob"
-                          placeholder="Date of Birth"
-                          icon="icon-calendar-primary"
-                          pickerProps={{
-                            disabledDays: { after: new Date() },
-                          }}
-                        />
-                        {formErrors.dob && touched.dob ? (
-                          <FieldError error={formErrors.dob} />
-                        ) : null}
+                {selectedUserType === userTypes.TENANT && (
+                  <>
+                    <hr />
+                    <span className="mt-3">Date of Birth</span>
+                    <div className="row">
+                      <div className="col-12 col-sm-4">
+                        <div className="field-group block">
+                          <AuthFieldDatePicker
+                            name="dobMonth"
+                            placeholder="Month"
+                            options={monthOptions}
+                            onChange={(e) => {
+                              handleChange(e);
+                              onChangeMonth(e);
+                            }}
+                          />
+                          {formErrors.dobMonth && touched.dobMonth ? (
+                            <FieldError error={formErrors.dobMonth} />
+                          ) : null}
+                        </div>
+                      </div>
+                      <div className="col-12 col-sm-4">
+                        <div className="field-group block">
+                          <AuthFieldDatePicker
+                            name="dobDay"
+                            placeholder="Day"
+                            options={monthOptions}
+                            onChange={(e) => {
+                              handleChange(e);
+                              onChangeDay(e);
+                            }}
+                          />
+                          {formErrors.dobDay && touched.dobDay ? (
+                            <FieldError error={formErrors.dobDay} />
+                          ) : null}
+                        </div>
+                      </div>
+                      <div className="col-12 col-sm-4">
+                        <div className="field-group block">
+                          <AuthFieldDatePicker
+                            name="dobYear"
+                            placeholder="Year"
+                            options={monthOptions}
+                            onChange={(e) => {
+                              handleChange(e);
+                              onChangeYear(e);
+                            }}
+                          />
+                          {formErrors.dobYear && touched.dobYear ? (
+                            <FieldError error={formErrors.dobYear} />
+                          ) : null}
+                        </div>
                       </div>
                     </div>
-                    <div className="col-12 col-sm-6 mt-3 mt-sm-0">
-                      <div className="field-group block">
-                        <AuthField id="phoneNumber" placeholder="Mobile Number" />
-                        {formErrors.phoneNumber && touched.phoneNumber ? (
-                          <FieldError error={formErrors.phoneNumber} />
-                        ) : null}
-                      </div>
-                    </div>
-                  </div>
-                ) : (
-                  <div className="field-group block mt-3">
-                    <AuthField id="phoneNumber" placeholder="Mobile Number" />
-                    {formErrors.phoneNumber && touched.phoneNumber ? (
-                      <FieldError error={formErrors.phoneNumber} />
-                    ) : null}
-                  </div>
+                    <hr />
+                  </>
                 )}
+
+                <div className="field-group block mt-3">
+                  <AuthField id="phoneNumber" placeholder="Mobile Number" />
+                  {formErrors.phoneNumber && touched.phoneNumber ? (
+                    <FieldError error={formErrors.phoneNumber} />
+                  ) : null}
+                </div>
 
                 <div className="field-group block mt-3">
                   <AuthField type="email" id="email" placeholder="Email Address" />

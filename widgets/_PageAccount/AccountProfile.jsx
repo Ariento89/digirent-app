@@ -1,11 +1,13 @@
+import cn from 'classnames';
 import Select from 'components/Select/index';
 import ToggleSwitch from 'components/ToggleSwitch/index';
+import { useDocuments } from 'hooks/useDocuments';
 import { useMe } from 'hooks/useMe';
-import { useRef, useState } from 'react';
-import { useToasts } from 'react-toast-notifications';
-import { toastTypes } from 'shared/types';
+import { useEffect, useRef, useState } from 'react';
 import Loader from 'react-loader-spinner';
-import cn from 'classnames';
+import { useToasts } from 'react-toast-notifications';
+import { API_ASSET_URL } from 'services/index';
+import { toastTypes } from 'shared/types';
 
 const languageOptions = [
   { name: 'Language 1', value: 1 },
@@ -26,6 +28,13 @@ const AccountProfile = () => {
 
   // CUSTOM HOOKS
   const { me } = useMe();
+
+  // METHODS
+  useEffect(() => {
+    if (me?.profileImageUrl) {
+      setAccountImage(`${API_ASSET_URL}${me.profileImageUrl}`);
+    }
+  }, [me]);
 
   const onImageSelect = (imageBase64) => {
     setAccountImage(imageBase64);
@@ -58,9 +67,11 @@ const AccountProfile = () => {
                 <span>ID</span>
               </div>
             </div>
-            <div className="status-banner">
-              ALL <span className="font-weight-bold">OK</span>
-            </div>
+            {me?.isActive && (
+              <div className="status-banner">
+                ALL <span className="font-weight-bold">OK</span>
+              </div>
+            )}
 
             {isUploadingImage && (
               <Loader className="upload-spinner" type="Oval" color="#fff" height={20} width={20} />
@@ -115,26 +126,16 @@ const AccountProfile = () => {
 export default AccountProfile;
 
 const AccountProfileImage = ({ onImageSelect, setIsUploadingImage }) => {
-  // REFS
-  const imageUploadRef = useRef(null);
-
   // CUSTOM HOOKS
   const { addToast } = useToasts();
-  const { uploadProfilePhoto } = useMe();
+  const { uploadProfilePhoto } = useDocuments();
+
+  // REFS
+  const imageUploadRef = useRef(null);
 
   // METHODS
   const onClickImageUpload = () => {
     imageUploadRef.current.click();
-  };
-
-  const onSuccess = () => {
-    setIsUploadingImage(false);
-    addToast('Successfully updated your profile picture.', toastTypes.SUCCESS);
-  };
-
-  const onError = () => {
-    setIsUploadingImage(false);
-    addToast('An error occurred while updating your profile picture.', toastTypes.ERROR);
   };
 
   const onChangeImageUpload = (event) => {
@@ -149,6 +150,16 @@ const AccountProfileImage = ({ onImageSelect, setIsUploadingImage }) => {
       uploadProfilePhoto({ file }, { onSuccess, onError });
     };
     reader.readAsDataURL(file);
+  };
+
+  const onSuccess = () => {
+    setIsUploadingImage(false);
+    addToast('Successfully updated your profile picture.', toastTypes.SUCCESS);
+  };
+
+  const onError = () => {
+    setIsUploadingImage(false);
+    addToast('An error occurred while updating your profile picture.', toastTypes.ERROR);
   };
 
   return (

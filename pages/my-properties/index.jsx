@@ -1,4 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import { useMe } from 'hooks/useMe';
 import { useProperties } from 'hooks/useProperties';
 import { usePropertyApplications } from 'hooks/usePropertyApplications';
 import { cloneDeep } from 'lodash';
@@ -25,6 +26,7 @@ const Page = () => {
 
   // CUSTOM HOOKS
   const { addToast } = useToasts();
+  const { me } = useMe();
   const { fetchProperties, status: propertiesStatus, errors: propertiesErrors } = useProperties();
   const {
     fetchApplicationsForProperties,
@@ -34,10 +36,13 @@ const Page = () => {
 
   // METHODS
   useEffect(() => {
-    fetchProperties(null, {
-      onSuccess: onFetchPropertiesSuccess,
-      onError: onFetchPropertiesError,
-    });
+    fetchProperties(
+      { landlord_id: me.id },
+      {
+        onSuccess: onFetchPropertiesSuccess,
+        onError: onFetchPropertiesError,
+      },
+    );
   }, []);
 
   const onFetchPropertiesSuccess = ({ response }) => {

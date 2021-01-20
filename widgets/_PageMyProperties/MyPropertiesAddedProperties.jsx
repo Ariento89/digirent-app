@@ -1,7 +1,7 @@
 import FieldError from 'components/FieldError/FieldError';
 import Spinner from 'components/Spinner/index';
 import { request } from 'shared/types';
-import StateList, { StateListTypes } from 'widgets/StateList/index';
+import StateList, { stateListTypes } from 'widgets/StateList/index';
 import PropertyInfo from 'widgets/PropertyInfo/index';
 
 const MyPropertiesAddedProperties = ({
@@ -37,27 +37,27 @@ const MyPropertiesAddedProperties = ({
             />
           </div>
         ))}
-
-        {/* EMPTY LIST */}
-        {status === request.SUCCESS && properties?.length === 0 && (
-          <StateList
-            className="mx-auto"
-            title="EMPTY LIST"
-            description="You have not added properties yet."
-            type={StateListTypes.EMPTY}
-          />
-        )}
-
-        {/* ERROR LIST */}
-        {status === request.ERROR && (
-          <StateList
-            className="mx-auto"
-            title="OOPS!"
-            description="An error ocurred while fetching your properties."
-            type={StateListTypes.ERROR}
-          />
-        )}
       </div>
+
+      {/* EMPTY */}
+      {status === request.SUCCESS && !properties?.length && (
+        <StateList
+          className="mx-auto"
+          title="LIST IS EMPTY"
+          description="You have not added properties yet."
+          type={stateListTypes.EMPTY}
+        />
+      )}
+
+      {/* ERROR */}
+      {status === request.ERROR && (
+        <StateList
+          className="mx-auto"
+          title="OOPS!"
+          description="An error ocurred while fetching your properties."
+          type={stateListTypes.ERROR}
+        />
+      )}
     </Spinner>
   </div>
 );

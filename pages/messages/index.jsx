@@ -1,136 +1,318 @@
-import cn from 'classnames';
-import PerfectScrollbar from 'react-perfect-scrollbar';
+/* eslint-disable no-console */
+/* eslint-disable operator-linebreak */
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useAuthentication } from 'hooks/useAuthentication';
+import { useChat } from 'hooks/useChat';
+import { useMe } from 'hooks/useMe';
+import { cloneDeep } from 'lodash';
+import { useRouter } from 'next/router';
+import { useEffect, useRef, useState } from 'react';
+import { useToasts } from 'react-toast-notifications';
+import { API_URL_WEBSOCKET } from 'services/index';
+import { eventTypes, request, toastTypes } from 'shared/types';
 import PageWrapper from 'widgets/PageWrapper';
+import MessagesList from 'widgets/_PageMessages/MessagesList';
+import MessagesMain from 'widgets/_PageMessages/MessagesMain';
+import MessagesSearch from 'widgets/_PageMessages/widgets/MessagesSearch';
 
-const data = [
-  { name: 'Jennifer', description: 'Your house is amazing. Every window is perfect.', count: 2 },
-  { name: 'Jennifer', description: 'Your house is amazing. Every window is perfect.', count: 2 },
-  { name: 'Jennifer', description: 'Your house is amazing. Every window is perfect.', count: 0 },
-  { name: 'Jennifer', description: 'Your house is amazing. Every window is perfect.', count: 0 },
-  { name: 'Jennifer', description: 'Your house is amazing. Every window is perfect.', count: 0 },
-  { name: 'Jennifer', description: 'Your house is amazing. Every window is perfect.', count: 0 },
-  { name: 'Jennifer', description: 'Your house is amazing. Every window is perfect.', count: 0 },
-];
+const MESSAGE_LIST_PAGE_SIZE = 8;
+const CONVERATION_LIST_PAGE_SIZE = 20;
 
-const Page = () => (
-  <PageWrapper title="DigiRent - Messages" pageName="messages">
-    <img src="/images/main-left-bg.svg" className="left-main-background" alt="left bg" />
-    <img src="/images/main-right-bg.svg" className="right-main-background" alt="right bg" />
-    <div className="container-fluid container-lg">
-      <h3 className="main-title">MESSAGES</h3>
-      <div className="row mt-5">
-        <div className="col-12 col-lg-4">
-          <div className="search-bar">
-            <img src="/images/icon/icon-search-primary.svg" alt="search icon" />
-            <input type="text" placeholder="Search" />
-          </div>
+const Page = () => {
+  // STATES
+  const [wsStatus, setWsStatus] = useState(request.NONE);
+  const [wsError, setWsError] = useState(null);
+  const [wsRecentRequest, setWsRecentRequest] = useState(null);
+  const [isDirectMessageDone, setIsDirectMessageDone] = useState(false);
+
+  // STATES: MESSAGE LIST
+  const [messageList, setMessageList] = useState([]);
+  const [messageListPage, setMessageListPage] = useState(1);
+  const [messageListEndOfList, setMessageListEndOfList] = useState(false);
+  const [messageListInitialStatus, setMessageListInitialStatus] = useState(request.REQUESTING);
+
+  // STATES: MESSAGE MAIN
+  const [talkingTo, setTalkingTo] = useState(null);
+  const [conversationList, setConversationList] = useState([]);
+  const [conversationListPage, setConversationListPage] = useState(1);
+  const [conversationListEndOfList, setConversationListEndOfList] = useState(false);
+  const [conversationListInitialStatus, setConversationListInitialStatus] = useState(request.NONE);
+
+  // REFS
+  const socketRef = useRef(null);
+
+  // CUSTOM HOOKS
+  const router = useRouter();
+  const { addToast } = useToasts();
+  const { accessToken } = useAuthentication();
+  const { me } = useMe();
+  const { fetchUsersChatList, status: messageListStatus } = useChat();
+  const { fetchChatMessages, status: conversationListStatus } = useChat();
+
+  // METHODS
+  useEffect(() => {
+    if (
+      ![request.SUCCESS, request.ERROR].includes(messageListInitialStatus) &&
+      [request.SUCCESS, request.ERROR].includes(messageListStatus)
+    ) {
+      setMessageListInitialStatus(messageListStatus);
+
+      if (messageListStatus === request.ERROR) {
+        setConversationListInitialStatus(request.ERROR);
+      }
+    }
+  }, [messageListStatus, messageListInitialStatus]);
+
+  useEffect(() => {
+    const { isDirect = false, userId, firstName, lastName, profileImageUrl, role } = router.query;
+    if (
+      isDirect &&
+      !isDirectMessageDone &&
+      messageList.length &&
+      messageListInitialStatus === request.SUCCESS
+    ) {
+      onSelectConversation({ id: userId, firstName, lastName, profileImageUrl, role }, true);
+      setIsDirectMessageDone(true);
+    }
+  }, [router, messageList, messageListInitialStatus]);
+
+  // METHODS: WEBSOCKET
+  useEffect(() => {
+    if (socketRef.current) {
+      socketRef.current.onmessage = onMessage;
+    }
+  }, [talkingTo, socketRef]);
+
+  useEffect(() => {
+    setWsRecentRequest(eventTypes.USER_CONNECTED);
+    socketRef.current = new WebSocket(`${API_URL_WEBSOCKET}/${accessToken}`);
+    socketRef.current.onopen = onOpen;
+    socketRef.current.onmessage = onMessage;
+    socketRef.current.onerror = onError;
+    socketRef.current.onclose = onClose;
+
+    return () => {
+      setWsRecentRequest(eventTypes.USER_DISCONNECTED);
+      socketRef.current.send({ event_type: eventTypes.USER_DISCONNECTED });
+      socketRef.current.close();
+    };
+  }, [accessToken]);
+
+  const onOpen = () => {
+    setWsStatus(request.SUCCESS);
+  };
+
+  const onClose = (event) => {
+    console.log('socket closed', event);
+  };
+
+  const onMessage = (event) => {
+    const { data, eventType } = JSON.parse(event.data);
+    console.log('onMessage', JSON.parse(event.data));
+    if (eventType === eventTypes.MESSAGE) {
+      if (data.from === talkingTo?.id) {
+        onNewChatMessageMain(data.from, data.to, data.message);
+      }
+
+      if (data.from !== talkingTo?.id) {
+        onNewChatMessageFromUsers(data.from, data.message);
+      }
+    }
+  };
+
+  const onError = (error) => {
+    setWsStatus(request.ERROR);
+    setWsError(error);
+  };
+
+  const onSend = (from, to, message) => {
+    const data = {
+      messageId: 'test',
+      event_type: eventTypes.MESSAGE,
+      data: { from, to, message },
+    };
+
+    if (socketRef.current && wsStatus === request.SUCCESS) {
+      setWsRecentRequest(eventTypes.MESSAGE);
+      socketRef.current.send(JSON.stringify(data));
+
+      onNewChatMessageMain(from, to, message);
+    }
+  };
+
+  // METHODS: MESSAGE LIST
+  useEffect(() => {
+    onFetchMessageList();
+  }, []);
+
+  const onFetchMessageList = (onCompleteCallback = null) => {
+    fetchUsersChatList(
+      {
+        page: messageListPage,
+        page_size: MESSAGE_LIST_PAGE_SIZE,
+      },
+      {
+        onSuccess: (response) => {
+          onCompleteCallback?.();
+          onFetchMessageListSuccess(response);
+        },
+        onError: (response) => {
+          onCompleteCallback?.();
+          onFetchMessageListError(response);
+        },
+      },
+    );
+  };
+
+  const onFetchMessageListSuccess = ({ response }) => {
+    setMessageListPage(response.page + 1);
+    setMessageList(response.data);
+    setMessageListEndOfList(!response.data.length);
+  };
+
+  const onFetchMessageListError = () => {
+    addToast('An error occurred while fetching properties.', toastTypes.ERROR);
+  };
+
+  const onNextPageMessageList = (onCompleteCallback) => {
+    onFetchMessageList(onCompleteCallback);
+  };
+
+  const onNewChatMessageFromUsers = (fromUserId, message) => {
+    setMessageList((list) => {
+      let newList = list;
+
+      const foundIndex = list.findIndex((item) => {
+        const user = me.id === item.fromUser.id ? item.toUser : item.fromUser;
+        return user.id === fromUserId;
+      });
+
+      if (foundIndex !== -1) {
+        newList = cloneDeep(list);
+        const { count = 0 } = newList[foundIndex];
+        newList[foundIndex] = {
+          ...newList[foundIndex],
+          message,
+          count: count + 1,
+        };
+      }
+
+      return newList;
+    });
+  };
+
+  const onSelectMessageListItem = (fromUserId) => {
+    setMessageList((list) => {
+      let newList = list;
+
+      const foundIndex = list.findIndex((item) => {
+        const user = me.id === item.fromUser.id ? item.toUser : item.fromUser;
+        return user.id === fromUserId;
+      });
+
+      if (foundIndex !== -1) {
+        newList = cloneDeep(list);
+        newList[foundIndex].count = 0;
+      }
+
+      return newList;
+    });
+  };
+
+  // METHODS: MESSAGE MAIN
+  const onSelectConversation = (user, shouldReset) => {
+    if (shouldReset) {
+      setConversationListInitialStatus(request.REQUESTING);
+
+      setConversationList([]);
+      setConversationListPage(1);
+      setConversationListEndOfList(false);
+      onSelectMessageListItem(user.id);
+    }
+
+    fetchChatMessages(
+      {
+        id: user?.id,
+        page: shouldReset ? 1 : conversationListPage,
+        page_size: CONVERATION_LIST_PAGE_SIZE,
+      },
+      {
+        onSuccess: (response) => {
+          setTalkingTo(user);
+          onFetchConversationListSuccess(response);
+
+          if (shouldReset) {
+            setConversationListInitialStatus(response.status);
+          }
+        },
+        onError: (response) => {
+          onFetchConversationListError(response);
+
+          if (shouldReset) {
+            setConversationListInitialStatus(response.status);
+          }
+        },
+      },
+    );
+  };
+
+  const onFetchConversationListSuccess = ({ response }) => {
+    setConversationListPage(response.page + 1);
+    setConversationList((value) => [...response.data.reverse(), ...value]);
+    setConversationListEndOfList(!response.data.length);
+  };
+
+  const onFetchConversationListError = () => {
+    addToast('An error occurred while fetching conversation.', toastTypes.ERROR);
+  };
+
+  const onNextPageConversation = (user) => {
+    onSelectConversation(user);
+  };
+
+  const onNewChatMessageMain = (fromUserId, toUserId, message) => {
+    setConversationList((value) => [
+      ...value,
+      {
+        fromUserId,
+        id: '',
+        message,
+        toUserId,
+      },
+    ]);
+  };
+
+  return (
+    <PageWrapper title="DigiRent - Messages" pageName="messages">
+      <img src="/images/main-left-bg.svg" className="left-main-background" alt="left bg" />
+      <img src="/images/main-right-bg.svg" className="right-main-background" alt="right bg" />
+      <div className="container-fluid container-lg">
+        <h3 className="main-title">MESSAGES</h3>
+        <MessagesSearch />
+
+        <div className="row mt-4">
+          <MessagesList
+            talkingTo={talkingTo}
+            list={messageList}
+            initialStatus={messageListInitialStatus}
+            fetchStatus={messageListStatus}
+            isEndOfList={messageListEndOfList}
+            onNextPage={onNextPageMessageList}
+            onSelectConversation={onSelectConversation}
+          />
+          <MessagesMain
+            talkingTo={talkingTo}
+            list={conversationList}
+            initialStatus={conversationListInitialStatus}
+            fetchStatus={conversationListStatus}
+            isEndOfList={conversationListEndOfList}
+            onNextPage={onNextPageConversation}
+            onSend={onSend}
+          />
         </div>
       </div>
-
-      <div className="row mt-4">
-        <div className="col-12 col-lg-5 col-xl-4">
-          <div className="position-relative d-flex align-items-center">
-            <div className="message-icon">
-              <img src="/images/icon/icon-user-white.svg" alt="user icon" />
-            </div>
-
-            <div className="user-messages main-box" id="user-messages">
-              <PerfectScrollbar options={{ wheelPropagation: false }}>
-                {data.map((item, index) => (
-                  <div className={cn('item', { 'mt-3': index !== 0 })}>
-                    <div className="user-photo" />
-                    <div className="information">
-                      <div className="name-date">
-                        <p className="name">{item.name}</p>
-                        <div className="date-wrapper">
-                          <p className="time">01:10pm</p>
-                          {item.count > 0 && <p className="messages-count">{item.count}</p>}
-                        </div>
-                      </div>
-                      <p className="message main-desc">{item.description}</p>
-                    </div>
-                  </div>
-                ))}
-              </PerfectScrollbar>
-            </div>
-          </div>
-        </div>
-        <div className="col-12 col-lg-7 col-xl-8 mt-5 mt-lg-0">
-          <div className="user-header">
-            <div className="user-photo" />
-            <div className="user-info">
-              <p className="name">Jennifer</p>
-              <p className="role">STUDENT</p>
-            </div>
-            <button type="button" className="button btn-send-booking-request">
-              SEND <span className="font-weight-bold"> BOOKING REQUEST </span>
-            </button>
-          </div>
-
-          <div className="main-message mt-3">
-            <PerfectScrollbar options={{ wheelPropagation: false }}>
-              <div className="content" id="main-message-content">
-                <p className="message person">
-                  Your house is amazing. Every window is an embodiment of art.
-                </p>
-                <p className="message you">
-                  Your house is amazing. Every window is an embodiment of art.
-                </p>
-                <p className="message person">Your house is amazing.</p>
-                <p className="message person">Your house is amazing.</p>
-                <p className="message you">Your house is amazing.</p>
-                <p className="message person">Ok.</p>
-
-                <p className="message person">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                  incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-                  exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute
-                  irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-                  pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
-                  officia deserunt mollit anim id est laborum.
-                </p>
-                <p className="message you">
-                  Your house is amazing. Every window is an embodiment of art.
-                </p>
-                <p className="message person">Your house is amazing.</p>
-                <p className="message person">Your house is amazing.</p>
-                <p className="message you">Your house is amazing.</p>
-                <p className="message person">Ok.</p>
-
-                <p className="message person">
-                  Your house is amazing. Every window is an embodiment of art.
-                </p>
-                <p className="message you">
-                  Your house is amazing. Every window is an embodiment of art.
-                </p>
-                <p className="message person">Your house is amazing.</p>
-                <p className="message person">Your house is amazing.</p>
-                <p className="message you">Your house is amazing.</p>
-                <p className="message person">Ok.</p>
-
-                <p className="message person">
-                  Your house is amazing. Every window is an embodiment of art.
-                </p>
-                <p className="message you">
-                  Your house is amazing. Every window is an embodiment of art.
-                </p>
-                <p className="message person">Your house is amazing.</p>
-                <p className="message person">Your house is amazing.</p>
-                <p className="message you">Your house is amazing.</p>
-                <p className="message person">Ok.</p>
-              </div>
-            </PerfectScrollbar>
-            <div className="footer">
-              <textarea placeholder="Message" />
-              <button className="button">
-                <img src="/images/icon/icon-email-outline.svg" alt="email icon" />
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </PageWrapper>
-);
+    </PageWrapper>
+  );
+};
 
 export default Page;

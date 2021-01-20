@@ -4,17 +4,17 @@ import { useEffect, useState } from 'react';
 import { useToasts } from 'react-toast-notifications';
 import { toastTypes, userTypes } from 'shared/types';
 import CookieOverlay from 'widgets/CookieOverlay/index';
-import AreasOfExpertise from 'widgets/_PageHome/AreasOfExpertise';
-import Blog from 'widgets/_PageHome/Blog';
-import ExploreOurMosePopularCities from 'widgets/_PageHome/ExploreOurMosePopularCities';
+import HomeAreasOfExpertise from 'widgets/_PageHome/HomeAreasOfExpertise';
+import HomeBlog from 'widgets/_PageHome/HomeBlog';
+import HomeExploreOurMostPopularCities from 'widgets/_PageHome/HomeExploreOurMostPopularCities';
+import HomeHowDoesItWork from 'widgets/_PageHome/HomeHowDoesItWork';
+import HomeLanding from 'widgets/_PageHome/HomeLanding';
+import HomeLoginModal from 'widgets/_PageHome/HomeLoginModal';
 import HomePageWrapper from 'widgets/_PageHome/HomePageWrapper';
-import HowDoesItWork from 'widgets/_PageHome/HowDoesItWork';
-import Landing from 'widgets/_PageHome/Landing';
-import LoginModal from 'widgets/_PageHome/LoginModal';
-import RecentlyAddedProperties from 'widgets/_PageHome/RecentlyAddedProperties';
-import RegisterModal from 'widgets/_PageHome/RegisterModal';
-import SectionDivider from 'widgets/_PageHome/SectionDivider';
-import WhyChooseDigiRentOverAnyAgency from 'widgets/_PageHome/WhyChooseDigiRentOverAnyAgency';
+import HomeRecentlyAddedProperties from 'widgets/_PageHome/HomeRecentlyAddedProperties';
+import HomeRegisterModal from 'widgets/_PageHome/HomeRegisterModal';
+import HomeSectionDivider from 'widgets/_PageHome/HomeSectionDivider';
+import HomeWhyChooseDigiRentOverAnyAgency from 'widgets/_PageHome/HomeWhyChooseDigiRentOverAnyAgency';
 
 const Page = () => {
   // STATES
@@ -51,45 +51,45 @@ const Page = () => {
         <img src="/images/wheel.svg" className="left-main-background" alt="left bg" />
         <img src="/images/main-right-bg-2.svg" className="right-main-background" alt="right bg" />
 
-        <LoginModal
+        <HomeLoginModal
           isVisible={loginModalVisible}
           onRegister={onSelectRegister}
           onClose={() => setLoginModalVisible(false)}
         />
-        <RegisterModal
+        <HomeRegisterModal
           initialUserType={initialUserType}
           isVisible={registerModalVisible}
           onClose={() => setRegisterModalVisible(false)}
         />
 
-        <Landing />
+        <HomeLanding />
 
-        <RecentlyAddedProperties />
+        <HomeRecentlyAddedProperties />
 
-        <HowDoesItWork
+        <HomeHowDoesItWork
           selectedUserType={selectedUserType}
           setSelectedUserType={setSelectedUserType}
         />
 
-        <SectionDivider
+        <HomeSectionDivider
           title="TENANTS"
           description="Find your new home online"
           link="/properties"
         />
 
-        <AreasOfExpertise />
+        <HomeAreasOfExpertise />
 
-        {selectedUserType === userTypes.LANDLORD && <WhyChooseDigiRentOverAnyAgency />}
+        {selectedUserType === userTypes.LANDLORD && <HomeWhyChooseDigiRentOverAnyAgency />}
 
-        <ExploreOurMosePopularCities />
+        <HomeExploreOurMostPopularCities />
 
-        <SectionDivider
+        <HomeSectionDivider
           title="LANDLORDS"
           description="Find your renters online"
-          link="/tenants-list"
+          link="/tenants"
         />
 
-        <Blog />
+        <HomeBlog />
 
         <CookieOverlay isAccepted={isCookieAccepted} onAccept={() => setIsCookieAccepted(true)} />
       </div>

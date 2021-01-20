@@ -1,5 +1,6 @@
 import { memoize } from 'lodash';
 import moment from 'moment';
+import { API_ASSET_URL } from 'services/index';
 import { request } from './types';
 
 // UI FUNCTIONS
@@ -70,3 +71,16 @@ export const toBase64 = async (file) => {
   const base64 = await toBase64Promise(file);
   return base64;
 };
+
+export const blobToBase64 = (blob) =>
+  new Promise((resolve) => {
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      resolve(reader.result);
+    };
+    reader.readAsDataURL(blob);
+  });
+
+// eslint-disable-next-line no-confusing-arrow
+export const getProfileImage = (profileImageUrl) =>
+  profileImageUrl ? `url(${API_ASSET_URL}${profileImageUrl})` : undefined;

@@ -1,0 +1,307 @@
+.layout-content.tenants {
+  padding-top: 0;
+  padding-bottom: 400px;
+
+  @include media-breakpoint-down(lg) {
+    padding-bottom: 250px;
+  }
+
+  @include media-breakpoint-down(sm) {
+    padding-bottom: 150px;
+  }
+
+  @include media-breakpoint-down(xs) {
+    .left-main-background,
+    .right-main-background {
+      display: none;
+    }
+  }
+
+  .left-main-background {
+    top: 140vh;
+  }
+
+  .right-main-background {
+    top: 90vh;
+  }
+
+  .landing {
+    min-height: 90vh;
+    padding: 150px 0;
+    background-image: url('/images/property-tenants-bg.jpg');
+    background-size: cover;
+    background-position: top;
+    background-repeat: no-repeat;
+    background-blend-mode: darken;
+    background-color: rgba(255, 255, 255, 0.1);
+    position: relative;
+    @include flex(center, center, column);
+
+    div.content {
+      width: 100%;
+      margin-top: 25px;
+      padding: 0 25px;
+      @include flex(center, center);
+
+      @include media-breakpoint-down(md) {
+        flex-direction: column;
+        margin-top: 0;
+      }
+
+      @include media-breakpoint-down(sm) {
+        padding: 0 15px;
+      }
+
+      .left {
+        flex-basis: 50%;
+        padding-right: 60px;
+        @include flex(flex-end, flex-end, column);
+
+        .title {
+          @include font(6rem, bold);
+          color: white;
+
+          @include media-breakpoint-down(md) {
+            font-size: 4.5rem;
+            text-align: center;
+          }
+
+          @include media-breakpoint-down(sm) {
+            font-size: 3rem;
+          }
+
+          @include media-breakpoint-down(xs) {
+            font-size: 2.75rem;
+          }
+        }
+
+        .subtitle {
+          @include font(75px, $fw-light);
+          font-family: $font-secondary;
+          color: $color-primary;
+
+          @include media-breakpoint-down(md) {
+            font-size: 60px;
+          }
+
+          @include media-breakpoint-down(sm) {
+            font-size: 45px;
+          }
+
+          @include media-breakpoint-down(xs) {
+            font-size: 32px;
+          }
+        }
+      }
+
+      .right {
+        flex-basis: 50%;
+      }
+
+      @include breakpoint-down(1350px) {
+        flex-direction: column;
+        margin-top: 0;
+
+        .left {
+          padding-right: 0;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .right {
+          margin-top: 50px;
+        }
+      }
+    }
+
+    .scroll-down {
+      @include flex();
+      position: absolute;
+      width: 100%;
+      bottom: 0;
+
+      .scroll-down-wrapper {
+        flex-shrink: 0;
+        position: relative;
+
+        .scroll-down-space {
+          margin-left: -1px;
+          margin-right: -1px;
+          margin-bottom: -1px;
+        }
+
+        .scroll-down {
+          width: 35px;
+          height: 35px;
+          padding: 8px;
+          position: absolute;
+          top: 10px;
+          left: 0;
+          right: 0;
+          margin-left: auto;
+          margin-right: auto;
+          border-radius: 40px;
+          cursor: pointer;
+
+          &:hover {
+            background-color: rgba(255, 255, 255, 0.25);
+          }
+        }
+      }
+
+      .white-space {
+        flex: 1;
+        background-color: white;
+        margin-bottom: -1px;
+      }
+    }
+  }
+
+  .container {
+    max-width: 1300px;
+  }
+
+  .tenants {
+    margin-top: 150px;
+
+    @include media-breakpoint-down(sm) {
+      margin-top: 100px;
+    }
+
+    .list {
+      margin-top: 100px;
+
+      @include media-breakpoint-down(sm) {
+        margin-top: 75px;
+      }
+
+      .item {
+        margin-bottom: 150px;
+        position: relative;
+
+        @include media-breakpoint-down(lg) {
+          margin-bottom: 100px;
+        }
+
+        .tenant-info {
+          width: 175px;
+          position: absolute;
+          top: -50px;
+          margin-left: auto;
+          margin-right: auto;
+          left: 0;
+          right: 0;
+          z-index: 2;
+          @include flex(center, center, column);
+        }
+
+        .top {
+          @include flex();
+          flex-direction: column;
+
+          .photo-holder {
+            width: 100%;
+            height: 300px;
+            background-image: url('/images/photo-placeholder.png');
+            background-position: center;
+            background-size: cover;
+            background-repeat: no-repeat;
+            border-top-left-radius: $border-radius;
+            border-top-right-radius: $border-radius;
+            position: relative;
+            padding-top: 35px;
+            @include flex(flex-start, flex-start);
+
+            .photo-additional-bg {
+              position: absolute;
+              width: calc(100% + 4px);
+              left: -2px;
+              right: -2px;
+              bottom: -3px;
+
+              background-image: url('/images/account-profile-bg.svg');
+              background-position: top;
+              background-size: cover;
+
+              img {
+                width: 100%;
+                opacity: 0;
+              }
+            }
+
+            .status {
+              width: 100%;
+              @include flex(space-between, center);
+
+              .verified {
+                padding: 10px 20px;
+                color: white;
+                background-color: $color-green;
+                border-top-left-radius: 30px;
+                border-bottom-left-radius: 30px;
+                @include font(17px, $fw-light);
+              }
+
+              .profile-completion {
+                color: white;
+                padding: 3px 8px;
+                background-color: $color-primary;
+                display: inline-block;
+                @include font(12px, $fw-light);
+                border-top-right-radius: 30px;
+                border-bottom-right-radius: 30px;
+              }
+            }
+
+            .star-photo {
+              width: 40px;
+              height: 40px;
+              position: absolute;
+              z-index: 1;
+              bottom: 70px;
+              right: 15px;
+              padding: 8px;
+              border-radius: 50%;
+              transition: 250ms;
+              cursor: pointer;
+
+              img {
+                width: 100%;
+              }
+
+              &:hover {
+                transition: 250ms;
+                background: rgba(0, 0, 0, 0.2);
+              }
+            }
+          }
+        }
+
+        .bottom {
+          padding: 15px 25px 40px;
+
+          .searches {
+            @include flex(space-between, center);
+          }
+
+          .btn-about-me-container {
+            position: absolute;
+            width: 100%;
+            left: 0;
+            right: 0;
+            bottom: -20px;
+          }
+        }
+      }
+    }
+  }
+}
+
+.about-me-modal {
+  .modal-dialog {
+    max-width: 560px !important;
+  }
+  button {
+    font-size: 14px;
+  }
+}

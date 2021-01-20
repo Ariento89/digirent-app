@@ -1,0 +1,223 @@
+#register-modal {
+  .modal-content {
+    width: 640px;
+
+    border-top-left-radius: 320px;
+    border-top-right-radius: 320px;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+
+    @include media-breakpoint-down(xs) {
+      margin-top: 40px;
+      border-radius: 15px;
+      height: auto;
+    }
+  }
+
+  .modal-body {
+    .icon-user {
+      position: absolute;
+      height: 90px;
+      width: 90px;
+      z-index: 2;
+      left: 0;
+      right: 0;
+      top: -45px;
+
+      @include breakpoint-down(400px) {
+        height: 60px;
+        width: 60px;
+        top: -30px;
+      }
+    }
+
+    .top-toggle {
+      margin-top: 4px;
+      position: relative;
+
+      .toggle-bg {
+        display: block;
+      }
+
+      .toggle-icon {
+        background-color: $color-gray;
+        height: 8px;
+        width: 8px;
+        border-radius: 50%;
+        position: absolute;
+
+        &.active {
+          background-color: $color-primary;
+        }
+
+        &.tenant-icon {
+          left: 70px;
+          bottom: -1px;
+        }
+
+        &.landlord-icon {
+          right: 70px;
+          bottom: -1px;
+        }
+      }
+
+      @include media-breakpoint-down(xs) {
+        display: none !important;
+      }
+    }
+
+    .title {
+      @include clear-spacing;
+      @include font(40px, $fw-bold);
+      text-align: center;
+      color: $color-primary;
+      margin-top: -20px;
+
+      @include media-breakpoint-down(xs) {
+        margin-top: 80px;
+      }
+
+      @include breakpoint-down(400px) {
+        margin-top: 30px;
+      }
+    }
+
+    .button-toggler {
+      button {
+        font-weight: bold;
+
+        &:not(.active) {
+          color: $color-primary !important;
+          background-color: white !important;
+        }
+
+        &.btn-as-tenant {
+          margin-left: -50px;
+        }
+
+        &.btn-as-landlord {
+          display: block;
+          margin-left: auto;
+          margin-right: -50px;
+        }
+
+        @include media-breakpoint-down(xs) {
+          &.btn-as-tenant {
+            margin-left: 20px;
+          }
+
+          &.btn-as-landlord {
+            margin-right: 20px;
+          }
+        }
+
+        @include breakpoint-down(500px) {
+          &.btn-as-tenant,
+          &.btn-as-landlord {
+            margin-left: 0;
+            margin-right: 0;
+          }
+        }
+      }
+
+      @include breakpoint-down(500px) {
+        @include flex(space-between, center);
+        margin-top: 25px !important;
+        padding-left: 20px;
+        padding-right: 20px;
+      }
+
+      @include breakpoint-down(400px) {
+        padding-left: 0;
+        padding-right: 0;
+      }
+    }
+
+    .social-media-options {
+      @include flex(center, center);
+      margin-top: -15px;
+
+      .item {
+        @include simple-shadow;
+        border-radius: 8px;
+        padding: 8px;
+        height: 40px;
+        width: 40px;
+        background-color: white;
+        cursor: pointer;
+        transition: 300ms;
+
+        &:hover {
+          opacity: 0.8;
+          transition: 300ms;
+        }
+
+        img {
+          width: 100%;
+        }
+      }
+
+      @include media-breakpoint-down(xs) {
+        margin-top: 20px;
+      }
+    }
+
+    .main-content {
+      padding-left: 25px;
+      padding-right: 25px;
+
+      @include media-breakpoint-down(xs) {
+        padding-left: 20px;
+        padding-right: 20px;
+      }
+
+      @include breakpoint-down(400px) {
+        padding-left: 0;
+        padding-right: 0;
+      }
+
+      .fields-container {
+        display: none;
+
+        &.active {
+          display: block;
+        }
+      }
+
+      input,
+      select {
+        box-shadow: none;
+        border: 1px solid #d7d7d7;
+        padding: 12px 20px;
+      }
+
+      .checkbox {
+        flex-shrink: 0;
+        cursor: pointer;
+        height: 25px;
+        width: 25px;
+
+        &.active {
+          img {
+            display: block;
+          }
+        }
+
+        img {
+          display: none;
+        }
+      }
+
+      .i-agree {
+        .i-agree-text {
+          @include font(15px, $fw-light);
+          color: $color-dark-gray;
+        }
+      }
+
+      .field-icon {
+        display: none;
+      }
+    }
+  }
+}

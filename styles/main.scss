@@ -32,7 +32,7 @@
 @import 'components/toggle-switch-language';
 
 // widgets
-@import 'widgets/blog-card';
+@import 'widgets/blog-info';
 @import 'widgets/cookie-overlay';
 @import 'widgets/state-list';
 @import 'widgets/property-info';
@@ -51,11 +51,10 @@
 @import 'pages/contracts-tenant';
 @import 'pages/extra-information';
 @import 'pages/faq';
-@import 'pages/homepage/homepage';
+@import 'pages/home/home';
 @import 'pages/international-students-expats';
 @import 'pages/media';
 @import 'pages/messages';
-@import 'pages/messages-tenant';
 @import 'pages/payments-landlord';
 @import 'pages/payments-tenant';
 @import 'pages/pricing';
@@ -65,4 +64,4 @@
 @import 'pages/my-properties/my-properties';
 @import 'pages/rental-tips';
 @import 'pages/sitemap';
-@import 'pages/tenants-list';
+@import 'pages/tenants';

@@ -1,5 +1,3 @@
-/* eslint-disable implicit-arrow-linebreak */
-/* eslint-disable react-hooks/exhaustive-deps */
 import FieldError from 'components/FieldError/FieldError';
 import Select from 'components/Select/index';
 import Spinner from 'components/Spinner/index';
@@ -8,7 +6,7 @@ import Modal from 'react-bootstrap/Modal';
 import { yearOptions } from 'shared/options';
 import { request } from 'shared/types';
 import Pagination from 'widgets/Pagination/index';
-import StateList, { StateListTypes } from 'widgets/StateList/index';
+import StateList, { stateListTypes } from 'widgets/StateList/index';
 import PropertyApplication from './widgets/PropertyApplication';
 
 const MyPropertiesApplicationsModal = ({
@@ -52,7 +50,7 @@ const MyPropertiesApplicationsModal = ({
           )}
 
           {/* LIST */}
-          {status === request.SUCCESS && applications?.length > 0 && (
+          {status === request.SUCCESS && !!applications && (
             <div className="main-content pb-4">
               <TableHeader
                 currentPage={paginationData.currentPage}
@@ -73,23 +71,23 @@ const MyPropertiesApplicationsModal = ({
             </div>
           )}
 
-          {/* EMPTY LIST */}
-          {status === request.SUCCESS && applications?.length === 0 && (
+          {/* EMPTY */}
+          {status === request.SUCCESS && !applications?.length && (
             <StateList
               className="mx-auto"
-              title="EMPTY LIST"
+              title="LIST IS EMPTY"
               description="There are no applications on this property yet."
-              type={StateListTypes.EMPTY}
+              type={stateListTypes.EMPTY}
             />
           )}
 
-          {/* ERROR LIST */}
+          {/* ERROR */}
           {status === request.ERROR && (
             <StateList
               className="mx-auto"
               title="OOPS!"
               description="An error ocurred while applications of your property."
-              type={StateListTypes.ERROR}
+              type={stateListTypes.ERROR}
             />
           )}
         </Spinner>

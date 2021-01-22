@@ -23,6 +23,25 @@ function* updateProfileInformation({ payload }) {
   }
 }
 
+function* fetchMe({ payload }) {
+  const { callback, ...data } = payload;
+  callback({ status: request.REQUESTING });
+
+  try {
+    const response = yield call(service.me);
+    yield put(
+      actions.save({
+        type: types.GET_ME,
+        me: response.data,
+      }),
+    );
+
+    callback({ status: request.SUCCESS, response: response.data });
+  } catch (e) {
+    callback({ status: request.ERROR, errors: e.errors });
+  }
+}
+
 function* updatePassword({ payload }) {
   const { callback, ...data } = payload;
   callback({ status: request.REQUESTING });
@@ -97,9 +116,14 @@ const setUserBankDetailsWatcherSaga = function* setUserBankDetailsWatcherSaga() 
   yield takeLatest(types.SET_USER_BANK_DETAILS, setUserBankDetails);
 };
 
+const fetchMeWatcherSaga = function* fetchMeWatcherSaga() {
+  yield takeLatest(types.GET_ME, fetchMe);
+}
+
 export default [
   updateProfileInformationWatcherSaga(),
   updatePasswordWatcherSaga(),
   setTenantLookingForWatcherSaga(),
   setUserBankDetailsWatcherSaga(),
+  fetchMeWatcherSaga(),
 ];

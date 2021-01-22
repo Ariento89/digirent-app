@@ -48,9 +48,9 @@ const HomePageHeader = ({ onLoginClick, onRegisterClick }) => {
             <span>FOR LANDLORDS</span>
           </div>
 
-          <div className="note">
-            <span>Not Verified</span>
-          </div>
+          {accessToken && !me?.emailVerified &&  <div className="note" style={{backgroundColor: 'red'}}>
+            <span style={{color: 'white'}}>Not Verified</span>
+          </div>}
 
           <div className="main-menu">
             <Link href="/properties">

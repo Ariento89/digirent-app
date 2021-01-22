@@ -1,11 +1,15 @@
 import cn from 'classnames';
+import { useMe } from 'hooks/useMe';
 import Head from 'next/head';
 import Loader from 'react-loader-spinner';
+import NotVerified from './NotVerified'
 import Footer from 'widgets/Footer';
 import Header from 'widgets/Header';
 
-const PageWrapper = ({ title, pageName, children }) => {
+const PageWrapper = ({ title, pageName, children, verificationRequired=false }) => {
   // const { language } = useLanguage();
+
+  const {me} = useMe();
 
   // eslint-disable-next-line react-hooks/rules-of-hooks
   // useEffect(() => {
@@ -79,7 +83,8 @@ const PageWrapper = ({ title, pageName, children }) => {
       </Head>
 
       <Header />
-      <div className={cn('layout-content', pageName)}>{children}</div>
+      {(!verificationRequired || me?.emailVerified) && <div className={cn('layout-content', pageName)}>{children}</div>}
+      {verificationRequired && !me?.emailVerified && <NotVerified/>}
       <Footer />
     </div>
   );

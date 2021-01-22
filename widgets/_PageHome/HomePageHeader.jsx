@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/no-noninteractive-tabindex */
 import cn from 'classnames';
 import ToggleSwitch from 'components/ToggleSwitch/index';
+import Button from 'components/Button'
 import { useAuthentication } from 'hooks/useAuthentication';
 import { useLanguage } from 'hooks/useLanguage';
 import Link from 'next/link';
@@ -9,6 +10,7 @@ import { useToasts } from 'react-toast-notifications';
 import { useScrollData } from 'scroll-data-hook';
 import { languageSwitchOptions, toastTypes } from 'shared/types';
 import HomePageMenu from './HomePageMenu';
+import { useMe } from 'hooks/useMe';
 
 const SCROLL_THRESHOLD = 100;
 
@@ -19,6 +21,7 @@ const HomePageHeader = ({ onLoginClick, onRegisterClick }) => {
 
   // CUSTOM HOOKS
   const { position } = useScrollData();
+  const {me} = useMe()
   const { language, setLanguage } = useLanguage();
   const { addToast } = useToasts();
   const { accessToken, logout } = useAuthentication();
@@ -43,6 +46,10 @@ const HomePageHeader = ({ onLoginClick, onRegisterClick }) => {
         <div className="header-menu">
           <div className="note">
             <span>FOR LANDLORDS</span>
+          </div>
+
+          <div className="note">
+            <span>Not Verified</span>
           </div>
 
           <div className="main-menu">

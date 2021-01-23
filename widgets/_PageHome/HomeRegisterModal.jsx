@@ -1,9 +1,10 @@
+/* eslint-disable no-plusplus */
 import cn from 'classnames';
 import Button from 'components/Button/index';
 import FieldError from 'components/FieldError/FieldError';
+import dayjs from 'dayjs';
 import { Form, Formik } from 'formik';
 import { useUsers } from 'hooks/useUsers';
-import moment from 'moment';
 import Link from 'next/link';
 import { useCallback, useEffect, useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
@@ -16,18 +17,18 @@ import AuthFieldDatePicker from './widgets/AuthFieldDatePicker';
 import AuthUserSelection from './widgets/AuthUserSelection';
 
 const monthOptions = [
-  { label: 'Jan', value: '1' },
-  { label: 'Feb', value: '2' },
-  { label: 'Mar', value: '3' },
-  { label: 'Apr', value: '4' },
-  { label: 'May', value: '5' },
-  { label: 'Jun', value: '6' },
-  { label: 'Jul', value: '7' },
-  { label: 'Aug', value: '8' },
-  { label: 'Sep', value: '9' },
-  { label: 'Oct', value: '10' },
-  { label: 'Nov', value: '11' },
-  { label: 'Dec', value: '12' },
+  { label: 'Jan', value: '0' },
+  { label: 'Feb', value: '1' },
+  { label: 'Mar', value: '2' },
+  { label: 'Apr', value: '3' },
+  { label: 'May', value: '4' },
+  { label: 'Jun', value: '5' },
+  { label: 'Jul', value: '6' },
+  { label: 'Aug', value: '7' },
+  { label: 'Sep', value: '8' },
+  { label: 'Oct', value: '9' },
+  { label: 'Nov', value: '10' },
+  { label: 'Dec', value: '11' },
 ];
 
 const HomeRegisterModal = ({ initialUserType, onClose, isVisible }) => {
@@ -35,12 +36,33 @@ const HomeRegisterModal = ({ initialUserType, onClose, isVisible }) => {
   const [selectedUserType, setSelectedUserType] = useState(userTypes.TENANT);
   const [termsAndPolicyActive, setTermsAndPolicyActive] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [dayOptions, setDayOptions] = useState([]);
+  const [yearOptions, setYearOptions] = useState([]);
 
   // CUSTOM HOOKS
   const { addToast } = useToasts();
   const { registerTenant, registerLandlord, status, errors, reset } = useUsers();
 
   // METHODS
+  useEffect(() => {
+    // Year
+    const year = dayjs().year();
+    const lastYear = year - 100;
+    const years = [];
+    for (let i = year; i >= lastYear; i--) {
+      years.push({ label: String(i), value: String(i) });
+    }
+    setYearOptions(years);
+
+    // Day
+    const days = [];
+    const maxDays = dayjs().daysInMonth();
+    for (let i = 1; i <= maxDays; i++) {
+      days.push({ label: String(i), value: String(i) });
+    }
+    setDayOptions(days);
+  }, []);
+
   useEffect(() => {
     if (initialUserType) {
       setSelectedUserType(initialUserType);
@@ -54,9 +76,9 @@ const HomeRegisterModal = ({ initialUserType, onClose, isVisible }) => {
         lastName: '',
         email: '',
         phoneNumber: '',
-        dobMonth: '',
-        dobDay: '',
-        dobYear: '',
+        dobMonth: String(dayjs().month()),
+        dobDay: String(dayjs().date()),
+        dobYear: String(dayjs().year()),
         password: '',
         passwordConfirmation: '',
       },
@@ -99,16 +121,22 @@ const HomeRegisterModal = ({ initialUserType, onClose, isVisible }) => {
     closeModal();
   };
 
-  const onSubmit = (data) => {
+  const onSubmit = ({ dobDay, dobMonth, dobYear, ...data }) => {
     if (termsAndPolicyActive) {
       let register;
       let payload = {};
 
       if (selectedUserType === userTypes.TENANT) {
         register = registerTenant;
+
+        let date = dayjs();
+        date = date.date(dobDay);
+        date = date.month(dobMonth);
+        date = date.year(dobYear);
+
         payload = {
           ...data,
-          dob: moment(data.dob).format('YYYY-MM-DD'),
+          dob: date.format('YYYY-MM-DD'),
           passwordConfirmation: undefined,
         };
       } else {
@@ -131,11 +159,31 @@ const HomeRegisterModal = ({ initialUserType, onClose, isVisible }) => {
     }
   };
 
-  const onChangeDay = () => {};
+  const onChangeMonth = (e, values) => {
+    const { dobDay, dobYear } = values;
+    const month = e.target.value;
+    changeDayOptions(dobDay, month, dobYear);
+  };
 
-  const onChangeMonth = () => {};
+  const onChangeYear = (e, values) => {
+    const { dobDay, dobMonth } = values;
+    const year = e.target.value;
+    changeDayOptions(dobDay, dobMonth, year);
+  };
 
-  const onChangeYear = () => {};
+  const changeDayOptions = (day, month, year) => {
+    let date = dayjs();
+    date = date.date(day);
+    date = date.month(month);
+    date = date.year(year);
+    const maxDays = date.daysInMonth();
+
+    const days = [];
+    for (let i = 1; i <= maxDays; i++) {
+      days.push({ label: String(i), value: String(i) });
+    }
+    setDayOptions(days);
+  };
 
   return (
     <Modal show={isVisible} onHide={closeModal} id="register-modal" centered>
@@ -170,7 +218,7 @@ const HomeRegisterModal = ({ initialUserType, onClose, isVisible }) => {
               onSubmit(values);
             }}
           >
-            {({ errors: formErrors, touched, handleChange }) => (
+            {({ values, errors: formErrors, touched, handleChange }) => (
               <Form className="form mt-2">
                 <div className="row">
                   <div className="col-12 col-sm-6">
@@ -194,7 +242,7 @@ const HomeRegisterModal = ({ initialUserType, onClose, isVisible }) => {
                 {selectedUserType === userTypes.TENANT && (
                   <>
                     <hr />
-                    <span className="mt-3">Date of Birth</span>
+                    <span className="mt-3 mb-1 d-block">Date of Birth</span>
                     <div className="row">
                       <div className="col-12 col-sm-4">
                         <div className="field-group block">
@@ -204,7 +252,7 @@ const HomeRegisterModal = ({ initialUserType, onClose, isVisible }) => {
                             options={monthOptions}
                             onChange={(e) => {
                               handleChange(e);
-                              onChangeMonth(e);
+                              onChangeMonth(e, values);
                             }}
                           />
                           {formErrors.dobMonth && touched.dobMonth ? (
@@ -217,10 +265,9 @@ const HomeRegisterModal = ({ initialUserType, onClose, isVisible }) => {
                           <AuthFieldDatePicker
                             name="dobDay"
                             placeholder="Day"
-                            options={monthOptions}
+                            options={dayOptions}
                             onChange={(e) => {
                               handleChange(e);
-                              onChangeDay(e);
                             }}
                           />
                           {formErrors.dobDay && touched.dobDay ? (
@@ -233,10 +280,10 @@ const HomeRegisterModal = ({ initialUserType, onClose, isVisible }) => {
                           <AuthFieldDatePicker
                             name="dobYear"
                             placeholder="Year"
-                            options={monthOptions}
+                            options={yearOptions}
                             onChange={(e) => {
                               handleChange(e);
-                              onChangeYear(e);
+                              onChangeYear(e, values);
                             }}
                           />
                           {formErrors.dobYear && touched.dobYear ? (

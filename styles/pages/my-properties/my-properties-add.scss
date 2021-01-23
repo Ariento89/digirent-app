@@ -130,15 +130,20 @@
     }
 
     .add-images {
-      @include flex(space-evenly, center);
+      @include flex(stretch, center);
 
       @include media-breakpoint-down(xs) {
         @include flex(center, center, column);
       }
 
       .item {
-        padding: 15px 23px;
-        @include flex(center, center, column);
+        flex: 1;
+
+        .main-box {
+          width: 100%;
+          padding: 20px;
+          @include flex(center, center, column);
+        }
 
         @include media-breakpoint-down(xs) {
           width: 100%;
@@ -162,7 +167,15 @@
           }
         }
 
-        span {
+        .file-image {
+          width: 100%;
+          height: 200px;
+          background-position: center;
+          background-size: contain;
+          background-repeat: no-repeat;
+        }
+
+        .file-label {
           @include font(15px, $fw-light);
           color: $color-gray2;
           margin-top: 10px;

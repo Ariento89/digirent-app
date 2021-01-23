@@ -6,7 +6,7 @@ import FormInputIcon from 'components/FormInputIcon/index';
 import FormSelect from 'components/FormSelect/index';
 import { Form, Formik } from 'formik';
 import { useMe } from 'hooks/useMe';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import { useCallback, useState } from 'react';
 import { useToasts } from 'react-toast-notifications';
 import { sleep } from 'shared/functions';
@@ -70,7 +70,7 @@ const AccountGeneral = () => {
           setIsSubmitting(true);
 
           // Transform
-          values.dob = moment(values.dob).format('YYYY-MM-DD');
+          values.dob = dayjs(values.dob).format('YYYY-MM-DD');
 
           await sleep(500);
           setIsSubmitting(false);

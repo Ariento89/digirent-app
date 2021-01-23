@@ -1,7 +1,7 @@
 import { useField, useFormikContext } from 'formik';
 import { useRef } from 'react';
 
-const AddImageField = ({ ...props }) => {
+const AddImageField = ({ image, ...props }) => {
   const { setFieldValue } = useFormikContext();
   const [field] = useField(props);
 
@@ -17,10 +17,24 @@ const AddImageField = ({ ...props }) => {
 
   return (
     <>
-      <button type="button" className="button" onClick={() => inputRef.current.click()}>
-        <img src="/images/icon/icon-plus-white.svg" alt="icon" />
-      </button>
-      <span className="text-center">Add Image</span>
+      {image ? (
+        <>
+          <div
+            className="file-image"
+            alt="uploaded"
+            style={{ backgroundImage: `url(${image})` }}
+            onClick={() => inputRef.current.click()}
+          />
+        </>
+      ) : (
+        <>
+          <button type="button" className="button" onClick={() => inputRef.current.click()}>
+            <img src="/images/icon/icon-plus-white.svg" alt="icon" />
+          </button>
+          <span className="file-label text-center">Add Image</span>
+        </>
+      )}
+
       <input type="file" ref={inputRef} className="d-none" onChange={onChange} accept="image/*" />
     </>
   );

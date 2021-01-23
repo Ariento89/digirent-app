@@ -1,5 +1,5 @@
 import { memoize } from 'lodash';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import { API_ASSET_URL } from 'services/index';
 import { request } from './types';
 
@@ -32,7 +32,7 @@ export const showErrorsMessage = (toast, errors) => {
   });
 };
 
-export const formatDate = memoize((datetime) => moment(datetime).format('MM/DD/YYYY'));
+export const formatDate = memoize((datetime) => dayjs(datetime).format('MM/DD/YYYY'));
 
 // SERVICE FUNCTIONS
 export const modifiedCallback = (callback, successMessage, errorMessage, extraCallback = null) => (

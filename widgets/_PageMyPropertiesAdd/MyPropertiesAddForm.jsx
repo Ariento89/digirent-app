@@ -2,9 +2,10 @@
 import Button from 'components/Button/index';
 import Checkbox from 'components/Checkbox/index';
 import Spinner from 'components/Spinner/index';
+import dayjs from 'dayjs';
 import { Form, Formik } from 'formik';
-import moment from 'moment';
 import { useCallback, useState } from 'react';
+import { MAX_FILE_SIZE, SUPPORTED_IMAGE_UPLOAD_FORMATS } from 'shared/constants';
 import { sleep } from 'shared/functions';
 import * as Yup from 'yup';
 import MyPropertiesAddAmenities from './MyPropertiesAddAmenities';
@@ -46,9 +47,9 @@ const MyPropertiesAddForm = ({ errors, amenities, property, onSubmit, isLoading,
         amenities: [],
 
         // Images
-        // image1: null,
-        // image2: null,
-        // image3: null,
+        image1: null,
+        image2: null,
+        image3: null,
       },
       schema: Yup.object().shape({
         // Main
@@ -79,33 +80,33 @@ const MyPropertiesAddForm = ({ errors, amenities, property, onSubmit, isLoading,
         amenities: Yup.array().label('Amenities'),
 
         // Images
-        // image1: Yup.mixed()
-        //   .nullable()
-        //   .required('An image is required')
-        //   .test('fileSize', 'File too large', (value) => value && value.size <= MAX_FILE_SIZE)
-        //   .test(
-        //     'fileFormat',
-        //     'Unsupported Format',
-        //     (value) => value && SUPPORTED_IMAGE_UPLOAD_FORMATS.includes(value.type),
-        //   ),
-        // image2: Yup.mixed()
-        //   .nullable()
-        //   .required('An image is required')
-        //   .test('fileSize', 'File too large', (value) => value && value.size <= MAX_FILE_SIZE)
-        //   .test(
-        //     'fileFormat',
-        //     'Unsupported Format',
-        //     (value) => value && SUPPORTED_IMAGE_UPLOAD_FORMATS.includes(value.type),
-        //   ),
-        // image3: Yup.mixed()
-        //   .nullable()
-        //   .required('An image is required')
-        //   .test('fileSize', 'File too large', (value) => value && value.size <= MAX_FILE_SIZE)
-        //   .test(
-        //     'fileFormat',
-        //     'Unsupported Format',
-        //     (value) => value && SUPPORTED_IMAGE_UPLOAD_FORMATS.includes(value.type),
-        //   ),
+        image1: Yup.mixed()
+          .nullable()
+          .required('An image is required')
+          .test('fileSize', 'File too large', (value) => value && value.size <= MAX_FILE_SIZE)
+          .test(
+            'fileFormat',
+            'Unsupported Format',
+            (value) => value && SUPPORTED_IMAGE_UPLOAD_FORMATS.includes(value.type),
+          ),
+        image2: Yup.mixed()
+          .nullable()
+          .required('An image is required')
+          .test('fileSize', 'File too large', (value) => value && value.size <= MAX_FILE_SIZE)
+          .test(
+            'fileFormat',
+            'Unsupported Format',
+            (value) => value && SUPPORTED_IMAGE_UPLOAD_FORMATS.includes(value.type),
+          ),
+        image3: Yup.mixed()
+          .nullable()
+          .required('An image is required')
+          .test('fileSize', 'File too large', (value) => value && value.size <= MAX_FILE_SIZE)
+          .test(
+            'fileFormat',
+            'Unsupported Format',
+            (value) => value && SUPPORTED_IMAGE_UPLOAD_FORMATS.includes(value.type),
+          ),
       }),
     }),
     [property],
@@ -119,8 +120,8 @@ const MyPropertiesAddForm = ({ errors, amenities, property, onSubmit, isLoading,
           setIsSubmitting(true);
 
           // Transform
-          values.availableFrom = moment(values.availableFrom).format('YYYY-MM-DD');
-          values.availableTo = moment(values.availableTo).format('YYYY-MM-DD');
+          values.availableFrom = dayjs(values.availableFrom).format('YYYY-MM-DD');
+          values.availableTo = dayjs(values.availableTo).format('YYYY-MM-DD');
 
           await sleep(500);
           setIsSubmitting(false);
@@ -129,7 +130,7 @@ const MyPropertiesAddForm = ({ errors, amenities, property, onSubmit, isLoading,
         }}
         enableReinitialize
       >
-        {({ errors: formErrors, touched }) => (
+        {({ values, errors: formErrors, touched }) => (
           <Form>
             <div className="row">
               <div className="col-12 col-md-4 col-xl-3">
@@ -154,7 +155,7 @@ const MyPropertiesAddForm = ({ errors, amenities, property, onSubmit, isLoading,
                       requestErrors={errors}
                     />
 
-                    <MyPropertiesAddImages errors={formErrors} touched={touched} />
+                    <MyPropertiesAddImages values={values} errors={formErrors} touched={touched} />
 
                     <hr className="mt-5 mb-5" />
 

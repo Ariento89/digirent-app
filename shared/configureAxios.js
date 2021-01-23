@@ -24,6 +24,8 @@ export default function configureAxios(store) {
         return config;
       }
 
+      if(config.noAuth) { return config; }
+
       // since there's no `connect` HOC, this is how we
       // access the store (or reducer)
       const { accessToken } = store?.getState()?.[AUTH_KEY];

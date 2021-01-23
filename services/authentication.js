@@ -7,12 +7,10 @@ export const service = {
   forgotPassword: async (body) => axios.post('/auth/forgot-password/', body),
   resetPassword: async (body) => axios.post('/auth/reset-password/', body),
 
-  landlordGoogleAuth: async (params) => axios.get('/auth/landlord/authorization/google/', { params }),
-  tenantGoogleAuth: async (params) => axios.get('/auth/tenant/authorization/google/', { params }),
+  googleAuthorization: async (params) => axios.post('/auth/authorization/google', null, { params, noAuth: true, withCredentials: true }),
 
-  googleAuth: async (params) => axios.get('/auth/google/', { params }),
-  facebookAuth: async (params) => axios.get('/auth/facebook/', { params }),
+  googleAuth: async (who) => axios.post(`/auth/google`, null, {withCredentials: true, noAuth: true, params: {who}}),
+  facebookAuth: async (who) => axios.post(`/auth/facebook?who=${who}`, null, NO_VERIFICATION_CONFIG),
 
-  landlordFacebookAuth: async (params) => axios.get('/auth/landlord/authorization/facebook/', { params }),
-  tenantFacebookAuth: async (params) => axios.get('/auth/tenant/authorization/facebook/', { params }),
+  facebookAuthorization: async (params) => axios.post('/auth/authorization/facebook/', null, { params }),
 };

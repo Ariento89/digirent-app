@@ -1,4 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import qs from 'querystring'
+import LoadingPage from 'components/LoadingPage/index';
 import { useAuthentication } from 'hooks/useAuthentication';
 import { useEffect, useState } from 'react';
 import { useToasts } from 'react-toast-notifications';
@@ -15,8 +17,9 @@ import HomeRecentlyAddedProperties from 'widgets/_PageHome/HomeRecentlyAddedProp
 import HomeRegisterModal from 'widgets/_PageHome/HomeRegisterModal';
 import HomeSectionDivider from 'widgets/_PageHome/HomeSectionDivider';
 import HomeWhyChooseDigiRentOverAnyAgency from 'widgets/_PageHome/HomeWhyChooseDigiRentOverAnyAgency';
+import { useRouter } from 'node_modules/next/dist/client/router';
 
-const Page = () => {
+const Page = ({query}) => {
   // STATES
   const [loginModalVisible, setLoginModalVisible] = useState(false);
   const [registerModalVisible, setRegisterModalVisible] = useState(false);
@@ -26,6 +29,8 @@ const Page = () => {
 
   // CUSTOM HOOKS
   const { addToast } = useToasts();
+  const router = useRouter();
+  const { loginFacebook, loginGoogle, status, errors} = useAuthentication();
   const { sessionTimedOut, clearSessionTimeOut } = useAuthentication();
 
   // METHODS
@@ -36,10 +41,46 @@ const Page = () => {
     }
   }, [sessionTimedOut]);
 
+  useEffect(() => {
+    const queryString = qs.stringify(query);
+    if(queryString.includes('facebook')){
+      loginFacebook({query}, 
+        {
+          onSuccess: () => {
+            addToast('Login successful', toastTypes.SUCCESS);
+            router.push('/');
+          },
+          onError: () => {router.push('/')}
+        }
+      )
+    }
+    else if(queryString.includes('google')){
+      loginGoogle({query}, 
+        {
+          onSuccess: () => {
+            addToast('Login successful', toastTypes.SUCCESS);
+            router.push('/')
+          },
+          onError: () => {router.push('/')}
+        }
+      )
+    }
+  }, [query])
+
+  useEffect(() => {
+    if(!!errors?.length){
+      addToast(errors[errors.length - 1], toastTypes.ERROR);
+    }
+  }, [errors])
+
   const onSelectRegister = (userType) => {
     setInitialUserType(userType);
     setRegisterModalVisible(true);
   };
+
+  if(query.state) {
+    return <LoadingPage/>
+  }
 
   return (
     <HomePageWrapper
@@ -96,5 +137,13 @@ const Page = () => {
     </HomePageWrapper>
   );
 };
+
+export async function getServerSideProps({query}) {
+  return {
+      props: {
+          query: query
+      }
+  }
+}
 
 export default Page;

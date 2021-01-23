@@ -3,6 +3,7 @@ import Button from 'components/Button/index';
 import FieldError from 'components/FieldError/FieldError';
 import { Form, Formik } from 'formik';
 import { useAuthentication } from 'hooks/useAuthentication';
+import {service as authService} from 'services/authentication';
 import Link from 'next/link';
 import { useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
@@ -12,6 +13,7 @@ import { request, role, toastTypes, userTypes } from 'shared/types';
 import * as Yup from 'yup';
 import AuthField from './widgets/AuthField';
 import AuthUserSelection from './widgets/AuthUserSelection';
+import { useRouter } from 'node_modules/next/dist/client/router';
 
 const formDetails = {
   defaultValues: {
@@ -34,6 +36,8 @@ const HomeLoginModal = ({ onClose, isVisible, onRegister }) => {
   // CUSTOM HOOKS
   const { addToast } = useToasts();
   const { login, status, errors, reset } = useAuthentication();
+
+  const router = useRouter();
 
   // METHODS
   const toggleRememberMe = () => setRememberMeActive((value) => !value);
@@ -65,28 +69,21 @@ const HomeLoginModal = ({ onClose, isVisible, onRegister }) => {
     closeModal();
   };
 
-  const onLoginFacebook = () => {
-    // eslint-disable-next-line no-undef
-    FB.login(
-      (response) => {
-        // eslint-disable-next-line no-console
-        console.log(response);
-      },
-      { scope: 'public_profile,email' },
-    );
+  const onLoginGoogle = async () => {
+    try {
+      const response = await authService.googleAuth(selectedUserType);
+      router.push(response.data.to)
+    }
+    catch(err){ addToast(err.response.data.detail, toastTypes.ERROR) }
+  }
 
-    // FB.getLoginStatus((response) => {
-
-    //   switch (response?.status) {
-    //     case fbStatusTypes.NOT_AUTHORIZED: {
-
-    //       break;
-    //     }
-    //   }
-
-    //   console.log('response', response);
-    // });
-  };
+  const onLoginFacebook = async () => {
+    try {
+      const response = await authService.facebookAuth(selectedUserType);
+      router.push(response.data.to)
+    }
+    catch(err){ addToast(err.response.data.detail, toastTypes.ERROR) }
+  }
 
   return (
     <Modal show={isVisible} onHide={closeModal} id="login-modal" centered>
@@ -149,7 +146,7 @@ const HomeLoginModal = ({ onClose, isVisible, onRegister }) => {
                     <div className="item" onClick={onLoginFacebook}>
                       <img src="/images/social-media/facebook-square.png" alt="facebook icon" />
                     </div>
-                    <div className="item mx-2">
+                    <div className="item mx-2" onClick={onLoginGoogle}>
                       <img src="/images/social-media/google.png" alt="google icon" />
                     </div>
                     <div className="item">

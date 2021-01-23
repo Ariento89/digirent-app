@@ -1,5 +1,5 @@
 import { types } from 'ducks/properties';
-import { call, takeLatest } from 'redux-saga/effects';
+import { call, takeLatest, takeEvery } from 'redux-saga/effects';
 import { service } from 'services/properties';
 import { request } from 'shared/types';
 
@@ -53,11 +53,11 @@ function* updateProperty({ payload }) {
 }
 
 function* uploadImage({ payload }) {
-  const { callback, propertyId, file } = payload;
+  const { callback, propertyId, image } = payload;
   callback({ status: request.REQUESTING });
 
   const formData = new FormData();
-  formData.append('file', file);
+  formData.append('image', image);
 
   try {
     const response = yield call(service.uploadImage, propertyId, formData);
@@ -100,7 +100,7 @@ const updatePropertyWatcherSaga = function* updatePropertyWatcherSaga() {
 };
 
 const uploadImageWatcherSaga = function* uploadImageWatcherSaga() {
-  yield takeLatest(types.UPLOAD_IMAGE, uploadImage);
+  yield takeEvery(types.UPLOAD_IMAGE, uploadImage);
 };
 
 const uploadVideosWatcherSaga = function* uploadVideosWatcherSaga() {

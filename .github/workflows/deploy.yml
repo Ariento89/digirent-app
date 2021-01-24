@@ -8,6 +8,7 @@ on:
 env:
   PAT: ${{secrets.PAT}}
   API_URL: ${{secrets.API_URL}}
+  API_URL_WEBSOCKET: ${{secrets.API_URL_WEBSOCKET}}
   GITHUB_USERNAME: ariento89
   IMAGE_REGISTRY: ghcr.io
   IMAGE_NAME: digirent-app
@@ -24,7 +25,7 @@ jobs:
 
       - name: Build APP IMAGE
         run: |
-          docker build --build-arg API_URL=$API_URL -t $IMAGE .
+          docker build --build-arg API_URL=$API_URL --build-arg API_URL_WEBSOCKET=$API_URL_WEBSOCKET -t $IMAGE .
 
       - name: Push Built Image to github container registry
         run: |

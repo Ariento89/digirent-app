@@ -244,7 +244,7 @@ const HomeRegisterModal = ({ initialUserType, onClose, isVisible }) => {
                     <hr />
                     <span className="mt-3 mb-1 d-block">Date of Birth</span>
                     <div className="row">
-                      <div className="col-12 col-sm-4">
+                      <div className="col-12 col-sm-4 mt-3 mt-sm-0">
                         <div className="field-group block">
                           <AuthFieldDatePicker
                             name="dobMonth"
@@ -260,7 +260,7 @@ const HomeRegisterModal = ({ initialUserType, onClose, isVisible }) => {
                           ) : null}
                         </div>
                       </div>
-                      <div className="col-12 col-sm-4">
+                      <div className="col-12 col-sm-4 mt-3 mt-sm-0">
                         <div className="field-group block">
                           <AuthFieldDatePicker
                             name="dobDay"
@@ -275,7 +275,7 @@ const HomeRegisterModal = ({ initialUserType, onClose, isVisible }) => {
                           ) : null}
                         </div>
                       </div>
-                      <div className="col-12 col-sm-4">
+                      <div className="col-12 col-sm-4 mt-3 mt-sm-0">
                         <div className="field-group block">
                           <AuthFieldDatePicker
                             name="dobYear"

@@ -52,31 +52,22 @@ function* loginGoogle({ payload }) {
     const response = yield call(service.googleAuthorization, query);
     const meResponse = yield call(meService.me2, response.data.access_token);
 
-    if (meResponse.data.role === role) {
-      yield put(
-        actions.save({
-          type: types.LOGIN_GOOGLE,
-          accessToken: response.data.access_token,
-          tokenType: response.data.token_type,
-        }),
-      );
+    yield put(
+      actions.save({
+        type: types.LOGIN_GOOGLE,
+        accessToken: response.data.access_token,
+        tokenType: response.data.token_type,
+      }),
+    );
 
-      yield put(
-        meActions.save({
-          type: meTypes.GET_ME,
-          me: meResponse.data,
-        }),
-      );
+    yield put(
+      meActions.save({
+        type: meTypes.GET_ME,
+        me: meResponse.data,
+      }),
+    );
 
-      callback({ status: request.SUCCESS, response: response.data });
-    } else {
-      yield put(actions.logout());
-
-      callback({
-        status: request.ERROR,
-        errors: ['It seems that you selected an incorrect role to login.'],
-      });
-    }
+    callback({ status: request.SUCCESS, response: response.data });
   } catch (e) {
     callback({ status: request.ERROR, errors: e.errors });
   }
@@ -90,31 +81,22 @@ function* loginFacebook({ payload }) {
     const response = yield call(service.facebookAuthorization, query);
     const meResponse = yield call(meService.me2, response.data.access_token);
 
-    if (meResponse.data.role === role) {
-      yield put(
-        actions.save({
-          type: types.LOGIN_FACEBOOK,
-          accessToken: response.data.access_token,
-          tokenType: response.data.token_type,
-        }),
-      );
+    yield put(
+      actions.save({
+        type: types.LOGIN_FACEBOOK,
+        accessToken: response.data.access_token,
+        tokenType: response.data.token_type,
+      }),
+    );
 
-      yield put(
-        meActions.save({
-          type: meTypes.GET_ME,
-          me: meResponse.data,
-        }),
-      );
+    yield put(
+      meActions.save({
+        type: meTypes.GET_ME,
+        me: meResponse.data,
+      }),
+    );
 
-      callback({ status: request.SUCCESS, response: response.data });
-    } else {
-      yield put(actions.logout());
-
-      callback({
-        status: request.ERROR,
-        errors: ['It seems that you selected an incorrect role to login.'],
-      });
-    }
+    callback({ status: request.SUCCESS, response: response.data });
   } catch (e) {
     callback({ status: request.ERROR, errors: e.errors });
   }

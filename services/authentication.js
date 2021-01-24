@@ -10,7 +10,7 @@ export const service = {
   googleAuthorization: async (params) => axios.post('/auth/authorization/google', null, { params, noAuth: true, withCredentials: true }),
 
   googleAuth: async (who) => axios.post(`/auth/google`, null, {withCredentials: true, noAuth: true, params: {who}}),
-  facebookAuth: async (who) => axios.post(`/auth/facebook?who=${who}`, null, NO_VERIFICATION_CONFIG),
+  facebookAuth: async (who) => axios.post(`/auth/facebook`, null, {withCredentials: true, noAuth:true, params:{who}}),
 
-  facebookAuthorization: async (params) => axios.post('/auth/authorization/facebook/', null, { params }),
+  facebookAuthorization: async (params) => axios.post('/auth/authorization/facebook/', null, { params, noAuth: true, withCredentials: true }),
 };

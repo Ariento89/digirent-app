@@ -72,17 +72,19 @@ const HomeLoginModal = ({ onClose, isVisible, onRegister }) => {
   const onLoginGoogle = async () => {
     try {
       const response = await authService.googleAuth(selectedUserType);
-      router.push(response.data.to)
+      router.push(response.data.to);
     }
-    catch(err){ addToast(err.response.data.detail, toastTypes.ERROR) }
+    catch(err){ addToast(err.response.data.detail, toastTypes.ERROR); }
   }
 
   const onLoginFacebook = async () => {
     try {
       const response = await authService.facebookAuth(selectedUserType);
-      router.push(response.data.to)
+      router.push(response.data.to);
     }
-    catch(err){ addToast(err.response.data.detail, toastTypes.ERROR) }
+    catch(err){ 
+      addToast(err.response.data.detail, toastTypes.ERROR); 
+    }
   }
 
   return (

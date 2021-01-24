@@ -43,23 +43,23 @@ const Page = ({query}) => {
 
   useEffect(() => {
     const queryString = qs.stringify(query);
-    if(queryString.includes('facebook')){
-      loginFacebook({query}, 
-        {
-          onSuccess: () => {
-            addToast('Login successful', toastTypes.SUCCESS);
-            router.push('/');
-          },
-          onError: () => {router.push('/')}
-        }
-      )
-    }
-    else if(queryString.includes('google')){
+    if(queryString.includes('google')){
       loginGoogle({query}, 
         {
           onSuccess: () => {
             addToast('Login successful', toastTypes.SUCCESS);
             router.push('/')
+          },
+          onError: () => {router.push('/')}
+        }
+      )
+    }
+    else if(queryString && queryString.includes('code') && queryString.includes('state')){
+      loginFacebook({query}, 
+        {
+          onSuccess: () => {
+            addToast('Login successful', toastTypes.SUCCESS);
+            router.push('/');
           },
           onError: () => {router.push('/')}
         }

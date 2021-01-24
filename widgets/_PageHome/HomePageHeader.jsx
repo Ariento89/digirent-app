@@ -147,6 +147,7 @@ const HomePageHeader = ({ onLoginClick, onRegisterClick }) => {
         onClose={() => setMenuVisible(false)}
         onLoginClick={onLoginClick}
         onRegisterClick={onRegisterClick}
+        onLogoutClick={onLogout}
       />
     </>
   );

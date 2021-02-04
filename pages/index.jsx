@@ -24,7 +24,7 @@ const Page = ({query}) => {
   const [loginModalVisible, setLoginModalVisible] = useState(false);
   const [registerModalVisible, setRegisterModalVisible] = useState(false);
   const [selectedUserType, setSelectedUserType] = useState(userTypes.TENANT);
-  const [isCookieAccepted, setIsCookieAccepted] = useState(false);
+  const [isCookieAccepted, setIsCookieAccepted] = useState(localStorage.getItem("cookies"));
   const [initialUserType, setInitialUserType] = useState(null);
 
   // CUSTOM HOOKS
@@ -77,6 +77,11 @@ const Page = ({query}) => {
     setInitialUserType(userType);
     setRegisterModalVisible(true);
   };
+
+  const onAcceptCookie = () => {
+    setIsCookieAccepted(true);
+    localStorage.setItem('cookies', "accepted") ;
+  }
 
   if(query.state) {
     return <LoadingPage/>
@@ -132,7 +137,7 @@ const Page = ({query}) => {
 
         <HomeBlog />
 
-        <CookieOverlay isAccepted={isCookieAccepted} onAccept={() => setIsCookieAccepted(true)} />
+        <CookieOverlay isAccepted={isCookieAccepted} onAccept={onAcceptCookie} />
       </div>
     </HomePageWrapper>
   );

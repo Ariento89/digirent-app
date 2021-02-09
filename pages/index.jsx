@@ -1,9 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import qs from 'querystring'
+import { useRouter } from 'next';
+import qs from 'querystring';
 import LoadingPage from 'components/LoadingPage/index';
 import { useAuthentication } from 'hooks/useAuthentication';
 import { useEffect, useState } from 'react';
 import { useToasts } from 'react-toast-notifications';
+import { useLocalStorage } from 'hooks/useLocalStorage';
 import { toastTypes, userTypes } from 'shared/types';
 import CookieOverlay from 'widgets/CookieOverlay/index';
 import HomeAreasOfExpertise from 'widgets/_PageHome/HomeAreasOfExpertise';
@@ -17,20 +19,19 @@ import HomeRecentlyAddedProperties from 'widgets/_PageHome/HomeRecentlyAddedProp
 import HomeRegisterModal from 'widgets/_PageHome/HomeRegisterModal';
 import HomeSectionDivider from 'widgets/_PageHome/HomeSectionDivider';
 import HomeWhyChooseDigiRentOverAnyAgency from 'widgets/_PageHome/HomeWhyChooseDigiRentOverAnyAgency';
-import { useRouter } from 'node_modules/next/dist/client/router';
 
-const Page = ({query}) => {
+const Page = ({ query }) => {
   // STATES
   const [loginModalVisible, setLoginModalVisible] = useState(false);
   const [registerModalVisible, setRegisterModalVisible] = useState(false);
   const [selectedUserType, setSelectedUserType] = useState(userTypes.TENANT);
-  const [isCookieAccepted, setIsCookieAccepted] = useState(localStorage.getItem("cookies"));
+  const [isCookieAccepted, setIsCookieAccepted] = useLocalStorage('cookies', false);
   const [initialUserType, setInitialUserType] = useState(null);
 
   // CUSTOM HOOKS
   const { addToast } = useToasts();
   const router = useRouter();
-  const { loginFacebook, loginGoogle, status, errors} = useAuthentication();
+  const { loginFacebook, loginGoogle, /* status, */errors } = useAuthentication();
   const { sessionTimedOut, clearSessionTimeOut } = useAuthentication();
 
   // METHODS
@@ -43,48 +44,44 @@ const Page = ({query}) => {
 
   useEffect(() => {
     const queryString = qs.stringify(query);
-    if(queryString.includes('google')){
-      loginGoogle({query}, 
-        {
-          onSuccess: () => {
-            addToast('Login successful', toastTypes.SUCCESS);
-            router.push('/')
-          },
-          onError: () => {router.push('/')}
-        }
-      )
-    }
-    else if(queryString && queryString.includes('code') && queryString.includes('state')){
-      loginFacebook({query}, 
+    if (queryString.includes('google')) {
+      loginGoogle(
+        { query },
         {
           onSuccess: () => {
             addToast('Login successful', toastTypes.SUCCESS);
             router.push('/');
           },
-          onError: () => {router.push('/')}
-        }
-      )
+          onError: () => router.push('/'),
+        },
+      );
+    } else if (queryString && queryString.includes('code') && queryString.includes('state')) {
+      loginFacebook(
+        { query },
+        {
+          onSuccess: () => {
+            addToast('Login successful', toastTypes.SUCCESS);
+            router.push('/');
+          },
+          onError: () => router.push('/'),
+        },
+      );
     }
-  }, [query])
+  }, [query]);
 
   useEffect(() => {
-    if(!!errors?.length){
+    if (errors?.length) {
       addToast(errors[errors.length - 1], toastTypes.ERROR);
     }
-  }, [errors])
+  }, [errors]);
 
   const onSelectRegister = (userType) => {
     setInitialUserType(userType);
     setRegisterModalVisible(true);
   };
 
-  const onAcceptCookie = () => {
-    setIsCookieAccepted(true);
-    localStorage.setItem('cookies', "accepted") ;
-  }
-
-  if(query.state) {
-    return <LoadingPage/>
+  if (query.state) {
+    return <LoadingPage />;
   }
 
   return (
@@ -137,18 +134,18 @@ const Page = ({query}) => {
 
         <HomeBlog />
 
-        <CookieOverlay isAccepted={isCookieAccepted} onAccept={onAcceptCookie} />
+        <CookieOverlay isAccepted={isCookieAccepted} onAccept={() => setIsCookieAccepted(true)} />
       </div>
     </HomePageWrapper>
   );
 };
 
-export async function getServerSideProps({query}) {
+export async function getServerSideProps({ query }) {
   return {
-      props: {
-          query: query
-      }
-  }
+    props: {
+      query,
+    },
+  };
 }
 
 export default Page;

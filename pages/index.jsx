@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useRouter } from 'next';
+import { useRouter } from 'next/router';
 import qs from 'querystring';
 import LoadingPage from 'components/LoadingPage/index';
 import { useAuthentication } from 'hooks/useAuthentication';

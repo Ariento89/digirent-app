@@ -55,10 +55,12 @@ const Header = () => {
             />
 
             {me && (
-              <div
-                className="user"
-                style={{ backgroundImage: userImage ? `url(${userImage})` : undefined }}
-              />
+              <Link href="/account">
+                <div
+                  className="user"
+                  style={{ backgroundImage: userImage ? `url(${userImage})` : undefined }}
+                />
+              </Link>
             )}
           </div>
         </div>
@@ -94,9 +96,19 @@ const Header = () => {
                 <a className="px-2 uppercase text-white">Payments</a>
               </Link>
               <span>|</span>
-              <Link href="/contracts-landlord">
-                <a className="px-2 uppercase text-white">Contracts</a>
-              </Link>
+
+              {me?.role === role.LANDLORD && (
+                <Link href="/contracts-landlord">
+                  <a className="px-2 uppercase text-white">Contracts</a>
+                </Link>
+              )}
+
+              {me?.role === role.TENANT && (
+                <Link href="/contracts-tenant">
+                  <a className="px-2 uppercase text-white">Contracts</a>
+                </Link>
+              )}
+
             </div>
           </div>
         </div>

@@ -4,10 +4,12 @@ import ToggleSwitch from 'components/ToggleSwitch/index';
 import { useAuthentication } from 'hooks/useAuthentication';
 import { useLanguage } from 'hooks/useLanguage';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useToasts } from 'react-toast-notifications';
 import { useScrollData } from 'scroll-data-hook';
 import { languageSwitchOptions, toastTypes } from 'shared/types';
+import { API_ASSET_URL } from 'services/index';
+import { useMe } from 'hooks/useMe';
 import HomePageMenu from './HomePageMenu';
 
 const SCROLL_THRESHOLD = 100;
@@ -16,7 +18,8 @@ const HomePageHeader = ({ onLoginClick, onRegisterClick }) => {
   // STATES
   const [menuVisible, setMenuVisible] = useState(false);
   const [isInformationVisible, setIsInformationVisible] = useState(false);
-
+  const [userImage, setUserImage] = useState(null);
+  const { me } = useMe();
   // CUSTOM HOOKS
   const { position } = useScrollData();
   const { language, setLanguage } = useLanguage();
@@ -28,6 +31,12 @@ const HomePageHeader = ({ onLoginClick, onRegisterClick }) => {
     addToast('Successfully logged out.', toastTypes.SUCCESS);
     logout();
   };
+
+  useEffect(() => {
+    if (me?.profileImageUrl) {
+      setUserImage(`${API_ASSET_URL}${me.profileImageUrl}`);
+    }
+  }, [me]);
 
   return (
     <>
@@ -121,16 +130,28 @@ const HomePageHeader = ({ onLoginClick, onRegisterClick }) => {
           </div>
         </div>
 
-        <ToggleSwitch
-          classNames="toggle-switch-language"
-          name="language"
-          onValue={languageSwitchOptions.EN}
-          onLabel="EN"
-          offValue={languageSwitchOptions.NL}
-          offLabel="NL"
-          value={language}
-          onChange={setLanguage}
-        />
+        <div className="user-language-container">
+          <ToggleSwitch
+            classNames="toggle-switch-language"
+            name="language"
+            onValue={languageSwitchOptions.EN}
+            onLabel="EN"
+            offValue={languageSwitchOptions.NL}
+            offLabel="NL"
+            value={language}
+            onChange={setLanguage}
+          />
+
+          {me && (
+            <Link href="/account">
+              <div
+                className="user"
+                style={{ backgroundImage: userImage ? `url(${userImage})` : undefined }}
+              />
+            </Link>
+
+          )}
+        </div>
 
         <button
           className={cn('btn-burger-menu', { 'd-none': menuVisible })}

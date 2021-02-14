@@ -2,6 +2,19 @@
 @import '../abstract/variables';
 @import '../abstract/breakpoint';
 
+.dropdown {
+  display: inline-block;
+}
+.dropdown__content {
+  display: none;
+  span {
+    cursor: pointer;
+  }
+}
+.dropdown--active .dropdown__content {
+  display: block;
+}
+
 .layout-homepage-header {
   width: 100%;
   position: fixed;

@@ -10,6 +10,7 @@ import { useScrollData } from 'scroll-data-hook';
 import { languageSwitchOptions, toastTypes } from 'shared/types';
 import { API_ASSET_URL } from 'services/index';
 import { useMe } from 'hooks/useMe';
+import Dropdown, { DropdownTrigger, DropdownContent } from 'react-simple-dropdown';
 import HomePageMenu from './HomePageMenu';
 
 const SCROLL_THRESHOLD = 100;
@@ -143,14 +144,24 @@ const HomePageHeader = ({ onLoginClick, onRegisterClick }) => {
           />
 
           {me && (
-            <Link href="/account">
-              <div
-                className="user"
-                style={{ backgroundImage: userImage ? `url(${userImage})` : undefined }}
-              />
-            </Link>
-
+            <Dropdown>
+              <DropdownTrigger>
+                <button className="mt-2 bg-gray-800 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white" id="user-menu" aria-haspopup="true">
+                  <span className="sr-only">Open user menu</span>
+                  <img className="h-8 w-8 rounded-full" src="/images/photo-placeholder.png" alt="" />
+                </button>
+              </DropdownTrigger>
+              <DropdownContent>
+                <div className="relative">
+                  <div className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5" role="menu" aria-orientation="vertical" aria-labelledby="user-menu">
+                    <Link href="/account"><span className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Account</span></Link>
+                    <span className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" onClick={onLogout}>Log out</span>
+                  </div>
+                </div>
+              </DropdownContent>
+            </Dropdown>
           )}
+
         </div>
 
         <button

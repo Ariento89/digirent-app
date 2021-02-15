@@ -2,19 +2,6 @@
 @import '../abstract/variables';
 @import '../abstract/breakpoint';
 
-.dropdown {
-  display: inline-block;
-}
-.dropdown__content {
-  display: none;
-  span {
-    cursor: pointer;
-  }
-}
-.dropdown--active .dropdown__content {
-  display: block;
-}
-
 .header-background {
   width: 100%;
   position: absolute;
@@ -89,7 +76,6 @@
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
-        cursor: pointer;
 
         @include media-breakpoint-down(md) {
           height: 50px;

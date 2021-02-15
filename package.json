@@ -12,7 +12,6 @@
   },
   "dependencies": {
     "animate.css": "^4.1.1",
-    "autoprefixer": "^10.2.4",
     "axios": "^0.21.0",
     "bootstrap": "^4.5.3",
     "classnames": "^2.2.6",
@@ -22,7 +21,6 @@
     "moment": "^2.29.1",
     "next": "10.0.2",
     "next-redux-wrapper": "^6.0.2",
-    "postcss": "^8.2.6",
     "qs": "^6.9.4",
     "react": "17.0.1",
     "react-bootstrap": "^1.4.0",
@@ -34,7 +32,6 @@
     "react-loader-spinner": "^3.1.14",
     "react-perfect-scrollbar": "^1.5.8",
     "react-redux": "^7.2.2",
-    "react-simple-dropdown": "^3.2.3",
     "react-slick": "^0.27.13",
     "react-toast-notifications": "^2.4.0",
     "redux": "^4.0.5",
@@ -46,7 +43,6 @@
     "sass": "^1.29.0",
     "scroll-data-hook": "^1.0.4",
     "slick-carousel": "^1.8.1",
-    "tailwindcss": "^2.0.3",
     "yup": "^0.32.8"
   },
   "devDependencies": {

@@ -47,6 +47,9 @@ const HomePageMenu = ({
         <img src="/images/icon/icon-cancel-dark-gray.svg" alt="icon" />
       </button>
       <div className="main-links">
+        <Link href="/account">
+          <p className="links">ACCOUNT</p>
+        </Link>
         <Link href="/properties">
           <p className="links">RENTALS</p>
         </Link>

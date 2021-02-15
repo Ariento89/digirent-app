@@ -44,9 +44,75 @@ function* login({ payload }) {
   }
 }
 
+function* loginGoogle({ payload }) {
+  const { callback, query } = payload;
+  callback({ status: request.REQUESTING });
+
+  try {
+    const response = yield call(service.googleAuthorization, query);
+    const meResponse = yield call(meService.me2, response.data.access_token);
+
+    yield put(
+      actions.save({
+        type: types.LOGIN_GOOGLE,
+        accessToken: response.data.access_token,
+        tokenType: response.data.token_type,
+      }),
+    );
+
+    yield put(
+      meActions.save({
+        type: meTypes.GET_ME,
+        me: meResponse.data,
+      }),
+    );
+
+    callback({ status: request.SUCCESS, response: response.data });
+  } catch (e) {
+    callback({ status: request.ERROR, errors: e.errors });
+  }
+}
+
+function* loginFacebook({ payload }) {
+  const { callback, query } = payload;
+  callback({ status: request.REQUESTING });
+
+  try {
+    const response = yield call(service.facebookAuthorization, query);
+    const meResponse = yield call(meService.me2, response.data.access_token);
+
+    yield put(
+      actions.save({
+        type: types.LOGIN_FACEBOOK,
+        accessToken: response.data.access_token,
+        tokenType: response.data.token_type,
+      }),
+    );
+
+    yield put(
+      meActions.save({
+        type: meTypes.GET_ME,
+        me: meResponse.data,
+      }),
+    );
+
+    callback({ status: request.SUCCESS, response: response.data });
+  } catch (e) {
+    callback({ status: request.ERROR, errors: e.errors });
+  }
+}
+
 /* WATCHERS */
 const loginWatcherSaga = function* loginWatcherSaga() {
   yield takeLatest(types.LOGIN, login);
 };
 
-export default [loginWatcherSaga()];
+const loginGoogleWatcherSaga = function* loginGoogleWatcherSaga() {
+  yield takeLatest(types.LOGIN_GOOGLE, loginGoogle)
+}
+
+const loginFacebookWatcherSaga = function* loginFacebookWatcherSaga() {
+  yield takeLatest(types.LOGIN_FACEBOOK, loginFacebook)
+}
+
+export default [loginWatcherSaga(), loginGoogleWatcherSaga(), loginFacebookWatcherSaga()];

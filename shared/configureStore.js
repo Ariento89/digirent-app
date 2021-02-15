@@ -5,6 +5,7 @@ import storage from 'redux-persist/lib/storage';
 import createSagaMiddleware from 'redux-saga';
 import rootSaga from 'sagas';
 import { STORAGE_KEY } from './storage';
+import { composeWithDevTools } from 'redux-devtools-extension';
 
 export default function configureStore(initialState = {}) {
   const persistConfig = {
@@ -20,7 +21,7 @@ export default function configureStore(initialState = {}) {
   const enhancers = [applyMiddleware(...middlewares)];
   const persistedReducer = persistReducer(persistConfig, rootReducer);
 
-  const store = createStore(persistedReducer, initialState, compose(...enhancers));
+  const store = createStore(persistedReducer, initialState, composeWithDevTools(...enhancers));
 
   // run saga middleware
   sagaMiddleware.run(rootSaga);

@@ -4,10 +4,13 @@ import ToggleSwitch from 'components/ToggleSwitch/index';
 import { useAuthentication } from 'hooks/useAuthentication';
 import { useLanguage } from 'hooks/useLanguage';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useToasts } from 'react-toast-notifications';
 import { useScrollData } from 'scroll-data-hook';
 import { languageSwitchOptions, toastTypes } from 'shared/types';
+import { API_ASSET_URL } from 'services/index';
+import { useMe } from 'hooks/useMe';
+import Dropdown, { DropdownTrigger, DropdownContent } from 'react-simple-dropdown';
 import HomePageMenu from './HomePageMenu';
 
 const SCROLL_THRESHOLD = 100;
@@ -16,7 +19,8 @@ const HomePageHeader = ({ onLoginClick, onRegisterClick }) => {
   // STATES
   const [menuVisible, setMenuVisible] = useState(false);
   const [isInformationVisible, setIsInformationVisible] = useState(false);
-
+  const [setUserImage] = useState(null);
+  const { me } = useMe();
   // CUSTOM HOOKS
   const { position } = useScrollData();
   const { language, setLanguage } = useLanguage();
@@ -28,6 +32,12 @@ const HomePageHeader = ({ onLoginClick, onRegisterClick }) => {
     addToast('Successfully logged out.', toastTypes.SUCCESS);
     logout();
   };
+
+  useEffect(() => {
+    if (me?.profileImageUrl) {
+      setUserImage(`${API_ASSET_URL}${me.profileImageUrl}`);
+    }
+  }, [me]);
 
   return (
     <>
@@ -44,6 +54,12 @@ const HomePageHeader = ({ onLoginClick, onRegisterClick }) => {
           <div className="note">
             <span>FOR LANDLORDS</span>
           </div>
+
+          {accessToken && !me?.emailVerified && (
+            <div className="note" style={{ backgroundColor: 'red' }}>
+              <span style={{ color: 'white' }}>Not Verified</span>
+            </div>
+          )}
 
           <div className="main-menu">
             <Link href="/properties">
@@ -121,16 +137,38 @@ const HomePageHeader = ({ onLoginClick, onRegisterClick }) => {
           </div>
         </div>
 
-        <ToggleSwitch
-          classNames="toggle-switch-language"
-          name="language"
-          onValue={languageSwitchOptions.EN}
-          onLabel="EN"
-          offValue={languageSwitchOptions.NL}
-          offLabel="NL"
-          value={language}
-          onChange={setLanguage}
-        />
+        <div className="user-language-container">
+          <ToggleSwitch
+            classNames="toggle-switch-language"
+            name="language"
+            onValue={languageSwitchOptions.EN}
+            onLabel="EN"
+            offValue={languageSwitchOptions.NL}
+            offLabel="NL"
+            value={language}
+            onChange={setLanguage}
+          />
+
+          {me && (
+            <Dropdown>
+              <DropdownTrigger>
+                <button className="mt-2 bg-gray-800 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white" id="user-menu" aria-haspopup="true">
+                  <span className="sr-only">Open user menu</span>
+                  <img className="h-8 w-8 rounded-full" src="/images/photo-placeholder.png" alt="" />
+                </button>
+              </DropdownTrigger>
+              <DropdownContent>
+                <div className="relative">
+                  <div className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5" role="menu" aria-orientation="vertical" aria-labelledby="user-menu">
+                    <Link href="/account"><span className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Account</span></Link>
+                    <span className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" onClick={onLogout}>Log out</span>
+                  </div>
+                </div>
+              </DropdownContent>
+            </Dropdown>
+          )}
+
+        </div>
 
         <button
           className={cn('btn-burger-menu', { 'd-none': menuVisible })}

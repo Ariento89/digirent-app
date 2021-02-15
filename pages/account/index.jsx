@@ -33,7 +33,7 @@ const Page = () => {
   }, [me]);
 
   return me ? (
-    <PageWrapper title="DigiRent - Account" pageName={getData().pageName}>
+    <PageWrapper title="DigiRent - Account" pageName={getData().pageName} verificationRequired={true}>
       <img src="/images/main-left-bg.svg" className="left-main-background" alt="left bg" />
       <img src="/images/main-right-bg.svg" className="right-main-background" alt="right bg" />
       <div className="container">

@@ -1,0 +1,52 @@
+name: Build container and Deploy to Digital Ocean
+
+on:
+  push:
+    branches:
+      - staging
+
+env:
+  PAT: ${{secrets.PAT}}
+  API_URL: ${{secrets.API_URL}}
+  API_URL_WEBSOCKET: ${{secrets.API_URL_WEBSOCKET}}
+  GITHUB_USERNAME: ariento89
+  IMAGE_REGISTRY: ghcr.io
+  IMAGE_NAME: digirent-app
+  IMAGE_TAG: staging
+  IMAGE: ghcr.io/ariento89/digirent-app:staging
+
+jobs:
+  build:
+    name: Build image and push to github registry
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout to repo
+        uses: actions/checkout@v2
+
+      - name: Build APP IMAGE
+        run: |
+          docker build --build-arg API_URL=$API_URL --build-arg API_URL_WEBSOCKET=$API_URL_WEBSOCKET -t $IMAGE .
+
+      - name: Push Built Image to github container registry
+        run: |
+          docker login $IMAGE_REGISTRY -u $GITHUB_USERNAME --password $PAT
+          docker push $IMAGE
+  deploy:
+    name: Deploy app to Digital Ocean
+    needs: [build]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy App To Digital occean
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.DO_HOST }}
+          username: ${{ secrets.DO_USERNAME }}
+          key: ${{ secrets.DO_SSH_KEY }}
+          port: ${{ secrets.DO_PORT }}
+          passphrase: ${{secrets.DO_SSH_PASSPHRASE}}
+          envs: IMAGE_REGISTRY,GITHUB_USERNAME,PAT,IMAGE
+          script: |
+            cd ~/Digirent
+            docker login $IMAGE_REGISTRY -u $GITHUB_USERNAME -p $PAT
+            docker pull $IMAGE
+            docker-compose -f docker-compose.staging.yml up --remove-orphans -d --force-recreate

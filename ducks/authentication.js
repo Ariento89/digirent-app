@@ -7,6 +7,8 @@ export const types = {
   SAVE: `${key}/SAVE`,
   LOGOUT: `${key}/LOGOUT`,
   LOGIN: `${key}/LOGIN`,
+  LOGIN_GOOGLE: `${key}/LOGIN_GOOGLE`,
+  LOGIN_FACEBOOK: `${key}/LOGIN_FACEBOOK`,
   FORGOT_PASSWORD: `${key}/FORGOT_PASSWORD`,
   RESET_PASSWORD: `${key}/RESET_PASSWORD`,
 
@@ -26,6 +28,8 @@ const reducer = handleActions(
       let newData = {};
 
       switch (type) {
+        case types.LOGIN_GOOGLE:
+        case types.LOGIN_FACEBOOK:
         case types.LOGIN: {
           newData = {
             accessToken: payload.accessToken,
@@ -35,6 +39,7 @@ const reducer = handleActions(
           break;
         }
       }
+
 
       return { ...state, ...newData };
     },
@@ -55,6 +60,8 @@ const reducer = handleActions(
 export const actions = {
   save: createAction(types.SAVE),
   login: createAction(types.LOGIN),
+  loginGoogle: createAction(types.LOGIN_GOOGLE),
+  loginFacebook: createAction(types.LOGIN_FACEBOOK),
   logout: createAction(types.LOGOUT),
 
   clearSessionTimeOut: createAction(types.CLEAR_SESSION_TIME_OUT),

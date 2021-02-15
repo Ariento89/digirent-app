@@ -2,6 +2,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import cn from 'classnames';
 import ToggleSwitch from 'components/ToggleSwitch/index';
+import { useAuthentication } from 'hooks/useAuthentication';
 import { useLanguage } from 'hooks/useLanguage';
 import { useMe } from 'hooks/useMe';
 import Link from 'next/link';
@@ -20,6 +21,7 @@ const Header = () => {
   const { addToast } = useToasts();
   // CUSTOM HOOKS
   const router = useRouter();
+  const {accessToken} = useAuthentication();
   const { language, setLanguage } = useLanguage();
   const { me } = useMe();
 
@@ -103,6 +105,10 @@ const Header = () => {
                 )}
               </div>
             )}
+
+          {accessToken && !me?.emailVerified &&  <div className="note" style={{backgroundColor: 'red'}}>
+            <span style={{color: 'white'}}>Not Verified</span>
+          </div>}
 
             <div className="main-menu">
               <Link href="/properties">

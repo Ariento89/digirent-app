@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/no-noninteractive-tabindex */
 import cn from 'classnames';
 import ToggleSwitch from 'components/ToggleSwitch/index';
+import Button from 'components/Button'
 import { useAuthentication } from 'hooks/useAuthentication';
 import { useLanguage } from 'hooks/useLanguage';
 import Link from 'next/link';
@@ -12,6 +13,7 @@ import { API_ASSET_URL } from 'services/index';
 import { useMe } from 'hooks/useMe';
 import Dropdown, { DropdownTrigger, DropdownContent } from 'react-simple-dropdown';
 import HomePageMenu from './HomePageMenu';
+import { useMe } from 'hooks/useMe';
 
 const SCROLL_THRESHOLD = 100;
 
@@ -23,6 +25,7 @@ const HomePageHeader = ({ onLoginClick, onRegisterClick }) => {
   const { me } = useMe();
   // CUSTOM HOOKS
   const { position } = useScrollData();
+  const {me} = useMe()
   const { language, setLanguage } = useLanguage();
   const { addToast } = useToasts();
   const { accessToken, logout } = useAuthentication();
@@ -54,6 +57,10 @@ const HomePageHeader = ({ onLoginClick, onRegisterClick }) => {
           <div className="note">
             <span>FOR LANDLORDS</span>
           </div>
+
+          {accessToken && !me?.emailVerified &&  <div className="note" style={{backgroundColor: 'red'}}>
+            <span style={{color: 'white'}}>Not Verified</span>
+          </div>}
 
           <div className="main-menu">
             <Link href="/properties">

@@ -11,17 +11,15 @@ import { useEffect, useState } from 'react';
 import { API_ASSET_URL } from 'services/index';
 import { languageSwitchOptions, role, toastTypes } from 'shared/types';
 import Dropdown, { DropdownTrigger, DropdownContent } from 'react-simple-dropdown';
-import { useAuthentication } from 'hooks/useAuthentication';
 import { useToasts } from 'react-toast-notifications';
 
 const Header = () => {
   // STATES
-  const [userImage, setUserImage] = useState(null);
+  const [setUserImage] = useState(null);
   const { accessToken, logout } = useAuthentication();
   const { addToast } = useToasts();
   // CUSTOM HOOKS
   const router = useRouter();
-  const {accessToken} = useAuthentication();
   const { language, setLanguage } = useLanguage();
   const { me } = useMe();
 
@@ -106,9 +104,11 @@ const Header = () => {
               </div>
             )}
 
-          {accessToken && !me?.emailVerified &&  <div className="note" style={{backgroundColor: 'red'}}>
-            <span style={{color: 'white'}}>Not Verified</span>
-          </div>}
+            {accessToken && !me?.emailVerified && (
+              <div className="note" style={{ backgroundColor: 'red' }}>
+                <span style={{ color: 'white' }}>Not Verified</span>
+              </div>
+            )}
 
             <div className="main-menu">
               <Link href="/properties">

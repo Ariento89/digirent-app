@@ -15,7 +15,7 @@ import { useToasts } from 'react-toast-notifications';
 
 const Header = () => {
   // STATES
-  const [setUserImage] = useState(null);
+  const [image, setUserImage] = useState(null);
   const { accessToken, logout } = useAuthentication();
   const { addToast } = useToasts();
   // CUSTOM HOOKS

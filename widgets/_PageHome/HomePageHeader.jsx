@@ -19,7 +19,7 @@ const HomePageHeader = ({ onLoginClick, onRegisterClick }) => {
   // STATES
   const [menuVisible, setMenuVisible] = useState(false);
   const [isInformationVisible, setIsInformationVisible] = useState(false);
-  const [setUserImage] = useState(null);
+  const [image, setUserImage] = useState(null);
   const { me } = useMe();
   // CUSTOM HOOKS
   const { position } = useScrollData();

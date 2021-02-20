@@ -21,6 +21,7 @@ const HomePageHeader = ({ onLoginClick, onRegisterClick }) => {
   const [isInformationVisible, setIsInformationVisible] = useState(false);
   const [image, setUserImage] = useState(null);
   const { me } = useMe();
+
   // CUSTOM HOOKS
   const { position } = useScrollData();
   const { language, setLanguage } = useLanguage();

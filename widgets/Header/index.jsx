@@ -111,9 +111,19 @@ const Header = () => {
             )}
 
             <div className="main-menu">
-              <Link href="/properties">
-                <a className="px-2 uppercase text-white">Properties</a>
-              </Link>
+
+            {me?.role === role.LANDLORD && (
+                <Link href="/my-properties">
+                  <a className="px-2 uppercase text-white">Properties</a>
+                </Link>
+                )}
+
+              {me?.role === role.TENANT && (
+                <Link href="/properties">
+                  <a className="px-2 uppercase text-white">Properties</a>
+                </Link>
+              )}
+              
               <span>|</span>
               <Link href="/messages">
                 <a className="px-2 uppercase text-white">Messages</a>

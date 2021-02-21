@@ -17,7 +17,7 @@ const AccountProofOfEnrolment = () => {
 
   // CUSTOM HOOKS
   const { addToast } = useToasts();
-  const { me } = useMe();
+  const { me, getMe } = useMe();
   const { uploadProofOfEnrolment, status, errors } = useDocuments();
 
   // METHODS
@@ -42,6 +42,7 @@ const AccountProofOfEnrolment = () => {
   );
 
   const onSuccess = () => {
+    getMe();
     addToast('Successfully uploaded Proof of Enrolment.', toastTypes.SUCCESS);
   };
 

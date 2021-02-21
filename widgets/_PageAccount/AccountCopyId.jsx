@@ -17,7 +17,7 @@ const AccountCopyId = () => {
 
   // CUSTOM HOOKS
   const { addToast } = useToasts();
-  const { me } = useMe();
+  const { me, getMe } = useMe();
   const { uploadCopyId, status, errors } = useDocuments();
 
   // METHODS
@@ -42,6 +42,7 @@ const AccountCopyId = () => {
   );
 
   const onSuccess = () => {
+    getMe();
     addToast('Successfully uploaded Copy ID.', toastTypes.SUCCESS);
   };
 

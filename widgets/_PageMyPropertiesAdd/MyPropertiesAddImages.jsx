@@ -24,9 +24,12 @@ const MyPropertiesAddImages = ({ values, errors, touched }) => {
   }, [values?.image1, values?.image2, values?.image3]);
 
   const setImageUpload = async (file, setImage) => {
-    if (file) {
+    const isFile = file instanceof File;
+    if (isFile) {
       const image = await toBase64(file);
       setImage(image);
+    } else {
+      setImage(file);
     }
   };
 

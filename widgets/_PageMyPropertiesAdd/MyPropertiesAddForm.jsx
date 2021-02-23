@@ -12,6 +12,7 @@ import MyPropertiesAddAmenities from './MyPropertiesAddAmenities';
 import MyPropertiesAddImages from './MyPropertiesAddImages';
 import MyPropertiesAddMainDetails from './MyPropertiesAddMainDetails';
 import MyPropertiesAddQuantities from './MyPropertiesAddQuantities';
+import { API_ASSET_URL } from '../../services/index';
 
 const MyPropertiesAddForm = ({ errors, amenities, property, onSubmit, isLoading, loadingText }) => {
   // STATES
@@ -47,9 +48,9 @@ const MyPropertiesAddForm = ({ errors, amenities, property, onSubmit, isLoading,
         amenities: [],
 
         // Images
-        image1: null,
-        image2: null,
-        image3: null,
+        image1: property ? `${API_ASSET_URL}${property.images[0]}` : null,
+        image2: property ? `${API_ASSET_URL}${property.images[0]}` : null,
+        image3: property ? `${API_ASSET_URL}${property.images[0]}` : null,
       },
       schema: Yup.object().shape({
         // Main

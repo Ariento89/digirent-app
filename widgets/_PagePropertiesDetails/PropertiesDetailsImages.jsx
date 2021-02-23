@@ -2,16 +2,10 @@ import { NextArrow, PrevArrow } from 'components/SlickArrows/index';
 import { useRef, useState } from 'react';
 import Slider from 'react-slick';
 import SocialMedias from 'widgets/SocialMedias/index';
+import { API_ASSET_URL } from 'services/index';
 
-const houseInsides = [
-  { id: 1, image: '/images/property-detail-sample.jpg' },
-  { id: 2, image: '/images/property-detail-inside-1.jpg' },
-  { id: 3, image: '/images/property-detail-sample.jpg' },
-  { id: 4, image: '/images/property-detail-inside-2.jpg' },
-];
-
-const PropertiesDetailsImages = () => {
-  const [mainImage, setMainImage] = useState('/images/property-detail-sample.jpg');
+const PropertiesDetailsImages = (images) => {
+  const [mainImage, setMainImage] = useState(`${API_ASSET_URL}${images.images[0]}`);
   const slider = useRef(null);
 
   const houseInsidesSettings = {
@@ -22,7 +16,7 @@ const PropertiesDetailsImages = () => {
     infinite: true,
     focusOnSelect: true,
     beforeChange: (oldIndex, newIndex) => {
-      setMainImage(houseInsides[newIndex].image);
+      setMainImage(images.images[newIndex] ? `${API_ASSET_URL}${images.images[newIndex]}` : '');
     },
     responsive: [
       {
@@ -67,11 +61,17 @@ const PropertiesDetailsImages = () => {
         {...houseInsidesSettings}
         className="house-insides mt-4"
       >
-        {houseInsides.map((item) => (
-          <div key={item.id} className="item">
-            <div className="photo" style={{ backgroundImage: `url(${item.image})` }} />
+        {images.images.map((item) => (
+          <div key={item} className="item">
+            <div className="photo" style={{ backgroundImage: `url(${API_ASSET_URL}${item})` }} />
           </div>
+
         ))}
+        {/* {houseInsides.map((item) => (
+          <div key={item} className="item">
+            <div className="photo" style={{ backgroundImage: `url(${API_ASSET_URL}${item})` }} />
+          </div>
+        ))} */}
       </Slider>
     </>
   );

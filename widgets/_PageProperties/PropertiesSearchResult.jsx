@@ -6,6 +6,7 @@ import Pagination from 'widgets/Pagination/index';
 import PropertyInfo from 'widgets/PropertyInfo/index';
 import StateList, { stateListTypes } from 'widgets/StateList/index';
 import TableHeader from 'widgets/TableHeader/index';
+import { API_ASSET_URL } from 'services/index';
 
 const PropertiesSearchResult = ({ searchResultRef, properties, status, errors }) => {
   // STATES
@@ -51,7 +52,7 @@ const PropertiesSearchResult = ({ searchResultRef, properties, status, errors })
                   <div key={property.id} className="col-12 col-md-6 col-lg-4 item">
                     <PropertyInfo
                       link={`/properties/${property.id}`}
-                      houseImage="/images/house-sample-1.jpg"
+                      houseImage={property.images && property.images.length > 0 ? `${API_ASSET_URL}${property.images[0]}` : '"/images/house-sample-2.jpg"'}
                       name={property.name}
                       address={property.address}
                       rentFee={property.monthlyPrice}

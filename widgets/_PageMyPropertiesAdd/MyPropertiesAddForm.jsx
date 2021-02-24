@@ -51,6 +51,10 @@ const MyPropertiesAddForm = ({ errors, amenities, property, onSubmit, isLoading,
         image1: property ? `${API_ASSET_URL}${property.images[0]}` : null,
         image2: property ? `${API_ASSET_URL}${property.images[0]}` : null,
         image3: property ? `${API_ASSET_URL}${property.images[0]}` : null,
+
+        // savedImage1: property ? `${API_ASSET_URL}${property.images[0]}` : null,
+        // savedImage2: property ? `${API_ASSET_URL}${property.images[0]}` : null,
+        // savedImage3: property ? `${API_ASSET_URL}${property.images[0]}` : null,
       },
       schema: Yup.object().shape({
         // Main

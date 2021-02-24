@@ -1,17 +1,30 @@
 import { NextArrow, PrevArrow } from 'components/SlickArrows/index';
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import Slider from 'react-slick';
 import SocialMedias from 'widgets/SocialMedias/index';
 import { API_ASSET_URL } from 'services/index';
 
+const houseInsides = [
+  { id: 0, image: '/images/property-detail-sample.jpg' },
+  { id: 1, image: '/images/property-detail-inside-1.jpg' },
+  { id: 2, image: '/images/property-detail-sample.jpg' },
+  // { id: 4, image: '/images/property-detail-inside-2.jpg' },
+];
+
 const PropertiesDetailsImages = (images) => {
   const [mainImage, setMainImage] = useState(`${API_ASSET_URL}${images.images[0]}`);
+  const [imgs, setImgs] = useState([]);
+
   const slider = useRef(null);
+
+  useEffect(() => {
+    setImgs(images.images);
+  }, [images]);
 
   const houseInsidesSettings = {
     nextArrow: <NextArrow />,
     prevArrow: <PrevArrow />,
-    slidesToShow: 3,
+    slidesToShow: 2,
     slidesToScroll: 1,
     infinite: true,
     focusOnSelect: true,
@@ -41,6 +54,9 @@ const PropertiesDetailsImages = (images) => {
 
   return (
     <>
+      {imgs.map((item) => (
+        <h1 key={item}>ward</h1>
+      ))}
       <div className="house-photo" style={{ backgroundImage: `url(${mainImage})` }}>
         <SocialMedias />
 
@@ -61,17 +77,11 @@ const PropertiesDetailsImages = (images) => {
         {...houseInsidesSettings}
         className="house-insides mt-4"
       >
-        {images.images.map((item) => (
-          <div key={item} className="item">
-            <div className="photo" style={{ backgroundImage: `url(${API_ASSET_URL}${item})` }} />
+        {houseInsides.map((item) => (
+          <div key={item.id} className="item">
+            <div className="photo" style={{ backgroundImage: `url(${API_ASSET_URL}${imgs[item.id]})` }} />
           </div>
-
         ))}
-        {/* {houseInsides.map((item) => (
-          <div key={item} className="item">
-            <div className="photo" style={{ backgroundImage: `url(${API_ASSET_URL}${item})` }} />
-          </div>
-        ))} */}
       </Slider>
     </>
   );

@@ -54,9 +54,6 @@ const PropertiesDetailsImages = (images) => {
 
   return (
     <>
-      {imgs.map((item) => (
-        <h1 key={item}>ward</h1>
-      ))}
       <div className="house-photo" style={{ backgroundImage: `url(${mainImage})` }}>
         <SocialMedias />
 

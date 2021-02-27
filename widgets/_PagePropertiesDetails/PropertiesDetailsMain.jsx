@@ -64,7 +64,7 @@ const PropertiesDetailsMain = ({ property }) => {
             </div>
           )}
 
-          <PropertiesDetailsLandlord />
+          <PropertiesDetailsLandlord landlord={property.landlord} />
         </div>
       </div>
     </div>

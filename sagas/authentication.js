@@ -102,6 +102,35 @@ function* loginFacebook({ payload }) {
   }
 }
 
+function* loginApple({ payload }) {
+  const { callback, query } = payload;
+  callback({ status: request.REQUESTING });
+
+  try {
+    const response = yield call(service.appleAuthorization, query);
+    const meResponse = yield call(meService.me2, response.data.access_token);
+
+    yield put(
+      actions.save({
+        type: types.LOGIN_APPLE,
+        accessToken: response.data.access_token,
+        tokenType: response.data.token_type,
+      }),
+    );
+
+    yield put(
+      meActions.save({
+        type: meTypes.GET_ME,
+        me: meResponse.data,
+      }),
+    );
+
+    callback({ status: request.SUCCESS, response: response.data });
+  } catch (e) {
+    callback({ status: request.ERROR, errors: e.errors });
+  }
+}
+
 /* WATCHERS */
 const loginWatcherSaga = function* loginWatcherSaga() {
   yield takeLatest(types.LOGIN, login);
@@ -115,4 +144,8 @@ const loginFacebookWatcherSaga = function* loginFacebookWatcherSaga() {
   yield takeLatest(types.LOGIN_FACEBOOK, loginFacebook)
 }
 
-export default [loginWatcherSaga(), loginGoogleWatcherSaga(), loginFacebookWatcherSaga()];
+const loginAppleWatcherSaga = function* loginAppleWatcherSaga() {
+  yield takeLatest(types.LOGIN_APPLE, loginApple)
+}
+
+export default [loginWatcherSaga(), loginGoogleWatcherSaga(), loginFacebookWatcherSaga(), loginAppleWatcherSaga()];

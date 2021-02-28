@@ -209,6 +209,16 @@ const HomeRegisterModal = ({ initialUserType, onClose, isVisible }) => {
     }
   }
 
+  const onSignupApple = async () => {
+    try{
+      const response = await authService.appleAuth(selectedUserType);
+      router.push(response.data.to);
+    }
+    catch(err){
+      addToast(err.response.data.detail, toastTypes.ERROR)
+    }
+  }
+
   return (
     <Modal show={isVisible} onHide={closeModal} id="register-modal" centered>
       <Modal.Body>
@@ -224,7 +234,7 @@ const HomeRegisterModal = ({ initialUserType, onClose, isVisible }) => {
           <div className="item mx-3" onClick={onSignupGoogle}>
             <img src="/images/social-media/google.png" alt="google icon" />
           </div>
-          <div className="item">
+          <div className="item" onClick={onSignupApple}>
             <img src="/images/social-media/apple.png" alt="apple icon" />
           </div>
         </div>

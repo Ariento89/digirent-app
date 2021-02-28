@@ -87,6 +87,16 @@ const HomeLoginModal = ({ onClose, isVisible, onRegister }) => {
     }
   }
 
+  const onLoginApple = async () => {
+    try{
+      const response = await authService.appleAuth(selectedUserType);
+      router.push(response.data.to);
+    }
+    catch(err){
+      addToast(err.response.data.detail, toastTypes.ERROR)
+    }
+  }
+
   return (
     <Modal show={isVisible} onHide={closeModal} id="login-modal" centered>
       <Modal.Body>
@@ -151,7 +161,7 @@ const HomeLoginModal = ({ onClose, isVisible, onRegister }) => {
                     <div className="item mx-2" onClick={onLoginGoogle}>
                       <img src="/images/social-media/google.png" alt="google icon" />
                     </div>
-                    <div className="item">
+                    <div className="item" onClick={onLoginApple}>
                       <img src="/images/social-media/apple.png" alt="apple icon" />
                     </div>
                   </div>

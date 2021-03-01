@@ -119,7 +119,7 @@ const Page = () => {
             GET STARTED
           </button>
 
-          <div className="row properties">
+          {/* <div className="row properties">
             {[1, 2, 3].map((key) => (
               <div key={key} className="col-12 col-md-6 col-lg-4">
                 <PropertyInfo
@@ -133,7 +133,7 @@ const Page = () => {
                 />
               </div>
             ))}
-          </div>
+          </div> */}
         </div>
       </PageWrapper>
 

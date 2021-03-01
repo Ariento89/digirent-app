@@ -33,7 +33,7 @@ const MyPropertiesAddedProperties = ({
               bathrooms={property.bathrooms}
               buttonName="VIEW APPLICATIONS"
               onClick={() => onViewApplications(property)}
-              onDelete={onDeleteProperty}
+              onDelete={() => onDeleteProperty(property)}
               selectionType={null}
             />
           </div>

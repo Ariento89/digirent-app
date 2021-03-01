@@ -82,6 +82,18 @@ function* uploadVideos({ payload }) {
   }
 }
 
+function* deleteProperty({ payload }) {
+  const { callback, propertyId } = payload;
+  callback({ status: request.REQUESTING });
+
+  try {
+    const response = yield call(service.deleteProperty, propertyId);
+    callback({ status: request.SUCCESS, response: response.data });
+  } catch (e) {
+    callback({ status: request.ERROR, errors: e.errors });
+  }
+}
+
 /* WATCHERS */
 const fetchPropertiesWatcherSaga = function* fetchPropertiesWatcherSaga() {
   yield takeLatest(types.FETCH_PROPERTIES, fetchProperties);
@@ -107,6 +119,10 @@ const uploadVideosWatcherSaga = function* uploadVideosWatcherSaga() {
   yield takeLatest(types.UPLOAD_VIDEOS, uploadVideos);
 };
 
+const deletePropertyWatcherSaga = function* deletePropertyWatcherSaga() {
+  yield takeLatest(types.DELETE_PROPERTY, deleteProperty);
+};
+
 export default [
   fetchPropertiesWatcherSaga(),
   createPropertyWatcherSaga(),
@@ -114,4 +130,5 @@ export default [
   updatePropertyWatcherSaga(),
   uploadImageWatcherSaga(),
   uploadVideosWatcherSaga(),
+  deletePropertyWatcherSaga()
 ];

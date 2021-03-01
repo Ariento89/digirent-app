@@ -45,6 +45,7 @@ const Page = ({ query }) => {
 
   useEffect(() => {
     // const queryString = qs.stringify(query);
+    console.log({query})
     if(query.state){
       const queryState = query.state;
       const provider = queryState.split('.', 1)[0]

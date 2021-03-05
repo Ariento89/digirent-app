@@ -12,7 +12,7 @@ const FormInputIcon = ({ name, type, placeholder, icon, classNames }) => (
       </>
     )}
 
-    <Field className={cn({ 'no-icon': !icon })} type={type} name={name} placeholder={placeholder} />
+    <Field className={cn({ 'no-icon': !icon })} type={type} name={name} placeholder={placeholder} min={0} step="any" />
   </div>
 );
 

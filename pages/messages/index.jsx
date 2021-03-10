@@ -289,7 +289,12 @@ const Page = () => {
       <div className="container-fluid container-lg">
         <h3 className="main-title">MESSAGES</h3>
         <MessagesSearch />
-
+        <button onClick={() => {
+          console.log('Sending...');
+          onSend('1833bd31-39b4-4c2f-8162-e7ed4565e7b3', '222b23c8-adaa-47f7-82a5-475a5058091e', '');
+        }}
+        >Test msg
+        </button>
         <div className="row mt-4">
           <MessagesList
             talkingTo={talkingTo}

@@ -9,11 +9,13 @@ import { useToasts } from 'react-toast-notifications';
 import { showErrorsMessage } from 'shared/functions';
 import { applicationStatusTypes, request, toastTypes } from 'shared/types';
 import { API_ASSET_URL } from 'services/index';
+import ContactLandLordDialog from 'widgets/ContactLandLordDialog';
 
 const PropertyApplication = ({ application: propertyApplication, onUpdateApplication }) => {
   // STATES
   const [application, setApplication] = useState(null);
   const [buttonOverlayVisible, setButtonOverlayVisible] = useState(false);
+  const [openContact, setOpenContact] = useState(false);
 
   // CUSTOM HOOKS
   const { addToast } = useToasts();
@@ -93,6 +95,15 @@ const PropertyApplication = ({ application: propertyApplication, onUpdateApplica
 
   return (
     <div className="PropertyApplication">
+      {openContact && (
+        <ContactLandLordDialog
+          landlord={application?.tenant}
+          closeDialog={() => {
+            setOpenContact(false);
+          }}
+        />
+      )}
+
       <div className="item d-none d-md-flex">
         <div className="user-photo" style={{ backgroundImage: `url(${API_ASSET_URL}${application?.tenant?.profileImageUrl})` }} />
 
@@ -227,7 +238,7 @@ const PropertyApplication = ({ application: propertyApplication, onUpdateApplica
         <div className="divider" />
 
         <div className="flex-1">
-          <button type="button" className="button btn-email d-block mx-auto">
+          <button onClick={() => { console.log('WARD'); setOpenContact(true); }} type="button" className="button btn-email d-block mx-auto">
             <img src="/images/icon/icon-email-outline.svg" alt="icon" />
           </button>
         </div>

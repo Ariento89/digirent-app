@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react';
 import { useToasts } from 'react-toast-notifications';
 import { showErrorsMessage } from 'shared/functions';
 import { applicationStatusTypes, request, toastTypes } from 'shared/types';
+import { API_ASSET_URL } from 'services/index';
 
 const PropertyApplication = ({ application: propertyApplication, onUpdateApplication }) => {
   // STATES
@@ -93,12 +94,12 @@ const PropertyApplication = ({ application: propertyApplication, onUpdateApplica
   return (
     <div className="PropertyApplication">
       <div className="item d-none d-md-flex">
-        <div className="user-photo" />
+        <div className="user-photo" style={{ backgroundImage: `url(${API_ASSET_URL}${application?.tenant?.profileImageUrl})` }} />
 
         <div className="user-name flex-1 text-center">
           <div className="d-flex align-items-center justify-content-center">
-            <span className="text-sm font-weight-bold">Jane</span>
-            <span className="text-sm">, 22</span>
+            <span className="text-sm font-weight-bold">{application?.tenant?.firstName}</span>
+            <span className="text-sm">, {application?.tenant?.age}</span>
             <img
               className="ml-2"
               src="/images/icon/icon-gender-primary.svg"
@@ -114,7 +115,7 @@ const PropertyApplication = ({ application: propertyApplication, onUpdateApplica
 
         <div className="flex-1">
           <span className="profile-completion text-sm">
-            <span className="font-weight-bold d-block">60% PROFILE</span>
+            <span className="font-weight-bold d-block">{application?.tenant?.profilePercentage}% PROFILE</span>
             COMPLETION
           </span>
         </div>
@@ -122,7 +123,7 @@ const PropertyApplication = ({ application: propertyApplication, onUpdateApplica
         <div className="divider" />
 
         <div className="flex-1">
-          <span className="verified text-sm">VERIFIED</span>
+          <span className="verified text-sm">{application?.status?.toUpperCase()}</span>
         </div>
 
         <div className="divider" />

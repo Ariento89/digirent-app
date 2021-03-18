@@ -2,6 +2,7 @@
 import FieldError from 'components/FieldError/FieldError';
 import FormInputIcon from 'components/FormInputIcon/index';
 import FormTextarea from 'components/FormTextarea/index';
+import AutoFillField from 'components/AutoFillField/index';
 
 const MyPropertiesAddMainDetails = ({ errors, touched, requestErrors }) => (
   <>
@@ -72,6 +73,7 @@ const MyPropertiesAddMainDetails = ({ errors, touched, requestErrors }) => (
           placeholder="Country"
           icon="icon-circle-primary"
         />
+        {/* <AutoFillField types={['(cities)']} placeholderColor="#d0d3d4" height="40px" width="100%" placeholder="Country" icon="icon-circle-primary" /> */}
         {errors.country && touched.country ? <FieldError error={errors.country} /> : null}
       </div>
       <div className="col-lg-4 mt-4">

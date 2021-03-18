@@ -7,10 +7,10 @@ import Head from 'next/head';
 import Footer from 'widgets/Footer';
 import HomePageHeader from 'widgets/_PageHome/HomePageHeader';
 
-const HomePageWrapper = ({ title, onLoginClick, onRegisterClick, children }) => {
-  // const { language } = useLanguage();
+const HomePageWrapper = ({ title, onLoginClick, onRegisterClick, children }) =>
+// const { language } = useLanguage();
 
-  return (
+  (
     <div className="page-wrapper">
       <Head>
         <link rel="apple-touch-icon" sizes="57x57" href="/favicons/apple-icon-57x57.png" />
@@ -61,9 +61,9 @@ const HomePageWrapper = ({ title, onLoginClick, onRegisterClick, children }) => 
                 if(!Weglot.initialized) {
                   Weglot.initialize({api_key: 'wg_8fa89c444075cf79dc5825b3457396ab5', hide_switcher: true});
                   window.Weglot = Weglot;
-                  Weglot.switchTo('${language}');  
+                  Weglot.switchTo('${language}');
                 } else {
-                  Weglot.switchTo('${language}');  
+                  Weglot.switchTo('${language}');
                 }
               }
             `,
@@ -80,9 +80,9 @@ const HomePageWrapper = ({ title, onLoginClick, onRegisterClick, children }) => 
                   xfbml      : true,
                   version    : 'v9.0'
                 });
-                  
-                FB.AppEvents.logPageView();   
-                  
+
+                FB.AppEvents.logPageView();
+
               };
 
               (function(d, s, id){
@@ -102,6 +102,4 @@ const HomePageWrapper = ({ title, onLoginClick, onRegisterClick, children }) => 
       <Footer />
     </div>
   );
-};
-
 export default HomePageWrapper;

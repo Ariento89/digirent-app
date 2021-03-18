@@ -6,6 +6,7 @@ import { useCallback, useState } from 'react';
 import { sleep } from 'shared/functions';
 import { genderOptions, houseTypeOptions, locationOptions } from 'shared/options';
 import * as Yup from 'yup';
+import AutoFillField from 'components/AutoFillField/index';
 
 const options = [
   { name: 'Option 1', value: 1 },
@@ -65,7 +66,7 @@ const SearchTenantForm = ({ onSubmit }) => {
                 <div className="row">
                   <div className="col-12 col-sm-6 col-lg-4">
                     <p className="main-desc pb-2">Location</p>
-                    <FormSelect name="location" placeholder="Location" options={locationOptions} />
+                    <AutoFillField placeholderColor="#d0d3d4" height="40px" width="100%" placeholder="Location" />
                     {errors.location && touched.location ? (
                       <FieldError error={errors.location} />
                     ) : null}

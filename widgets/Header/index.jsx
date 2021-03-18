@@ -146,6 +146,11 @@ const Header = () => {
                 </Link>
               )}
 
+<span>|</span>
+              <Link href="/notifications">
+                <a className="px-2 uppercase text-white">Notifications</a>
+              </Link>
+
             </div>
           </div>
         </div>

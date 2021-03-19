@@ -11,6 +11,7 @@ import { sleep } from 'shared/functions';
 import { cityOptions, houseTypeOptions } from 'shared/options';
 import { request, toastTypes } from 'shared/types';
 import * as Yup from 'yup';
+import AutoFillField from 'components/AutoFillField/index';
 
 const AccountLookingFor = () => {
   // STATES
@@ -90,12 +91,13 @@ const AccountLookingFor = () => {
                 ) : null}
               </div>
               <div className="col-12 col-sm-6 mt-3">
-                <FormSelect
+                {/* <FormSelect
                   name="city"
                   placeholder="City"
                   options={cityOptions}
                   icon="icon-map-marker-primary"
-                />
+                /> */}
+                <AutoFillField types={['(cities)']} placeholderColor="#d0d3d4" height="40px" width="100%" placeholder="city" icon="icon-map-marker-primary" />
                 {formErrors.city && touched.city ? <FieldError error={formErrors.city} /> : null}
               </div>
               <div className="col-12 mt-3">

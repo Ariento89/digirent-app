@@ -1,4 +1,4 @@
-import Input from 'components/Input/index';
+import AutoFillField from 'components/AutoFillField/index';
 import InputDatePicker from 'components/InputDatePicker/index';
 
 const HomeLanding = () => (
@@ -8,7 +8,7 @@ const HomeLanding = () => (
     </p>
 
     <div className="input-fields">
-      <Input placeholder="Where will you go?" icon="icon-map-marker-primary" />
+      <AutoFillField height="45px" width="250px" placeholder="Where will you go?" icon="icon-map-marker-primary" />
       <InputDatePicker classNames="mx-md-3" placeholder="Move-in date" icon="icon-calendar-gray" />
       <InputDatePicker classNames="mr-md-3" placeholder="Move-out date" icon="icon-calendar-gray" />
       <button className="button min-width">SEARCH</button>

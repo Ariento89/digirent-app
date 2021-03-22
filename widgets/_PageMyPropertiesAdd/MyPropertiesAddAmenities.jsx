@@ -24,7 +24,14 @@ const MyPropertiesAddAmenities = ({ property, amenities }) => {
       <hr />
 
       {amenities.map(({ id, title }) => (
-        <FormCheckbox selected={property.amenityTitles.includes(title)} key={id} name="amenities" value={id} label={title} classNames="field-item" />
+        <FormCheckbox
+          selected={property?.amenityTitles?.includes(title)}
+          key={id}
+          name="amenities"
+          value={id}
+          label={title}
+          classNames="field-item"
+        />
       ))}
 
       {/* {moreAmenitiesVisible && (

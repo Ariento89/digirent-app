@@ -1,7 +1,9 @@
 import FormCheckbox from 'components/FormCheckbox/index';
 import { useState } from 'react';
 
-const MyPropertiesAddAmenities = ({ amenities }) => {
+const MyPropertiesAddAmenities = ({ property, amenities }) => {
+  // console.log(property.amenityTitles);
+  // console.log(amenities);
   const [moreAmenitiesValue, setMoreAmenitiesValue] = useState({});
   const [moreAmenitiesVisible, setMoreAmenitiesVisible] = useState(false);
 
@@ -22,7 +24,7 @@ const MyPropertiesAddAmenities = ({ amenities }) => {
       <hr />
 
       {amenities.map(({ id, title }) => (
-        <FormCheckbox key={id} name="amenities" value={id} label={title} classNames="field-item" />
+        <FormCheckbox selected={property.amenityTitles.includes(title)} key={id} name="amenities" value={id} label={title} classNames="field-item" />
       ))}
 
       {/* {moreAmenitiesVisible && (

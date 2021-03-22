@@ -142,6 +142,7 @@ const MyPropertiesAddForm = ({ errors, amenities, property, onSubmit, isLoading,
                 <MyPropertiesAddQuantities errors={formErrors} touched={touched} />
 
                 <MyPropertiesAddAmenities
+                  property={property}
                   amenities={amenities}
                   errors={formErrors}
                   touched={touched}

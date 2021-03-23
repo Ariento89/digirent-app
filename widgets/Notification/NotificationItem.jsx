@@ -1,12 +1,61 @@
+import Link from 'next/link';
+import { usePropertyApplications } from 'hooks/usePropertyApplications';
+import { useToasts } from 'react-toast-notifications';
+import MyPropertiesApplicationsModal from 'widgets/_PageMyProperties/MyPropertiesApplicationsModal';
+import { cloneDeep } from 'lodash';
+import { useState } from 'react';
+
 const NotificationItem = ({ notification }) => {
-  console.log(notification);
   const d = new Date(notification.createdAt);
   const datestring = `${`0${d.getDate()}`.slice(-2)}-${`0${d.getMonth() + 1}`.slice(
     -2,
   )}-${d.getFullYear()}`;
+
+  // applications
+  const { addToast } = useToasts();
+  const [seeReactionModalVisible, setSeeReactionModalVisible] = useState(false);
+  const [applications, setApplications] = useState([]);
+  const {
+    fetchApplicationsForProperties,
+    status: applicationsStatus,
+    errors: applicationsErrors,
+  } = usePropertyApplications();
+
+  const onViewApplications = (property) => {
+    console.log(property);
+    setSeeReactionModalVisible(true);
+
+    setApplications([]);
+    fetchApplicationsForProperties(
+      { propertyId: property.id },
+      {
+        onSuccess: onFetchApplicationsSuccess,
+        onError: onFetchApplicationsError,
+      },
+    );
+  };
+
+  const onFetchApplicationsSuccess = ({ response }) => {
+    setApplications(response);
+  };
+
+  const onFetchApplicationsError = () => {
+    addToast("An error occurred while fetching property's applications.", toastTypes.ERROR);
+  };
+
+  const onUpdateApplication = (index, application) => {
+    setApplications((previousApplications) => {
+      const newApplications = cloneDeep(previousApplications);
+      newApplications[index] = application;
+
+      return newApplications;
+    });
+  };
+  // --------------
+
   return (
     <li>
-      <a href="#" className="block hover:bg-gray-50 no-underline">
+      <span className="block no-underline">
         <div className="px-4 py-4 flex items-center sm:px-6">
           <div className="min-w-0 flex-1 sm:flex sm:items-center sm:justify-between">
             <div className="truncate">
@@ -19,6 +68,7 @@ const NotificationItem = ({ notification }) => {
                   <p className="font-bold text-blue-500">
                     {notification.data?.from?.firstName} {notification.data?.from?.lastName}
                   </p>
+                  {' '}
                 </div>
               )}
 
@@ -80,23 +130,37 @@ const NotificationItem = ({ notification }) => {
               </div>
             </div>
           </div>
-          <div className="ml-5 flex-shrink-0">
-            <svg
-              className="h-5 w-5 text-gray-400"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-              aria-hidden="true"
-            >
-              <path
-                fillRule="evenodd"
-                d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                clipRule="evenodd"
-              />
-            </svg>
+          <div className="ml-5 flex items-center">
+            {notification.type === 'chat'
+              && (
+                <Link href="/messages">
+                  <button type="button" className="mr-4 inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded text-blue-700 bg-blue-100 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                    View Messages
+                  </button>
+                </Link>
+              )}
+            {notification.type === 'new_apartment_application'
+              && (
+                <button onClick={() => onViewApplications(notification?.data?.apartment)} type="button" className="mr-4 inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded text-blue-700 bg-blue-100 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                  View Applications
+                </button>
+              )}
+            <button type="button">
+              <svg className="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
           </div>
         </div>
-      </a>
+        <MyPropertiesApplicationsModal
+          applications={applications}
+          status={applicationsStatus}
+          errors={applicationsErrors}
+          onUpdateApplication={onUpdateApplication}
+          isVisible={seeReactionModalVisible}
+          onClose={() => setSeeReactionModalVisible(false)}
+        />
+      </span>
     </li>
   );
 };

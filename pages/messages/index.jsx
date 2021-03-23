@@ -93,7 +93,7 @@ const Page = () => {
 
     return () => {
       setWsRecentRequest(eventTypes.USER_DISCONNECTED);
-      socketRef.current.send({ event_type: eventTypes.USER_DISCONNECTED });
+      // socketRef.current.send({ event_type: eventTypes.USER_DISCONNECTED });
       socketRef.current.close();
     };
   }, [accessToken]);

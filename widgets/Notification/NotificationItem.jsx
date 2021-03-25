@@ -3,13 +3,24 @@ import { usePropertyApplications } from 'hooks/usePropertyApplications';
 import { useToasts } from 'react-toast-notifications';
 import MyPropertiesApplicationsModal from 'widgets/_PageMyProperties/MyPropertiesApplicationsModal';
 import { cloneDeep } from 'lodash';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { toastTypes } from 'shared/types';
+import axios from 'axios';
 
-const NotificationItem = ({ notification }) => {
+const NotificationItem = ({ notification, onDeleted }) => {
   const d = new Date(notification.createdAt);
   const datestring = `${`0${d.getDate()}`.slice(-2)}-${`0${d.getMonth() + 1}`.slice(
     -2,
   )}-${d.getFullYear()}`;
+
+  useEffect(() => {
+    const notificationRed = async () => {
+      await axios.post(`/notifications/${notification.id}/read`);
+    };
+    if (notification.isRead !== true) {
+      notificationRed();
+    }
+  }, [notification]);
 
   // applications
   const { addToast } = useToasts();
@@ -22,7 +33,6 @@ const NotificationItem = ({ notification }) => {
   } = usePropertyApplications();
 
   const onViewApplications = (property) => {
-    console.log(property);
     setSeeReactionModalVisible(true);
 
     setApplications([]);
@@ -34,15 +44,12 @@ const NotificationItem = ({ notification }) => {
       },
     );
   };
-
   const onFetchApplicationsSuccess = ({ response }) => {
     setApplications(response);
   };
-
   const onFetchApplicationsError = () => {
     addToast("An error occurred while fetching property's applications.", toastTypes.ERROR);
   };
-
   const onUpdateApplication = (index, application) => {
     setApplications((previousApplications) => {
       const newApplications = cloneDeep(previousApplications);
@@ -52,6 +59,11 @@ const NotificationItem = ({ notification }) => {
     });
   };
   // --------------
+
+  const removeNotification = async () => {
+    await axios.delete(`/notifications/${notification.id}`);
+    onDeleted(notification.id);
+  };
 
   return (
     <li>
@@ -67,8 +79,7 @@ const NotificationItem = ({ notification }) => {
                   &nbsp;
                   <p className="font-bold text-blue-500">
                     {notification.data?.from?.firstName} {notification.data?.from?.lastName}
-                  </p>
-                  {' '}
+                  </p>{' '}
                 </div>
               )}
 
@@ -131,23 +142,39 @@ const NotificationItem = ({ notification }) => {
             </div>
           </div>
           <div className="ml-5 flex items-center">
-            {notification.type === 'chat'
-              && (
-                <Link href="/messages">
-                  <button type="button" className="mr-4 inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded text-blue-700 bg-blue-100 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                    View Messages
-                  </button>
-                </Link>
-              )}
-            {notification.type === 'new_apartment_application'
-              && (
-                <button onClick={() => onViewApplications(notification?.data?.apartment)} type="button" className="mr-4 inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded text-blue-700 bg-blue-100 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                  View Applications
+            {notification.type === 'chat' && (
+              <Link href="/messages">
+                <button
+                  type="button"
+                  className="mr-4 inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded text-blue-700 bg-blue-100 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                >
+                  View Messages
                 </button>
-              )}
-            <button type="button">
-              <svg className="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+              </Link>
+            )}
+            {notification.type === 'new_apartment_application' && (
+              <button
+                onClick={() => onViewApplications(notification?.data?.apartment)}
+                type="button"
+                className="mr-4 inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded text-blue-700 bg-blue-100 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              >
+                View Applications
+              </button>
+            )}
+            <button onClick={removeNotification} type="button">
+              <svg
+                className="h-5 w-5 text-gray-400"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M6 18L18 6M6 6l12 12"
+                />
               </svg>
             </button>
           </div>

@@ -1,28 +1,74 @@
 import AutoFillField from 'components/AutoFillField/index';
 import InputDatePicker from 'components/InputDatePicker/index';
+import { useState } from 'react';
+import Router from 'next/router';
+import dayjs from 'dayjs';
 
-const HomeLanding = () => (
-  <div className="landing">
-    <p className="title">
-      RENTING DONE <span className="alt">DIGITALLY</span>
-    </p>
+const HomeLanding = () => {
+  const [from, setFrom] = useState('');
+  const [to, setTo] = useState('');
+  const [lat, setLat] = useState(0);
+  const [lng, setLng] = useState(0);
 
-    <div className="input-fields">
-      <AutoFillField height="45px" width="250px" placeholder="Where will you go?" icon="icon-map-marker-primary" />
-      <InputDatePicker classNames="mx-md-3" placeholder="Move-in date" icon="icon-calendar-gray" />
-      <InputDatePicker classNames="mr-md-3" placeholder="Move-out date" icon="icon-calendar-gray" />
-      <button className="button min-width">SEARCH</button>
-    </div>
+  const search = () => {
+    let f = '';
+    let t = '';
+    if (from) {
+      f = dayjs(from).format('YYYY-MM-DD');
+    }
+    if (to) {
+      t = dayjs(to).format('YYYY-MM-DD');
+    }
+    Router.push({ pathname: '/properties', query: { from: f, to: t, lat, lng } });
+  };
+  return (
+    <div className="landing">
+      <p className="title">
+        RENTING DONE <span className="alt">DIGITALLY</span>
+      </p>
 
-    <div className="scroll-down">
-      <div className="white-space" />
-      <div className="scroll-down-wrapper">
-        <img src="/images/scroll-down-space.svg" className="scroll-down-space" alt="icon space" />
-        <img src="/images/icon/icon-caret-down-white.svg" className="scroll-down" alt="icon" />
+      <div className="input-fields">
+        <AutoFillField
+          selected={(latitude, longitude) => {
+            setLat(latitude);
+            setLng(longitude);
+          }}
+          height="45px"
+          width="250px"
+          placeholder="Where will you go?"
+          icon="icon-map-marker-primary"
+        />
+        <InputDatePicker
+          onDayClick={(d) => {
+            setFrom(d);
+          }}
+          classNames="mx-md-3"
+          placeholder="Move-in date"
+          icon="icon-calendar-gray"
+        />
+        <InputDatePicker
+          onDayClick={(d) => {
+            setTo(d);
+          }}
+          classNames="mr-md-3"
+          placeholder="Move-out date"
+          icon="icon-calendar-gray"
+        />
+        <button onClick={search} className="button min-width">
+          SEARCH
+        </button>
       </div>
-      <div className="white-space" />
+
+      <div className="scroll-down">
+        <div className="white-space" />
+        <div className="scroll-down-wrapper">
+          <img src="/images/scroll-down-space.svg" className="scroll-down-space" alt="icon space" />
+          <img src="/images/icon/icon-caret-down-white.svg" className="scroll-down" alt="icon" />
+        </div>
+        <div className="white-space" />
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 export default HomeLanding;

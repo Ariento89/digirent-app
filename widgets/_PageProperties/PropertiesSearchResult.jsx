@@ -8,7 +8,7 @@ import StateList, { stateListTypes } from 'widgets/StateList/index';
 import TableHeader from 'widgets/TableHeader/index';
 import { API_ASSET_URL } from 'services/index';
 
-const PropertiesSearchResult = ({ searchResultRef, properties, status, errors }) => {
+const PropertiesSearchResult = ({ searchResultRef, properties, status, errors, location }) => {
   // STATES
   const [list, setList] = useState([]);
   const [paginationData, setPaginationData] = useState({});
@@ -24,10 +24,14 @@ const PropertiesSearchResult = ({ searchResultRef, properties, status, errors })
       <Spinner loadingText="Searching properties..." isLoading={status === request.REQUESTING}>
         <div ref={searchResultRef} className="rental-houses">
           <h3 className="main-title">
-            RENTAL HOUSE IN <span className="text-primary font-weight-bold">INDIA</span>
+            RENTAL HOUSE IN{' '}
+            <span className="text-primary font-weight-bold">
+              {location ? location.toUpperCase() : 'NETHERLANDS'}
+            </span>
           </h3>
           <p className="main-subtitle mt-1 mt-md-2 dark-gray">
-            {properties.length} NEW RENTAL PROPERTIES IN INDIA IN THE LAST 30 DAYS
+            {properties.length} NEW RENTAL PROPERTIES IN{' '}
+            {location ? location.toUpperCase() : 'NETHERLANDS'} IN THE LAST 30 DAYS
           </p>
 
           {!!errors?.length && (
@@ -52,7 +56,11 @@ const PropertiesSearchResult = ({ searchResultRef, properties, status, errors })
                   <div key={property.id} className="col-12 col-md-6 col-lg-4 item">
                     <PropertyInfo
                       link={`/properties/${property.id}`}
-                      houseImage={property.images && property.images.length > 0 ? `${API_ASSET_URL}${property.images[0]}` : '"/images/house-sample-2.jpg"'}
+                      houseImage={
+                        property.images && property.images.length > 0
+                          ? `${API_ASSET_URL}${property.images[0]}`
+                          : '"/images/house-sample-2.jpg"'
+                      }
                       name={property.name}
                       address={property.address}
                       rentFee={property.monthlyPrice}

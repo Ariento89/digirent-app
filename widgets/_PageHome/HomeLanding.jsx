@@ -5,6 +5,7 @@ import Router from 'next/router';
 import dayjs from 'dayjs';
 
 const HomeLanding = () => {
+  const [label, setLabel] = useState('');
   const [from, setFrom] = useState('');
   const [to, setTo] = useState('');
   const [lat, setLat] = useState(0);
@@ -19,7 +20,7 @@ const HomeLanding = () => {
     if (to) {
       t = dayjs(to).format('YYYY-MM-DD');
     }
-    Router.push({ pathname: '/properties', query: { from: f, to: t, lat, lng } });
+    Router.push({ pathname: '/properties', query: { label, from: f, to: t, lat, lng } });
   };
   return (
     <div className="landing">
@@ -29,7 +30,8 @@ const HomeLanding = () => {
 
       <div className="input-fields">
         <AutoFillField
-          selected={(latitude, longitude) => {
+          selected={(lbl, latitude, longitude) => {
+            setLabel(lbl);
             setLat(latitude);
             setLng(longitude);
           }}

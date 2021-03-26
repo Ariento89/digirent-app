@@ -37,7 +37,6 @@ const Page = ({ router }) => {
     if (router.query.lng !== '0') {
       params.longitude = router.query.lng;
     }
-    console.log(params);
 
     onSearch(params);
   }, []);
@@ -77,6 +76,7 @@ const Page = ({ router }) => {
         properties={properties}
         status={status}
         errors={errors}
+        location={router.query.label}
       />
 
       <PropertiesRecommended properties={recommendedProperties} />

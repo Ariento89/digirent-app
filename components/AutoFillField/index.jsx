@@ -1,6 +1,5 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import cn from 'classnames';
-import { useState } from 'react';
 import GooglePlacesAutocomplete, { geocodeByPlaceId } from 'react-google-places-autocomplete';
 
 const AutoFillField = ({
@@ -18,14 +17,12 @@ const AutoFillField = ({
       apiKey="AIzaSyAZU-nw2CatyXuD1_zoe1rIPOJBGuA-vdg"
       selectProps={{
         placeholder,
-        // place,
-        // onChange: setPlace,
         onChange: (p) => {
           geocodeByPlaceId(p?.value?.place_id)
             .then((results) => {
               if (selected) {
                 const loc = results[0]?.geometry?.location;
-                selected(loc.lat(), loc.lng());
+                selected(p.label, loc.lat(), loc.lng());
               }
             })
             .catch(() => {});

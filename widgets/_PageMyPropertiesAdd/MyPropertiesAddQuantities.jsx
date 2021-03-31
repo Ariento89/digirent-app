@@ -2,7 +2,10 @@ import FieldError from 'components/FieldError/FieldError';
 import FormDatePicker from 'components/FormDatePicker/index';
 import FormInputIcon from 'components/FormInputIcon/index';
 import FormSelect from 'components/FormSelect/index';
-import { furnishTypeOptions, houseTypeOptions } from 'shared/options';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+
+import { furnishTypeOptions } from 'shared/options';
 
 const options = [
   { name: '1', value: 1 },
@@ -13,75 +16,89 @@ const options = [
   { name: '6', value: 6 },
 ];
 
-const MyPropertiesAddQuantities = ({ errors, touched }) => (
-  <div className="main-box info-quantity">
-    <div>
-      <FormSelect
-        classNames="field-item"
-        name="houseType"
-        placeholder="House Type"
-        options={houseTypeOptions}
-      />
-      {errors.houseType && touched.houseType ? <FieldError error={errors.houseType} /> : null}
-    </div>
+const MyPropertiesAddQuantities = ({ errors, touched }) => {
+  const [houseTypes, setHouseTypes] = useState([]);
 
-    <div>
-      <FormSelect
-        classNames="field-item"
-        name="bedrooms"
-        placeholder="Bedrooms"
-        options={options}
-      />
-      {errors.bedrooms && touched.bedrooms ? <FieldError error={errors.bedrooms} /> : null}
-    </div>
+  useEffect(() => {
+    const fetchHouseTypes = async () => {
+      const result = await axios('/apartments/house-types');
+      const types = result.data.map((type) => ({ name: type, value: type }));
+      setHouseTypes(types);
+    };
 
-    <div>
-      <FormSelect
-        classNames="field-item"
-        name="bathrooms"
-        placeholder="Bathrooms"
-        options={options}
-      />
-      {errors.bathrooms && touched.bathrooms ? <FieldError error={errors.bathrooms} /> : null}
-    </div>
+    fetchHouseTypes();
+  }, []);
 
-    <div>
-      <FormSelect
-        classNames="field-item"
-        name="furnishType"
-        placeholder="Furnish Type"
-        options={furnishTypeOptions}
-      />
-      {errors.furnishType && touched.furnishType ? <FieldError error={errors.furnishType} /> : null}
-    </div>
+  return (
+    <div className="main-box info-quantity">
+      <div>
+        <FormSelect
+          classNames="field-item"
+          name="houseType"
+          placeholder="House Type"
+          options={houseTypes}
+        />
+        {errors.houseType && touched.houseType ? <FieldError error={errors.houseType} /> : null}
+      </div>
 
-    <div>
-      <FormInputIcon type="number" classNames="field-item" name="size" placeholder="Sqft" />
-      {errors.size && touched.size ? <FieldError error={errors.size} /> : null}
-    </div>
+      <div>
+        <FormSelect
+          classNames="field-item"
+          name="bedrooms"
+          placeholder="Bedrooms"
+          options={options}
+        />
+        {errors.bedrooms && touched.bedrooms ? <FieldError error={errors.bedrooms} /> : null}
+      </div>
 
-    <div>
-      <FormDatePicker
-        classNames="field-item"
-        name="availableFrom"
-        placeholder="Availability Per (Date) From"
-        rightIcon="icon-calendar-gray"
-      />
-      {errors.availableFrom && touched.availableFrom ? (
-        <FieldError error={errors.availableFrom} />
-      ) : null}
-    </div>
+      <div>
+        <FormSelect
+          classNames="field-item"
+          name="bathrooms"
+          placeholder="Bathrooms"
+          options={options}
+        />
+        {errors.bathrooms && touched.bathrooms ? <FieldError error={errors.bathrooms} /> : null}
+      </div>
 
-    <div>
-      <FormDatePicker
-        classNames="field-item"
-        name="availableTo"
-        placeholder="Availability Per (Date) To"
-        rightIcon="icon-calendar-gray"
-      />
-      {errors.availableTo && touched.availableTo ? <FieldError error={errors.availableTo} /> : null}
+      <div>
+        <FormSelect
+          classNames="field-item"
+          name="furnishType"
+          placeholder="Furnish Type"
+          options={furnishTypeOptions}
+        />
+        {errors.furnishType && touched.furnishType ? <FieldError error={errors.furnishType} /> : null}
+      </div>
+
+      <div>
+        <FormInputIcon type="number" classNames="field-item" name="size" placeholder="Sqft" />
+        {errors.size && touched.size ? <FieldError error={errors.size} /> : null}
+      </div>
+
+      <div>
+        <FormDatePicker
+          classNames="field-item"
+          name="availableFrom"
+          placeholder="Availability Per (Date) From"
+          rightIcon="icon-calendar-gray"
+        />
+        {errors.availableFrom && touched.availableFrom ? (
+          <FieldError error={errors.availableFrom} />
+        ) : null}
+      </div>
+
+      <div>
+        <FormDatePicker
+          classNames="field-item"
+          name="availableTo"
+          placeholder="Availability Per (Date) To"
+          rightIcon="icon-calendar-gray"
+        />
+        {errors.availableTo && touched.availableTo ? <FieldError error={errors.availableTo} /> : null}
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 export default MyPropertiesAddQuantities;

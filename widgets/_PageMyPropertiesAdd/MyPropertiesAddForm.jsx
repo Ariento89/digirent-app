@@ -156,6 +156,7 @@ const MyPropertiesAddForm = ({ errors, amenities, property, onSubmit, isLoading,
 
                   <div className="main-form">
                     <MyPropertiesAddMainDetails
+                      property={property}
                       errors={formErrors}
                       touched={touched}
                       requestErrors={errors}

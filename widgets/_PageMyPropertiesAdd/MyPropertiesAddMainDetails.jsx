@@ -1,14 +1,29 @@
 /* eslint-disable operator-linebreak */
+import AutoFillField from 'components/AutoFillField/index';
 import FieldError from 'components/FieldError/FieldError';
 import FormInputIcon from 'components/FormInputIcon/index';
 import FormTextarea from 'components/FormTextarea/index';
 import { Field, useFormikContext } from 'formik';
+import { useEffect } from 'react';
 // import AutoFillField from 'components/AutoFillField/index';
 import MapPicker from './MapPicker';
 
 const MyPropertiesAddMainDetails = ({ property, errors, touched, requestErrors }) => {
   const { setFieldValue } = useFormikContext();
   console.log(property);
+
+  useEffect(() => {
+    if (property !== null) {
+      setFieldValue('latitude', property.latitude);
+      setFieldValue('longitude', property.longitude);
+      setFieldValue('address', property.address);
+
+      setFieldValue('country', 'Netherlands');
+      setFieldValue('state', property.state);
+      setFieldValue('city', property.city);
+    }
+  }, [property]);
+
   return (
     <>
       {!!requestErrors?.length &&
@@ -70,19 +85,34 @@ const MyPropertiesAddMainDetails = ({ property, errors, touched, requestErrors }
 
         {/* 4th row */}
         <div className="col-lg-12 mt-4">
-          <FormInputIcon name="address" placeholder="Address" icon="icon-map-marker-primary" />
+          <AutoFillField
+            types={['address']}
+            placeholderColor="#d0d3d4"
+            height="40px"
+            width="100%"
+            placeholder={property?.address ?? 'Address'}
+            icon="icon-map-marker-primary"
+            selected={(label, lat, lng, value, terms) => {
+              setFieldValue('latitude', lat);
+              setFieldValue('longitude', lng);
+              setFieldValue('address', value);
+
+              setFieldValue('country', 'Netherlands');
+              setFieldValue('state', terms[0]?.value ?? 'none');
+              setFieldValue('city', terms[1]?.value ?? 'none');
+            }}
+          />
           {errors.address && touched.address ? <FieldError error={errors.address} /> : null}
         </div>
 
         {/* 5th row */}
-        <div className="col-lg-4 mt-4">
+        {/* <div className="col-lg-4 mt-4">
           <FormInputIcon
             classNames="field-item small-icon"
             name="country"
             placeholder="Country"
             icon="icon-circle-primary"
           />
-          {/* <AutoFillField types={['(cities)']} placeholderColor="#d0d3d4" height="40px" width="100%" placeholder="Country" icon="icon-circle-primary" /> */}
           {errors.country && touched.country ? <FieldError error={errors.country} /> : null}
         </div>
         <div className="col-lg-4 mt-4">
@@ -102,9 +132,9 @@ const MyPropertiesAddMainDetails = ({ property, errors, touched, requestErrors }
             icon="icon-circle-primary"
           />
           {errors.city && touched.city ? <FieldError error={errors.city} /> : null}
-        </div>
+        </div> */}
 
-        <div className="col-12">
+        {/* <div className="col-12">
           {errors.longitude && touched.longitude ? <FieldError error="Location is required" /> : null}
           <MapPicker
             lat={52.0057441}
@@ -114,11 +144,15 @@ const MyPropertiesAddMainDetails = ({ property, errors, touched, requestErrors }
               setFieldValue('longitude', lng);
             }}
           />
-        </div>
+        </div> */}
 
         {/* 6th row */}
         <div className="col-lg-12 mt-4">
-          <FormTextarea name="description" placeholder="Description" icon="icon-left-align-primary" />
+          <FormTextarea
+            name="description"
+            placeholder="Description"
+            icon="icon-left-align-primary"
+          />
           {errors.description && touched.description ? (
             <FieldError error={errors.description} />
           ) : null}

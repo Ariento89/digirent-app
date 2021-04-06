@@ -16,13 +16,20 @@ const AutoFillField = ({
     <GooglePlacesAutocomplete
       apiKey="AIzaSyAZU-nw2CatyXuD1_zoe1rIPOJBGuA-vdg"
       selectProps={{
+        value: 'ward',
         placeholder,
         onChange: (p) => {
           geocodeByPlaceId(p?.value?.place_id)
             .then((results) => {
               if (selected) {
                 const loc = results[0]?.geometry?.location;
-                selected(p.label, loc.lat(), loc.lng());
+                selected(
+                  p.label,
+                  loc.lat(),
+                  loc.lng(),
+                  results[0]?.formatted_address,
+                  p.value?.terms,
+                );
               }
             })
             .catch(() => {});

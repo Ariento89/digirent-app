@@ -16,7 +16,6 @@ const AutoFillField = ({
     <GooglePlacesAutocomplete
       apiKey="AIzaSyAZU-nw2CatyXuD1_zoe1rIPOJBGuA-vdg"
       selectProps={{
-        value: 'ward',
         placeholder,
         onChange: (p) => {
           geocodeByPlaceId(p?.value?.place_id)

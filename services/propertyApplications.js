@@ -7,7 +7,7 @@ export const service = {
   apply: async (propertyId) => axios.post(`/applications/${propertyId}`),
   rejectApplication: async (applicationId) => axios.post(`/applications/${applicationId}/reject`),
   considerApplication: async (applicationId) => axios.post(`/applications/${applicationId}/consider`),
-  processApplication: async (applicationId) => axios.post(`/applications/${applicationId}/process`),
+  processApplication: async (applicationId, withContract) => axios.post(`/applications/${applicationId}/process?with_contract=${withContract}`),
   landlordProvideKeysToTenant: async (applicationId) => axios.post(`/applications/${applicationId}/keys/provided`),
   tenantReceivedKeys: async (applicationId) => axios.post(`/applications/${applicationId}/keys/received`),
   fetchTenantApplications: async () => axios.get('/applications/'),

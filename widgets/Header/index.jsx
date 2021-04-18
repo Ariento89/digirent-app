@@ -95,6 +95,66 @@ const Header = () => {
                           Account
                         </span>
                       </Link>
+
+                      <Link href="/notifications">
+                        <span className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                          Notifications
+                        </span>
+                      </Link>
+
+                      {me?.role === role.TENANT && (
+                        <Link href="">
+                          <span className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                            Favorites
+                          </span>
+                        </Link>
+                      )}
+
+                      {me?.role === role.LANDLORD && (
+                        <Link href="/my-properties">
+                          <span className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                            Properties
+                          </span>
+                        </Link>
+                      )}
+
+                      {me?.role === role.TENANT && (
+                        <Link href="/properties">
+                          <span className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                            Properties
+                          </span>
+                        </Link>
+                      )}
+
+                      <Link href="/messages">
+                        <span className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                          Messages
+                        </span>
+                      </Link>
+
+                      <Link href="/payments-landlord">
+                        <span className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                          Payments
+                        </span>
+                      </Link>
+
+                      {me?.role === role.LANDLORD && (
+                        <Link href="/contracts-landlord">
+                          <span className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                            Contracts
+                          </span>
+                        </Link>
+
+                      )}
+
+                      {me?.role === role.TENANT && (
+                        <Link href="/contracts-tenant">
+                          <span className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                            Contracts
+                          </span>
+                        </Link>
+                      )}
+
                       <span
                         className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                         onClick={onLogout}
@@ -134,7 +194,7 @@ const Header = () => {
                   <span style={{ color: 'white' }}>Not Verified</span>
                 </div>
               )}
-
+              {/*
               <div className="main-menu">
                 {me?.role === role.LANDLORD && (
                   <Link href="/my-properties">
@@ -172,7 +232,7 @@ const Header = () => {
 
                 <span>|</span>
                 <NotificationBadge />
-              </div>
+              </div> */}
             </div>
           </div>
         ) }

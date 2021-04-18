@@ -7,7 +7,7 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { useToasts } from 'react-toast-notifications';
 import { useScrollData } from 'scroll-data-hook';
-import { languageSwitchOptions, toastTypes } from 'shared/types';
+import { languageSwitchOptions, role, toastTypes } from 'shared/types';
 import { API_ASSET_URL } from 'services/index';
 import { useMe } from 'hooks/useMe';
 import Dropdown, { DropdownTrigger, DropdownContent } from 'react-simple-dropdown';
@@ -64,68 +64,22 @@ const HomePageHeader = ({ onLoginClick, onRegisterClick }) => {
 
           <div className="main-menu">
             <Link href="/properties">
-              <p className="links">RENTALS</p>
+              {/* <p className="links">RENTALS</p> */}
+              <button type="button" className="inline-flex items-center px-3 py-2 border border-transparent  leading-4 font-medium rounded-md shadow-sm text-white bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-400">
+                RENTALS
+              </button>
             </Link>
 
-            <div
-              className={cn('information-container mx-3 mx-md-4', { active: isInformationVisible })}
-              tabIndex="0"
-              onBlur={() => setIsInformationVisible(false)}
-            >
-              <div
-                className="information-link-container px-2"
-                onClick={() => setIsInformationVisible((value) => !value)}
-              >
-                <p className="links">INFORMATION</p>
-                {position.y >= SCROLL_THRESHOLD ? (
-                  <img
-                    src="/images/icon/icon-caret-down-primary.svg"
-                    className="icon-caret active-icon"
-                    alt="icon"
-                  />
-                ) : (
-                  <img
-                    src="/images/icon/icon-caret-down-white.svg"
-                    className="icon-caret inactive-icon"
-                    alt="icon"
-                  />
-                )}
-              </div>
-
-              <div className="information-links">
-                <Link href="#for-tenants">
-                  <p className="links">HOW TO RENT</p>
-                </Link>
-
-                <Link href="/pricing">
-                  <p className="links">PRICING</p>
-                </Link>
-
-                <Link href="/rental-tips">
-                  <p className="links">RENTAL TIPS</p>
-                </Link>
-
-                <Link href="/about">
-                  <p className="links">ABOUT US</p>
-                </Link>
-
-                <Link href="/media">
-                  <p className="links">MEDIA</p>
-                </Link>
-              </div>
-            </div>
-
             <Link href="#for-landlords">
-              <p className="links">RENT OUT</p>
+              {/* <p className="links ml-4 bg-blue-400">RENT OUT</p> */}
+              <button type="button" className="ml-4 inline-flex items-center px-3 py-2 border border-transparent  leading-4 font-medium rounded-md shadow-sm text-white bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-400">
+                RENT OUT
+              </button>
             </Link>
           </div>
 
           <div className="portal-choices">
-            {accessToken ? (
-              <button onClick={onLogout}>
-                <p className="links logout mx-5">LOGOUT</p>
-              </button>
-            ) : (
+            {!accessToken && (
               <>
                 <button onClick={onLoginClick}>
                   <p className="links login mr-3">LOGIN</p>
@@ -160,9 +114,83 @@ const HomePageHeader = ({ onLoginClick, onRegisterClick }) => {
               </DropdownTrigger>
               <DropdownContent>
                 <div className="relative">
-                  <div className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5" role="menu" aria-orientation="vertical" aria-labelledby="user-menu">
-                    <Link href="/account"><span className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Account</span></Link>
-                    <span className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" onClick={onLogout}>Log out</span>
+                  <div
+                    className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5"
+                    role="menu"
+                    aria-orientation="vertical"
+                    aria-labelledby="user-menu"
+                  >
+                    <Link href="/account">
+                      <span className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                        Account
+                      </span>
+                    </Link>
+
+                    <Link href="/notifications">
+                      <span className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                        Notifications
+                      </span>
+                    </Link>
+
+                    {me?.role === role.TENANT && (
+                      <Link href="">
+                        <span className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                          Favorites
+                        </span>
+                      </Link>
+                    )}
+
+                    {me?.role === role.LANDLORD && (
+                      <Link href="/my-properties">
+                        <span className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                          Properties
+                        </span>
+                      </Link>
+                    )}
+
+                    {me?.role === role.TENANT && (
+                      <Link href="/properties">
+                        <span className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                          Properties
+                        </span>
+                      </Link>
+                    )}
+
+                    <Link href="/messages">
+                      <span className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                        Messages
+                      </span>
+                    </Link>
+
+                    <Link href="/payments-landlord">
+                      <span className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                        Payments
+                      </span>
+                    </Link>
+
+                    {me?.role === role.LANDLORD && (
+                      <Link href="/contracts-landlord">
+                        <span className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                          Contracts
+                        </span>
+                      </Link>
+
+                    )}
+
+                    {me?.role === role.TENANT && (
+                      <Link href="/contracts-tenant">
+                        <span className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                          Contracts
+                        </span>
+                      </Link>
+                    )}
+
+                    <span
+                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                      onClick={onLogout}
+                    >
+                      Log out
+                    </span>
                   </div>
                 </div>
               </DropdownContent>

@@ -25,7 +25,7 @@ const PropertyInfo = ({
 }) => {
   const getContent = () => (
     // <div className={cn('property-info main-box p-0', { clickable: !!link })}>
-    <div className={cn('property-info main-box p-0', { clickable: false })}>
+    <div className={cn('property-info main-box p-0', { clickable: !onDelete })}>
       {/* {!!onDelete && (
         <button
           className="button-icon btn-delete gray2"
@@ -166,7 +166,7 @@ const PropertyInfo = ({
     </div>
   );
 
-  return getContent(); // link ? <Link href={link}>{getContent()}</Link> : getContent();
+  return !onDelete ? <Link href={link}>{getContent()}</Link> : getContent();
 };
 
 PropertyInfo.defaultProps = {

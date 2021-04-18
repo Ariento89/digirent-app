@@ -8,24 +8,25 @@ import { toastTypes } from 'shared/types';
 const MyPropertiesDeleteConfirmationModal = ({ property, isVisible, onClose, refresh }) => {
   // CUSTOM HOOKS
   const { addToast } = useToasts();
-  const {deleteProperty} = useProperties()
+  const { deleteProperty } = useProperties();
 
   // METHODS
   const onDelete = () => {
     // TODO: Implement delete functionality once there is an endpoint.
     deleteProperty(
-      {propertyId: property.id},
+      { propertyId: property.id },
       {
         onSuccess: () => {
-          
           onClose();
-          addToast('Property Deleted Successfully', toastTypes.SUCCESS);
+          addToast('Property Unpublished Successfully', toastTypes.SUCCESS);
           refresh();
         },
-        onError: () => { onClose(); addToast('Unable to delete property.', toastTypes.ERROR);}
-      }
-    )
-    
+        onError: () => {
+          onClose();
+          addToast('Unable to unpublish property.', toastTypes.ERROR);
+        },
+      },
+    );
   };
 
   return (
@@ -36,7 +37,7 @@ const MyPropertiesDeleteConfirmationModal = ({ property, isVisible, onClose, ref
         <div className="main-content">
           <p className="description">
             ARE YOU SURE YOU WANT TO
-            <span className="text-primary font-weight-bold"> DELETE THIS PROPERTY?</span>
+            <span className="text-primary font-weight-bold"> UNPUBLISH THIS PROPERTY?</span>
           </p>
 
           <div className="mt-4 buttons">

@@ -25,7 +25,11 @@ const MyPropertiesAddedProperties = ({
           <div key={property.id} className="col-12 col-md-6 col-xl-4">
             <PropertyInfo
               link={`my-properties/update/${property.id}`}
-              houseImage={property.images && property.images.length > 0 ? `${API_ASSET_URL}${property.images[0]}` : '"/images/house-sample-2.jpg"'}
+              houseImage={
+                property.images && property.images.length > 0
+                  ? `${API_ASSET_URL}${property.images[0]}`
+                  : '"/images/house-sample-2.jpg"'
+              }
               name={property.name}
               address={property.address}
               rentFee={property.monthlyPrice}
@@ -35,6 +39,7 @@ const MyPropertiesAddedProperties = ({
               onClick={() => onViewApplications(property)}
               onDelete={() => onDeleteProperty(property)}
               selectionType={null}
+              propId={property.id}
             />
           </div>
         ))}

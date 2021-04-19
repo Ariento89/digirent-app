@@ -73,11 +73,16 @@ const PropertyInfo = ({
                       Edit
                     </span>
                   </Link>
-                  <Link href={link}>
+                  <a
+                    rel="noopener noreferrer"
+                    target="_blank"
+                    href={`/properties/${propId}`}
+                    className="no-underline"
+                  >
                     <span className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
                       Preview
                     </span>
-                  </Link>
+                  </a>
                   {/* router.push(`/my-properties/duplicate/${selectedProperty.id}`); */}
                   <Link href={`/my-properties/duplicate/${propId}`}>
                     <span className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">

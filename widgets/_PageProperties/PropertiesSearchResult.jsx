@@ -1,25 +1,45 @@
 import FieldError from 'components/FieldError/FieldError';
 import Spinner from 'components/Spinner/index';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { request } from 'shared/types';
 import Pagination from 'widgets/Pagination/index';
 import PropertyInfo from 'widgets/PropertyInfo/index';
 import StateList, { stateListTypes } from 'widgets/StateList/index';
 import TableHeader from 'widgets/TableHeader/index';
 import { API_ASSET_URL } from 'services/index';
-import AutoFillField from 'components/AutoFillField/index';
 import GooglePlacesAutocomplete, { geocodeByPlaceId } from 'react-google-places-autocomplete';
+import axios from 'axios';
 
 const PropertiesSearchResult = ({ searchResultRef, properties, status, errors, location }) => {
   // STATES
   const [list, setList] = useState([]);
   const [paginationData, setPaginationData] = useState({});
+  const [houseTypes, setHouseTypes] = useState([]);
+  const [amenities, setAnemities] = useState([]);
 
   // METHODS
   const onPageChange = (newList, pagination) => {
     setList(newList);
     setPaginationData(pagination);
   };
+
+  useEffect(() => {
+    const fetchHouseTypes = async () => {
+      const result = await axios('/apartments/house-types');
+      const types = result.data.map((type) => ({ name: type, value: type }));
+      setHouseTypes(types);
+    };
+
+    const fetchAnemities = async () => {
+      const result = await axios('/amenities');
+      const types = result.data.map((type) => ({ name: type, value: type }));
+
+      setAnemities(types);
+    };
+
+    fetchHouseTypes();
+    fetchAnemities();
+  }, []);
 
   return (
     <div className="containerx mx-auto px-4 sm:px-6 lg:px-16">
@@ -68,8 +88,6 @@ const PropertiesSearchResult = ({ searchResultRef, properties, status, errors, l
                             Location
                           </span>
                           <div className="mt-1 flex rounded-md shadow-sm">
-                            {/* <input id="location" name="location" type="text" className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" /> */}
-                            {/* <AutoFillField types={['(cities)']} placeholderColor="#d0d3d4" height="40px" width="100%" placeholder="city" /> */}
                             <GooglePlacesAutocomplete
                               apiKey="AIzaSyAZU-nw2CatyXuD1_zoe1rIPOJBGuA-vdg"
                               selectProps={{
@@ -119,10 +137,9 @@ const PropertiesSearchResult = ({ searchResultRef, properties, status, errors, l
                           <div className="mt-1 flex rounded-md shadow-sm">
                             <select id="country" name="country" autoComplete="country" className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                               <option>Any</option>
-                              <option>studio</option>
-                              <option>apartment</option>
-                              <option>shared_room</option>
-                              <option>private_room</option>
+                              {
+                                houseTypes.map((ht) => <option key={ht.name}>{ht.name}</option>)
+                              }
                             </select>
                           </div>
                         </div>
@@ -216,7 +233,21 @@ const PropertiesSearchResult = ({ searchResultRef, properties, status, errors, l
                         <div>
                           <legend className="text-base font-medium text-gray-900">Amenities</legend>
                         </div>
-                        <div className="space-y-4">
+
+                        {
+                          amenities.map((ht) => (
+                            <div key={ht.name.id} className="space-y-4">
+                              <div className="flex items-center">
+                                <input id="comments" name="comments" type="checkbox" className="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 rounded" />
+                                <span htmlFor="push_everything" className="ml-3 block text-sm font-medium text-gray-700">
+                                  {ht.name.title}
+                                </span>
+                              </div>
+                            </div>
+                          ))
+                        }
+
+                        {/* <div className="space-y-4">
                           <div className="flex items-center">
                             <input id="comments" name="comments" type="checkbox" className="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 rounded" />
                             <span htmlFor="push_everything" className="ml-3 block text-sm font-medium text-gray-700">
@@ -247,7 +278,7 @@ const PropertiesSearchResult = ({ searchResultRef, properties, status, errors, l
                               party rooms
                             </span>
                           </div>
-                        </div>
+                        </div> */}
 
                       </div>
                     </div>

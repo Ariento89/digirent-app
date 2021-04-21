@@ -111,9 +111,9 @@ const PropertyInfo = ({
 
       <div className="p-3 p-md-4">
         <h3 className="main-subtitle font-weight-bold text-left">{name}</h3>
-        <div className="d-flex align-items-center mt-2">
+        <div className="d-flex align-items-center mt-2 h-10">
           <img src="/images/icon/icon-map-marker-primary.svg" height="20" width="20" alt="icon" />
-          <p className="ml-2 main-desc">{address}</p>
+          <p className="ml-2 main-desc text-sm">{address}</p>
         </div>
       </div>
 

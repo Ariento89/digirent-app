@@ -1,11 +1,17 @@
 module.exports = {
-  purge: ['./pages/**/*.{js,ts,jsx,tsx}', './components/**/*.{js,ts,jsx,tsx}'],
+  purge: ['./pages/**/*.{js,ts,jsx,tsx}', './components/**/*.{js,ts,jsx,tsx}', './widgets/**/*.{js,ts,jsx,tsx}'],
   darkMode: false, // or 'media' or 'class'
+  important: true,
   theme: {
     extend: {},
   },
   variants: {
     extend: {},
   },
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/forms'),
+    require('@tailwindcss/typography'),
+    require('@tailwindcss/aspect-ratio'),
+    require('@tailwindcss/line-clamp'),
+  ],
 };

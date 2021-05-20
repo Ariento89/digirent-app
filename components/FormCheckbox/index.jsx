@@ -1,9 +1,19 @@
 import Checkbox from 'components/Checkbox/index';
 import { useField, useFormikContext } from 'formik';
+import { useEffect } from 'react';
 
-const FormCheckbox = ({ classNames, options, value: initialValue, label, icon, ...props }) => {
+const FormCheckbox = ({ selected,
+  classNames, options, value: initialValue, label, icon, ...props }) => {
   const { setFieldValue } = useFormikContext();
   const [field] = useField(props);
+
+  useEffect(() => {
+    if (selected === true) {
+      const values = field.value;
+      values.push(initialValue);
+      setFieldValue(field.name, values);
+    }
+  }, [field.value]);
 
   const handleChange = (value) => {
     const values = field.value;

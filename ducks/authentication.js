@@ -9,6 +9,7 @@ export const types = {
   LOGIN: `${key}/LOGIN`,
   LOGIN_GOOGLE: `${key}/LOGIN_GOOGLE`,
   LOGIN_FACEBOOK: `${key}/LOGIN_FACEBOOK`,
+  LOGIN_APPLE: `${key}/LOGIN_APPLE`,
   FORGOT_PASSWORD: `${key}/FORGOT_PASSWORD`,
   RESET_PASSWORD: `${key}/RESET_PASSWORD`,
 
@@ -62,6 +63,7 @@ export const actions = {
   login: createAction(types.LOGIN),
   loginGoogle: createAction(types.LOGIN_GOOGLE),
   loginFacebook: createAction(types.LOGIN_FACEBOOK),
+  loginApple: createAction(types.LOGIN_APPLE),
   logout: createAction(types.LOGOUT),
 
   clearSessionTimeOut: createAction(types.CLEAR_SESSION_TIME_OUT),

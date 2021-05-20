@@ -78,6 +78,7 @@ const MessagesList = ({
 
                 return (
                   <div
+                    key={`${item.fromUser.id}-${item.toUser.id}`}
                     onClick={() => {
                       if (talkingTo?.id !== user.id) {
                         onSelectConversation(user, true);

@@ -8,7 +8,11 @@ const PropertiesDetailsName = ({ property }) => (
     </div>
 
     <button className="btn-open-map">
-      <a href="https://goo.gl/maps/8v5n9qm6QhgUoDCPA" target="_blank" rel="noreferrer">
+      <a
+        href={`https://www.google.com/maps?ll=${property.latitude},${property.longitude}`}
+        target="_blank"
+        rel="noreferrer"
+      >
         <img src="/images/icon/icon-open-map-primary.svg" height="30" width="30" alt="icon" />
         <span>OPEN MAP</span>
       </a>

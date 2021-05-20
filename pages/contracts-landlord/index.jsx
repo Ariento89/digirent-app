@@ -37,89 +37,11 @@ const Page = () => {
         <div className="container">
           <h3 className="main-title">CONTRACTS</h3>
 
-          <p className="main-title-2 pt-5 mt-5">
-            MOVE IN <span className="font-weight-bold text-primary">PROCESS</span>
-          </p>
-          <p className="main-desc font-weight-bold text-dark-gray text-center mt-4">
-            SELECT THE MOVE IN SCENARIO
-          </p>
           <p className="main-desc text-center">
-            Move in your tenant to the property and start collecting rent
+            You do not have any contracts yet
           </p>
 
-          <div className="row process-list">
-            <div className="col-12 col-md-6 col-lg-4 d-flex">
-              <div
-                className={cn('main-box item', {
-                  active: selectedScenario === moveInScenarioTypes.SEND,
-                })}
-                onClick={() => setSelectedScenario(moveInScenarioTypes.SEND)}
-              >
-                <div className="selector">
-                  <img src="/images/icon/icon-check-white.svg" alt="icon" />
-                </div>
-                <div className="rounded-icon primary mx-auto">
-                  <img src="/images/icon/icon-send-to-sign-agreement-white.svg" alt="item icon" />
-                </div>
-                <p className="main-desc text-center font-weight-bold text-dark">
-                  Send to sign agreement
-                </p>
-                <p className="main-desc text-center mt-3">
-                  Build the lease agreements with available templates or add your own template,
-                  customize, and have tenants sign it online.
-                </p>
-              </div>
-            </div>
-            <div className="col-12 col-md-6 col-lg-4 d-flex">
-              <div
-                className={cn('main-box item align-self-stretch', {
-                  active: selectedScenario === moveInScenarioTypes.ATTACH,
-                })}
-                onClick={() => setSelectedScenario(moveInScenarioTypes.ATTACH)}
-              >
-                <div className="selector">
-                  <img src="/images/icon/icon-check-white.svg" alt="icon" />
-                </div>
-                <div className="rounded-icon primary mx-auto">
-                  <img src="/images/icon/icon-attach-signed-agreement-white.svg" alt="item icon" />
-                </div>
-                <p className="main-desc text-center font-weight-bold text-dark">
-                  Attach signed agreement
-                </p>
-                <p className="main-desc text-center mt-3">
-                  If you already have tenants with signed agreements, upload the files and complete
-                  the move-in process.
-                </p>
-              </div>
-            </div>
-            <div className="col-12 col-md-6 col-lg-4 d-flex">
-              <div
-                className={cn('main-box item', {
-                  active: selectedScenario === moveInScenarioTypes.NO_NEED,
-                })}
-                onClick={() => setSelectedScenario(moveInScenarioTypes.NO_NEED)}
-              >
-                <div className="selector">
-                  <img src="/images/icon/icon-check-white.svg" alt="icon" />
-                </div>
-                <div className="rounded-icon primary mx-auto">
-                  <img src="/images/icon/icon-no-need-for-an-aggrement-white.svg" alt="item icon" />
-                </div>
-                <p className="main-desc text-center font-weight-bold text-dark">
-                  No need for an agreement
-                </p>
-                <p className="main-desc text-center mt-3">
-                  I got this all arranged externally. And not in need of documenting here.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <button type="button" className="button d-block mx-auto mt-5">
-            GET STARTED
-          </button>
-
-          <div className="row properties">
+          {/* <div className="row properties">
             {[1, 2, 3].map((key) => (
               <div key={key} className="col-12 col-md-6 col-lg-4">
                 <PropertyInfo
@@ -133,7 +55,7 @@ const Page = () => {
                 />
               </div>
             ))}
-          </div>
+          </div> */}
         </div>
       </PageWrapper>
 

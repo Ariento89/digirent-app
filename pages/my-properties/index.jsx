@@ -34,8 +34,7 @@ const Page = () => {
     errors: applicationsErrors,
   } = usePropertyApplications();
 
-  // METHODS
-  useEffect(() => {
+  const refresh = () => {
     fetchProperties(
       { landlord_id: me.id },
       {
@@ -43,6 +42,11 @@ const Page = () => {
         onError: onFetchPropertiesError,
       },
     );
+  }
+
+  // METHODS
+  useEffect(() => {
+    refresh()
   }, []);
 
   const onFetchPropertiesSuccess = ({ response }) => {
@@ -120,6 +124,7 @@ const Page = () => {
       <MyPropertiesDeleteConfirmationModal
         property={selectedProperty}
         isVisible={deleteConfirmationModalVisible}
+        refresh={refresh}
         onClose={() => setDeleteConfirmationModalVisible(false)}
       />
 

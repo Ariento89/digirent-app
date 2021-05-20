@@ -17,6 +17,7 @@ export const useProperties = () => {
   const updatePropertyAction = useActionDispatch(actions.updateProperty);
   const uploadImageAction = useActionDispatch(actions.uploadImage);
   const uploadVideosAction = useActionDispatch(actions.uploadVideos);
+  const deletePropertyAction = useActionDispatch(actions.deleteProperty);
 
   // GENERAL METHODS
   const resetError = () => setErrors([]);
@@ -66,6 +67,10 @@ export const useProperties = () => {
     executeRequest(data, callback, uploadVideosAction, types.UPLOAD_VIDEOS);
   };
 
+  const deleteProperty = (data, callback = {}) => {
+    executeRequest(data, callback, deletePropertyAction, types.DELETE_PROPERTY)
+  }
+
   return {
     fetchProperties,
     createProperty,
@@ -73,6 +78,7 @@ export const useProperties = () => {
     updateProperty,
     uploadImage,
     uploadVideos,
+    deleteProperty,
     status,
     errors,
     recentRequest,

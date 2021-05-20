@@ -54,11 +54,11 @@ function* considerApplication({ payload }) {
 }
 
 function* processApplication({ payload }) {
-  const { callback, applicationId } = payload;
+  const { callback, applicationId, withContract } = payload;
   callback({ status: request.REQUESTING });
 
   try {
-    const response = yield call(service.processApplication, applicationId);
+    const response = yield call(service.processApplication, applicationId, withContract);
     callback({ status: request.SUCCESS, response: response.data });
   } catch (e) {
     callback({ status: request.ERROR, errors: e.errors });

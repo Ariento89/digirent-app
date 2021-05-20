@@ -3,6 +3,7 @@ import Spinner from 'components/Spinner/index';
 import { request } from 'shared/types';
 import StateList, { stateListTypes } from 'widgets/StateList/index';
 import PropertyInfo from 'widgets/PropertyInfo/index';
+import { API_ASSET_URL } from 'services/index';
 
 const MyPropertiesAddedProperties = ({
   properties,
@@ -24,7 +25,11 @@ const MyPropertiesAddedProperties = ({
           <div key={property.id} className="col-12 col-md-6 col-xl-4">
             <PropertyInfo
               link={`my-properties/update/${property.id}`}
-              houseImage="/images/house-sample-1.jpg"
+              houseImage={
+                property.images && property.images.length > 0
+                  ? `${API_ASSET_URL}${property.images[0]}`
+                  : '"/images/house-sample-2.jpg"'
+              }
               name={property.name}
               address={property.address}
               rentFee={property.monthlyPrice}
@@ -32,8 +37,9 @@ const MyPropertiesAddedProperties = ({
               bathrooms={property.bathrooms}
               buttonName="VIEW APPLICATIONS"
               onClick={() => onViewApplications(property)}
-              onDelete={onDeleteProperty}
+              onDelete={() => onDeleteProperty(property)}
               selectionType={null}
+              propId={property.id}
             />
           </div>
         ))}

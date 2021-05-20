@@ -7,8 +7,9 @@ import PageWrapper from 'widgets/PageWrapper';
 import PropertiesLanding from 'widgets/_PageProperties/PropertiesLanding';
 import PropertiesRecommended from 'widgets/_PageProperties/PropertiesRecommended';
 import PropertiesSearchResult from 'widgets/_PageProperties/PropertiesSearchResult';
+import { withRouter } from 'next/router';
 
-const Page = () => {
+const Page = ({ router }) => {
   // STATES
   const [properties, setProperties] = useState([]);
   const [recommendedProperties, setRecommendedProperties] = useState([]);
@@ -23,7 +24,21 @@ const Page = () => {
   // METHODS
 
   useEffect(() => {
-    onSearch(null);
+    const params = {};
+    if (router.query.from) {
+      params.available_from = router.query.from;
+    }
+    if (router.query.to) {
+      params.available_to = router.query.to;
+    }
+    if (router.query.lat !== '0') {
+      params.latitude = router.query.lat;
+    }
+    if (router.query.lng !== '0') {
+      params.longitude = router.query.lng;
+    }
+
+    onSearch(params);
   }, []);
 
   const onSearch = (data) => {
@@ -61,6 +76,7 @@ const Page = () => {
         properties={properties}
         status={status}
         errors={errors}
+        location={router.query.label}
       />
 
       <PropertiesRecommended properties={recommendedProperties} />
@@ -68,4 +84,4 @@ const Page = () => {
   );
 };
 
-export default Page;
+export default withRouter(Page);

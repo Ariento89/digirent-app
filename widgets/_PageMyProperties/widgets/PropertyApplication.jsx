@@ -8,11 +8,16 @@ import { useEffect, useState } from 'react';
 import { useToasts } from 'react-toast-notifications';
 import { showErrorsMessage } from 'shared/functions';
 import { applicationStatusTypes, request, toastTypes } from 'shared/types';
+import { API_ASSET_URL } from 'services/index';
+import ContactLandLordDialog from 'widgets/ContactLandLordDialog';
+import StartContracctDialog from '../StartContractDialog';
 
 const PropertyApplication = ({ application: propertyApplication, onUpdateApplication }) => {
   // STATES
   const [application, setApplication] = useState(null);
   const [buttonOverlayVisible, setButtonOverlayVisible] = useState(false);
+  const [openContact, setOpenContact] = useState(false);
+  const [openStartContract, setOpenStartContract] = useState(false);
 
   // CUSTOM HOOKS
   const { addToast } = useToasts();
@@ -30,14 +35,15 @@ const PropertyApplication = ({ application: propertyApplication, onUpdateApplica
     setApplication(propertyApplication);
   }, [propertyApplication]);
 
-  const onProcess = () => {
+  const onProcess = (withContract) => {
     processApplication(
-      { applicationId: application.id },
+      { applicationId: application.id, withContract },
       {
         onSuccess: ({ response }) => {
           setApplication(response);
           onUpdateApplication(response);
           addToast("Successfully processed the tenant's property application.", toastTypes.SUCCESS);
+          setOpenStartContract(false);
         },
         onError: () => {
           showErrorsMessage(addToast, errors);
@@ -92,13 +98,32 @@ const PropertyApplication = ({ application: propertyApplication, onUpdateApplica
 
   return (
     <div className="PropertyApplication">
+      {openContact && (
+        <ContactLandLordDialog
+          landlord={application?.tenant}
+          closeDialog={() => {
+            setOpenContact(false);
+          }}
+        />
+      )}
+      {openStartContract && (
+        <StartContracctDialog
+          startContract={(withContract) => {
+            onProcess(withContract);
+          }}
+          closeDialog={() => {
+            setOpenStartContract(false);
+          }}
+        />
+      )}
+
       <div className="item d-none d-md-flex">
-        <div className="user-photo" />
+        <div className="user-photo" style={{ backgroundImage: `url(${API_ASSET_URL}${application?.tenant?.profileImageUrl})` }} />
 
         <div className="user-name flex-1 text-center">
           <div className="d-flex align-items-center justify-content-center">
-            <span className="text-sm font-weight-bold">Jane</span>
-            <span className="text-sm">, 22</span>
+            <span className="text-sm font-weight-bold">{application?.tenant?.firstName}</span>
+            <span className="text-sm">, {application?.tenant?.age}</span>
             <img
               className="ml-2"
               src="/images/icon/icon-gender-primary.svg"
@@ -114,7 +139,7 @@ const PropertyApplication = ({ application: propertyApplication, onUpdateApplica
 
         <div className="flex-1">
           <span className="profile-completion text-sm">
-            <span className="font-weight-bold d-block">60% PROFILE</span>
+            <span className="font-weight-bold d-block">{application?.tenant?.profilePercentage}% PROFILE</span>
             COMPLETION
           </span>
         </div>
@@ -122,7 +147,7 @@ const PropertyApplication = ({ application: propertyApplication, onUpdateApplica
         <div className="divider" />
 
         <div className="flex-1">
-          <span className="verified text-sm">VERIFIED</span>
+          <span className="verified text-sm">{application?.status?.toUpperCase()}</span>
         </div>
 
         <div className="divider" />
@@ -171,7 +196,15 @@ const PropertyApplication = ({ application: propertyApplication, onUpdateApplica
             </>
           )}
 
-          {application?.status === applicationStatusTypes.PROCESSING && (
+          {application?.status === applicationStatusTypes.CONSIDERED && (
+            <>
+              <button onClick={() => { setOpenStartContract(true); }} type="button" className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                Accept
+              </button>
+            </>
+          )}
+
+          {/* {application?.status === applicationStatusTypes.PROCESSING && (
             <>
               {buttonOverlayVisible && (
                 <div className="button-overlay">
@@ -208,14 +241,15 @@ const PropertyApplication = ({ application: propertyApplication, onUpdateApplica
                 <img src="/images/icon/icon-check-white.svg" alt="icon" />
               </Button>
             </>
-          )}
+          )} */}
 
           {[
-            applicationStatusTypes.CONSIDERED,
+            // applicationStatusTypes.CONSIDERED,
             applicationStatusTypes.FAILED,
             applicationStatusTypes.REJECTED,
             applicationStatusTypes.AWARDED,
             applicationStatusTypes.COMPLETED,
+            applicationStatusTypes.PROCESSING,
           ].includes(application?.status) && (
             <span className={cn('application-status text-sm', application?.status)}>
               {application?.status}
@@ -226,7 +260,7 @@ const PropertyApplication = ({ application: propertyApplication, onUpdateApplica
         <div className="divider" />
 
         <div className="flex-1">
-          <button type="button" className="button btn-email d-block mx-auto">
+          <button onClick={() => { setOpenContact(true); }} type="button" className="button btn-email d-block mx-auto">
             <img src="/images/icon/icon-email-outline.svg" alt="icon" />
           </button>
         </div>

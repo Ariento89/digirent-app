@@ -15,6 +15,8 @@ const Page = () => {
   const [property, setProperty] = useState(null);
   const [amenities, setAmenities] = useState([]);
 
+  const { uploadImage, status: uploadImage1RequestStatus } = useProperties();
+
   // CUSTOM HOOKS
   const router = useRouter();
   const { id: propertyId } = router.query;
@@ -98,11 +100,59 @@ const Page = () => {
     addToast('An error occurred while updating your property.', toastTypes.ERROR);
   };
 
-  const onSubmit = (data) => {
+  const onImageUploadSuccess = (label) => {
+    addToast(`Successfully uploaded your ${label}.`, toastTypes.SUCCESS);
+  };
+
+  const onImageUploadError = (label) => {
+    addToast(`An error occurred while uploaded ${label}.`, toastTypes.ERROR);
+  };
+
+  const onSubmit = ({ image1, image2, image3, savedImage1, savedImage2, savedImage3, ...data }) => {
     updateProperty(
       { propertyId, ...data },
       {
-        onSuccess: onUpdateSuccess,
+        onSuccess: ({ response }) => {
+          onUpdateSuccess();
+
+          const { id } = response;
+
+          uploadImage(
+            { propertyId: id, image: image1 },
+            {
+              onSuccess: () => {
+                onImageUploadSuccess('First image');
+
+                uploadImage(
+                  { propertyId: id, image: image2 },
+                  {
+                    onSuccess: () => {
+                      onImageUploadSuccess('Second image');
+
+                      uploadImage(
+                        { propertyId: id, image: image3 },
+                        {
+                          onSuccess: () => {
+                            onImageUploadSuccess('Third image');
+                          },
+                          onError: () => {
+                            onImageUploadError('Third image');
+                          },
+                        },
+                      );
+                    },
+                    onError: () => {
+                      onImageUploadError('Second image');
+                    },
+                  },
+                );
+              },
+              onError: () => {
+                onImageUploadError('First image');
+              },
+            },
+          );
+        },
         onError: onUpdateError,
       },
     );

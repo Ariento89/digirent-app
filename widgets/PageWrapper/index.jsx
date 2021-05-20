@@ -2,14 +2,14 @@ import cn from 'classnames';
 import { useMe } from 'hooks/useMe';
 import Head from 'next/head';
 import Loader from 'react-loader-spinner';
-import NotVerified from './NotVerified'
 import Footer from 'widgets/Footer';
 import Header from 'widgets/Header';
+import NotVerified from './NotVerified';
 
-const PageWrapper = ({ title, pageName, children, verificationRequired=false }) => {
+const PageWrapper = ({ title, pageName, children, verificationRequired = false }) => {
   // const { language } = useLanguage();
 
-  const {me} = useMe();
+  const { me } = useMe();
 
   // eslint-disable-next-line react-hooks/rules-of-hooks
   // useEffect(() => {
@@ -44,47 +44,15 @@ const PageWrapper = ({ title, pageName, children, verificationRequired=false }) 
         <meta name="msapplication-TileImage" content="/favicons/ms-icon-144x144.png" />
         <meta name="theme-color" content="#ffffff" />
         <title>{title}</title>
-
         {/* <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              window.Widget = { key: '5f89dd860307c' };
-              (function (e, t) {
-              var n = e.createElement(t);
-              n.async = true;
-              n.src = 'https://static.futy-widget.com/js/widget.js';
-              var r = e.getElementsByTagName(t)[0];
-              r.parentNode.insertBefore(n, r);
-              })(document, 'script');
-                  `,
-          }}
-        ></script> */}
-
-        {/* <script type="text/javascript" src="https://cdn.weglot.com/weglot.min.js"></script> */}
-
-        {/* <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              window.initWeglot = function() {
-                if(typeof Weglot !== 'undefined') {
-                  if(!Weglot.initialized) {
-                    Weglot.initialize({api_key: 'wg_8fa89c444075cf79dc5825b3457396ab5', hide_switcher: true});
-                    Weglot.switchTo('${language}'); 
-                  } else {
-                    Weglot.switchTo('${language}');  
-                  }
-                }
-              }
-
-              window.initWeglot()
-            `,
-          }}
-        ></script> */}
+          async
+          src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAZU-nw2CatyXuD1_zoe1rIPOJBGuA-vdg&libraries=places"
+        /> */}
       </Head>
 
       <Header />
       {(!verificationRequired || me?.emailVerified) && <div className={cn('layout-content', pageName)}>{children}</div>}
-      {verificationRequired && !me?.emailVerified && <NotVerified/>}
+      {verificationRequired && !me?.emailVerified && <NotVerified />}
       <Footer />
     </div>
   );

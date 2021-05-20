@@ -19,6 +19,7 @@ export const useAuthentication = () => {
   const loginAction = useActionDispatch(actions.login);
   const loginGoogleAction = useActionDispatch(actions.loginGoogle);
   const loginFacebookAction = useActionDispatch(actions.loginFacebook);
+  const loginAppleAction = useActionDispatch(actions.loginApple)
   const logout = useActionDispatch(actions.logout);
   const clearSessionTimeOut = useActionDispatch(actions.clearSessionTimeOut);
 
@@ -58,12 +59,17 @@ export const useAuthentication = () => {
     executeRequest(data, callback, loginFacebookAction, types.LOGIN_FACEBOOK)
   }
 
+  const loginApple = (data, callback = {}) => {
+    executeRequest(data, callback, loginAppleAction, types.LOGIN_APPLE)
+  }
+
   return {
     accessToken,
     sessionTimedOut,
     login,
     loginGoogle,
     loginFacebook,
+    loginApple,
     logout,
     clearSessionTimeOut,
     status,

@@ -19,6 +19,7 @@ import HomeRecentlyAddedProperties from 'widgets/_PageHome/HomeRecentlyAddedProp
 import HomeRegisterModal from 'widgets/_PageHome/HomeRegisterModal';
 import HomeSectionDivider from 'widgets/_PageHome/HomeSectionDivider';
 import HomeWhyChooseDigiRentOverAnyAgency from 'widgets/_PageHome/HomeWhyChooseDigiRentOverAnyAgency';
+import app from 'node_modules/next/app';
 
 const Page = ({ query }) => {
   // STATES
@@ -31,7 +32,7 @@ const Page = ({ query }) => {
   // CUSTOM HOOKS
   const { addToast } = useToasts();
   const router = useRouter();
-  const { loginFacebook, loginGoogle, /* status, */errors } = useAuthentication();
+  const { loginFacebook, loginGoogle, loginApple, /* status, */errors } = useAuthentication();
   const { sessionTimedOut, clearSessionTimeOut } = useAuthentication();
 
   // METHODS
@@ -43,29 +44,50 @@ const Page = ({ query }) => {
   }, [sessionTimedOut]);
 
   useEffect(() => {
-    const queryString = qs.stringify(query);
-    if (queryString.includes('google')) {
-      loginGoogle(
-        { query },
-        {
-          onSuccess: () => {
-            addToast('Login successful', toastTypes.SUCCESS);
-            router.push('/');
+    // const queryString = qs.stringify(query);
+    console.log({query})
+    if(query.state){
+      const queryState = query.state;
+      const provider = queryState.split('.', 1)[0]
+      const foundProvider = ['google', 'facebook', 'apple'].find(x=>x===provider)
+      if(!foundProvider){
+        router.push('/')
+        return
+      }
+      if (foundProvider === 'google') {
+        loginGoogle(
+          { query },
+          {
+            onSuccess: () => {
+              addToast('Login successful', toastTypes.SUCCESS);
+              router.push('/');
+            },
+            onError: () => router.push('/'),
           },
-          onError: () => router.push('/'),
-        },
-      );
-    } else if (queryString && queryString.includes('code') && queryString.includes('state')) {
-      loginFacebook(
-        { query },
-        {
-          onSuccess: () => {
-            addToast('Login successful', toastTypes.SUCCESS);
-            router.push('/');
+        );
+      } else if (foundProvider === 'facebook') {
+        loginFacebook(
+          { query },
+          {
+            onSuccess: () => {
+              addToast('Login successful', toastTypes.SUCCESS);
+              router.push('/');
+            },
+            onError: () => router.push('/'),
           },
-          onError: () => router.push('/'),
-        },
-      );
+        );
+      }else if (foundProvider === 'apple') {
+        loginApple(
+          {query},
+          {
+            onSuccess: () => {
+              addToast('Login successful', toastTypes.SUCCESS);
+              router.push('/');
+            },
+            onError: () => router.push('/')
+          },
+        );
+      }
     }
   }, [query]);
 

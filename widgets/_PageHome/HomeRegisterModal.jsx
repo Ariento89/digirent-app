@@ -3,6 +3,7 @@ import cn from 'classnames';
 import Button from 'components/Button/index';
 import FieldError from 'components/FieldError/FieldError';
 import dayjs from 'dayjs';
+import {service as authService} from 'services/authentication'
 import { Form, Formik } from 'formik';
 import { useUsers } from 'hooks/useUsers';
 import Link from 'next/link';
@@ -15,6 +16,7 @@ import * as Yup from 'yup';
 import AuthField from './widgets/AuthField';
 import AuthFieldDatePicker from './widgets/AuthFieldDatePicker';
 import AuthUserSelection from './widgets/AuthUserSelection';
+import { useRouter } from 'node_modules/next/dist/client/router';
 
 const monthOptions = [
   { label: 'Jan', value: '0' },
@@ -42,6 +44,8 @@ const HomeRegisterModal = ({ initialUserType, onClose, isVisible }) => {
   // CUSTOM HOOKS
   const { addToast } = useToasts();
   const { registerTenant, registerLandlord, status, errors, reset } = useUsers();
+
+  const router = useRouter()
 
   // METHODS
   useEffect(() => {
@@ -185,6 +189,36 @@ const HomeRegisterModal = ({ initialUserType, onClose, isVisible }) => {
     setDayOptions(days);
   };
 
+  const onSignupGoogle = async () => {
+    try {
+      const response = await authService.googleAuth(selectedUserType);
+      router.push(response.data.to);
+    }
+    catch(err){ 
+      addToast(err.response.data.detail, toastTypes.ERROR); 
+    }
+  }
+
+  const onSignupFacebook = async () => {
+    try {
+      const response = await authService.facebookAuth(selectedUserType);
+      router.push(response.data.to);
+    }
+    catch(err){
+      addToast(err.response.data.detail, toastTypes.ERROR); 
+    }
+  }
+
+  const onSignupApple = async () => {
+    try{
+      const response = await authService.appleAuth(selectedUserType);
+      router.push(response.data.to);
+    }
+    catch(err){
+      addToast(err.response.data.detail, toastTypes.ERROR)
+    }
+  }
+
   return (
     <Modal show={isVisible} onHide={closeModal} id="register-modal" centered>
       <Modal.Body>
@@ -194,13 +228,13 @@ const HomeRegisterModal = ({ initialUserType, onClose, isVisible }) => {
           onSelectUser={setSelectedUserType}
         />
         <div className="social-media-options">
-          <div className="item">
+          <div className="item" onClick={onSignupFacebook}>
             <img src="/images/social-media/facebook-square.png" alt="fb icon" />
           </div>
-          <div className="item mx-3">
+          <div className="item mx-3" onClick={onSignupGoogle}>
             <img src="/images/social-media/google.png" alt="google icon" />
           </div>
-          <div className="item">
+          <div className="item" onClick={onSignupApple}>
             <img src="/images/social-media/apple.png" alt="apple icon" />
           </div>
         </div>

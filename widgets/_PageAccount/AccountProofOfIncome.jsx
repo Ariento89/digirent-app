@@ -17,7 +17,7 @@ const AccountProofOfIncome = () => {
 
   // CUSTOM HOOKS
   const { addToast } = useToasts();
-  const { me } = useMe();
+  const { me, getMe } = useMe();
   const { uploadProofOfIncome, status, errors } = useDocuments();
 
   // METHODS
@@ -42,6 +42,7 @@ const AccountProofOfIncome = () => {
   );
 
   const onSuccess = () => {
+    getMe();
     addToast('Successfully uploaded Proof of Income.', toastTypes.SUCCESS);
   };
 

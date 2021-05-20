@@ -93,7 +93,7 @@ const Page = () => {
 
     return () => {
       setWsRecentRequest(eventTypes.USER_DISCONNECTED);
-      socketRef.current.send({ event_type: eventTypes.USER_DISCONNECTED });
+      // socketRef.current.send({ event_type: eventTypes.USER_DISCONNECTED });
       socketRef.current.close();
     };
   }, [accessToken]);
@@ -289,7 +289,6 @@ const Page = () => {
       <div className="container-fluid container-lg">
         <h3 className="main-title">MESSAGES</h3>
         <MessagesSearch />
-
         <div className="row mt-4">
           <MessagesList
             talkingTo={talkingTo}

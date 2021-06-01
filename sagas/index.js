@@ -8,6 +8,7 @@ import meSagas from './me';
 import propertiesSagas from './properties';
 import propertyApplicationsSagas from './propertyApplications';
 import usersSagas from './users';
+import filterPropertiesSagas from './filterProperties'
 
 export default function* rootSaga() {
   yield all([
@@ -20,5 +21,6 @@ export default function* rootSaga() {
     ...propertiesSagas,
     ...propertyApplicationsSagas,
     ...usersSagas,
+    ...filterPropertiesSagas,
   ]);
 }

@@ -20,6 +20,7 @@ const HomeLanding = () => {
     if (to) {
       t = dayjs(to).format('YYYY-MM-DD');
     }
+    console.log(from, to)
     Router.push({ pathname: '/properties', query: { label, from: f, to: t, lat, lng } });
   };
   return (

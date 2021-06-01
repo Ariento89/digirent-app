@@ -46,10 +46,11 @@ const PropertiesRecommended = ({ properties }) =>
             <div key={property.id} className="item">
               <PropertyInfo
                 link={`/properties/${property.id}`}
-                houseImage={property.images && property.images.length > 0 ? `${API_ASSET_URL}${property.images[0]}` : '"/images/house-sample-2.jpg"'}
+                houseImage={property.images}
                 name={property.name}
                 address={property.address}
                 rentFee={property.monthlyPrice}
+                houseType={property.houseType}
                 bedrooms={property.bedrooms}
                 bathrooms={property.bathrooms}
               />

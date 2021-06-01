@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { actions, key as AUTH_KEY } from 'ducks/authentication';
-import { isArray, isString } from 'lodash';
+import { isArray, isString, result } from 'lodash';
 import {
   API_TIMEOUT,
   API_URL,
@@ -57,3 +57,4 @@ export default function configureAxios(store) {
     return Promise.reject(modifiedError);
   });
 }
+

@@ -4,18 +4,15 @@ import { useEffect, useRef, useState } from 'react';
 import { useToasts } from 'react-toast-notifications';
 import { toastTypes } from 'shared/types';
 import PageWrapper from 'widgets/PageWrapper';
-import PropertiesLanding from 'widgets/_PageProperties/PropertiesLanding';
 import PropertiesRecommended from 'widgets/_PageProperties/PropertiesRecommended';
 import PropertiesSearchResult from 'widgets/_PageProperties/PropertiesSearchResult';
 import { withRouter } from 'next/router';
 
 const Page = ({ router }) => {
-  console.log("entered properties page")
+  console.log("search page")
   // STATES
   const [properties, setProperties] = useState([]);
-  console.log("here?")
   const [recommendedProperties, setRecommendedProperties] = useState([]);
-  console.log("here345")
 
 
   // REFS
@@ -24,15 +21,42 @@ const Page = ({ router }) => {
   // CUSTOM HOOKS
   const { addToast } = useToasts();
   const { fetchProperties, status, errors } = useProperties();
-  const params = {};
+  console.log("--------------------------")
+
+    const params = {};
 
   // METHODS
   useEffect(() => {
+    console.log("create params")
+
     if (router.query.from) {
       params.available_from = router.query.from;
+      // console.log("from within properties")
     }
     if (router.query.to) {
       params.available_to = router.query.to;
+      // console.log(params)
+    }
+    if (router.query.mp) {
+      params.min_price = router.query.mp;
+    }
+    if (router.query.max_price) {
+      params.max_price = router.query.max_price;
+    }
+    if (router.query.housetype) {
+      params.house_type = router.query.housetype;
+    }
+    if (router.query.max_bathrooms) {
+      params.max_bathrooms = router.query.max_bathrooms;
+    }
+    if (router.query.max_bedrooms) {
+      params.max_bedrooms = router.query.max_bedrooms;
+    }
+    if (router.query.min_bathrooms) {
+      params.min_bathrooms = router.query.min_bathrooms;
+    }
+    if (router.query.min_bedrooms) {
+      params.min_bedrooms = router.query.min_bedrooms;
     }
     if (router.query.lat !== '0') {
       params.latitude = router.query.lat;
@@ -42,13 +66,17 @@ const Page = ({ router }) => {
     }
 
     onSearch(params);
-  }, []);
+    // par = params;
+  });
 
   const onSearch = (data) => {
+    console.log("searching")
     if (data !== null) {
+      console.log("there is data so top of the page")
       searchResultRef.current.scrollIntoView();
     }
 
+    console.log("fetching properties")
     fetchProperties(data, {
       onSuccess: onFetchSuccess,
       onError: onFetchError,
@@ -56,34 +84,17 @@ const Page = ({ router }) => {
   };
 
   const onFetchSuccess = ({ response }) => {
-    console.log("fetchsccessul")
+    console.log("query fetch data successful")
     if (!recommendedProperties.length) {
       setRecommendedProperties(response);
     }
 
-    console.log("returning your response")
+    console.log("search data")
     setProperties(response);
   };
 
   const onFetchError = () => {
     addToast('An error occurred while searching properties.', toastTypes.ERROR);
-  };
-  
-  const onFiltersChanged = (filterObject) => {
-    // console.log(filterObject.min_price);
-    params.min_price = filterObject.min_price;
-    params.max_price = filterObject.max_price;
-    params.available_from = filterObject.available_from;
-    params.available_to = filterObject.available_to;
-    params.house_type = filterObject.house_type;
-    params.max_bathrooms = filterObject.max_bathrooms;
-    params.min_bathrooms = filterObject.min_bathrooms;
-    params.max_bedrooms = filterObject.max_bedrooms;
-    params.min_bedrooms = filterObject.min_bedrooms;
-    params.lat = filterObject.lat;
-    params.lng = filterObject.lng;
-
-    onSearch(params);
   };
 
   return (
@@ -99,13 +110,19 @@ const Page = ({ router }) => {
         status={status}
         errors={errors}
         location={router.query.label}
-        onFiltersChanged={onFiltersChanged}
       />
 
+      {/* <PropertiesSearchResult
+        f = {router.query.from}
+        tr = {router.query.to}
+        location={router.query.label}
+            
+      /> */}
+
+      
       <PropertiesRecommended properties={recommendedProperties} /> 
     </PageWrapper>
   );
 };
 
 export default withRouter(Page);
-

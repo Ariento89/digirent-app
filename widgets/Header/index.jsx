@@ -236,11 +236,11 @@ const Header = () => {
             </div>
           </div>
         ) }
-        <div className="header-back">
+        {/* <div className="header-back">
           <div className="back" onClick={onBack}>
             <img src="/images/icon/icon-arrow-left-white.svg" alt="icon user" />
           </div>
-        </div>
+        </div> */}
       </section>
     </>
   );

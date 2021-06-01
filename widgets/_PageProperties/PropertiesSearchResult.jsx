@@ -405,22 +405,7 @@ const [available_from, setAvailableFrom] = useState();
                   <AccordionDetails>
                   <div className="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-1 mt-4">
                   <Box component="form"  sx={{'& .MuiTextField-root': { m: 1, width: '15ch' },}} noValidate autoComplete="off">
-                      <div className="flex">   
-                          <div >
-                            <select 
-                              id="bathrooms" 
-                              name="min_bathrooms"
-                              onChange = {quickFilter}
-                              className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                              <option>Any</option>
-                              <option value="1">1</option>
-                              <option value="2">2</option>
-                              <option value="3">3</option>
-                              <option value="4">4</option>
-                              <option value="5">5</option>
-                              <option value="6">6</option>
-                            </select>
-                          </div>
+                      <div className="flex"> 
                           <div>
                             <select 
                               id="bathrooms" 

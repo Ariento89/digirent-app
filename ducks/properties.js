@@ -9,7 +9,7 @@ export const types = {
   UPDATE_PROPERTY: `${key}/UPDATE_PROPERTY`,
   UPLOAD_IMAGE: `${key}/UPLOAD_IMAGE`,
   UPLOAD_VIDEOS: `${key}/UPLOAD_VIDEOS`,
-  DELETE_PROPERTY: `${key}/DELETE_PROPERTY`
+  DELETE_PROPERTY: `${key}/DELETE_PROPERTY`,
 };
 
 export const actions = {
@@ -19,5 +19,5 @@ export const actions = {
   updateProperty: createAction(types.UPDATE_PROPERTY),
   uploadImage: createAction(types.UPLOAD_IMAGE),
   uploadVideos: createAction(types.UPLOAD_VIDEOS),
-  deleteProperty: createAction(types.DELETE_PROPERTY)
+  deleteProperty: createAction(types.DELETE_PROPERTY),
 };

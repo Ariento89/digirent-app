@@ -68,8 +68,8 @@ export const useProperties = () => {
   };
 
   const deleteProperty = (data, callback = {}) => {
-    executeRequest(data, callback, deletePropertyAction, types.DELETE_PROPERTY)
-  }
+    executeRequest(data, callback, deletePropertyAction, types.DELETE_PROPERTY);
+  };
 
   return {
     fetchProperties,

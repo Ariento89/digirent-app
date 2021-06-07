@@ -400,6 +400,7 @@ const PropertiesSearchResult = ({
                               </div>
                             </div>
                           </div>
+
                         </AccordionDetails>
                       </Accordion>
                       <Accordion>

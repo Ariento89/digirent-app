@@ -6,7 +6,9 @@ import Pagination from 'widgets/Pagination/index';
 import PropertyInfo from 'widgets/PropertyInfo/index';
 import CustomSlider from 'widgets/customSlider/index';
 import CssTextField from 'widgets/customPriceField/index';
+import { AntTab, AntTabs } from 'widgets/customTabs/index';
 import CustomCheckBox from 'widgets/customCheckbox/index';
+import BootstrapInput from 'widgets/customSelect/index';
 import StateList, { stateListTypes } from 'widgets/StateList/index';
 import TableHeader from 'widgets/TableHeader/index';
 import { API_ASSET_URL } from 'services/index';
@@ -37,6 +39,33 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
+import InputLabel from '@material-ui/core/InputLabel';
+import FormControl from '@material-ui/core/FormControl';
+
+import { createTheme, ThemeProvider, makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme) => ({
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: 120,
+  },
+  searchbox: {
+    position: 'fixed',
+    top: 40,
+    left: 280,
+    zIndex: 3000,
+  },
+}));
+
+const outerTheme = createTheme({
+  palette: {
+    secondary: {
+      main: '#41A2C9',
+    },
+  },
+});
 
 const PropertiesSearchResult = ({
   searchResultRef,
@@ -46,6 +75,8 @@ const PropertiesSearchResult = ({
   location,
   onFiltersChanged,
 }) => {
+  const classes = useStyles();
+
   // STATES
   const [list, setList] = useState([]);
   const [paginationData, setPaginationData] = useState({});
@@ -68,7 +99,7 @@ const PropertiesSearchResult = ({
   const [expanded, setExpanded] = useState('panel1');
 
   // hold filter value
-  const [priceRange, setPriceRange] = useState();
+  const [priceRange, setPriceRange] = useState({ min_price: 30, max_price: 4600 });
 
   const [val, setVal] = useState('1');
 
@@ -136,33 +167,36 @@ const PropertiesSearchResult = ({
     // furnish_type : "",
   });
 
+  const handlePriceInput = (evt) => {
+    if (evt.target.name === 'min_price' && evt.target.value !== minPrice) {
+      setMinPrice(evt.target.value);
+      setPriceRange((prevValue) => ({
+        ...prevValue,
+        [evt.target.name]: evt.target.value,
+      }));
+    }
+
+    if (evt.target.name === 'max_price' && evt.target.value !== maxPrice) {
+      setMaxPrice(evt.target.value);
+      setPriceRange((prevValue) => ({
+        ...prevValue,
+        [evt.target.name]: evt.target.value,
+      }));
+    }
+  };
+
+  const priceQuickSearch = () => {
+    onFiltersChanged(priceRange);
+  };
+
   const quickFilter = (evt) => {
-    // console.log('in quickfilter');
-    // console.log('checkbox', evt.target.value);
-    // if (evt.target.name == 'min_price' && evt.target.value !== minPrice) {
-    //   setMinPrice(evt.target.value);
-    // }
-
-    // if (evt.target.name == 'max_price' && evt.target.value !== maxPrice) {
-    //   setMaxPrice(evt.target.value);
-    // }
-
-    // console.log('within');
-
-    // // let value = evt.target.value;
-    // // setState( {
-    // //   ...state,
-    // //   [evt.target.name] : value
-    // // });
-
-    // const params = {
+    console.log('testing house type', evt.target.name, evt.target.value);
+    // setPriceRange((prevValue) => ({
+    //   ...prevValue,
     //   [evt.target.name]: evt.target.value,
-    // };
-    // console.log(params);
-    setPriceRange((prevValue) => ({
-      ...prevValue,
-      [evt.target.name]: evt.target.value,
-    }));
+    // }));
+
+    priceRange[evt.target.name] = evt.target.value;
 
     onFiltersChanged(priceRange);
     console.log('this is me', priceRange);
@@ -222,6 +256,22 @@ const PropertiesSearchResult = ({
   return (
     <div className="container mx-auto px-4 sm:px-6 lg:px-10">
       <Spinner loadingText="Searching properties..." isLoading={status === request.REQUESTING}>
+        <div className={classes.searchbox}>
+          <AutoFillField
+            selected={(lbl, latitude, longitude) => {
+              setLabel(lbl);
+              setLat(latitude);
+              setLng(longitude);
+            }}
+            height="55px"
+            width="270px"
+            border="3"
+            placeholder="Where will you go?"
+            icon="icon-map-marker-primary"
+            name="location"
+            borderColor="#41A2F9"
+          />
+        </div>
         <div ref={searchResultRef} className="rental-houses">
           {/* <h3 className="main-title">
             RENTAL HOUSE IN{' '}
@@ -235,13 +285,13 @@ const PropertiesSearchResult = ({
           <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
             <TabContext value={val}>
               <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                <TabList onChange={handleChanges} aria-label="places views">
-                  <Tab icon={<DashboardOutlined />} label="Gallery" value="1" />
-                  <Tab icon={<Map />} label="Map" value="2" />
-                </TabList>
+                <AntTabs onChange={handleChanges} aria-label="places views">
+                  <AntTab icon={<DashboardOutlined />} label="Gallery" value="1" />
+                  <AntTab icon={<Map />} label="Map" value="2" />
+                </AntTabs>
               </Box>
 
-              <div className="flex">
+              <div className="flex" style={{ marginLeft: '-15px' }}>
                 <div className="flex-col">
                   <div className="bg-white rounded-lg w-80 col-xl-12">
                     <div className="px-4 py-5 sm:px-6 bg-blue-400 mb-4">
@@ -256,11 +306,10 @@ const PropertiesSearchResult = ({
                           expandIcon={<ExpandMoreIcon />}
                           aria-controls="panel1a-content"
                           id="panel1a-header"
-                          style={{ marginBottom: '-10px' }}
                         >
                           <Typography>Price Range</Typography>
                         </AccordionSummary>
-                        <AccordionDetails>
+                        <AccordionDetails style={{ marginTop: '-5px' }}>
                           <CustomSlider
                             min={minVal}
                             max={maxVal}
@@ -282,7 +331,8 @@ const PropertiesSearchResult = ({
                                 name="min_price"
                                 label="Min Price"
                                 id="outlined-size-normal"
-                                onChange={quickFilter}
+                                onChange={handlePriceInput}
+                                onBlur={priceQuickSearch}
                                 InputProps={{
                                   startAdornment: (
                                     <InputAdornment position="start">EUR</InputAdornment>
@@ -301,7 +351,8 @@ const PropertiesSearchResult = ({
                                 name="max_price"
                                 label="Max Price"
                                 id="outlined-size-normal"
-                                onChange={quickFilter}
+                                onChange={handlePriceInput}
+                                onBlur={priceQuickSearch}
                                 InputProps={{
                                   startAdornment: (
                                     <InputAdornment position="start">EUR</InputAdornment>
@@ -320,41 +371,12 @@ const PropertiesSearchResult = ({
                       <Accordion>
                         <AccordionSummary
                           expandIcon={<ExpandMoreIcon />}
-                          aria-controls="panel2a-content"
-                          id="panel2a-header"
-                        >
-                          <Typography>Location</Typography>
-                        </AccordionSummary>
-                        <AccordionDetails>
-                          <div className="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-1">
-                            <div className="sm:col-span-4">
-                              <div className="mt-1 flex rounded-md shadow-sm">
-                                <AutoFillField
-                                  selected={(lbl, latitude, longitude) => {
-                                    setLabel(lbl);
-                                    setLat(latitude);
-                                    setLng(longitude);
-                                  }}
-                                  height="45px"
-                                  width="250px"
-                                  placeholder="City"
-                                  icon="icon-map-marker-primary"
-                                  name="location"
-                                />
-                              </div>
-                            </div>
-                          </div>
-                        </AccordionDetails>
-                      </Accordion>
-                      <Accordion>
-                        <AccordionSummary
-                          expandIcon={<ExpandMoreIcon />}
                           aria-controls="panel3a-content"
                           id="panel3a-header"
                         >
                           <Typography>House Type</Typography>
                         </AccordionSummary>
-                        <AccordionDetails>
+                        <AccordionDetails style={{ marginTop: '-30px' }}>
                           <div className="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-1 mt-4">
                             <div className="sm:col-span-4">
                               <div className="mt-1 flex rounded-md shadow-sm">
@@ -411,7 +433,7 @@ const PropertiesSearchResult = ({
                         >
                           <Typography>Select Date</Typography>
                         </AccordionSummary>
-                        <AccordionDetails>
+                        <AccordionDetails style={{ marginTop: '-15px' }}>
                           <div className="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-1 mt-4">
                             <LocalizationProvider dateAdapter={AdapterDateFns}>
                               <DatePicker
@@ -447,11 +469,36 @@ const PropertiesSearchResult = ({
                         >
                           <Typography>Bedrooms</Typography>
                         </AccordionSummary>
-                        <AccordionDetails>
+                        <AccordionDetails style={{ marginTop: '-25px' }}>
                           <div className="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-1 mt-4">
                             <div className="sm:col-span-4">
                               <div className="mt-1 flex rounded-md shadow-sm">
-                                <select
+                                <ThemeProvider theme={outerTheme}>
+                                  <FormControl
+                                    color="secondary"
+                                    variant="outlined"
+                                    className={classes.formControl}
+                                  >
+                                    <InputLabel id="demo-simple-select-outlined-label">
+                                      Bedrooms
+                                    </InputLabel>
+                                    <Select
+                                      labelId="demo-simple-select-outlined-label"
+                                      id="min_bedrooms"
+                                      name="min_bedrooms"
+                                      defaultValue={1}
+                                      onChange={quickFilter}
+                                    >
+                                      <MenuItem value={1}>1</MenuItem>
+                                      <MenuItem value={2}>2</MenuItem>
+                                      <MenuItem value={3}>3</MenuItem>
+                                      <MenuItem value={4}>4</MenuItem>
+                                      <MenuItem value={5}>5</MenuItem>
+                                      <MenuItem value={6}>6</MenuItem>
+                                    </Select>
+                                  </FormControl>
+                                </ThemeProvider>
+                                {/* <select
                                   id="bedrooms"
                                   name="bedrooms"
                                   onChange={quickFilter}
@@ -464,7 +511,7 @@ const PropertiesSearchResult = ({
                                   <option value="4">4</option>
                                   <option value="5">5</option>
                                   <option value="6">6</option>
-                                </select>
+                                </select> */}
                               </div>
                             </div>
                           </div>
@@ -478,7 +525,7 @@ const PropertiesSearchResult = ({
                         >
                           <Typography>Bathrooms</Typography>
                         </AccordionSummary>
-                        <AccordionDetails>
+                        <AccordionDetails style={{ marginTop: '-25px' }}>
                           <div className="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-1 mt-4">
                             <Box
                               component="form"
@@ -488,7 +535,32 @@ const PropertiesSearchResult = ({
                             >
                               <div className="flex">
                                 <div>
-                                  <select
+                                  <ThemeProvider theme={outerTheme}>
+                                    <FormControl
+                                      color="secondary"
+                                      variant="outlined"
+                                      className={classes.formControl}
+                                    >
+                                      <InputLabel id="demo-simple-select-outlined-label1">
+                                        min
+                                      </InputLabel>
+                                      <Select
+                                        labelId="demo-simple-select-outlined-label1"
+                                        id="min_bathrooms"
+                                        name="min_bathrooms"
+                                        defaultValue={1}
+                                        onChange={quickFilter}
+                                      >
+                                        <MenuItem value={1}>1</MenuItem>
+                                        <MenuItem value={2}>2</MenuItem>
+                                        <MenuItem value={3}>3</MenuItem>
+                                        <MenuItem value={4}>4</MenuItem>
+                                        <MenuItem value={5}>5</MenuItem>
+                                        <MenuItem value={6}>6</MenuItem>
+                                      </Select>
+                                    </FormControl>
+                                  </ThemeProvider>
+                                  {/* <select
                                     id="bathrooms"
                                     name="min_bathrooms"
                                     onChange={quickFilter}
@@ -501,10 +573,35 @@ const PropertiesSearchResult = ({
                                     <option value="4">4</option>
                                     <option value="5">5</option>
                                     <option value="6">6</option>
-                                  </select>
+                                  </select> */}
                                 </div>
                                 <div>
-                                  <select
+                                  <ThemeProvider theme={outerTheme}>
+                                    <FormControl
+                                      color="secondary"
+                                      variant="outlined"
+                                      className={classes.formControl}
+                                    >
+                                      <InputLabel id="demo-simple-select-outlined-label2">
+                                        max
+                                      </InputLabel>
+                                      <Select
+                                        labelId="demo-simple-select-outlined-label2"
+                                        id="max_bathrooms"
+                                        name="max_bathrooms"
+                                        defaultValue={1}
+                                        onChange={quickFilter}
+                                      >
+                                        <MenuItem value={1}>1</MenuItem>
+                                        <MenuItem value={2}>2</MenuItem>
+                                        <MenuItem value={3}>3</MenuItem>
+                                        <MenuItem value={4}>4</MenuItem>
+                                        <MenuItem value={5}>5</MenuItem>
+                                        <MenuItem value={6}>6</MenuItem>
+                                      </Select>
+                                    </FormControl>
+                                  </ThemeProvider>
+                                  {/* <select
                                     id="bathrooms"
                                     name="max_bathrooms"
                                     onChange={quickFilter}
@@ -517,7 +614,7 @@ const PropertiesSearchResult = ({
                                     <option value="4">4</option>
                                     <option value="5">5</option>
                                     <option value="6">6</option>
-                                  </select>
+                                  </select> */}
                                 </div>
                               </div>
                             </Box>
@@ -532,19 +629,31 @@ const PropertiesSearchResult = ({
                         >
                           <Typography>Furnishing</Typography>
                         </AccordionSummary>
-                        <AccordionDetails>
+                        <AccordionDetails style={{ marginTop: '-28px' }}>
                           <div className="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-1 mt-4">
                             <div className="sm:col-span-4">
                               <div className="mt-1 flex rounded-md shadow-sm">
-                                <select
-                                  id="funish_type"
-                                  onChange={quickFilter}
-                                  name="furnish_type"
-                                  className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                                >
-                                  <option>Furnished</option>
-                                  <option>Unfurnished</option>
-                                </select>
+                                <ThemeProvider theme={outerTheme}>
+                                  <FormControl
+                                    color="secondary"
+                                    variant="outlined"
+                                    className={classes.formControl}
+                                  >
+                                    <InputLabel id="demo-simple-select-outlined-label3">
+                                      Furnishing
+                                    </InputLabel>
+                                    <Select
+                                      labelId="demo-simple-select-outlined-label3"
+                                      id="funish_type"
+                                      onChange={quickFilter}
+                                      name="furnish_type"
+                                      defaultValue="None"
+                                    >
+                                      <MenuItem value="Furnished">Furnished</MenuItem>
+                                      <MenuItem value="Unfurnished">Unfurnished</MenuItem>
+                                    </Select>
+                                  </FormControl>
+                                </ThemeProvider>
                               </div>
                             </div>
                           </div>
@@ -558,44 +667,45 @@ const PropertiesSearchResult = ({
                         >
                           <Typography>House Size</Typography>
                         </AccordionSummary>
-                        <AccordionDetails>
-                          <div className="grid grid-cols-8 gap-y-6 gap-x-4 mt-4">
-                            <div className="sm:col-span-4">
-                              <span
-                                htmlFor="minsqft"
-                                className="block text-sm font-medium text-gray-700"
-                              >
-                                Min Sqft
-                              </span>
-                              <div className="mt-1 flex rounded-md shadow-sm">
-                                <input
-                                  placeholder="0"
-                                  onChange={quickFilter}
+                        <AccordionDetails style={{ marginTop: '-25px' }}>
+                          <div className="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-1 mt-4">
+                            <Box
+                              component="form"
+                              sx={{ '& .MuiTextField-root': { m: 1, width: '15ch' } }}
+                              noValidate
+                              autoComplete="off"
+                            >
+                              <div className="flex">
+                                <CssTextField
+                                  value="0"
                                   id="minsqft"
                                   name="minsqft"
-                                  type="number"
-                                  className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
-                                />
-                              </div>
-                            </div>
-                            <div className="sm:col-span-4">
-                              <span
-                                htmlFor="maxsqft"
-                                className="block text-sm font-medium text-gray-700"
-                              >
-                                Max Sqft
-                              </span>
-                              <div className="mt-1 flex rounded-md shadow-sm">
-                                <input
-                                  placeholder="0"
+                                  label="minsqft"
                                   onChange={quickFilter}
+                                  InputProps={{
+                                    startAdornment: (
+                                      <InputAdornment position="start">Sq</InputAdornment>
+                                    ),
+                                    type: 'number',
+                                    'aria-labelledby': 'input-slider',
+                                  }}
+                                />
+                                <CssTextField
+                                  value="0"
                                   id="maxsqft"
                                   name="maxsqft"
-                                  type="number"
-                                  className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                                  label="maxsqft"
+                                  onChange={quickFilter}
+                                  InputProps={{
+                                    startAdornment: (
+                                      <InputAdornment position="start">Sq</InputAdornment>
+                                    ),
+                                    type: 'number',
+                                    'aria-labelledby': 'input-slider',
+                                  }}
                                 />
                               </div>
-                            </div>
+                            </Box>
                           </div>
                         </AccordionDetails>
                       </Accordion>
@@ -607,7 +717,7 @@ const PropertiesSearchResult = ({
                         >
                           <Typography>Amenities</Typography>
                         </AccordionSummary>
-                        <AccordionDetails>
+                        <AccordionDetails style={{ marginTop: '-25px' }}>
                           <div className="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-1 mt-4">
                             <div className="sm:col-span-4">
                               <div className="mt-1 flex rounded-md shadow-sm">
@@ -617,20 +727,18 @@ const PropertiesSearchResult = ({
                                       <li key={am.name.id} className="space-y-4">
                                         <div>
                                           <div className="left-section flex items-center">
-                                            <input
-                                              type="checkbox"
-                                              id={`custom-checkbox-${am.name.id}`}
-                                              name={am.name.title}
-                                              value={am.name.title}
-                                              onChange={quickFilter}
-                                              className="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 rounded"
+                                            <FormControlLabel
+                                              control={
+                                                <CustomCheckBox
+                                                  id={`custom-checkbox-${am.name.id}`}
+                                                  name={am.name.title}
+                                                  value={am.name.title}
+                                                  onChange={quickFilter}
+                                                  color="primary"
+                                                />
+                                              }
+                                              label={am.name.title}
                                             />
-                                            <label
-                                              className="ml-3 block text-sm font-medium text-gray-700"
-                                              htmlFor={`custom-checkbox-${am.name.id}`}
-                                            >
-                                              {am.name.title}
-                                            </label>
                                           </div>
                                           <div className="right-section">20</div>
                                         </div>

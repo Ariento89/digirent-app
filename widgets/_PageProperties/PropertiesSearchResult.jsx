@@ -284,7 +284,7 @@ const PropertiesSearchResult = ({
               {location ? location.toUpperCase() : 'NETHERLANDS'}
             </span>
           </h3> */}
-          <div className={classes.searchbox} >
+          <div className={classes.searchbox}>
             <AutoFillField
               selected={(lbl, latitude, longitude) => {
                 // setLabel(lbl);
@@ -762,7 +762,6 @@ const PropertiesSearchResult = ({
                                                 label={am.name.title}
                                               />
                                             </div>
-                                            <div className="right-section">20</div>
                                           </div>
                                         ))}
                                       </FormGroup>

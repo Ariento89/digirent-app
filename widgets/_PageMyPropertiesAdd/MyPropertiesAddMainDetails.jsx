@@ -83,8 +83,19 @@ const MyPropertiesAddMainDetails = ({ property, errors, touched, requestErrors }
           {errors.latitude && touched.latitude ? <FieldError error={errors.latitude} /> : null}
         </div> */}
 
-        {/* 4th row */}
+        {/* 4th row (Temporary, until autofill field is fixed) */}
+
         <div className="col-lg-12 mt-4">
+          <FormInputIcon
+            name="address"
+            placeholder="Address"
+            icon="icon-map-marker-coordinate-primary"
+          />
+          {errors.address && touched.address ? <FieldError error={errors.address} /> : null}
+        </div>
+
+        {/* 4th row */}
+        {/* <div className="col-lg-12 mt-4">
           <AutoFillField
             types={['address']}
             placeholderColor="#d0d3d4"
@@ -103,7 +114,7 @@ const MyPropertiesAddMainDetails = ({ property, errors, touched, requestErrors }
             }}
           />
           {errors.address && touched.address ? <FieldError error={errors.address} /> : null}
-        </div>
+        </div> */}
 
         {/* 5th row */}
         {/* <div className="col-lg-4 mt-4">

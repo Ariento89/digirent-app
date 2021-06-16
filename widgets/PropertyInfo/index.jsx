@@ -7,13 +7,7 @@ import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
-import CardActions from '@material-ui/core/CardActions';
-import Avatar from '@material-ui/core/Avatar';
-import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
-import { red } from '@material-ui/core/colors';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import Box from '@material-ui/core/Box';
+import Moment from 'react-moment';
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 
@@ -67,28 +61,22 @@ console.log(houseImage);
         {/* </Slider>   */}
       </Carousel>
 
-      <CardContent>
-        <Typography component='div'>
-        
-        
-        <Box >
-        €{rentFee}<span>/month (Bills excluded)</span>
-        </Box>
-        <ul>
+      <CardContent style={{ marginTop:'10px' }} className="table">
+       <p>€{rentFee}<span style={{ fontSize: '12px', fontWeight: '300' }}>/month (Bills excluded)</span></p>
+        <ul id="horizontal-list" style={{ fontSize: '13px', listStyleType:'square', fontWeight: '300'  }}>
           <li>
-          {name},{address} 
+          {name}, {address} 
           </li>
-          <li>
+          <span><li>
           {houseType} 
           </li>
           <li>
-          {size} 
+          {size}m² 
           </li>
           <li>
-          {availableFrom} 
-          </li>
+          Available In <Moment fromNow ago>{availableFrom}</Moment> 
+          </li></span>
         </ul>
-        </Typography>
       </CardContent>
       
     </Card>

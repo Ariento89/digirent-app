@@ -1,5 +1,6 @@
 import FieldError from 'components/FieldError/FieldError';
 import Spinner from 'components/Spinner/index';
+import { Formik, Field } from 'formik';
 import { useState, useRef, useEffect } from 'react';
 import { request } from 'shared/types';
 import Pagination from 'widgets/Pagination/index';
@@ -8,6 +9,7 @@ import CustomSlider from 'widgets/customSlider/index';
 import CssTextField from 'widgets/customPriceField/index';
 import { AntTab, AntTabs } from 'widgets/customTabs/index';
 import CustomCheckBox from 'widgets/customCheckbox/index';
+import CustomRadioBtn from 'widgets/customRadioBtn/index';
 import BootstrapInput from 'widgets/customSelect/index';
 import StateList, { stateListTypes } from 'widgets/StateList/index';
 import TableHeader from 'widgets/TableHeader/index';
@@ -38,7 +40,10 @@ import Map from '@material-ui/icons/Map';
 import InputAdornment from '@material-ui/core/InputAdornment';
 
 import FormControlLabel from '@material-ui/core/FormControlLabel';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import FormGroup from '@material-ui/core/FormGroup';
 import Checkbox from '@material-ui/core/Checkbox';
+import Radio from '@material-ui/core/Radio';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -52,10 +57,8 @@ const useStyles = makeStyles((theme) => ({
     minWidth: 120,
   },
   searchbox: {
-    position: 'fixed',
-    top: 40,
-    left: 280,
-    zIndex: 3000,
+    marginTop: '40px',
+    marginBottom: '20px',
   },
 }));
 
@@ -74,6 +77,7 @@ const PropertiesSearchResult = ({
   errors,
   location,
   onFiltersChanged,
+  onNewSearch,
 }) => {
   const classes = useStyles();
 
@@ -82,16 +86,16 @@ const PropertiesSearchResult = ({
   const [paginationData, setPaginationData] = useState({});
   const [houseTypes, setHouseTypes] = useState([]);
   const [minVal, setMinVal] = useState(30);
-  const [maxVal, setMaxVal] = useState(4600);
+  const [maxVal, setMaxVal] = useState(2000);
   const [amenities, setAmenities] = useState([]);
 
   const [label, setLabel] = useState('');
   const [from, setFrom] = useState('');
   const [to, setTo] = useState('');
-  const [lat, setLat] = useState(0);
-  const [lng, setLng] = useState(0);
+  // const [lat, setLat] = useState(0);
+  // const [lng, setLng] = useState(0);
   const [minPrice, setMinPrice] = useState(30);
-  const [maxPrice, setMaxPrice] = useState(4600);
+  const [maxPrice, setMaxPrice] = useState(2000);
   const [available_from, setAvailableFrom] = useState();
   const [available_to, setAvailableTo] = useState();
   const [value, setValue] = useState(null);
@@ -99,9 +103,11 @@ const PropertiesSearchResult = ({
   const [expanded, setExpanded] = useState('panel1');
 
   // hold filter value
-  const [priceRange, setPriceRange] = useState({ min_price: 30, max_price: 4600 });
+  const [priceRange, setPriceRange] = useState({ min_price: 30, max_price: 2000 });
 
   const [val, setVal] = useState('1');
+
+  const [open, setOpen] = useState(false);
 
   const handleChanges = (event, newVal) => {
     setVal(newVal);
@@ -121,7 +127,7 @@ const PropertiesSearchResult = ({
     return `${val}°C`;
   }
 
-  const handleChange = (event, newValue) => {
+  const handleAllChange = (event, newValue) => {
     let value;
     if (newValue[0] !== minPrice) {
       event.target.name = 'min_price';
@@ -215,18 +221,14 @@ const PropertiesSearchResult = ({
 
     const fetchRange = async () => {
       const result = await axios('/apartments');
-      var types = result.data;
-      var maxp = Math.max.apply(
+      const types = result.data;
+      const maxp = Math.max.apply(
         Math,
-        types.map(function (o) {
-          return o.monthlyPrice;
-        }),
+        types.map((o) => o.monthlyPrice),
       );
-      var minp = Math.min.apply(
+      const minp = Math.min.apply(
         Math,
-        types.map(function (o) {
-          return o.monthlyPrice;
-        }),
+        types.map((o) => o.monthlyPrice),
       );
       // console.log(minp, maxp)
       setMinVal(minp);
@@ -250,13 +252,16 @@ const PropertiesSearchResult = ({
     fetchRange();
   }, []);
 
-  console.log('my searches from home', properties);
-  console.log('home list', list);
+  const handleNewSearch = ({ lbl, lat, lng }) => {
+    console.log('Here is new search', lbl, lat, lng);
+    router.push({ pathname: '/properties', query: { lbl, lat, lng } });
+    //onNewSearch(data);
+  };
 
   return (
     <div className="container mx-auto px-4 sm:px-6 lg:px-10">
       <Spinner loadingText="Searching properties..." isLoading={status === request.REQUESTING}>
-        <div className={classes.searchbox}>
+        {/* <div className={classes.searchbox}>
           <AutoFillField
             selected={(lbl, latitude, longitude) => {
               setLabel(lbl);
@@ -271,7 +276,7 @@ const PropertiesSearchResult = ({
             name="location"
             borderColor="#41A2F9"
           />
-        </div>
+        </div> */}
         <div ref={searchResultRef} className="rental-houses">
           {/* <h3 className="main-title">
             RENTAL HOUSE IN{' '}
@@ -279,8 +284,27 @@ const PropertiesSearchResult = ({
               {location ? location.toUpperCase() : 'NETHERLANDS'}
             </span>
           </h3> */}
+          <div className={classes.searchbox} >
+            <AutoFillField
+              selected={(lbl, latitude, longitude) => {
+                // setLabel(lbl);
+                // setLat(latitude);
+                // setLng(longitude);
+                console.log('finished here', latitude, longitude);
+                onFiltersChanged({ longitude: longitude, latitude: latitude });
+                //handleNewSearch({ lbl: lbl, lat: longitude, lng: latitude });
+              }}
+              height="55px"
+              width="270px"
+              border="3"
+              placeholder="Where will you go?"
+              icon="icon-map-marker-primary"
+              name="location"
+              borderColor="#41A2F9"
+            />
+          </div>
           <p className="main-subtitle mt-1 mt-md-2 dark-gray" style={{ textAlign: 'left' }}>
-            {properties.length} new properties for rent in {location ? location : 'Netherlands'}
+            {properties.length} properties for rent in {location || 'Netherlands'}
           </p>
           <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
             <TabContext value={val}>
@@ -297,460 +321,460 @@ const PropertiesSearchResult = ({
                     <div className="px-4 py-5 sm:px-6 bg-blue-400 mb-4">
                       <h3 className="text-xl leading-6 font-medium text-white">Filter</h3>
                     </div>
-                    <div className="input-fields">
-                      <Accordion
-                        expanded={expanded === 'panel1'}
-                        onChange={handleAccordionChange('panel1')}
-                      >
-                        <AccordionSummary
-                          expandIcon={<ExpandMoreIcon />}
-                          aria-controls="panel1a-content"
-                          id="panel1a-header"
-                        >
-                          <Typography>Price Range</Typography>
-                        </AccordionSummary>
-                        <AccordionDetails style={{ marginTop: '-5px' }}>
-                          <CustomSlider
-                            min={minVal}
-                            max={maxVal}
-                            value={[minPrice, maxPrice]}
-                            onChange={handleChange}
-                            onChangeCommitted={handleComplete}
-                            getAriaValueText={valuetext}
-                          />
-                          <Box
-                            component="form"
-                            sx={{ '& .MuiTextField-root': { m: 1, width: '15ch' } }}
-                            noValidate
-                            autoComplete="off"
-                            style={{ marginLeft: '-10px' }}
-                          >
-                            <div className="flex">
-                              <CssTextField
-                                value={minPrice}
-                                name="min_price"
-                                label="Min Price"
-                                id="outlined-size-normal"
-                                onChange={handlePriceInput}
-                                onBlur={priceQuickSearch}
-                                InputProps={{
-                                  startAdornment: (
-                                    <InputAdornment position="start">EUR</InputAdornment>
-                                  ),
-                                  step: 10,
-                                  min: minVal,
-                                  max: maxVal,
-                                  type: 'number',
-                                  'aria-labelledby': 'input-slider',
-                                }}
-                              />
-
-                              <CssTextField
-                                style={{ marginLeft: '15px', marginRight: '0px' }}
-                                value={maxPrice}
-                                name="max_price"
-                                label="Max Price"
-                                id="outlined-size-normal"
-                                onChange={handlePriceInput}
-                                onBlur={priceQuickSearch}
-                                InputProps={{
-                                  startAdornment: (
-                                    <InputAdornment position="start">EUR</InputAdornment>
-                                  ),
-                                  step: 10,
-                                  min: { minVal },
-                                  max: { maxVal },
-                                  type: 'number',
-                                  'aria-labelledby': 'input-slider',
-                                }}
-                              />
-                            </div>
-                          </Box>
-                        </AccordionDetails>
-                      </Accordion>
-                      <Accordion>
-                        <AccordionSummary
-                          expandIcon={<ExpandMoreIcon />}
-                          aria-controls="panel3a-content"
-                          id="panel3a-header"
-                        >
-                          <Typography>House Type</Typography>
-                        </AccordionSummary>
-                        <AccordionDetails style={{ marginTop: '-30px' }}>
-                          <div className="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-1 mt-4">
-                            <div className="sm:col-span-4">
-                              <div className="mt-1 flex rounded-md shadow-sm">
-                                <ul className="block text-sm font-medium text-gray-700">
-                                  {houseTypes.map((ht, index) => {
-                                    return (
-                                      <li key={index}>
-                                        <div className="block text-sm font-medium text-gray-700">
-                                          <div className="left-section flex items-center">
-                                            <FormControlLabel
-                                              control={
-                                                <CustomCheckBox
-                                                  id={`custom-checkbox-${index}`}
-                                                  name="house_type"
-                                                  value={ht.name}
-                                                  onChange={quickFilter}
-                                                  color="primary"
-                                                />
-                                              }
-                                              label={ht.name}
-                                            />
-                                            {/* <input
-                                              type="checkbox"
-                                              id={`custom-checkbox-${index}`}
-                                              name="house_type"
-                                              value={ht.name}
-                                              onChange={quickFilter}
-                                              className="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 rounded"
-                                            />
-                                            <label
-                                              className="ml-3 block text-sm font-medium text-gray-700"
-                                              htmlFor={`custom-checkbox-${index}`}
-                                            >
-                                              {ht.name}
-                                            </label> */}
-                                          </div>
-                                          {/* <div className="right-section">20</div> */}
-                                        </div>
-                                      </li>
-                                    );
-                                  })}
-                                </ul>
-                              </div>
-                            </div>
-                          </div>
-                        </AccordionDetails>
-                      </Accordion>
-                      <Accordion>
-                        <AccordionSummary
-                          expandIcon={<ExpandMoreIcon />}
-                          aria-controls="panel4a-content"
-                          id="panel4a-header"
-                        >
-                          <Typography>Select Date</Typography>
-                        </AccordionSummary>
-                        <AccordionDetails style={{ marginTop: '-15px' }}>
-                          <div className="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-1 mt-4">
-                            <LocalizationProvider dateAdapter={AdapterDateFns}>
-                              <DatePicker
-                                label="Move In"
-                                value={available_from}
-                                onChange={(newValue) => {
-                                  setAvailableFrom(newValue);
-                                }}
-                                name="available-from"
-                                renderInput={(params) => <CssTextField {...params} />}
-                              />
-                            </LocalizationProvider>
-
-                            <LocalizationProvider dateAdapter={AdapterDateFns}>
-                              <DatePicker
-                                label="Move Out"
-                                value={available_to}
-                                onChange={(newValue) => {
-                                  setAvailableTo(newValue);
-                                }}
-                                name="available-to"
-                                renderInput={(params) => <CssTextField {...params} />}
-                              />
-                            </LocalizationProvider>
-                          </div>
-                        </AccordionDetails>
-                      </Accordion>
-                      <Accordion>
-                        <AccordionSummary
-                          expandIcon={<ExpandMoreIcon />}
-                          aria-controls="panel5a-content"
-                          id="panel5a-header"
-                        >
-                          <Typography>Bedrooms</Typography>
-                        </AccordionSummary>
-                        <AccordionDetails style={{ marginTop: '-25px' }}>
-                          <div className="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-1 mt-4">
-                            <div className="sm:col-span-4">
-                              <div className="mt-1 flex rounded-md shadow-sm">
-                                <ThemeProvider theme={outerTheme}>
-                                  <FormControl
-                                    color="secondary"
-                                    variant="outlined"
-                                    className={classes.formControl}
-                                  >
-                                    <InputLabel id="demo-simple-select-outlined-label">
-                                      Bedrooms
-                                    </InputLabel>
-                                    <Select
-                                      labelId="demo-simple-select-outlined-label"
-                                      id="min_bedrooms"
-                                      name="min_bedrooms"
-                                      defaultValue={1}
-                                      onChange={quickFilter}
-                                    >
-                                      <MenuItem value={1}>1</MenuItem>
-                                      <MenuItem value={2}>2</MenuItem>
-                                      <MenuItem value={3}>3</MenuItem>
-                                      <MenuItem value={4}>4</MenuItem>
-                                      <MenuItem value={5}>5</MenuItem>
-                                      <MenuItem value={6}>6</MenuItem>
-                                    </Select>
-                                  </FormControl>
-                                </ThemeProvider>
-                                {/* <select
-                                  id="bedrooms"
-                                  name="bedrooms"
-                                  onChange={quickFilter}
-                                  className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                    <Formik
+                      initialValues={{}}
+                      onSubmit={(values, { setSubmitting }) => {
+                        // setTimeout(() => {
+                        console.log(JSON.stringify(values, null, 2));
+                        onFiltersChanged(values);
+                        //   setSubmitting(false);
+                        // }, 400);
+                      }}
+                    >
+                      {({
+                        values,
+                        errors,
+                        touched,
+                        handleChange,
+                        handleBlur,
+                        handleSubmit,
+                        isSubmitting,
+                        setFieldValue,
+                        /* and other goodies */
+                      }) => (
+                        <form onSubmit={handleSubmit}>
+                          <div className="input-fields">
+                            <Accordion
+                              expanded={expanded === 'panel1'}
+                              onChange={handleAccordionChange('panel1')}
+                            >
+                              <AccordionSummary
+                                expandIcon={<ExpandMoreIcon />}
+                                aria-controls="panel1a-content"
+                                id="panel1a-header"
+                              >
+                                <Typography>Price Range</Typography>
+                              </AccordionSummary>
+                              <AccordionDetails style={{ marginTop: '-5px' }}>
+                                <CustomSlider
+                                  min={minVal}
+                                  max={maxVal}
+                                  value={[minPrice, maxPrice]}
+                                  onChange={handleAllChange}
+                                  onChangeCommitted={() => {
+                                    setFieldValue('max_price', maxPrice);
+                                    setFieldValue('min_price', minPrice);
+                                    handleComplete();
+                                  }}
+                                  getAriaValueText={valuetext}
+                                />
+                                <Box
+                                  component="form"
+                                  sx={{ '& .MuiTextField-root': { m: 1, width: '15ch' } }}
+                                  noValidate
+                                  autoComplete="off"
+                                  style={{ marginLeft: '-10px' }}
                                 >
-                                  <option>Any</option>
-                                  <option value="1">1</option>
-                                  <option value="2">2</option>
-                                  <option value="3">3</option>
-                                  <option value="4">4</option>
-                                  <option value="5">5</option>
-                                  <option value="6">6</option>
-                                </select> */}
-                              </div>
-                            </div>
-                          </div>
-                        </AccordionDetails>
-                      </Accordion>
-                      <Accordion>
-                        <AccordionSummary
-                          expandIcon={<ExpandMoreIcon />}
-                          aria-controls="panel6a-content"
-                          id="panel6a-header"
-                        >
-                          <Typography>Bathrooms</Typography>
-                        </AccordionSummary>
-                        <AccordionDetails style={{ marginTop: '-25px' }}>
-                          <div className="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-1 mt-4">
-                            <Box
-                              component="form"
-                              sx={{ '& .MuiTextField-root': { m: 1, width: '15ch' } }}
-                              noValidate
-                              autoComplete="off"
-                            >
-                              <div className="flex">
-                                <div>
-                                  <ThemeProvider theme={outerTheme}>
-                                    <FormControl
-                                      color="secondary"
-                                      variant="outlined"
-                                      className={classes.formControl}
-                                    >
-                                      <InputLabel id="demo-simple-select-outlined-label1">
-                                        min
-                                      </InputLabel>
-                                      <Select
-                                        labelId="demo-simple-select-outlined-label1"
-                                        id="min_bathrooms"
-                                        name="min_bathrooms"
-                                        defaultValue={1}
-                                        onChange={quickFilter}
-                                      >
-                                        <MenuItem value={1}>1</MenuItem>
-                                        <MenuItem value={2}>2</MenuItem>
-                                        <MenuItem value={3}>3</MenuItem>
-                                        <MenuItem value={4}>4</MenuItem>
-                                        <MenuItem value={5}>5</MenuItem>
-                                        <MenuItem value={6}>6</MenuItem>
-                                      </Select>
-                                    </FormControl>
-                                  </ThemeProvider>
-                                  {/* <select
-                                    id="bathrooms"
-                                    name="min_bathrooms"
-                                    onChange={quickFilter}
-                                    className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                                  >
-                                    <option>Any</option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>
-                                    <option value="6">6</option>
-                                  </select> */}
-                                </div>
-                                <div>
-                                  <ThemeProvider theme={outerTheme}>
-                                    <FormControl
-                                      color="secondary"
-                                      variant="outlined"
-                                      className={classes.formControl}
-                                    >
-                                      <InputLabel id="demo-simple-select-outlined-label2">
-                                        max
-                                      </InputLabel>
-                                      <Select
-                                        labelId="demo-simple-select-outlined-label2"
-                                        id="max_bathrooms"
-                                        name="max_bathrooms"
-                                        defaultValue={1}
-                                        onChange={quickFilter}
-                                      >
-                                        <MenuItem value={1}>1</MenuItem>
-                                        <MenuItem value={2}>2</MenuItem>
-                                        <MenuItem value={3}>3</MenuItem>
-                                        <MenuItem value={4}>4</MenuItem>
-                                        <MenuItem value={5}>5</MenuItem>
-                                        <MenuItem value={6}>6</MenuItem>
-                                      </Select>
-                                    </FormControl>
-                                  </ThemeProvider>
-                                  {/* <select
-                                    id="bathrooms"
-                                    name="max_bathrooms"
-                                    onChange={quickFilter}
-                                    className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                                  >
-                                    <option>Any</option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>
-                                    <option value="6">6</option>
-                                  </select> */}
-                                </div>
-                              </div>
-                            </Box>
-                          </div>
-                        </AccordionDetails>
-                      </Accordion>
-                      <Accordion>
-                        <AccordionSummary
-                          expandIcon={<ExpandMoreIcon />}
-                          aria-controls="panel7a-content"
-                          id="panel7a-header"
-                        >
-                          <Typography>Furnishing</Typography>
-                        </AccordionSummary>
-                        <AccordionDetails style={{ marginTop: '-28px' }}>
-                          <div className="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-1 mt-4">
-                            <div className="sm:col-span-4">
-                              <div className="mt-1 flex rounded-md shadow-sm">
-                                <ThemeProvider theme={outerTheme}>
-                                  <FormControl
-                                    color="secondary"
-                                    variant="outlined"
-                                    className={classes.formControl}
-                                  >
-                                    <InputLabel id="demo-simple-select-outlined-label3">
-                                      Furnishing
-                                    </InputLabel>
-                                    <Select
-                                      labelId="demo-simple-select-outlined-label3"
-                                      id="funish_type"
-                                      onChange={quickFilter}
-                                      name="furnish_type"
-                                      defaultValue="None"
-                                    >
-                                      <MenuItem value="Furnished">Furnished</MenuItem>
-                                      <MenuItem value="Unfurnished">Unfurnished</MenuItem>
-                                    </Select>
-                                  </FormControl>
-                                </ThemeProvider>
-                              </div>
-                            </div>
-                          </div>
-                        </AccordionDetails>
-                      </Accordion>
-                      <Accordion>
-                        <AccordionSummary
-                          expandIcon={<ExpandMoreIcon />}
-                          aria-controls="panel8a-content"
-                          id="panel8a-header"
-                        >
-                          <Typography>House Size</Typography>
-                        </AccordionSummary>
-                        <AccordionDetails style={{ marginTop: '-25px' }}>
-                          <div className="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-1 mt-4">
-                            <Box
-                              component="form"
-                              sx={{ '& .MuiTextField-root': { m: 1, width: '15ch' } }}
-                              noValidate
-                              autoComplete="off"
-                            >
-                              <div className="flex">
-                                <CssTextField
-                                  value="0"
-                                  id="minsqft"
-                                  name="minsqft"
-                                  label="minsqft"
-                                  onChange={quickFilter}
-                                  InputProps={{
-                                    startAdornment: (
-                                      <InputAdornment position="start">Sq</InputAdornment>
-                                    ),
-                                    type: 'number',
-                                    'aria-labelledby': 'input-slider',
-                                  }}
-                                />
-                                <CssTextField
-                                  value="0"
-                                  id="maxsqft"
-                                  name="maxsqft"
-                                  label="maxsqft"
-                                  onChange={quickFilter}
-                                  InputProps={{
-                                    startAdornment: (
-                                      <InputAdornment position="start">Sq</InputAdornment>
-                                    ),
-                                    type: 'number',
-                                    'aria-labelledby': 'input-slider',
-                                  }}
-                                />
-                              </div>
-                            </Box>
-                          </div>
-                        </AccordionDetails>
-                      </Accordion>
-                      <Accordion>
-                        <AccordionSummary
-                          expandIcon={<ExpandMoreIcon />}
-                          aria-controls="panel9a-content"
-                          id="panel9a-header"
-                        >
-                          <Typography>Amenities</Typography>
-                        </AccordionSummary>
-                        <AccordionDetails style={{ marginTop: '-25px' }}>
-                          <div className="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-1 mt-4">
-                            <div className="sm:col-span-4">
-                              <div className="mt-1 flex rounded-md shadow-sm">
-                                <ul>
-                                  {amenities.map((am) => {
-                                    return (
-                                      <li key={am.name.id} className="space-y-4">
-                                        <div>
-                                          <div className="left-section flex items-center">
+                                  <div className="flex">
+                                    <CssTextField
+                                      value={minPrice}
+                                      name="min_price"
+                                      label="Min Price"
+                                      id="outlined-size-normal"
+                                      // onChange={handlePriceInput}
+                                      // onBlur={priceQuickSearch}
+                                      onChange={(vale) => {
+                                        handleChange(vale);
+                                        setMinPrice(vale.target.value);
+                                      }}
+                                      onBlur={handleSubmit}
+                                      InputProps={{
+                                        startAdornment: (
+                                          <InputAdornment position="start">EUR</InputAdornment>
+                                        ),
+                                        step: 10,
+                                        min: minVal,
+                                        max: maxVal,
+                                        type: 'number',
+                                        'aria-labelledby': 'input-slider',
+                                      }}
+                                    />
+
+                                    <CssTextField
+                                      style={{ marginLeft: '15px', marginRight: '0px' }}
+                                      value={maxPrice}
+                                      name="max_price"
+                                      label="Max Price"
+                                      id="outlined-size-normal"
+                                      // onChange={handlePriceInput}
+                                      // onBlur={priceQuickSearch}
+                                      onChange={(vale) => {
+                                        handleChange(vale);
+                                        setMaxPrice(vale.target.value);
+                                      }}
+                                      onBlur={handleSubmit}
+                                      InputProps={{
+                                        startAdornment: (
+                                          <InputAdornment position="start">EUR</InputAdornment>
+                                        ),
+                                        step: 10,
+                                        min: minVal,
+                                        max: maxVal,
+                                        type: 'number',
+                                        'aria-labelledby': 'input-slider',
+                                      }}
+                                    />
+                                  </div>
+                                </Box>
+                              </AccordionDetails>
+                            </Accordion>
+                            <Accordion>
+                              <AccordionSummary
+                                expandIcon={<ExpandMoreIcon />}
+                                aria-controls="panel3a-content"
+                                id="panel3a-header"
+                              >
+                                <Typography>House Type</Typography>
+                              </AccordionSummary>
+                              <AccordionDetails style={{ marginTop: '-30px' }}>
+                                <div className="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-1 mt-4">
+                                  <div className="sm:col-span-4">
+                                    <div className="mt-1 flex rounded-md shadow-sm">
+                                      <ul className="block text-sm font-medium text-gray-700">
+                                        <RadioGroup
+                                          aria-label="house type"
+                                          name="house_type"
+                                          value={value}
+                                          onChange={handleChange}
+                                          // onBlur={handleBlur}
+                                        >
+                                          <FormControlLabel
+                                            value="studio"
+                                            onChange={handleSubmit}
+                                            control={
+                                              <CustomRadioBtn
+                                                checked={values.house_type === 'studio'}
+                                              />
+                                            }
+                                            label="Studio"
+                                          />
+                                          <FormControlLabel
+                                            value="apartment"
+                                            onChange={handleSubmit}
+                                            onClick={() => setOpen(!open)}
+                                            control={
+                                              <CustomRadioBtn
+                                                checked={values.house_type === 'apartment'}
+                                              />
+                                            }
+                                            label="Apartment"
+                                          />
+                                          <RadioGroup
+                                            aria-label="room"
+                                            name="min_bedrooms"
+                                            value={value}
+                                            onChange={handleChange}
+                                            // onBlur={handleBlur}
+                                            style={{
+                                              marginLeft: '30px',
+                                              display: open ? 'block' : 'none',
+                                            }}
+                                          >
                                             <FormControlLabel
+                                              value="1"
+                                              onChange={handleSubmit}
                                               control={
-                                                <CustomCheckBox
-                                                  id={`custom-checkbox-${am.name.id}`}
-                                                  name={am.name.title}
-                                                  value={am.name.title}
-                                                  onChange={quickFilter}
-                                                  color="primary"
+                                                <CustomRadioBtn
+                                                  checked={values.min_bedrooms === '1'}
                                                 />
                                               }
-                                              label={am.name.title}
+                                              label="1 bedroom"
                                             />
+                                            <FormControlLabel
+                                              value="2"
+                                              onChange={handleSubmit}
+                                              control={
+                                                <CustomRadioBtn
+                                                  checked={values.min_bedrooms === '2'}
+                                                />
+                                              }
+                                              label="2 bedroom"
+                                            />
+                                            <FormControlLabel
+                                              value="3"
+                                              onChange={handleSubmit}
+                                              control={
+                                                <CustomRadioBtn
+                                                  checked={values.min_bedrooms === '3'}
+                                                />
+                                              }
+                                              label="3 bedroom"
+                                            />
+                                            <FormControlLabel
+                                              value="4"
+                                              onChange={handleSubmit}
+                                              control={
+                                                <CustomRadioBtn
+                                                  checked={values.min_bedrooms === '4'}
+                                                />
+                                              }
+                                              label="4+ bedroom"
+                                            />
+                                          </RadioGroup>
+                                          <FormControlLabel
+                                            value="shared_room"
+                                            onChange={handleSubmit}
+                                            control={
+                                              <CustomRadioBtn
+                                                checked={values.house_type === 'shared_room'}
+                                              />
+                                            }
+                                            label="Shared Room"
+                                          />
+                                          <FormControlLabel
+                                            value="private_room"
+                                            onChange={handleSubmit}
+                                            control={
+                                              <CustomRadioBtn
+                                                checked={values.house_type === 'private_room'}
+                                              />
+                                            }
+                                            label="Private Room"
+                                          />
+                                        </RadioGroup>
+                                        {/* {houseTypes.map((ht, index) => (
+                                          <li key={index}>
+                                            <div className="block text-sm font-medium text-gray-700">
+                                              <div className="left-section flex items-center">
+                                                <FormControlLabel
+                                                  control={
+                                                    <CustomCheckBox
+                                                      id={`custom-checkbox-${index}`}
+                                                      name="house_type"
+                                                      value={ht.name}
+                                                      onChange={quickFilter}
+                                                      color="primary"
+                                                    />
+                                                  }
+                                                  label={ht.name}
+                                                />
+                                              </div>
+                                            </div>
+                                          </li>
+                                        ))} */}
+                                      </ul>
+                                    </div>
+                                  </div>
+                                </div>
+                              </AccordionDetails>
+                            </Accordion>
+                            <Accordion>
+                              <AccordionSummary
+                                expandIcon={<ExpandMoreIcon />}
+                                aria-controls="panel4a-content"
+                                id="panel4a-header"
+                              >
+                                <Typography>Select Date</Typography>
+                              </AccordionSummary>
+                              <AccordionDetails style={{ marginTop: '-15px' }}>
+                                <div className="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-1 mt-4">
+                                  <CssTextField
+                                    defaultValue="2020-06-10"
+                                    label="Move In"
+                                    name="available_from"
+                                    onChange={(vale) => {
+                                      handleChange(vale);
+                                      handleSubmit();
+                                    }}
+                                    // onBlur={handleSubmit}
+                                    type="date"
+                                    variant="outlined"
+                                    format="mm/dd/yyyy"
+                                  />
+
+                                  <CssTextField
+                                    defaultValue="2020-06-10"
+                                    label="Move Out"
+                                    name="available_to"
+                                    onChange={(vale) => {
+                                      handleChange(vale);
+                                      handleSubmit();
+                                    }}
+                                    // onBlur={handleSubmit}
+                                    type="date"
+                                    variant="outlined"
+                                    format="mm/dd/yyyy"
+                                  />
+                                </div>
+                              </AccordionDetails>
+                            </Accordion>
+
+                            <Accordion>
+                              <AccordionSummary
+                                expandIcon={<ExpandMoreIcon />}
+                                aria-controls="panel7a-content"
+                                id="panel7a-header"
+                              >
+                                <Typography>Furnishing</Typography>
+                              </AccordionSummary>
+                              <AccordionDetails style={{ marginTop: '-28px' }}>
+                                <div className="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-1 mt-4">
+                                  <div className="sm:col-span-4">
+                                    <div className="mt-1 flex rounded-md shadow-sm">
+                                      <RadioGroup
+                                        aria-label="furnishing"
+                                        name="furnish_type"
+                                        value={value}
+                                        onChange={handleChange}
+                                        // onBlur={handleBlur}
+                                      >
+                                        <FormControlLabel
+                                          value="unfurnished"
+                                          onChange={handleSubmit}
+                                          control={
+                                            <CustomRadioBtn
+                                              checked={values.furnish_type === 'unfurnished'}
+                                            />
+                                          }
+                                          label="Unfurnished"
+                                        />
+                                        <FormControlLabel
+                                          value="furnished"
+                                          onChange={handleSubmit}
+                                          control={
+                                            <CustomRadioBtn
+                                              checked={values.furnish_type === 'furnished'}
+                                            />
+                                          }
+                                          label="Furnished"
+                                        />
+                                      </RadioGroup>
+                                      {/* <ThemeProvider theme={outerTheme}>
+                                        <FormControl
+                                          color="secondary"
+                                          variant="outlined"
+                                          className={classes.formControl}
+                                        >
+                                          <InputLabel id="demo-simple-select-outlined-label3">
+                                            Furnishing
+                                          </InputLabel>
+                                          <Select
+                                            labelId="demo-simple-select-outlined-label3"
+                                            id="funish_type"
+                                            onChange={quickFilter}
+                                            name="furnish_type"
+                                            defaultValue="None"
+                                          >
+                                            <MenuItem value="Furnished">Furnished</MenuItem>
+                                            <MenuItem value="Unfurnished">Unfurnished</MenuItem>
+                                          </Select>
+                                        </FormControl>
+                                      </ThemeProvider> */}
+                                    </div>
+                                  </div>
+                                </div>
+                              </AccordionDetails>
+                            </Accordion>
+                            <Accordion>
+                              <AccordionSummary
+                                expandIcon={<ExpandMoreIcon />}
+                                aria-controls="panel8a-content"
+                                id="panel8a-header"
+                              >
+                                <Typography>House Size</Typography>
+                              </AccordionSummary>
+                              <AccordionDetails style={{ marginTop: '-25px' }}>
+                                <div className="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-1 mt-4">
+                                  <Box
+                                    component="form"
+                                    sx={{ '& .MuiTextField-root': { m: 1, width: '15ch' } }}
+                                    noValidate
+                                    autoComplete="off"
+                                  >
+                                    <div className="flex">
+                                      <CssTextField
+                                        // value={values.min_size}
+                                        id="minsqft"
+                                        name="min_size"
+                                        label="minsqft"
+                                        onChange={handleChange}
+                                        onBlur={values.min_size && handleSubmit}
+                                        InputProps={{
+                                          startAdornment: (
+                                            <InputAdornment position="start">Sq</InputAdornment>
+                                          ),
+                                          min: 10,
+                                          type: 'number',
+                                          'aria-labelledby': 'input-slider',
+                                        }}
+                                      />
+                                      <CssTextField
+                                        // value={values.max_size}
+                                        id="maxsqft"
+                                        name="max_size"
+                                        label="maxsqft"
+                                        onChange={handleChange}
+                                        onBlur={values.max_size && handleSubmit}
+                                        InputProps={{
+                                          startAdornment: (
+                                            <InputAdornment position="start">Sq</InputAdornment>
+                                          ),
+                                          min: 10,
+                                          type: 'number',
+                                          'aria-labelledby': 'input-slider',
+                                        }}
+                                      />
+                                    </div>
+                                  </Box>
+                                </div>
+                              </AccordionDetails>
+                            </Accordion>
+                            <Accordion>
+                              <AccordionSummary
+                                expandIcon={<ExpandMoreIcon />}
+                                aria-controls="panel9a-content"
+                                id="panel9a-header"
+                              >
+                                <Typography>Amenities</Typography>
+                              </AccordionSummary>
+                              <AccordionDetails style={{ marginTop: '-25px' }}>
+                                <div className="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-1 mt-4">
+                                  <div className="sm:col-span-4">
+                                    <div className="mt-1 flex rounded-md shadow-sm">
+                                      <FormGroup aria-label="amenities_type group">
+                                        {amenities.map((am) => (
+                                          <div>
+                                            <div className="left-section flex items-center">
+                                              <FormControlLabel
+                                                control={
+                                                  <CustomCheckBox
+                                                    id={am.name.id}
+                                                    name="ameneties"
+                                                    value={am.name.id}
+                                                    onChange={(vale) => {
+                                                      console.log(vale.target.id);
+                                                      handleChange(vale);
+                                                      handleSubmit();
+                                                    }}
+                                                    color="primary"
+                                                  />
+                                                }
+                                                label={am.name.title}
+                                              />
+                                            </div>
+                                            <div className="right-section">20</div>
                                           </div>
-                                          <div className="right-section">20</div>
-                                        </div>
-                                      </li>
-                                    );
-                                  })}
-                                </ul>
-                              </div>
-                            </div>
+                                        ))}
+                                      </FormGroup>
+                                    </div>
+                                  </div>
+                                </div>
+                              </AccordionDetails>
+                            </Accordion>
                           </div>
-                        </AccordionDetails>
-                      </Accordion>
-                    </div>
+                        </form>
+                      )}
+                    </Formik>
                   </div>
                 </div>
 

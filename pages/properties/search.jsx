@@ -69,6 +69,12 @@ const Page = ({ router }) => {
     // par = params;
   });
 
+  // search from properties filter page
+  const onNewSearch = (data) => {
+    console.log('Here');
+    onSearch(data);
+  };
+
   const onSearch = (data) => {
     console.log("searching")
     if (data !== null) {
@@ -110,6 +116,7 @@ const Page = ({ router }) => {
         status={status}
         errors={errors}
         location={router.query.label}
+        onNewSearch={(data) => onNewSearch(data)}
       />
 
       {/* <PropertiesSearchResult

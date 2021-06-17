@@ -77,7 +77,6 @@ const PropertiesSearchResult = ({
   errors,
   location,
   onFiltersChanged,
-  onNewSearch,
 }) => {
   const classes = useStyles();
 
@@ -89,15 +88,8 @@ const PropertiesSearchResult = ({
   const [maxVal, setMaxVal] = useState(2000);
   const [amenities, setAmenities] = useState([]);
 
-  const [label, setLabel] = useState('');
-  const [from, setFrom] = useState('');
-  const [to, setTo] = useState('');
-  // const [lat, setLat] = useState(0);
-  // const [lng, setLng] = useState(0);
   const [minPrice, setMinPrice] = useState(30);
   const [maxPrice, setMaxPrice] = useState(2000);
-  const [available_from, setAvailableFrom] = useState();
-  const [available_to, setAvailableTo] = useState();
   const [value, setValue] = useState(null);
   const router = useRouter();
   const [expanded, setExpanded] = useState('panel1');
@@ -128,84 +120,31 @@ const PropertiesSearchResult = ({
   }
 
   const handleAllChange = (event, newValue) => {
-    let value;
+    let vale;
     if (newValue[0] !== minPrice) {
       event.target.name = 'min_price';
-      value = newValue[0];
+      vale = newValue[0];
     } else {
       event.target.name = 'max_price';
-      value = newValue[1];
+      vale = newValue[1];
     }
     setMinPrice(newValue[0]);
     setMaxPrice(newValue[1]);
 
     const params = {
-      [event.target.name]: value,
+      [event.target.name]: vale,
     };
     console.log(params);
-    // setPriceRange(params);
     setPriceRange((prevValue) => ({
       ...prevValue,
-      [event.target.name]: value,
+      [event.target.name]: vale,
     }));
-    // onFiltersChanged(params);
   };
 
   // get filtered properties
   const handleComplete = () => {
     onFiltersChanged(priceRange);
     console.log('my prces', priceRange);
-  };
-
-  const [state, setState] = useState({
-    availableFrom: '',
-    availableTo: '',
-    // location: "",
-    houseType: '',
-    // min_price : "",
-    // max_price : "",
-    // ameni : "",
-    // location : "",
-    // min_bedrooms : "",
-    // bathrooms : "",
-    // minsqft : "",
-    // maxsqft : "",
-    // furnish_type : "",
-  });
-
-  const handlePriceInput = (evt) => {
-    if (evt.target.name === 'min_price' && evt.target.value !== minPrice) {
-      setMinPrice(evt.target.value);
-      setPriceRange((prevValue) => ({
-        ...prevValue,
-        [evt.target.name]: evt.target.value,
-      }));
-    }
-
-    if (evt.target.name === 'max_price' && evt.target.value !== maxPrice) {
-      setMaxPrice(evt.target.value);
-      setPriceRange((prevValue) => ({
-        ...prevValue,
-        [evt.target.name]: evt.target.value,
-      }));
-    }
-  };
-
-  const priceQuickSearch = () => {
-    onFiltersChanged(priceRange);
-  };
-
-  const quickFilter = (evt) => {
-    console.log('testing house type', evt.target.name, evt.target.value);
-    // setPriceRange((prevValue) => ({
-    //   ...prevValue,
-    //   [evt.target.name]: evt.target.value,
-    // }));
-
-    priceRange[evt.target.name] = evt.target.value;
-
-    onFiltersChanged(priceRange);
-    console.log('this is me', priceRange);
   };
 
   let num;
@@ -252,47 +191,15 @@ const PropertiesSearchResult = ({
     fetchRange();
   }, []);
 
-  const handleNewSearch = ({ lbl, lat, lng }) => {
-    console.log('Here is new search', lbl, lat, lng);
-    router.push({ pathname: '/properties', query: { lbl, lat, lng } });
-    //onNewSearch(data);
-  };
-
   return (
     <div className="container mx-auto px-4 sm:px-6 lg:px-10">
       <Spinner loadingText="Searching properties..." isLoading={status === request.REQUESTING}>
-        {/* <div className={classes.searchbox}>
-          <AutoFillField
-            selected={(lbl, latitude, longitude) => {
-              setLabel(lbl);
-              setLat(latitude);
-              setLng(longitude);
-            }}
-            height="55px"
-            width="270px"
-            border="3"
-            placeholder="Where will you go?"
-            icon="icon-map-marker-primary"
-            name="location"
-            borderColor="#41A2F9"
-          />
-        </div> */}
         <div ref={searchResultRef} className="rental-houses">
-          {/* <h3 className="main-title">
-            RENTAL HOUSE IN{' '}
-            <span className="text-primary font-weight-bold">
-              {location ? location.toUpperCase() : 'NETHERLANDS'}
-            </span>
-          </h3> */}
           <div className={classes.searchbox}>
             <AutoFillField
               selected={(lbl, latitude, longitude) => {
-                // setLabel(lbl);
-                // setLat(latitude);
-                // setLng(longitude);
                 console.log('finished here', latitude, longitude);
                 onFiltersChanged({ longitude: longitude, latitude: latitude });
-                //handleNewSearch({ lbl: lbl, lat: longitude, lng: latitude });
               }}
               height="55px"
               width="270px"
@@ -324,11 +231,8 @@ const PropertiesSearchResult = ({
                     <Formik
                       initialValues={{}}
                       onSubmit={(values, { setSubmitting }) => {
-                        // setTimeout(() => {
                         console.log(JSON.stringify(values, null, 2));
                         onFiltersChanged(values);
-                        //   setSubmitting(false);
-                        // }, 400);
                       }}
                     >
                       {({
@@ -381,8 +285,6 @@ const PropertiesSearchResult = ({
                                       name="min_price"
                                       label="Min Price"
                                       id="outlined-size-normal"
-                                      // onChange={handlePriceInput}
-                                      // onBlur={priceQuickSearch}
                                       onChange={(vale) => {
                                         handleChange(vale);
                                         setMinPrice(vale.target.value);
@@ -406,8 +308,6 @@ const PropertiesSearchResult = ({
                                       name="max_price"
                                       label="Max Price"
                                       id="outlined-size-normal"
-                                      // onChange={handlePriceInput}
-                                      // onBlur={priceQuickSearch}
                                       onChange={(vale) => {
                                         handleChange(vale);
                                         setMaxPrice(vale.target.value);
@@ -446,7 +346,6 @@ const PropertiesSearchResult = ({
                                           name="house_type"
                                           value={value}
                                           onChange={handleChange}
-                                          // onBlur={handleBlur}
                                         >
                                           <FormControlLabel
                                             value="studio"
@@ -474,7 +373,6 @@ const PropertiesSearchResult = ({
                                             name="min_bedrooms"
                                             value={value}
                                             onChange={handleChange}
-                                            // onBlur={handleBlur}
                                             style={{
                                               marginLeft: '30px',
                                               display: open ? 'block' : 'none',
@@ -542,26 +440,6 @@ const PropertiesSearchResult = ({
                                             label="Private Room"
                                           />
                                         </RadioGroup>
-                                        {/* {houseTypes.map((ht, index) => (
-                                          <li key={index}>
-                                            <div className="block text-sm font-medium text-gray-700">
-                                              <div className="left-section flex items-center">
-                                                <FormControlLabel
-                                                  control={
-                                                    <CustomCheckBox
-                                                      id={`custom-checkbox-${index}`}
-                                                      name="house_type"
-                                                      value={ht.name}
-                                                      onChange={quickFilter}
-                                                      color="primary"
-                                                    />
-                                                  }
-                                                  label={ht.name}
-                                                />
-                                              </div>
-                                            </div>
-                                          </li>
-                                        ))} */}
                                       </ul>
                                     </div>
                                   </div>
@@ -586,7 +464,6 @@ const PropertiesSearchResult = ({
                                       handleChange(vale);
                                       handleSubmit();
                                     }}
-                                    // onBlur={handleSubmit}
                                     type="date"
                                     variant="outlined"
                                     format="mm/dd/yyyy"
@@ -600,7 +477,6 @@ const PropertiesSearchResult = ({
                                       handleChange(vale);
                                       handleSubmit();
                                     }}
-                                    // onBlur={handleSubmit}
                                     type="date"
                                     variant="outlined"
                                     format="mm/dd/yyyy"
@@ -626,7 +502,6 @@ const PropertiesSearchResult = ({
                                         name="furnish_type"
                                         value={value}
                                         onChange={handleChange}
-                                        // onBlur={handleBlur}
                                       >
                                         <FormControlLabel
                                           value="unfurnished"
@@ -649,27 +524,6 @@ const PropertiesSearchResult = ({
                                           label="Furnished"
                                         />
                                       </RadioGroup>
-                                      {/* <ThemeProvider theme={outerTheme}>
-                                        <FormControl
-                                          color="secondary"
-                                          variant="outlined"
-                                          className={classes.formControl}
-                                        >
-                                          <InputLabel id="demo-simple-select-outlined-label3">
-                                            Furnishing
-                                          </InputLabel>
-                                          <Select
-                                            labelId="demo-simple-select-outlined-label3"
-                                            id="funish_type"
-                                            onChange={quickFilter}
-                                            name="furnish_type"
-                                            defaultValue="None"
-                                          >
-                                            <MenuItem value="Furnished">Furnished</MenuItem>
-                                            <MenuItem value="Unfurnished">Unfurnished</MenuItem>
-                                          </Select>
-                                        </FormControl>
-                                      </ThemeProvider> */}
                                     </div>
                                   </div>
                                 </div>
@@ -693,7 +547,6 @@ const PropertiesSearchResult = ({
                                   >
                                     <div className="flex">
                                       <CssTextField
-                                        // value={values.min_size}
                                         id="minsqft"
                                         name="min_size"
                                         label="minsqft"
@@ -709,7 +562,6 @@ const PropertiesSearchResult = ({
                                         }}
                                       />
                                       <CssTextField
-                                        // value={values.max_size}
                                         id="maxsqft"
                                         name="max_size"
                                         label="maxsqft"
@@ -790,12 +642,6 @@ const PropertiesSearchResult = ({
                     {/* LIST */}
                     {status === request.SUCCESS && !!properties?.length && (
                       <>
-                        {/* <TableHeader
-                    classNames="rental-houses-table-header mt-5"
-                    currentPage={paginationData.currentPage}
-                    maxPage={paginationData.currentPage}
-                  /> */}
-
                         {properties.map((property) => (
                           <div key={property.id} className="item col-md-12 col-lg-6 col-xl-4">
                             <PropertyInfo

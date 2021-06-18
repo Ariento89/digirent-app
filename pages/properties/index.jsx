@@ -97,7 +97,6 @@ const Page = ({ router }) => {
       <img src="/images/main-right-bg.svg" className="right-main-background" alt="right bg" />
 
       {/* <PropertiesLanding onSubmit={onSearch} /> */}
-
       <PropertiesSearchResult
         searchResultRef={searchResultRef}
         properties={properties}

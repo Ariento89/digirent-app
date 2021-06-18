@@ -48,6 +48,7 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
+import Filter from './widgets/Filter';
 
 import { createTheme, ThemeProvider, makeStyles } from '@material-ui/core/styles';
 
@@ -60,6 +61,12 @@ const useStyles = makeStyles((theme) => ({
     marginTop: '40px',
     marginBottom: '20px',
   },
+  filterMenuWrapper: {
+    position: 'absolute',
+    zIndex: 2,
+    right: '340px',
+    top: '25px',
+  }
 }));
 
 const outerTheme = createTheme({
@@ -215,7 +222,10 @@ const PropertiesSearchResult = ({
           </p>
           <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
             <TabContext value={val}>
-              <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+              <Box sx={{ borderBottom: 1, borderColor: 'divider', position: 'relative' }}>
+                <div className={classes.filterMenuWrapper}>
+                  <Filter />
+                </div>
                 <AntTabs onChange={handleChanges} aria-label="places views">
                   <AntTab icon={<DashboardOutlined />} label="Gallery" value="1" />
                   <AntTab icon={<Map />} label="Map" value="2" />

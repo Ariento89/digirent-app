@@ -1,12 +1,19 @@
-import Button from 'components/Button/index';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Dropdown, { DropdownTrigger, DropdownContent } from 'react-simple-dropdown';
 import cn from 'classnames';
 import { API_ASSET_URL } from 'services/index';
+import Fab from '@material-ui/core/Fab';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import { makeStyles } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
+import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import IconButton from '@material-ui/core/IconButton';
 import Moment from 'react-moment';
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
@@ -17,6 +24,90 @@ export const propertyInfoSelectionType = {
   STILL_TO_COMMENT: 'STILL_TO_COMMENT',
 };
 
+const useStyles = makeStyles(() => ({
+  cardImageWrapper: {
+    width: '100%',
+    position: 'relative',
+    paddingTop: '66.66%',
+  },
+  cardImageContainer: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    bottom: 0,
+    top: 0,
+    height: '100%',
+
+    '& .carousel-root': {
+      height: '100%'
+    },
+
+    '& .carousel.carousel-slider': {
+      height: '100%'
+    },
+
+    '& .carousel .slider-wrapper': {
+      height: '100%'
+    },
+
+    '& .carousel .slider-wrapper .slider': {
+      height: '100%'
+    }
+  },
+  infoContainer: {
+    padding: '0.875rem 1rem 1rem 1rem'
+  },
+  infoListItem: {
+    width: '100%',
+    display: 'flex',
+    position: 'relative',
+    boxSizing: 'border-box',
+    textAlign: 'left',
+    alignItems: 'baseline',
+    justifyContent: 'flex-start',
+    textDecoration: 'none',
+    paddingTop: '8px'
+  },
+  priceContainer: {
+    padding: 0
+  },
+  priceLabel: {
+    color: '#00af9e',
+    fontSize: '1.25rem',
+    fontWeight: 'bold'
+  },
+  billsContainer: {
+    color: '#566a79',
+    fontSize: '0.75rem',
+    lineHeight: 1.375
+  },
+  infoDivider: {
+    color: '#aab4bb',
+    marginLeft: '4px',
+    marginRight: '4px',
+  },
+  infoDefaultText: {
+    color: '#2d4658',
+    fontSize: '0.875rem',
+    fontWeight: 'normal',
+    lineHeight: '1.375',
+  },
+  arrowWrapper: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
+    zIndex: 1,
+    display: 'flex',
+    alignItems: 'center'
+  },
+  arrowContainer: {
+    display: 'flex',
+    width: '100%',
+    justifyContent: 'space-between'
+  }
+}));
 
 const PropertyInfo = ({
   name,
@@ -34,50 +125,91 @@ const PropertyInfo = ({
   link,
   propId,
 }) => {
-console.log(houseImage);
+  const classes = useStyles();
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  const nextSlide = () => setCurrentSlide(value => value + 1);
+  const prevSlide = () => setCurrentSlide(value => value - 1);
+  const updateCurrentSlide = (index) => {
+    if (currentSlide !== index) {
+      setCurrentSlide(index);
+    }
+  }
 
   const getContent = () => (
-    <Card sx={{ maxWidth: 345 }}>
-      {/* <CardHeader
-        title={name}
-      /> */}
-        {/* <Slider {...slideSettings} className="list"> */}
-        <Carousel autoplay>
+    <Card sx={{ maxWidth: 345 }} className='position-relative h-full'>
+      <div className={classes.cardImageWrapper}>
+        <div className={classes.arrowWrapper}>
+          <div className={classes.arrowContainer}>
+            <IconButton onClick={prevSlide} style={{ color: 'white', filter: 'drop-shadow(0px 1px 3px #2d4658)' }} aria-label="left">
+              <ChevronLeftIcon style={{ fontSize: 40 }} />
+            </IconButton>
+            <IconButton onClick={nextSlide} style={{ color: 'white', filter: 'drop-shadow(0px 1px 3px #2d4658)' }} aria-label="right">
+              <ChevronRightIcon style={{ fontSize: 40 }} />
+            </IconButton>
+          </div>
+        </div>
+        <div className={classes.cardImageContainer}>
+          <Carousel
+            autoplay
+            showIndicators={false}
+            showStatus={false}
+            showThumbs={false}
+            showArrows={false}
+            selectedItem={currentSlide}
+            onChange={updateCurrentSlide}
+          >
 
-          { Array.isArray(houseImage) ? 
-          houseImage.map((house,index) => (
-            <div key={index}>
-              {/* <CardMedia
-                sx={{
-                  height: 0,
-                  paddingTop: '60.25%', // 16:9
-                }}
-                image= */}
-        <img src={`${API_ASSET_URL}${house}`}/>
-            </div>
-          )):
-          <img src="/images/house-sample-2.jpg"/> 
-          }
-        {/* </Slider>   */}
-      </Carousel>
+            {Array.isArray(houseImage) ? (
+              houseImage.map((house,index) => (
+                <div key={index} className='w-full h-full'>
+                  <img src={`${API_ASSET_URL}${house}`} className='h-full object-cover'/>
+                </div>
+              ))
+            ) : (
+              <img src="/images/house-sample-2.jpg" className='h-full object-cover' /> 
+            )}
+          </Carousel>
+        </div>
+      </div>
+      <div className='fab-label-wrapper d-flex'>
+        <div className='flex-grow-1'>
 
-      <CardContent style={{ marginTop:'10px' }} className="table">
-       <p>€{rentFee}<span style={{ fontSize: '12px', fontWeight: '300' }}>/month (Bills excluded)</span></p>
-        <ul id="horizontal-list" style={{ fontSize: '13px', listStyleType:'square', fontWeight: '300'  }}>
-          <li>
-          {name}, {address} 
+        </div>
+        <Fab
+          aria-label='favorite'
+          className='fab-button'
+        >
+          <FavoriteIcon fontSize='small' className='fab--favorite-icon' />
+        </Fab>
+      </div>
+      <div>
+        <ul className={classes.infoContainer}>
+          <li className={`${classes.infoListItem} ${classes.priceContainer}`}>
+            <h3 className={classes.priceLabel}>€{rentFee}</h3>
+            <span className={classes.billsContainer}>/month (Bills excluded)</span>
           </li>
-          <span><li>
-          {houseType} 
+          <li className={classes.infoListItem}>
+            <span className={classes.infoDefaultText}>
+              {houseType}
+              {
+                bathrooms &&
+                  <>
+                    <span className={classes.infoDivider}>•</span>
+                    {bathrooms} bathrooms
+                  </>
+              }
+              <span className={classes.infoDivider}>•</span>
+              {size} m²
+            </span>
           </li>
-          <li>
-          {size}m² 
+          <li className={classes.infoListItem}>
+            <span className={classes.infoDefaultText}>
+              Available In{' '}<Moment fromNow ago>{availableFrom}</Moment>
+            </span>
           </li>
-          <li>
-          Available In <Moment fromNow ago>{availableFrom}</Moment> 
-          </li></span>
         </ul>
-      </CardContent>
+      </div>
       
     </Card>
     // <div className={cn('property-info main-box p-0', { clickable: !!link })}>

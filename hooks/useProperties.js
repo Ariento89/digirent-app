@@ -18,6 +18,8 @@ export const useProperties = () => {
   const uploadImageAction = useActionDispatch(actions.uploadImage);
   const uploadVideosAction = useActionDispatch(actions.uploadVideos);
   const deletePropertyAction = useActionDispatch(actions.deleteProperty);
+  const postFavoritePropertyAction = useActionDispatch(actions.postFavoriteProperty);
+  const deleteFavoritePropertyAction = useActionDispatch(actions.deleteFavoriteProperty);
 
   // GENERAL METHODS
   const resetError = () => setErrors([]);
@@ -71,6 +73,14 @@ export const useProperties = () => {
     executeRequest(data, callback, deletePropertyAction, types.DELETE_PROPERTY);
   };
 
+  const postFavoriteProperty = (data, callback = {}) => {
+    executeRequest(data, callback, postFavoritePropertyAction, types.POST_FAVORITE_PROPERTY);
+  }
+
+  const deleteFavoriteProperty = (data, callback = {}) => {
+    executeRequest(data, callback, deleteFavoritePropertyAction, types.DELETE_FAVORITE_PROPERTY);
+  }
+
   return {
     fetchProperties,
     createProperty,
@@ -79,6 +89,8 @@ export const useProperties = () => {
     uploadImage,
     uploadVideos,
     deleteProperty,
+    postFavoriteProperty,
+    deleteFavoriteProperty,
     status,
     errors,
     recentRequest,

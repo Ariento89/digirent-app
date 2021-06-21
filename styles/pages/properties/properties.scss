@@ -347,9 +347,14 @@
   font-size: 1rem;
   min-height: 30px;
   background-color: #fff;
+  z-index: 2;
 
   .fab--favorite-icon {
     color: rgba(0, 0, 0, 0.54);
+
+    &.favorite {
+      color: rgb(220, 0, 78);
+    }
   }
 
   &:hover {

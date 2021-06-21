@@ -9,4 +9,6 @@ export const service = {
   updateProperty: async (propertyId, body) => axios.put(`/apartments/${propertyId}`, body),
   uploadImage: async (propertyId, body) => axios.post(`/apartments/${propertyId}/images`, body, HEADER_MULTIPART_FORM_DATA),
   uploadVideos: async (propertyId, body) => axios.post(`/apartments/${propertyId}/videos`, body, HEADER_MULTIPART_FORM_DATA),
+  postFavoriteProperty: async (propertyId) => axios.post(`/apartments/${propertyId}/favorites`),
+  deleteFavoriteProperty: async (propertyId) => axios.delete(`/apartments/${propertyId}/favorites`),
 };

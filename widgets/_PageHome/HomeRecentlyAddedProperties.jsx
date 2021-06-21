@@ -77,6 +77,7 @@ const HomeRecentlyAddedProperties = () => {
                 rentFee={property.monthlyPrice}
                 bedrooms={property.bedrooms}
                 bathrooms={property.bathrooms}
+                propId={property.id}
               />
             </div>
           ))}

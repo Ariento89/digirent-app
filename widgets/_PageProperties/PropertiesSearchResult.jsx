@@ -1,5 +1,6 @@
 import FieldError from 'components/FieldError/FieldError';
 import Spinner from 'components/Spinner/index';
+import cn from 'classnames';
 import { Formik, Field } from 'formik';
 import { useState, useRef, useEffect } from 'react';
 import { request } from 'shared/types';
@@ -66,7 +67,7 @@ const useStyles = makeStyles((theme) => ({
     zIndex: 2,
     right: '340px',
     top: '25px',
-  }
+  },
 }));
 
 const outerTheme = createTheme({
@@ -103,6 +104,8 @@ const PropertiesSearchResult = ({
 
   // hold filter value
   const [priceRange, setPriceRange] = useState({ min_price: 30, max_price: 2000 });
+  const [filterObj, setFilterObj] = useState({});
+  const [sortObj, setSortObj] = useState({});
 
   const [val, setVal] = useState('1');
 
@@ -153,6 +156,12 @@ const PropertiesSearchResult = ({
     onFiltersChanged(priceRange);
     console.log('my prces', priceRange);
   };
+
+  // get sort option
+  const onSortChange = (value) => {
+    setSortObj({...value});
+    onFiltersChanged({...value, ...filterObj});
+  }
 
   let num;
 
@@ -224,7 +233,9 @@ const PropertiesSearchResult = ({
             <TabContext value={val}>
               <Box sx={{ borderBottom: 1, borderColor: 'divider', position: 'relative' }}>
                 <div className={classes.filterMenuWrapper}>
-                  <Filter />
+                  <Filter
+                    onSortChange={onSortChange}
+                  />
                 </div>
                 <AntTabs onChange={handleChanges} aria-label="places views">
                   <AntTab icon={<DashboardOutlined />} label="Gallery" value="1" />
@@ -241,8 +252,8 @@ const PropertiesSearchResult = ({
                     <Formik
                       initialValues={{}}
                       onSubmit={(values, { setSubmitting }) => {
-                        console.log(JSON.stringify(values, null, 2));
-                        onFiltersChanged(values);
+                        setFilterObj({...values});
+                        onFiltersChanged({...values, ...sortObj});
                       }}
                     >
                       {({
@@ -639,8 +650,8 @@ const PropertiesSearchResult = ({
                   </div>
                 </div>
 
-                <TabPanel value="1">
-                  <div className="row list flex-1 mt-0">
+                <TabPanel value="1" className="flex-1">
+                  <div className={cn("row list flex-1 mt-0", {'h-full': request.SUCCESS && !properties?.length})}>
                     {!!errors?.length && (
                       <div className="my-3">
                         {errors?.map((error) => (
@@ -665,6 +676,7 @@ const PropertiesSearchResult = ({
                               bathrooms={property.bathrooms}
                               size={property.size}
                               availableFrom={property.availableFrom}
+                              propId={property.id}
                             />
                           </div>
                         ))}

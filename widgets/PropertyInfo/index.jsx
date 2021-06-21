@@ -2,6 +2,10 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Dropdown, { DropdownTrigger, DropdownContent } from 'react-simple-dropdown';
 import cn from 'classnames';
+import { useProperties } from 'hooks/useProperties';
+import { useAuthentication } from 'hooks/useAuthentication';
+import { useToasts } from 'react-toast-notifications';
+import { toastTypes } from 'shared/types';
 import { API_ASSET_URL } from 'services/index';
 import Fab from '@material-ui/core/Fab';
 import Card from '@material-ui/core/Card';
@@ -16,6 +20,7 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import IconButton from '@material-ui/core/IconButton';
 import Moment from 'react-moment';
 import { Carousel } from 'react-responsive-carousel';
+import HomeLoginModal from 'widgets/_PageHome/HomeLoginModal';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 
 export const propertyInfoSelectionType = {
@@ -72,7 +77,7 @@ const useStyles = makeStyles(() => ({
     padding: 0
   },
   priceLabel: {
-    color: '#00af9e',
+    color: '#47a4f5',
     fontSize: '1.25rem',
     fontWeight: 'bold'
   },
@@ -124,16 +129,61 @@ const PropertyInfo = ({
   onDelete,
   link,
   propId,
+  favorite,
 }) => {
   const classes = useStyles();
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [isFavorite, setIsFavorite] = useState(false);
+  const [loginModalVisible, setLoginModalVisible] = useState(false);
 
-  const nextSlide = () => setCurrentSlide(value => value + 1);
-  const prevSlide = () => setCurrentSlide(value => value - 1);
+  const { postFavoriteProperty, deleteFavoriteProperty, status, errors } = useProperties();
+  const { accessToken } = useAuthentication();
+  const { addToast } = useToasts();
+
+  const nextSlide = (e) => {
+    e.preventDefault();
+    setCurrentSlide(value => value + 1);
+  };
+
+  const prevSlide = (e) => {
+    e.preventDefault();
+    setCurrentSlide(value => value - 1);
+  };
+
   const updateCurrentSlide = (index) => {
     if (currentSlide !== index) {
       setCurrentSlide(index);
     }
+  };
+
+  useEffect(() => {
+    setIsFavorite(favorite);
+  }, [])
+
+  const toggleFavoriteProperty = (e) => {
+    e.preventDefault();
+    if (accessToken) {
+      console.log(isFavorite)
+      isFavorite ? deleteFavoriteProperty({propertyId: propId}, {
+                    onSuccess: onFetchSuccess,
+                    onError: onFetchError,
+                  })
+                 : postFavoriteProperty({propertyId: propId}, {
+                    onSuccess: onFetchSuccess,
+                    onError: onFetchError,
+                 });
+    } else {
+      setLoginModalVisible(true);
+    }
+  };
+
+  const onFetchSuccess = ({ response }) => {
+    console.log("@34234234234243");
+    setIsFavorite(value => !value)
+  };
+
+  const onFetchError = () => {
+    addToast('An error occurred while check favorite property.', toastTypes.ERROR);
   }
 
   const getContent = () => (
@@ -179,8 +229,9 @@ const PropertyInfo = ({
         <Fab
           aria-label='favorite'
           className='fab-button'
+          onClick={toggleFavoriteProperty}
         >
-          <FavoriteIcon fontSize='small' className='fab--favorite-icon' />
+          <FavoriteIcon fontSize='small' className={cn('fab--favorite-icon', { favorite: isFavorite })} />
         </Fab>
       </div>
       <div>
@@ -216,7 +267,15 @@ const PropertyInfo = ({
   );
 
   // return !onDelete ? <Link href={link}>{getContent()}</Link> : getContent();
-  return !onDelete ?<Link href="/properties">{getContent()}</Link>: getContent();
+  return (
+    <>
+      {!onDelete ?<Link href={link}>{getContent()}</Link>: getContent()}
+      <HomeLoginModal
+        isVisible={loginModalVisible}
+        onClose={() => setLoginModalVisible(false)}
+      />
+    </>
+  )
 };
 
 PropertyInfo.defaultProps = {

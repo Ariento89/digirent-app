@@ -94,6 +94,31 @@ function* deleteProperty({ payload }) {
   }
 }
 
+function* postFavoriteProperty({ payload }) {
+  const { callback, propertyId } = payload;
+  console.log(propertyId)
+  callback({ status: request.REQUESTING });
+
+  try {
+    const response = yield call(service.postFavoriteProperty, propertyId);
+    callback({ status: request.SUCCESS, response: response.data });
+  } catch (e) {
+    callback({ status: request.ERROR, errors: e.errors });
+  }
+}
+
+function* deleteFavoriteProperty({ payload }) {
+  const { callback, propertyId } = payload;
+  callback({ status: request.REQUESTING });
+
+  try {
+    const response = yield call(service.deleteFavoriteProperty, propertyId);
+    callback({ status: request.SUCCESS, response: response.data });
+  } catch (e) {
+    callback({ status: request.ERROR, errors: e.errors });
+  }
+}
+
 /* WATCHERS */
 const fetchPropertiesWatcherSaga = function* fetchPropertiesWatcherSaga() {
   yield takeLatest(types.FETCH_PROPERTIES, fetchProperties);
@@ -123,6 +148,14 @@ const deletePropertyWatcherSaga = function* deletePropertyWatcherSaga() {
   yield takeLatest(types.DELETE_PROPERTY, deleteProperty);
 };
 
+const postFavoritePropertyWatcherSaga = function* postFavoritePropertyWatcherSaga() {
+  yield takeLatest(types.POST_FAVORITE_PROPERTY, postFavoriteProperty);
+};
+
+const deleteFavoritePropertyWatcherSaga = function* deleteFavoritePropertyWatcherSaga() {
+  yield takeLatest(types.DELETE_FAVORITE_PROPERTY, deleteFavoriteProperty);
+};
+
 export default [
   fetchPropertiesWatcherSaga(),
   createPropertyWatcherSaga(),
@@ -130,5 +163,7 @@ export default [
   updatePropertyWatcherSaga(),
   uploadImageWatcherSaga(),
   uploadVideosWatcherSaga(),
-  deletePropertyWatcherSaga()
+  deletePropertyWatcherSaga(),
+  postFavoritePropertyWatcherSaga(),
+  deleteFavoritePropertyWatcherSaga()
 ];

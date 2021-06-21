@@ -11,8 +11,14 @@ import MenuItem from '@material-ui/core/MenuItem';
 import MenuList from '@material-ui/core/MenuList';
 
 const options = ['SORT BY', 'Recommended', 'Most recent', 'Lowest price', 'Highest price'];
+const sortAPIOptions = [
+  {},
+  { sort_by: 'date', sort_order: 'desc' },
+  { sort_by: 'price', sort_order: 'asc' },
+  { sort_by: 'price', sort_order: 'desc' },
+];
 
-export default function SplitButton() {
+export default function SplitButton({ onSortChange }) {
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
   const [selectedIndex, setSelectedIndex] = React.useState(0);
@@ -22,6 +28,7 @@ export default function SplitButton() {
   };
 
   const handleMenuItemClick = (event, index) => {
+    onSortChange(sortAPIOptions[index - 1]);
     setSelectedIndex(index);
     setOpen(false);
   };

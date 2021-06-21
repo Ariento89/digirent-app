@@ -10,6 +10,8 @@ export const types = {
   UPLOAD_IMAGE: `${key}/UPLOAD_IMAGE`,
   UPLOAD_VIDEOS: `${key}/UPLOAD_VIDEOS`,
   DELETE_PROPERTY: `${key}/DELETE_PROPERTY`,
+  POST_FAVORITE_PROPERTY: `${key}/POST_FAVORITE_PROPERTY`,
+  DELETE_FAVORITE_PROPERTY: `${key}/DELETE_FAVORITE_PROPERTY`,
 };
 
 export const actions = {
@@ -20,4 +22,6 @@ export const actions = {
   uploadImage: createAction(types.UPLOAD_IMAGE),
   uploadVideos: createAction(types.UPLOAD_VIDEOS),
   deleteProperty: createAction(types.DELETE_PROPERTY),
+  postFavoriteProperty: createAction(types.POST_FAVORITE_PROPERTY),
+  deleteFavoriteProperty: createAction(types.DELETE_FAVORITE_PROPERTY),
 };

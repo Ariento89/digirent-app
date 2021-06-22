@@ -3,6 +3,7 @@ import { HEADER_MULTIPART_FORM_DATA } from './index';
 
 export const service = {
   fetchProperties: async (params) => axios.get('/apartments/', { params }),
+  fetchPropertiesTenant: async (params) => axios.get('/apartments/tenant', { params }),
   createProperty: async (body) => axios.post('/apartments/', body),
   deleteProperty: async (propertyId) => axios.put(`/apartments/${propertyId}/archive`),
   getProperty: async (propertyId) => axios.get(`/apartments/${propertyId}`),

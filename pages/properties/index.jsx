@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useProperties } from 'hooks/useProperties';
+import { useMe } from 'hooks/useMe';
 import { useEffect, useRef, useState } from 'react';
 import { useToasts } from 'react-toast-notifications';
 import { toastTypes } from 'shared/types';
@@ -13,9 +14,7 @@ const Page = ({ router }) => {
   console.log('entered properties page');
   // STATES
   const [properties, setProperties] = useState([]);
-  console.log('here?');
   const [recommendedProperties, setRecommendedProperties] = useState([]);
-  console.log('here345');
 
   // REFS
   const searchResultRef = useRef(null);
@@ -23,6 +22,7 @@ const Page = ({ router }) => {
   // CUSTOM HOOKS
   const { addToast } = useToasts();
   const { fetchProperties, status, errors } = useProperties();
+  const { me } = useMe();
   const params = {};
 
   // METHODS
@@ -41,18 +41,24 @@ const Page = ({ router }) => {
     }
 
     onSearch(params);
-  }, []);
+  }, [me]);
 
   const onSearch = (data) => {
     if (data !== null) {
       searchResultRef.current.scrollIntoView();
     }
-    console.log('logged from index', data);
-
-    fetchProperties(data, {
-      onSuccess: onFetchSuccess,
-      onError: onFetchError,
-    });
+    
+    if (me && me.role === 'tenant') {
+      fetchProperties({...data, isTenant: true}, {
+        onSuccess: onFetchSuccess,
+        onError: onFetchError,
+      });
+    } else {
+      fetchProperties(data, {
+        onSuccess: onFetchSuccess,
+        onError: onFetchError,
+      });
+    }
   };
 
   const onFetchSuccess = ({ response }) => {

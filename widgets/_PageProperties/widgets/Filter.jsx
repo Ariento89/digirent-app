@@ -10,7 +10,7 @@ import Popper from '@material-ui/core/Popper';
 import MenuItem from '@material-ui/core/MenuItem';
 import MenuList from '@material-ui/core/MenuList';
 
-const options = ['SORT BY', 'Recommended', 'Most recent', 'Lowest price', 'Highest price'];
+const options = ['Sort by', 'Recommended', 'Most recent', 'Lowest price', 'Highest price'];
 const sortAPIOptions = [
   {},
   { sort_by: 'date', sort_order: 'desc' },
@@ -57,6 +57,7 @@ export default function SplitButton({ onSortChange }) {
           aria-label="select merge strategy"
           aria-haspopup="menu"
           onClick={handleToggle}
+          style={{fontFamily: '"Proxima Nova", sans-serif'}}
         >
           {options[selectedIndex]}
           <ArrowDropDownIcon />
@@ -78,7 +79,8 @@ export default function SplitButton({ onSortChange }) {
                           fontSize: '0.875rem',
                           minHeight: 'auto',
                           fontWeight: 400,
-                          lineHeight: 1.43
+                          lineHeight: 1.43,
+                          fontFamily: '"Proxima Nova", sans-serif'
                         }}
                         key={option}
                         disabled={index === 0}

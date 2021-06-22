@@ -49,7 +49,7 @@ const AutoFillField = ({
             width,
             height,
             paddingLeft: icon ? '40px' : '16px',
-            borderRadius: '5px',
+            borderRadius: '20px',
             border: border && border,
             borderColor: borderColor && borderColor,
             color: '#7f7f7f',

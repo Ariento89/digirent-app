@@ -10,13 +10,10 @@ import PropertiesSearchResult from 'widgets/_PageProperties/PropertiesSearchResu
 import { withRouter } from 'next/router';
 
 const Page = ({ router }) => {
-  console.log("entered properties page")
+  console.log('entered properties page');
   // STATES
   const [properties, setProperties] = useState([]);
-  console.log("here?")
   const [recommendedProperties, setRecommendedProperties] = useState([]);
-  console.log("here345")
-
 
   // REFS
   const searchResultRef = useRef(null);
@@ -48,7 +45,7 @@ const Page = ({ router }) => {
     if (data !== null) {
       searchResultRef.current.scrollIntoView();
     }
-
+    
     fetchProperties(data, {
       onSuccess: onFetchSuccess,
       onError: onFetchError,
@@ -56,34 +53,39 @@ const Page = ({ router }) => {
   };
 
   const onFetchSuccess = ({ response }) => {
-    console.log("fetchsccessul")
+    console.log('fetchsccessul');
+    console.log('my searches here', response);
     if (!recommendedProperties.length) {
       setRecommendedProperties(response);
     }
 
-    console.log("returning your response")
+    console.log('returning your response');
     setProperties(response);
+    console.log('my searches here 3', response);
   };
 
   const onFetchError = () => {
     addToast('An error occurred while searching properties.', toastTypes.ERROR);
   };
-  
+
   const onFiltersChanged = (filterObject) => {
     // console.log(filterObject.min_price);
-    params.min_price = filterObject.min_price;
-    params.max_price = filterObject.max_price;
-    params.available_from = filterObject.available_from;
-    params.available_to = filterObject.available_to;
-    params.house_type = filterObject.house_type;
-    params.max_bathrooms = filterObject.max_bathrooms;
-    params.min_bathrooms = filterObject.min_bathrooms;
-    params.max_bedrooms = filterObject.max_bedrooms;
-    params.min_bedrooms = filterObject.min_bedrooms;
-    params.lat = filterObject.lat;
-    params.lng = filterObject.lng;
+    // params.min_price = filterObject.min_price;
+    // params.max_price = filterObject.max_price;
+    // params.available_from = filterObject.available_from;
+    // params.available_to = filterObject.available_to;
+    // params.house_type = filterObject.house_type;
+    // params.max_bathrooms = filterObject.max_bathrooms;
+    // params.min_bathrooms = filterObject.min_bathrooms;
+    // params.max_bedrooms = filterObject.max_bedrooms;
+    // params.min_bedrooms = filterObject.min_bedrooms;
+    // params.lat = filterObject.lat;
+    // params.lng = filterObject.lng;
 
-    onSearch(params);
+    // testing
+    console.log('API sent', filterObject);
+
+    onSearch(filterObject);
   };
 
   return (
@@ -92,7 +94,6 @@ const Page = ({ router }) => {
       <img src="/images/main-right-bg.svg" className="right-main-background" alt="right bg" />
 
       {/* <PropertiesLanding onSubmit={onSearch} /> */}
-
       <PropertiesSearchResult
         searchResultRef={searchResultRef}
         properties={properties}
@@ -102,10 +103,9 @@ const Page = ({ router }) => {
         onFiltersChanged={onFiltersChanged}
       />
 
-      <PropertiesRecommended properties={recommendedProperties} /> 
+      <PropertiesRecommended properties={recommendedProperties} />
     </PageWrapper>
   );
 };
 
 export default withRouter(Page);
-

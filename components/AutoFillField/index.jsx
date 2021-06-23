@@ -11,6 +11,8 @@ const AutoFillField = ({
   icon,
   classNames,
   selected,
+  border,
+  borderColor,
 }) => (
   <div className={cn('Input field-group', classNames)}>
     <GooglePlacesAutocomplete
@@ -48,7 +50,8 @@ const AutoFillField = ({
             height,
             paddingLeft: icon ? '40px' : '16px',
             borderRadius: '20px',
-            border: '0',
+            border: border && border,
+            borderColor: borderColor && borderColor,
             color: '#7f7f7f',
             boxShadow: '0 1px 6px -1px rgb(0 0 0 / 10%), 0 2px 4px -1px rgb(0 0 0 / 6%)',
             fontFamily: 'Proxima Nova, sans-serif',

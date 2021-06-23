@@ -54,15 +54,16 @@ const PropertiesDetailsRecentlyViewedProperties = ({ properties, status }) => (
       {status === request.SUCCESS && !!properties?.length && (
         <Slider {...settings} className="list">
           {properties.map((property) => (
-            <div key={property.id} className="item">
+            <div key={property.apartment.id} className="item">
               <PropertyInfo
-                link={`/properties/${property.id}`}
-                houseImage={property.images && property.images.length > 0 ? `${API_ASSET_URL}${property.images[0]}` : '"/images/house-sample-2.jpg"'}
-                name={property.name}
-                address={property.address}
-                rentFee={property.monthlyPrice}
-                bedrooms={property.bedrooms}
-                bathrooms={property.bathrooms}
+                link={`/properties/${property.apartment.id}`}
+                houseImage={property.apartment.images && property.apartment.images.length > 0 ? `${API_ASSET_URL}${property.apartment.images[0]}` : '"/images/house-sample-2.jpg"'}
+                name={property.apartment.name}
+                address={property.apartment.address}
+                rentFee={property.apartment.monthlyPrice}
+                bedrooms={property.apartment.bedrooms}
+                bathrooms={property.apartment.bathrooms}
+                context={property.context}
               />
             </div>
           ))}

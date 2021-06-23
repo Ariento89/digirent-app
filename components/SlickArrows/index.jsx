@@ -6,7 +6,7 @@ export const NextArrow = ({ onClick, responsive }) => (
     className={cn('button btn-next slick-arrow', { 'hide-xs': responsive })}
     onClick={onClick}
   >
-    <img src="/images/icon/icon-caret-right-white.svg" alt="next arrow" />
+    <img className='m-auto' src="/images/icon/icon-caret-right-white.svg" alt="next arrow" />
   </button>
 );
 
@@ -16,6 +16,6 @@ export const PrevArrow = ({ onClick, responsive }) => (
     className={cn('button btn-prev slick-arrow', { 'hide-xs': responsive })}
     onClick={onClick}
   >
-    <img src="/images/icon/icon-caret-left-white.svg" alt="next arrow" />
+    <img className='m-auto' src="/images/icon/icon-caret-left-white.svg" alt="next arrow" />
   </button>
 );

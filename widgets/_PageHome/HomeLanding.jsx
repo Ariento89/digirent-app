@@ -20,7 +20,7 @@ const HomeLanding = () => {
     if (to) {
       t = dayjs(to).format('YYYY-MM-DD');
     }
-    console.log(from, to)
+    console.log(from, to);
     Router.push({ pathname: '/properties', query: { label, from: f, to: t, lat, lng } });
   };
   return (
@@ -60,15 +60,6 @@ const HomeLanding = () => {
         <button onClick={search} className="button min-width">
           SEARCH
         </button>
-      </div>
-
-      <div className="scroll-down">
-        <div className="white-space" />
-        <div className="scroll-down-wrapper">
-          <img src="/images/scroll-down-space.svg" className="scroll-down-space" alt="icon space" />
-          <img src="/images/icon/icon-caret-down-white.svg" className="scroll-down" alt="icon" />
-        </div>
-        <div className="white-space" />
       </div>
     </div>
   );

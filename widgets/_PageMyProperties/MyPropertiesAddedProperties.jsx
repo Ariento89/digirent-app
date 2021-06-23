@@ -22,24 +22,25 @@ const MyPropertiesAddedProperties = ({
 
       <div className="row properties">
         {properties.map((property) => (
-          <div key={property.id} className="col-12 col-md-6 col-xl-4">
+          <div key={property.apartment.id} className="col-12 col-md-6 col-xl-4">
             <PropertyInfo
-              link={`my-properties/update/${property.id}`}
+              link={`my-properties/update/${property.apartment.id}`}
               houseImage={
-                property.images && property.images.length > 0
-                  ? `${API_ASSET_URL}${property.images[0]}`
+                property.apartment.images && property.apartment.images.length > 0
+                  ? `${API_ASSET_URL}${property.apartment.images[0]}`
                   : '"/images/house-sample-2.jpg"'
               }
-              name={property.name}
-              address={property.address}
-              rentFee={property.monthlyPrice}
-              bedrooms={property.bedrooms}
-              bathrooms={property.bathrooms}
+              name={property.apartment.name}
+              address={property.apartment.address}
+              rentFee={property.apartment.monthlyPrice}
+              bedrooms={property.apartment.bedrooms}
+              bathrooms={property.apartment.bathrooms}
               buttonName="VIEW APPLICATIONS"
-              onClick={() => onViewApplications(property)}
-              onDelete={() => onDeleteProperty(property)}
+              onClick={() => onViewApplications(property.apartment)}
+              onDelete={() => onDeleteProperty(property.apartment)}
               selectionType={null}
-              propId={property.id}
+              propId={property.apartment.id}
+              context={property.context}
             />
           </div>
         ))}

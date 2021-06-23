@@ -107,7 +107,7 @@ const Page = () => {
 
             <div className="pagination mt-5">
               <button type="button" className="btn-arrow prev">
-                <img src="/images/icon/icon-caret-left-white.svg" alt="icon" />
+                <img className='m-auto' src="/images/icon/icon-caret-left-white.svg" alt="icon" />
               </button>
               <div className="pages">
                 <span className="number active">
@@ -120,7 +120,7 @@ const Page = () => {
                 <span className="number">05</span>
               </div>
               <button type="button" className="btn-arrow next">
-                <img src="/images/icon/icon-caret-right-white.svg" alt="icon" />
+                <img className='m-auto' src="/images/icon/icon-caret-right-white.svg" alt="icon" />
               </button>
             </div>
           </div>

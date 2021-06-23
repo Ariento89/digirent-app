@@ -13,9 +13,7 @@ const Page = ({ router }) => {
   console.log('entered properties page');
   // STATES
   const [properties, setProperties] = useState([]);
-  console.log('here?');
   const [recommendedProperties, setRecommendedProperties] = useState([]);
-  console.log('here345');
 
   // REFS
   const searchResultRef = useRef(null);
@@ -47,8 +45,7 @@ const Page = ({ router }) => {
     if (data !== null) {
       searchResultRef.current.scrollIntoView();
     }
-    console.log('logged from index', data);
-
+    
     fetchProperties(data, {
       onSuccess: onFetchSuccess,
       onError: onFetchError,

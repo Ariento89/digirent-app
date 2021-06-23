@@ -77,7 +77,7 @@ const Header = () => {
                     <span className="sr-only">Open user menu</span>
                     <img
                       className="h-8 w-8 rounded-full"
-                      src="/images/photo-placeholder.png"
+                      src={image || "/images/photo-placeholder.png"}
                       alt=""
                     />
                   </button>
@@ -103,7 +103,7 @@ const Header = () => {
                       </Link>
 
                       {me?.role === role.TENANT && (
-                        <Link href="">
+                        <Link href="/favorites">
                           <span className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
                             Favorites
                           </span>

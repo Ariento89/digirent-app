@@ -61,15 +61,6 @@ const HomeLanding = () => {
           SEARCH
         </button>
       </div>
-
-      <div className="scroll-down">
-        <div className="white-space" />
-        <div className="scroll-down-wrapper">
-          <img src="/images/scroll-down-space.svg" className="scroll-down-space" alt="icon space" />
-          <img src="/images/icon/icon-caret-down-white.svg" className="scroll-down" alt="icon" />
-        </div>
-        <div className="white-space" />
-      </div>
     </div>
   );
 };

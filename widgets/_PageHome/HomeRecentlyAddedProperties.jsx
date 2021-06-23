@@ -68,16 +68,17 @@ const HomeRecentlyAddedProperties = () => {
       {status === request.SUCCESS && !!properties.length && (
         <Slider {...propertiesSlickSettings} className="properties">
           {properties.map((property) => (
-            <div key={property.id} className="item">
+            <div key={property.apartment.id} className="item">
               <PropertyInfo
-                link={`/properties/${property.id}`}
-                houseImage={property.images}
-                name={property.name}
-                address={property.address}
-                rentFee={property.monthlyPrice}
-                bedrooms={property.bedrooms}
-                bathrooms={property.bathrooms}
-                propId={property.id}
+                link={`/properties/${property.apartment.id}`}
+                houseImage={property.apartment.images}
+                name={property.apartment.name}
+                address={property.apartment.address}
+                rentFee={property.apartment.monthlyPrice}
+                bedrooms={property.apartment.bedrooms}
+                bathrooms={property.apartment.bathrooms}
+                propId={property.apartment.id}
+                context={property.context}
               />
             </div>
           ))}

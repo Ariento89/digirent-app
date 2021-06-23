@@ -64,9 +64,9 @@ const useStyles = makeStyles((theme) => ({
   },
   filterMenuWrapper: {
     position: 'absolute',
-    zIndex: 2,
+    zIndex: 3,
     right: '340px',
-    top: '25px',
+    top: '20px',
   },
 }));
 
@@ -238,8 +238,8 @@ const PropertiesSearchResult = ({
                   />
                 </div>
                 <AntTabs onChange={handleChanges} aria-label="places views">
-                  <AntTab icon={<DashboardOutlined />} label="Gallery" value="1" />
-                  <AntTab icon={<Map />} label="Map" value="2" />
+                  <AntTab style={{fontWeight: 300}} icon={<DashboardOutlined />} label="Gallery" value="1" />
+                  <AntTab style={{fontWeight: 300}} icon={<Map />} label="Map" value="2" />
                 </AntTabs>
               </Box>
 
@@ -664,19 +664,20 @@ const PropertiesSearchResult = ({
                     {status === request.SUCCESS && !!properties?.length && (
                       <>
                         {properties.map((property) => (
-                          <div key={property.id} className="item col-md-12 col-lg-6 col-xl-4">
+                          <div key={property.apartment.id} className="item col-md-12 col-lg-6 col-xl-4">
                             <PropertyInfo
-                              link={`/properties/${property.id}`}
-                              houseImage={property.images}
-                              name={property.name}
-                              address={property.state}
-                              rentFee={property.monthlyPrice}
-                              houseType={property.houseType}
-                              bedrooms={property.bedrooms}
-                              bathrooms={property.bathrooms}
-                              size={property.size}
-                              availableFrom={property.availableFrom}
-                              propId={property.id}
+                              link={`/properties/${property.apartment.id}`}
+                              houseImage={property.apartment.images}
+                              name={property.apartment.name}
+                              address={property.apartment.state}
+                              rentFee={property.apartment.monthlyPrice}
+                              houseType={property.apartment.houseType}
+                              bedrooms={property.apartment.bedrooms}
+                              bathrooms={property.apartment.bathrooms}
+                              size={property.apartment.size}
+                              availableFrom={property.apartment.availableFrom}
+                              propId={property.apartment.id}
+                              context={property.context}
                             />
                           </div>
                         ))}

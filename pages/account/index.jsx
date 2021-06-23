@@ -10,7 +10,6 @@ import PageWrapper from 'widgets/PageWrapper/index';
 const Page = () => {
   // CUSTOM HOOKS
   const { me } = useMe();
-
   // METHODS
   const getData = useCallback(() => {
     switch (me?.role) {

@@ -43,16 +43,17 @@ const PropertiesRecommended = ({ properties }) =>
 
         <Slider {...slickSettings} className="list">
           {properties.map((property) => (
-            <div key={property.id} className="item">
+            <div key={property.apartment.id} className="item">
               <PropertyInfo
-                link={`/properties/${property.id}`}
-                houseImage={property.images}
-                name={property.name}
-                address={property.address}
-                rentFee={property.monthlyPrice}
-                houseType={property.houseType}
-                bedrooms={property.bedrooms}
-                bathrooms={property.bathrooms}
+                link={`/properties/${property.apartment.id}`}
+                houseImage={property.apartment.images}
+                name={property.apartment.name}
+                address={property.apartment.address}
+                rentFee={property.apartment.monthlyPrice}
+                houseType={property.apartment.houseType}
+                bedrooms={property.apartment.bedrooms}
+                bathrooms={property.apartment.bathrooms}
+                context={property.context}
               />
             </div>
           ))}

@@ -1,6 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useProperties } from 'hooks/useProperties';
-import { useMe } from 'hooks/useMe';
 import { useEffect, useRef, useState } from 'react';
 import { useToasts } from 'react-toast-notifications';
 import { toastTypes } from 'shared/types';
@@ -22,7 +21,6 @@ const Page = ({ router }) => {
   // CUSTOM HOOKS
   const { addToast } = useToasts();
   const { fetchProperties, status, errors } = useProperties();
-  const { me } = useMe();
   const params = {};
 
   // METHODS
@@ -41,24 +39,17 @@ const Page = ({ router }) => {
     }
 
     onSearch(params);
-  }, [me]);
+  }, []);
 
   const onSearch = (data) => {
     if (data !== null) {
       searchResultRef.current.scrollIntoView();
     }
     
-    if (me && me.role === 'tenant') {
-      fetchProperties({...data, isTenant: true}, {
-        onSuccess: onFetchSuccess,
-        onError: onFetchError,
-      });
-    } else {
-      fetchProperties(data, {
-        onSuccess: onFetchSuccess,
-        onError: onFetchError,
-      });
-    }
+    fetchProperties(data, {
+      onSuccess: onFetchSuccess,
+      onError: onFetchError,
+    });
   };
 
   const onFetchSuccess = ({ response }) => {

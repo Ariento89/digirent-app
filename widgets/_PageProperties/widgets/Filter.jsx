@@ -57,7 +57,13 @@ export default function SplitButton({ onSortChange }) {
           aria-label="select merge strategy"
           aria-haspopup="menu"
           onClick={handleToggle}
-          style={{fontFamily: '"Proxima Nova", sans-serif'}}
+          style={{
+            fontFamily: '"Proxima Nova", sans-serif',
+            textTransform: 'initial',
+            fontWeight: 300,
+            borderRadius: 20,
+            fontSize: 16
+          }}
         >
           {options[selectedIndex]}
           <ArrowDropDownIcon />
@@ -78,7 +84,7 @@ export default function SplitButton({ onSortChange }) {
                         style={{
                           fontSize: '0.875rem',
                           minHeight: 'auto',
-                          fontWeight: 400,
+                          fontWeight: 300,
                           lineHeight: 1.43,
                           fontFamily: '"Proxima Nova", sans-serif'
                         }}

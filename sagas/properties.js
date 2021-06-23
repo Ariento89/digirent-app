@@ -31,7 +31,7 @@ function* createProperty({ payload }) {
 function* getProperty({ payload }) {
   const { callback, propertyId } = payload;
   callback({ status: request.REQUESTING });
-
+  
   try {
     const response = yield call(service.getProperty, propertyId);
     callback({ status: request.SUCCESS, response: response.data });

@@ -129,7 +129,7 @@ const PropertyInfo = ({
   onDelete,
   link,
   propId,
-  favorite,
+  context,
 }) => {
   const classes = useStyles();
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -157,13 +157,14 @@ const PropertyInfo = ({
   };
 
   useEffect(() => {
-    setIsFavorite(favorite);
-  }, [])
+    if (context) {
+      setIsFavorite(context.is_favorited);
+    }
+  }, [context])
 
   const toggleFavoriteProperty = (e) => {
     e.preventDefault();
     if (accessToken) {
-      console.log(isFavorite)
       isFavorite ? deleteFavoriteProperty({propertyId: propId}, {
                     onSuccess: onFetchSuccess,
                     onError: onFetchError,

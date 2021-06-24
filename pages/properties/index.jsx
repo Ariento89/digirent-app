@@ -21,25 +21,28 @@ const Page = ({ router }) => {
   // CUSTOM HOOKS
   const { addToast } = useToasts();
   const { fetchProperties, status, errors } = useProperties();
-  const params = {};
 
   // METHODS
   useEffect(() => {
-    if (router.query.from) {
-      params.available_from = router.query.from;
+    if (router) {
+      const params = {};
+      
+      if (router.query.from) {
+        params.available_from = router.query.from;
+      }
+      if (router.query.to) {
+        params.available_to = router.query.to;
+      }
+      if (router.query.lat !== '0') {
+        params.latitude = router.query.lat;
+      }
+      if (router.query.lng !== '0') {
+        params.longitude = router.query.lng;
+      }
+      
+      onSearch(params);
     }
-    if (router.query.to) {
-      params.available_to = router.query.to;
-    }
-    if (router.query.lat !== '0') {
-      params.latitude = router.query.lat;
-    }
-    if (router.query.lng !== '0') {
-      params.longitude = router.query.lng;
-    }
-
-    onSearch(params);
-  }, []);
+  }, [router]);
 
   const onSearch = (data) => {
     if (data !== null) {

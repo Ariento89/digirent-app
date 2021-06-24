@@ -80,24 +80,48 @@ const Footer = () => (
           <div className="col-6 col-md-4 col-lg header-column">
             <h3>Cities</h3>
             <div className="list">
-              <Link href="/properties">
-                <a>Amsterdam</a>
-              </Link>
-              <Link href="/properties">
-                <a>Den Haag</a>
-              </Link>
-              <Link href="/properties">
-                <a>Rotterdam</a>
-              </Link>
-              <Link href="/properties">
-                <a>Eindhoven</a>
-              </Link>
-              <Link href="/properties">
-                <a>Utrecht</a>
-              </Link>
-              <Link href="/properties">
-                <a>Arnhem</a>
-              </Link>
+              <a
+                onClick={() => {
+                  window.location.href="/properties?label=Amsterdam%2C+Netherlands&from=&to=&lat=52.3675734&lng=4.9041389"
+                }}
+                style={{cursor: "pointer"}}
+              >Amsterdam
+              </a>
+              <a
+                onClick={() => {
+                  window.location.href="/properties?label=Den+Haag%2C+Netherlands&from=&to=&lat=52.0704978&lng=4.3006999"
+                }}
+                style={{cursor: "pointer"}}
+              >Den Haag
+              </a>
+              <a
+                onClick={() => {
+                  window.location.href="/properties?label=Rotterdam%2C+Netherlands&from=&to=&lat=51.9244201&lng=4.4777325"
+                }}
+                style={{cursor: "pointer"}}
+              >Rotterdam
+              </a>
+              <a
+                onClick={() => {
+                  window.location.href="/properties?label=Eindhoven%2C+Netherlands&from=&to=&lat=51.44164199999999&lng=5.4697225"
+                }}
+                style={{cursor: "pointer"}}
+              >Eindhoven
+              </a>
+              <a
+                onClick={() => {
+                  window.location.href="/properties?label=Utrecht%2C+Netherlands&from=&to=&lat=52.09073739999999&lng=5.1214201"
+                }}
+                style={{cursor: "pointer"}}
+              >Utrecht
+              </a>
+              <a
+                onClick={() => {
+                  window.location.href="/properties?label=Arnhem%2C+Netherlands&from=&to=&lat=51.9851034&lng=5.898729599999999"
+                }}
+                style={{cursor: "pointer"}}
+              >Arnhem
+              </a>
             </div>
           </div>
           <div className="col-6 col-md-4 col-lg header-column">

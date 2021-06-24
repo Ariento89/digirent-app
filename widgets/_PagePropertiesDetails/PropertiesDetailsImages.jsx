@@ -54,7 +54,28 @@ const PropertiesDetailsImages = (images) => {
 
   return (
     <>
-      <div className="house-photo" style={{ backgroundImage: `url(${mainImage})` }}>
+      <div className="d-flex">
+        <div className="flex-1 pb-0.5">
+          <div className="house-photo" style={{ backgroundImage: `url(${mainImage})`, borderRadius: 5 }}>
+            <SocialMedias />
+
+            <div className="star-photo">
+              <img src="/images/icon/icon-star-white.svg" alt="icon" />
+            </div>
+          </div>
+        </div>
+        <div className="flex-1">
+          <div className="d-flex h-full flex-wrap">
+            {houseInsides.filter((_, i) => i < 4).map((item) => (
+              <div key={item.id} className="w-1/2 h-1/2 pl-0.5 pb-0.5">
+                <div className="photo h-full" style={{ backgroundImage: `url(${API_ASSET_URL}${imgs[item.id]})`, borderRadius: 5, backgroundSize: 'cover' }} />
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* <div className="house-photo" style={{ backgroundImage: `url(${mainImage})` }}>
         <SocialMedias />
 
         <div className="star-photo">
@@ -79,7 +100,7 @@ const PropertiesDetailsImages = (images) => {
             <div className="photo" style={{ backgroundImage: `url(${API_ASSET_URL}${imgs[item.id]})` }} />
           </div>
         ))}
-      </Slider>
+      </Slider> */}
     </>
   );
 };

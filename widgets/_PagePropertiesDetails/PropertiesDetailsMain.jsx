@@ -33,13 +33,13 @@ const PropertiesDetailsMain = ({ property }) => {
   return (
     <div className="container max-width property-detail mt-3 mt-md-5">
       <div className="row">
-        <div className="col-12 col-xl-7">
+        <div className="col-12 mb-10">
           <PropertiesDetailsImages images={property.images} />
 
           <PropertiesDetailsDescription property={property} />
         </div>
 
-        <div className="col-12 col-xl-5 mt-5 mt-xl-0">
+        <div className="col-12">
           <PropertiesDetailsName property={property} />
 
           <PropertiesDetailsQuantities property={property} />

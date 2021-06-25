@@ -37,13 +37,13 @@ const Page = () => {
         <img src="/images/main-right-bg.svg" className="right-main-background" alt="right bg" />
         <div className="container-fluid container-lg">
           <h3 className="main-title">FAVORITE LIST</h3>
-          <div className="mt-5">
+          <div className="mt-5 px-16">
             <Spinner loadingText="Searching properties..." isLoading={status === request.REQUESTING}>
               <div className={cn("row list flex-1 mt-0", {'h-full': request.SUCCESS && !properties?.length})}>
                 {status === request.SUCCESS && !!properties?.length && (
                   <>
                     {properties.map((property) => (
-                      <div key={property.apartment.id} className="item col-md-12 col-lg-6 col-xl-4">
+                      <div key={property.apartment.id} className="item col-md-12 col-lg-6 col-xl-4 mb-6">
                         <PropertyInfo
                           link={`/properties/${property.apartment.id}`}
                           houseImage={property.apartment.images}

@@ -34,36 +34,37 @@ const PropertiesDetailsMain = ({ property }) => {
     <div className="container max-width property-detail mt-3 mt-md-5">
       <div className="row">
         <div className="col-12 mb-10">
+          <PropertiesDetailsName property={property} />
           <PropertiesDetailsImages images={property.images} />
-
-          <PropertiesDetailsDescription property={property} />
         </div>
 
-        <div className="col-12">
-          <PropertiesDetailsName property={property} />
+        <div className="col-9">
+          <div className="px-10">
+            <PropertiesDetailsDescription property={property} />
+            <PropertiesDetailsQuantities property={property} />
 
-          <PropertiesDetailsQuantities property={property} />
+            <PropertiesDetailsAmenities property={property} />
 
-          <PropertiesDetailsAmenities property={property} />
+            {me?.role === role.TENANT && (
+              <Button
+                className="btn-apply min-width d-block mx-auto"
+                onClick={onApply}
+                loading={status === request.REQUESTING}
+              >
+                APPLY
+              </Button>
+            )}
 
-          {me?.role === role.TENANT && (
-            <Button
-              className="btn-apply min-width d-block mx-auto"
-              onClick={onApply}
-              loading={status === request.REQUESTING}
-            >
-              APPLY
-            </Button>
-          )}
-
-          {!!errors?.length && (
-            <div className="mt-1">
-              {errors?.map((error) => (
-                <FieldError error={error} center />
-              ))}
-            </div>
-          )}
-
+            {!!errors?.length && (
+              <div className="mt-1">
+                {errors?.map((error) => (
+                  <FieldError error={error} center />
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+        <div className="col-3">
           <PropertiesDetailsLandlord landlord={property.landlord} />
         </div>
       </div>

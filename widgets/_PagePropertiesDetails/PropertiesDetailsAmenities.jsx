@@ -1,13 +1,15 @@
 const PropertiesDetailsAmenities = ({ property }) => (
-  <div className="property-amenities">
+  <div className="">
     <p className="main-desc text-primary">AMENITIES</p>
     <div className="divider" />
     {property?.amenityTitles?.length ? (
-      <div className="list">
+      <div className="row">
         {property?.amenityTitles.map((amenity) => (
-          <span className="item main-desc dark-gray2">
-            {amenity} <span className="icon" />
-          </span>
+          <div className="col-3">
+            <span className="item">
+              {amenity} <span className="icon" />
+            </span>
+          </div>
         ))}
       </div>
     ) : (

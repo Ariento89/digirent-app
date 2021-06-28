@@ -12,6 +12,7 @@ import configureStore from 'shared/configureStore';
 import 'slick-carousel/slick/slick-theme.css';
 import 'slick-carousel/slick/slick.css';
 import '../styles/main.scss';
+import SimpleReactLightbox from 'simple-react-lightbox'
 
 // Initialize Store
 const store = configureStore();
@@ -24,7 +25,9 @@ const App = ({ Component, pageProps }) => (
     <PersistGate loading={null} persistor={persistStore(store)}>
       <ToastProvider autoDismiss>
         <PrivateRoute>
-          <Component {...pageProps} />
+          <SimpleReactLightbox>
+            <Component {...pageProps} />
+          </SimpleReactLightbox>
         </PrivateRoute>
       </ToastProvider>
     </PersistGate>

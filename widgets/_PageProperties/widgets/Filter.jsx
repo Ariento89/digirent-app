@@ -50,7 +50,6 @@ export default function SplitButton({ onSortChange }) {
       <Grid item xs={12}>
         <Button
           ref={anchorRef}
-          color="primary"
           variant='outlined'
           aria-controls={open ? 'split-button-menu' : undefined}
           aria-expanded={open ? 'true' : undefined}
@@ -62,7 +61,9 @@ export default function SplitButton({ onSortChange }) {
             textTransform: 'initial',
             fontWeight: 300,
             borderRadius: 20,
-            fontSize: 16
+            fontSize: 16,
+            color: '#47a4f5',
+            borderColor: '#47a4f5'
           }}
         >
           {options[selectedIndex]}

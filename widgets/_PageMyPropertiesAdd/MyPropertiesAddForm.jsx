@@ -133,7 +133,6 @@ const MyPropertiesAddForm = ({ errors, amenities, property, onSubmit, isLoading,
 
           onSubmit(values);
         }}
-        enableReinitialize
       >
         {({ values, errors: formErrors, touched }) => (
           <Form>

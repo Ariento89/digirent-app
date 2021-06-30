@@ -42,7 +42,7 @@ const HomePageHeader = ({ onLoginClick, onRegisterClick }) => {
 
   return (
     <>
-      <section className={cn('layout-homepage-header', { active: position.y >= SCROLL_THRESHOLD })}>
+      <section className={'layout-homepage-header active'}>
         <div className="header-logo">
           <Link href="/">
             <div className="logo">
@@ -65,14 +65,14 @@ const HomePageHeader = ({ onLoginClick, onRegisterClick }) => {
           <div className="main-menu">
             <Link href="/properties">
               {/* <p className="links">RENTALS</p> */}
-              <button type="button" className="inline-flex items-center px-3 py-2 border border-transparent  leading-4 font-medium rounded-md shadow-sm text-white bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-400">
+              <button type="button" className="main-menu--btn inline-flex items-center px-3 py-2 leading-4 shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-400">
                 RENTALS
               </button>
             </Link>
 
             <Link href="#for-landlords">
               {/* <p className="links ml-4 bg-blue-400">RENT OUT</p> */}
-              <button type="button" className="ml-4 inline-flex items-center px-3 py-2 border border-transparent  leading-4 font-medium rounded-md shadow-sm text-white bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-400">
+              <button type="button" className="main-menu--btn ml-4 inline-flex items-center px-3 py-2 leading-4 shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-400">
                 RENT OUT
               </button>
             </Link>

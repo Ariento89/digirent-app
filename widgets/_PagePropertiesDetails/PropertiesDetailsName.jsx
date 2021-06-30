@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import SocialMedias from 'widgets/SocialMedias/index';
 import cn from 'classnames';
 import Fab from '@material-ui/core/Fab';
+import { toastTypes } from 'shared/types';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import { useProperties } from 'hooks/useProperties';
 import { useAuthentication } from 'hooks/useAuthentication';
@@ -29,6 +30,15 @@ const PropertiesDetailsName = ({ property }) => {
       setLoginModalVisible(true);
     }
   };
+
+  const onFetchSuccess = ({ response }) => {
+    console.log("@34234234234243");
+    setIsFavorite(value => !value)
+  };
+
+  const onFetchError = () => {
+    addToast('An error occurred while check favorite property.', toastTypes.ERROR);
+  }
 
   useEffect(() => {
     if (property) {

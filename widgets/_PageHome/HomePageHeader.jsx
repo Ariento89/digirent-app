@@ -109,7 +109,7 @@ const HomePageHeader = ({ onLoginClick, onRegisterClick }) => {
               <DropdownTrigger>
                 <button className="mt-2 bg-gray-800 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white" id="user-menu" aria-haspopup="true">
                   <span className="sr-only">Open user menu</span>
-                  <img className="h-8 w-8 rounded-full" src={image || "/images/photo-placeholder.png"} alt="" />
+                  <img className="h-12 w-12 rounded-full" src={image || "/images/photo-placeholder.png"} alt="" />
                 </button>
               </DropdownTrigger>
               <DropdownContent>

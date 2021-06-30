@@ -38,7 +38,7 @@ const PropertiesDetailsMain = ({ property }) => {
           <PropertiesDetailsImages images={property.images} />
         </div>
 
-        <div className="col-9">
+        <div className="col-8">
           <div className="px-10">
             <PropertiesDetailsDescription property={property} />
             <PropertiesDetailsQuantities property={property} />
@@ -64,7 +64,7 @@ const PropertiesDetailsMain = ({ property }) => {
             )}
           </div>
         </div>
-        <div className="col-3">
+        <div className="col-4">
           <PropertiesDetailsLandlord landlord={property.landlord} />
         </div>
       </div>

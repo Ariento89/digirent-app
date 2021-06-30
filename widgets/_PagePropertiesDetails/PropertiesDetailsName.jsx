@@ -17,11 +17,11 @@ const PropertiesDetailsName = ({ property }) => {
   const toggleFavoriteProperty = (e) => {
     e.preventDefault();
     if (accessToken) {
-      isFavorite ? deleteFavoriteProperty({propertyId: propId}, {
+      isFavorite ? deleteFavoriteProperty({propertyId: property.id}, {
                     onSuccess: onFetchSuccess,
                     onError: onFetchError,
                   })
-                 : postFavoriteProperty({propertyId: propId}, {
+                 : postFavoriteProperty({propertyId: property.id}, {
                     onSuccess: onFetchSuccess,
                     onError: onFetchError,
                  });

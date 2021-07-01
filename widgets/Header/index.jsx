@@ -76,7 +76,7 @@ const Header = () => {
                   >
                     <span className="sr-only">Open user menu</span>
                     <img
-                      className="h-8 w-8 rounded-full"
+                      className="h-12 w-12 rounded-full"
                       src={image || "/images/photo-placeholder.png"}
                       alt=""
                     />

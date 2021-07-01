@@ -3,6 +3,7 @@
 
 .toggle-switch.toggle-switch-language {
   .switch {
+    border: 1px solid $color-primary;
     input[type='radio'].toggle {
       &.toggle-left {
         &:checked + label {

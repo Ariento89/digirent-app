@@ -26,13 +26,14 @@ const PropertiesDetailsImages = (images) => {
   
   return (
     <>
-      <div className="d-flex">
-        <div className="flex-1 pb-0.5">
-          <div className="house-photo h-full" style={{ backgroundImage: `url(${mainImage})`, borderRadius: 5 }}>
-          </div>
-        </div>
-        <div className="flex-1">
-          <SRLWrapper>
+      <SRLWrapper>
+         <div className="d-flex">
+           <div className="flex-1 pb-0.5">
+              <div className="house-photo h-full cursor-pointer" style={{ backgroundImage: `url(${mainImage})`, borderRadius: 5 }}>
+                <img src={mainImage}></img>
+              </div>
+            </div>
+            <div className="flex-1">
             <div className="d-flex h-full flex-wrap">
               {imgs.filter((_, i) => i < 4).map((item, i) => {
                 if (i === 3 && imgs.length > 4) {
@@ -82,9 +83,9 @@ const PropertiesDetailsImages = (images) => {
                 )
               })}
             </div>
-          </SRLWrapper>
-        </div>
+          </div>
       </div>
+    </SRLWrapper>
     </>
   );
 };

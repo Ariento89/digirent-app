@@ -22,7 +22,7 @@ const MyPropertiesAddedProperties = ({
 
       <div className="row properties">
         {properties.map((property) => (
-          <div key={property.apartment.id} className="col-12 col-md-6 col-xl-4">
+          <div key={property.apartment.id} className="col-12 col-md-6 col-xl-4 my-properties-property">
             <PropertyInfo
               link={`my-properties/update/${property.apartment.id}`}
               houseImage={

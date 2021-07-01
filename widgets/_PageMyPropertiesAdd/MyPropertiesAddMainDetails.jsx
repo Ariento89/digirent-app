@@ -117,7 +117,7 @@ const MyPropertiesAddMainDetails = ({ property, errors, touched, requestErrors }
         </div> */}
 
         {/* 5th row */}
-        {/* <div className="col-lg-4 mt-4">
+        <div className="col-lg-4 mt-4">
           <FormInputIcon
             classNames="field-item small-icon"
             name="country"
@@ -143,9 +143,9 @@ const MyPropertiesAddMainDetails = ({ property, errors, touched, requestErrors }
             icon="icon-circle-primary"
           />
           {errors.city && touched.city ? <FieldError error={errors.city} /> : null}
-        </div> */}
+        </div>
 
-        {/* <div className="col-12">
+        <div className="col-12">
           {errors.longitude && touched.longitude ? <FieldError error="Location is required" /> : null}
           <MapPicker
             lat={52.0057441}
@@ -155,7 +155,7 @@ const MyPropertiesAddMainDetails = ({ property, errors, touched, requestErrors }
               setFieldValue('longitude', lng);
             }}
           />
-        </div> */}
+        </div>
 
         {/* 6th row */}
         <div className="col-lg-12 mt-4">

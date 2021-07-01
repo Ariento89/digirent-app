@@ -1,6 +1,6 @@
 const PropertiesDetailsAmenities = ({ property }) => (
   <div className="">
-    <p className="main-desc text-primary">AMENITIES</p>
+    <p className="main-desc main-desc-header text-primary">AMENITIES</p>
     <div className="divider" />
     {property?.amenityTitles?.length ? (
       <div className="row">

@@ -1,7 +1,9 @@
 /* eslint-disable react/prefer-stateless-function */
 import React, { Component } from 'react';
+import Geocode from "react-geocode";
 import { Map, GoogleApiWrapper, Marker } from 'google-maps-react';
 
+Geocode.setApiKey("AIzaSyBdF3FcxvAquR1z3TkPLCfU9P2FpvLSWfA");
 const mapStyles = {
   width: '100%',
   height: '100%',
@@ -18,7 +20,35 @@ export class MapContainer extends Component {
       lat: clickEvent.latLng.lat(), lng: clickEvent.latLng.lng(),
     });
     this.props.onPick(clickEvent.latLng.lat(), clickEvent.latLng.lng());
-  }
+    Geocode.fromLatLng(clickEvent.latLng.lat(), clickEvent.latLng.lng()).then(
+      (response) => {
+        const address = response.results[0].formatted_address;
+        let city, state, country;
+        for (let i = 0; i < response.results[0].address_components.length; i++) {
+          for (let j = 0; j < response.results[0].address_components[i].types.length; j++) {
+            switch (response.results[0].address_components[i].types[j]) {
+              case "locality":
+                city = response.results[0].address_components[i].long_name;
+                break;
+              case "administrative_area_level_1":
+                state = response.results[0].address_components[i].long_name;
+                break;
+              case "country":
+                country = response.results[0].address_components[i].long_name;
+                break;
+            }
+          }
+        }
+        this.props.setFieldValue('country', country)
+        this.props.setFieldValue('city', city)
+        this.props.setFieldValue('state', state)
+        this.props.setFieldValue('address', address)
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
+      }
 
   render() {
     return (
@@ -56,5 +86,5 @@ export class MapContainer extends Component {
 }
 
 export default GoogleApiWrapper({
-  apiKey: 'AIzaSyAZU-nw2CatyXuD1_zoe1rIPOJBGuA-vdg',
+  apiKey: 'AIzaSyBdF3FcxvAquR1z3TkPLCfU9P2FpvLSWfA',
 })(MapContainer);

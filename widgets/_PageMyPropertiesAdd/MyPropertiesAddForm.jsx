@@ -51,6 +51,9 @@ const MyPropertiesAddForm = ({ errors, amenities, property, onSubmit, isLoading,
         image1: property ? `${API_ASSET_URL}${property.images[0]}` : null,
         image2: property ? `${API_ASSET_URL}${property.images[0]}` : null,
         image3: property ? `${API_ASSET_URL}${property.images[0]}` : null,
+        image4: property ? `${API_ASSET_URL}${property.images[0]}` : null,
+        image5: property ? `${API_ASSET_URL}${property.images[0]}` : null,
+
 
         // savedImage1: property ? `${API_ASSET_URL}${property.images[0]}` : null,
         // savedImage2: property ? `${API_ASSET_URL}${property.images[0]}` : null,
@@ -112,6 +115,25 @@ const MyPropertiesAddForm = ({ errors, amenities, property, onSubmit, isLoading,
             'Unsupported Format',
             (value) => value && SUPPORTED_IMAGE_UPLOAD_FORMATS.includes(value.type),
           ),
+        image4: Yup.mixed()
+          .nullable()
+          .required('An image is required')
+          .test('fileSize', 'File too large', (value) => value && value.size <= MAX_FILE_SIZE)
+          .test(
+            'fileFormat',
+            'Unsupported Format',
+            (value) => value && SUPPORTED_IMAGE_UPLOAD_FORMATS.includes(value.type),
+          ),
+        image5: Yup.mixed()
+          .nullable()
+          .required('An image is required')
+          .test('fileSize', 'File too large', (value) => value && value.size <= MAX_FILE_SIZE)
+          .test(
+            'fileFormat',
+            'Unsupported Format',
+            (value) => value && SUPPORTED_IMAGE_UPLOAD_FORMATS.includes(value.type),
+          ),
+
       }),
     }),
     [property],

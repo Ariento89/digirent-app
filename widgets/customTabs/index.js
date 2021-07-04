@@ -4,19 +4,18 @@ import Tab from '@material-ui/core/Tab';
 
 const AntTabs = withStyles({
   root: {
-    borderBottom: '1px solid #e8e8e8',
+    borderBottom: '1px solid #e8e8e8' + ' !important',
   },
   indicator: {
-    backgroundColor: '#1890ff',
+    backgroundColor: '#1890ff' + ' !important',
   },
 })(TabList);
 
 const AntTab = withStyles((theme) => ({
   root: {
-    textTransform: 'none',
-    minWidth: 72,
-    fontWeight: theme.typography.fontWeightRegular,
-    marginRight: theme.spacing(4),
+    textTransform: 'none' + ' !important',
+    minWidth: 72 + ' !important',
+    fontWeight: theme.typography.fontWeightRegular + ' !important',
     fontFamily: [
       '-apple-system',
       'BlinkMacSystemFont',
@@ -28,17 +27,17 @@ const AntTab = withStyles((theme) => ({
       '"Apple Color Emoji"',
       '"Segoe UI Emoji"',
       '"Segoe UI Symbol"',
-    ].join(','),
+    ].join(',') + ' !important',
     '&:hover': {
-      color: '#40a9ff',
-      opacity: 1,
+      color: '#40a9ff' + ' !important',
+      opacity: 1 + ' !important',
     },
     '&$selected': {
-      color: '#1890ff',
-      fontWeight: theme.typography.fontWeightMedium,
+      color: '#1890ff' + ' !important',
+      fontWeight: theme.typography.fontWeightMedium + ' !important',
     },
     '&:focus': {
-      color: '#40a9ff',
+      color: '#40a9ff' + ' !important',
     },
   },
   selected: {},

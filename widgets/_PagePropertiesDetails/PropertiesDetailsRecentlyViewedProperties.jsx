@@ -43,8 +43,9 @@ const settings = {
   ],
 };
 
-const PropertiesDetailsRecentlyViewedProperties = ({ properties, status }) => (
-  <div className="container max-width">
+const PropertiesDetailsRecentlyViewedProperties = ({ properties, status }) => {
+  console.log(properties)
+  return (<div className="container max-width">
     <div className="recently-viewed">
       <h3 className="main-title">
         RECENTLY <span className="text-primary font-weight-bold">VIEWED</span>
@@ -64,6 +65,7 @@ const PropertiesDetailsRecentlyViewedProperties = ({ properties, status }) => (
                 bedrooms={property.apartment.bedrooms}
                 bathrooms={property.apartment.bathrooms}
                 context={property.context}
+                propId={property.apartment.id}
               />
             </div>
           ))}
@@ -90,7 +92,7 @@ const PropertiesDetailsRecentlyViewedProperties = ({ properties, status }) => (
         />
       )}
     </div>
-  </div>
-);
+  </div>)
+};
 
 export default PropertiesDetailsRecentlyViewedProperties;

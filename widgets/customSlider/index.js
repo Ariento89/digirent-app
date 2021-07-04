@@ -6,7 +6,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    marginBottom: '15px',
+    marginBottom: '15px' + ' !important',
   },
 }));
 
@@ -28,31 +28,31 @@ ValueLabelComponent.propTypes = {
 
 const PrettoSlider = withStyles({
   root: {
-    color: '#41A2F9',
-    height: 8,
+    color: '#41A2F9' + ' !important',
+    height: 8 + 'px !important',
   },
   thumb: {
-    height: 24,
-    width: 24,
-    backgroundColor: '#fff',
-    border: '2px solid currentColor',
-    marginTop: -8,
-    marginLeft: -12,
+    height: 24 + 'px !important',
+    width: 24 + 'px !important',
+    backgroundColor: '#fff' + ' !important',
+    border: '2px solid currentColor' + ' !important',
+    marginTop: -8 + 'px !important',
+    marginLeft: -12 + 'px !important',
     '&:focus, &:hover, &$active': {
-      boxShadow: 'inherit',
+      boxShadow: 'inherit' + ' !important',
     },
   },
   active: {},
   valueLabel: {
-    left: 'calc(-50% + 4px)',
+    left: 'calc(-50% + 4px)' + ' !important',
   },
   track: {
-    height: 8,
-    borderRadius: 4,
+    height: 8 + 'px !important',
+    borderRadius: 4 + 'px !important',
   },
   rail: {
-    height: 8,
-    borderRadius: 4,
+    height: 8 + 'px !important',
+    borderRadius: 4 + 'px !important',
   },
 })(Slider);
 

@@ -17,7 +17,6 @@ const Page = () => {
   const { id: propertyId } = router.query;
   const { getProperty, status: getPropertyStatus } = useProperties();
   const { fetchProperties, status: fetchPropertiesStatus } = useProperties();
-
   // METHODS
   useEffect(() => {
     if (propertyId) {
@@ -46,6 +45,10 @@ const Page = () => {
   const onFetchPropertiesSuccess = ({ response }) => {
     setProperties(response.slice(0, 5));
   };
+
+  useEffect(() => {
+    console.log(properties)
+  }, [properties])
 
   return property ? (
     <PageWrapper title="DigiRent - Property Details" pageName="property-details">

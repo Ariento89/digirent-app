@@ -14,15 +14,21 @@ const PropertiesDetailsName = ({ property }) => {
   const { postFavoriteProperty, deleteFavoriteProperty, status, errors } = useProperties();
   const { accessToken } = useAuthentication();
   const { addToast } = useToasts();
+  
+  useEffect(() => {
+    if (property.context) {
+      setIsFavorite(property.context.is_favorited);
+    }
+  }, [property.context])
 
   const toggleFavoriteProperty = (e) => {
     e.preventDefault();
     if (accessToken) {
-      isFavorite ? deleteFavoriteProperty({propertyId: property.id}, {
+      isFavorite ? deleteFavoriteProperty({propertyId: property.apartment.id}, {
                     onSuccess: onFetchSuccess,
                     onError: onFetchError,
                   })
-                 : postFavoriteProperty({propertyId: property.id}, {
+                 : postFavoriteProperty({propertyId: property.apartment.id}, {
                     onSuccess: onFetchSuccess,
                     onError: onFetchError,
                  });
@@ -48,13 +54,13 @@ const PropertiesDetailsName = ({ property }) => {
 
   return (
     <>
-      <div className="d-flex justify-content-between align-items-center mb-3">
+      <div className="propery-page-address d-flex justify-content-between align-items-center mb-3">
         <div className="d-flex">
-          <p className="mx-2">{property?.city}, {property?.state}, {property?.country}</p>
+          <p className="mx-2">{property?.apartment.city}, {property?.apartment.state}, {property?.apartment.country}</p>
           <span> - </span>
-          <p className="mx-2">{property?.houseType}</p>
+          <p className="mx-2">{property?.apartment.houseType}</p>
           <span> - </span>
-          <p className="mx-2">{property?.name}</p>
+          <p className="mx-2">{property?.apartment.name}</p>
         </div>
         <div className="d-flex align-items-center">
           <SocialMedias />

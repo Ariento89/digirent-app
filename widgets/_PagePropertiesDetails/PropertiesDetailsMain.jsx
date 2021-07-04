@@ -35,15 +35,15 @@ const PropertiesDetailsMain = ({ property }) => {
       <div className="row">
         <div className="col-12 mb-10">
           <PropertiesDetailsName property={property} />
-          <PropertiesDetailsImages images={property.images} />
+          <PropertiesDetailsImages images={property.apartment.images} />
         </div>
 
         <div className="col-8">
           <div className="px-10">
-            <PropertiesDetailsDescription property={property} />
             <PropertiesDetailsQuantities property={property} />
 
             <PropertiesDetailsAmenities property={property} />
+            <PropertiesDetailsDescription property={property} />
 
             {me?.role === role.TENANT && (
               <Button
@@ -65,7 +65,7 @@ const PropertiesDetailsMain = ({ property }) => {
           </div>
         </div>
         <div className="col-4">
-          <PropertiesDetailsLandlord landlord={property.landlord} />
+          <PropertiesDetailsLandlord landlord={property.apartment.landlord} />
         </div>
       </div>
     </div>

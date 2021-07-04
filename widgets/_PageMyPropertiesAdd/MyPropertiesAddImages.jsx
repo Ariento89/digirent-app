@@ -8,6 +8,8 @@ const MyPropertiesAddImages = ({ values, errors, touched }) => {
   const [image1, setImage1] = useState('');
   const [image2, setImage2] = useState('');
   const [image3, setImage3] = useState('');
+  const [image4, setImage4] = useState('');
+  const [image5, setImage5] = useState('');
 
   // METHODS
   useEffect(() => {
@@ -21,7 +23,16 @@ const MyPropertiesAddImages = ({ values, errors, touched }) => {
     if (values?.image3) {
       setImageUpload(values?.image3, setImage3);
     }
-  }, [values?.image1, values?.image2, values?.image3]);
+
+    if (values?.image4) {
+      setImageUpload(values?.image4, setImage4);
+    }
+
+    if (values?.image5) {
+      setImageUpload(values?.image5, setImage5);
+    }
+
+  }, [values?.image1, values?.image2, values?.image3, values?.image4, values?.image5]);
 
   const setImageUpload = async (file, setImage) => {
     const isFile = file instanceof File;
@@ -34,6 +45,7 @@ const MyPropertiesAddImages = ({ values, errors, touched }) => {
   };
 
   return (
+    <>
     <div className="add-images mt-5">
       <div className="item">
         <div className="main-box">
@@ -56,6 +68,23 @@ const MyPropertiesAddImages = ({ values, errors, touched }) => {
         {errors.image3 && touched.image3 ? <FieldError error={errors.image3} /> : null}
       </div>
     </div>
+    
+    <div className="add-images mt-5">
+    <div className="item">
+      <div className="main-box">
+        <AddImageField name="image4" image={image4} />
+      </div>
+      {errors.image4 && touched.image4 ? <FieldError error={errors.image4} /> : null}
+    </div>
+
+    <div className="item mt-2 mt-sm-0 mx-0 mx-sm-4">
+      <div className="main-box">
+        <AddImageField name="image5" image={image5} />
+      </div>
+      {errors.image5 && touched.image5 ? <FieldError error={errors.image5} /> : null}
+    </div>
+  </div>
+    </>
   );
 };
 

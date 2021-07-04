@@ -16,11 +16,11 @@ const MyPropertiesAddMainDetails = ({ property, errors, touched, requestErrors }
     if (property !== null) {
       setFieldValue('latitude', property.latitude);
       setFieldValue('longitude', property.longitude);
-      setFieldValue('address', property.address);
+      // setFieldValue('address', property.address);
 
       setFieldValue('country', 'Netherlands');
-      setFieldValue('state', property.state);
-      setFieldValue('city', property.city);
+      // setFieldValue('state', property.state);
+      // setFieldValue('city', property.city);
     }
   }, [property]);
 
@@ -85,14 +85,14 @@ const MyPropertiesAddMainDetails = ({ property, errors, touched, requestErrors }
 
         {/* 4th row (Temporary, until autofill field is fixed) */}
 
-        <div className="col-lg-12 mt-4">
+        {/* <div className="col-lg-12 mt-4">
           <FormInputIcon
             name="address"
             placeholder="Address"
             icon="icon-map-marker-coordinate-primary"
           />
           {errors.address && touched.address ? <FieldError error={errors.address} /> : null}
-        </div>
+        </div> */}
 
         {/* 4th row */}
         {/* <div className="col-lg-12 mt-4">
@@ -117,7 +117,7 @@ const MyPropertiesAddMainDetails = ({ property, errors, touched, requestErrors }
         </div> */}
 
         {/* 5th row */}
-        <div className="col-lg-4 mt-4">
+        {/* <div className="col-lg-4 mt-4">
           <FormInputIcon
             classNames="field-item small-icon"
             name="country"
@@ -143,13 +143,14 @@ const MyPropertiesAddMainDetails = ({ property, errors, touched, requestErrors }
             icon="icon-circle-primary"
           />
           {errors.city && touched.city ? <FieldError error={errors.city} /> : null}
-        </div>
+        </div> */}
 
         <div className="col-12">
           {errors.longitude && touched.longitude ? <FieldError error="Location is required" /> : null}
           <MapPicker
             lat={52.0057441}
             lng={5.7565194}
+            setFieldValue={setFieldValue}
             onPick={(lat, lng) => {
               setFieldValue('latitude', lat);
               setFieldValue('longitude', lng);

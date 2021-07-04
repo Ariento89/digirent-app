@@ -70,7 +70,7 @@ const Page = () => {
     addToast('An error occurred while creating your property.', toastTypes.ERROR);
   };
 
-  const onSubmit = ({ image1, image2, image3, ...data }) => {
+  const onSubmit = ({ image1, image2, image3, image4, image5, ...data }) => {
     // propertyId, file
     createProperty(data, {
       onSuccess: ({ response }) => {
@@ -95,6 +95,32 @@ const Page = () => {
                       {
                         onSuccess: () => {
                           onImageUploadSuccess('Third image');
+
+                          uploadImage(
+                            { propertyId: id, image: image4 },
+                            {
+                              onSuccess: () => {
+                                onImageUploadSuccess('Forth image');
+
+                                uploadImage(
+                                  { propertyId: id, image: image5 },
+                                  {
+                                    onSuccess: () => {
+                                      onImageUploadSuccess('Fifth image');
+                                    },
+                                    onError: () => {
+                                      onImageUploadError('Fifth image');
+                                    },
+                                  },
+                                );
+            
+                              },
+                              onError: () => {
+                                onImageUploadError('Forth image');
+                              },
+                            },
+                          );
+      
                         },
                         onError: () => {
                           onImageUploadError('Third image');

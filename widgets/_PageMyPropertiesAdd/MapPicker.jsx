@@ -42,7 +42,6 @@ export class MapContainer extends Component {
         this.props.setFieldValue('country', country)
         this.props.setFieldValue('city', city)
         this.props.setFieldValue('state', state)
-        this.props.setFieldValue('address', address)
       },
       (error) => {
         console.error(error);

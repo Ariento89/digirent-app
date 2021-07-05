@@ -3,7 +3,7 @@ import { formatDate } from 'shared/functions';
 
 const PropertiesDetailsQuantities = ({ property }) => (
   <div className="property-other-info">
-    <p className="main-desc main-desc-header text-primary">Information</p>
+    <p className="main-desc main-desc-header text-primary">INFORMATION</p>
     <div className="row">
       <div className="col-sm-6 col-xl-4 mb-4">
         <div className="d-flex align-items-center">

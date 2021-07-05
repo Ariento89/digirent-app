@@ -53,6 +53,9 @@ const MyPropertiesAddForm = ({ errors, amenities, property, onSubmit, isLoading,
         image3: property ? `${API_ASSET_URL}${property.images[0]}` : null,
         image4: property ? `${API_ASSET_URL}${property.images[0]}` : null,
         image5: property ? `${API_ASSET_URL}${property.images[0]}` : null,
+        image6: property ? `${API_ASSET_URL}${property.images[0]}` : null,
+        image7: property ? `${API_ASSET_URL}${property.images[0]}` : null,
+        image8: property ? `${API_ASSET_URL}${property.images[0]}` : null,
 
 
         // savedImage1: property ? `${API_ASSET_URL}${property.images[0]}` : null,
@@ -125,6 +128,33 @@ const MyPropertiesAddForm = ({ errors, amenities, property, onSubmit, isLoading,
             (value) => value && SUPPORTED_IMAGE_UPLOAD_FORMATS.includes(value.type),
           ),
         image5: Yup.mixed()
+          .nullable()
+          .required('An image is required')
+          .test('fileSize', 'File too large', (value) => value && value.size <= MAX_FILE_SIZE)
+          .test(
+            'fileFormat',
+            'Unsupported Format',
+            (value) => value && SUPPORTED_IMAGE_UPLOAD_FORMATS.includes(value.type),
+          ),
+        image6: Yup.mixed()
+          .nullable()
+          .required('An image is required')
+          .test('fileSize', 'File too large', (value) => value && value.size <= MAX_FILE_SIZE)
+          .test(
+            'fileFormat',
+            'Unsupported Format',
+            (value) => value && SUPPORTED_IMAGE_UPLOAD_FORMATS.includes(value.type),
+          ),
+        image7: Yup.mixed()
+          .nullable()
+          .required('An image is required')
+          .test('fileSize', 'File too large', (value) => value && value.size <= MAX_FILE_SIZE)
+          .test(
+            'fileFormat',
+            'Unsupported Format',
+            (value) => value && SUPPORTED_IMAGE_UPLOAD_FORMATS.includes(value.type),
+          ),
+        image8: Yup.mixed()
           .nullable()
           .required('An image is required')
           .test('fileSize', 'File too large', (value) => value && value.size <= MAX_FILE_SIZE)

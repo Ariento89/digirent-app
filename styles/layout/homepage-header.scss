@@ -198,11 +198,16 @@
       button {
         background-color: transparent;
         border: 0;
-        padding: 0;
+
+        p{
+          font-weight: 300 !important;
+          padding: 0.5rem 0.75rem;
+          font-size: 100%;
+        }
       }
 
       .sign-up {
-        padding: 7px 10px;
+        padding: 0.5rem 0.75rem;
         border-radius: 15px;
         background-color: $color-primary;
 

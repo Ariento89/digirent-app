@@ -70,7 +70,7 @@ const Page = () => {
     addToast('An error occurred while creating your property.', toastTypes.ERROR);
   };
 
-  const onSubmit = ({ image1, image2, image3, image4, image5, ...data }) => {
+  const onSubmit = ({ image1, image2, image3, image4, image5, image6, image7, image8, ...data }) => {
     // propertyId, file
     createProperty(data, {
       onSuccess: ({ response }) => {
@@ -107,6 +107,45 @@ const Page = () => {
                                   {
                                     onSuccess: () => {
                                       onImageUploadSuccess('Fifth image');
+
+                                      uploadImage(
+                                        { propertyId: id, image: image6 },
+                                        {
+                                          onSuccess: () => {
+                                            onImageUploadSuccess('Sixth image');
+
+                                            uploadImage(
+                                              { propertyId: id, image: image7 },
+                                              {
+                                                onSuccess: () => {
+                                                  onImageUploadSuccess('Seventh image');
+
+                                                  uploadImage(
+                                                    { propertyId: id, image: image8 },
+                                                    {
+                                                      onSuccess: () => {
+                                                        onImageUploadSuccess('Eighth image');
+                                                      },
+                                                      onError: () => {
+                                                        onImageUploadError('Eighth image');
+                                                      },
+                                                    },
+                                                  );
+                  
+                                                },
+                                                onError: () => {
+                                                  onImageUploadError('Seventh image');
+                                                },
+                                              },
+                                            );
+            
+                                          },
+                                          onError: () => {
+                                            onImageUploadError('Sixth image');
+                                          },
+                                        },
+                                      );
+      
                                     },
                                     onError: () => {
                                       onImageUploadError('Fifth image');

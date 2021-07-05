@@ -16,7 +16,7 @@ const MyPropertiesAddMainDetails = ({ property, errors, touched, requestErrors }
     if (property !== null) {
       setFieldValue('latitude', property.latitude);
       setFieldValue('longitude', property.longitude);
-      // setFieldValue('address', property.address);
+      setFieldValue('address', property.address);
 
       setFieldValue('country', 'Netherlands');
       // setFieldValue('state', property.state);
@@ -95,7 +95,7 @@ const MyPropertiesAddMainDetails = ({ property, errors, touched, requestErrors }
         </div> */}
 
         {/* 4th row */}
-        {/* <div className="col-lg-12 mt-4">
+        <div className="col-lg-12 mt-4">
           <AutoFillField
             types={['address']}
             placeholderColor="#d0d3d4"
@@ -114,7 +114,7 @@ const MyPropertiesAddMainDetails = ({ property, errors, touched, requestErrors }
             }}
           />
           {errors.address && touched.address ? <FieldError error={errors.address} /> : null}
-        </div> */}
+        </div>
 
         {/* 5th row */}
         {/* <div className="col-lg-4 mt-4">
@@ -145,7 +145,7 @@ const MyPropertiesAddMainDetails = ({ property, errors, touched, requestErrors }
           {errors.city && touched.city ? <FieldError error={errors.city} /> : null}
         </div> */}
 
-        <div className="col-12">
+        {/* <div className="col-12">
           {errors.longitude && touched.longitude ? <FieldError error="Location is required" /> : null}
           <MapPicker
             lat={52.0057441}
@@ -156,7 +156,7 @@ const MyPropertiesAddMainDetails = ({ property, errors, touched, requestErrors }
               setFieldValue('longitude', lng);
             }}
           />
-        </div>
+        </div> */}
 
         {/* 6th row */}
         <div className="col-lg-12 mt-4">

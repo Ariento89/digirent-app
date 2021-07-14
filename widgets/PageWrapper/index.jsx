@@ -21,6 +21,7 @@ const PageWrapper = ({ title, pageName, children, verificationRequired = false }
   return (
     <div className="page-wrapper">
       <Head>
+        <script type="text/javascript" src="https://cdn.weglot.com/weglot.min.js"></script>
         <link rel="apple-touch-icon" sizes="57x57" href="/favicons/apple-icon-57x57.png" />
         <link rel="apple-touch-icon" sizes="60x60" href="/favicons/apple-icon-60x60.png" />
         <link rel="apple-touch-icon" sizes="72x72" href="/favicons/apple-icon-72x72.png" />
@@ -48,6 +49,11 @@ const PageWrapper = ({ title, pageName, children, verificationRequired = false }
           async
           src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAZU-nw2CatyXuD1_zoe1rIPOJBGuA-vdg&libraries=places"
         /> */}
+        {/* <script defer>{window.addEventListener('load', () => {
+          Weglot.initialize({
+            api_key: 'wg_ac3c0caf29a30b300b45bc7ba773a64e0'
+          })
+        })}</script> */}
       </Head>
 
       <Header />

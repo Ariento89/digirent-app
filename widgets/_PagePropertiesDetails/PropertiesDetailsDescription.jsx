@@ -7,7 +7,7 @@ const PropertiesDetailsDescription = ({ property }) => {
     return (
     <div className="property-description">
       <p className="main-desc main-desc-header text-primary">DESCRIPTION</p>
-      <p className="">{property?.apartment.description.substring(0, 500)}... <span onClick={e => setReadMore(!readMore)} className="property-readMore">Read more</span></p>
+      <p className="property-description--details">{property?.apartment.description.substring(0, 500)}... <span onClick={e => setReadMore(!readMore)} className="property-readMore">Read more</span></p>
     </div>
     )
     

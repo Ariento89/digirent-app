@@ -7,12 +7,14 @@ import Head from 'next/head';
 import Footer from 'widgets/Footer';
 import HomePageHeader from 'widgets/_PageHome/HomePageHeader';
 
-const HomePageWrapper = ({ title, onLoginClick, onRegisterClick, children }) =>
+const HomePageWrapper = ({ title, onLoginClick, onRegisterClick, children }) => 
 // const { language } = useLanguage();
 
   (
     <div className="page-wrapper">
       <Head>
+        <script type="text/javascript" src="https://cdn.weglot.com/weglot.min.js"></script>
+        <script type="text/javascript" src="https://static.futy-widget.com/js/widget.js"></script>
         <link rel="apple-touch-icon" sizes="57x57" href="/favicons/apple-icon-57x57.png" />
         <link rel="apple-touch-icon" sizes="60x60" href="/favicons/apple-icon-60x60.png" />
         <link rel="apple-touch-icon" sizes="72x72" href="/favicons/apple-icon-72x72.png" />
@@ -61,9 +63,9 @@ const HomePageWrapper = ({ title, onLoginClick, onRegisterClick, children }) =>
                 if(!Weglot.initialized) {
                   Weglot.initialize({api_key: 'wg_8fa89c444075cf79dc5825b3457396ab5', hide_switcher: true});
                   window.Weglot = Weglot;
-                  Weglot.switchTo('${language}');
+                  Weglot.switchTo('ln');
                 } else {
-                  Weglot.switchTo('${language}');
+                  Weglot.switchTo('en');
                 }
               }
             `,

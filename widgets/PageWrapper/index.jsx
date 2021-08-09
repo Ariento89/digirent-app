@@ -1,7 +1,6 @@
 import cn from 'classnames';
 import { useMe } from 'hooks/useMe';
 import Head from 'next/head';
-import Loader from 'react-loader-spinner';
 import Footer from 'widgets/Footer';
 import Header from 'widgets/Header';
 import NotVerified from './NotVerified';
@@ -11,18 +10,9 @@ const PageWrapper = ({ title, pageName, children, verificationRequired = false }
 
   const { me } = useMe();
 
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  // useEffect(() => {
-  //   if (window.initWeglot) {
-  //     window.initWeglot();
-  //   }
-  // }, [title, language]);
-
   return (
     <div className="page-wrapper">
       <Head>
-        <script type="text/javascript" src="https://cdn.weglot.com/weglot.min.js">
-        </script>
         <link rel="apple-touch-icon" sizes="57x57" href="/favicons/apple-icon-57x57.png" />
         <link rel="apple-touch-icon" sizes="60x60" href="/favicons/apple-icon-60x60.png" />
         <link rel="apple-touch-icon" sizes="72x72" href="/favicons/apple-icon-72x72.png" />
@@ -46,15 +36,6 @@ const PageWrapper = ({ title, pageName, children, verificationRequired = false }
         <meta name="msapplication-TileImage" content="/favicons/ms-icon-144x144.png" />
         <meta name="theme-color" content="#ffffff" />
         <title>{title}</title>
-        {/* <script
-          async
-          src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAZU-nw2CatyXuD1_zoe1rIPOJBGuA-vdg&libraries=places"
-        /> */}
-        {/* <script defer>{window.addEventListener('load', () => {
-          Weglot.initialize({
-            api_key: 'wg_ac3c0caf29a30b300b45bc7ba773a64e0'
-          })
-        })}</script> */}
       </Head>
 
       <Header />

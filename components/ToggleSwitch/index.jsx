@@ -21,12 +21,6 @@ const ToggleSwitch = ({
 
   return !finished ? null : (
     <>
-      <script>{
-        Weglot.initialize({
-          api_key: 'wg_ac3c0caf29a30b300b45bc7ba773a64e0'
-        })
-      }
-      </script>
       <div className={cn('toggle-switch', classNames)}>
         <div className="switch">
           <input
@@ -37,7 +31,7 @@ const ToggleSwitch = ({
             type="radio"
             checked={value === onValue}
             onChange={() => (onChange ? onChange(onValue) : null)}
-            onClick={() => Weglot?.switchTo('en')}
+            onClick={() => { }}
           />
           <label htmlFor={`${name}-on`} className="switch-button">
             {onLabel}
@@ -50,7 +44,7 @@ const ToggleSwitch = ({
             type="radio"
             checked={value === offValue}
             onChange={() => (onChange ? onChange(offValue) : null)}
-            onClick={() => Weglot?.switchTo('nl')}
+            onClick={() => { }}
           />
           <label htmlFor={`${name}-off`} className="switch-button">
             {offLabel}

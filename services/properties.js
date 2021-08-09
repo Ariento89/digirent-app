@@ -1,8 +1,9 @@
 import axios from 'axios';
+import { AUTH_TYPE } from 'shared/constants';
 import { HEADER_MULTIPART_FORM_DATA } from './index';
 
 export const service = {
-  fetchProperties: async (params) => axios.get('/apartments/', { params }),
+  fetchProperties: async (params) => axios.get('/apartments/', { authType: AUTH_TYPE.OPTIONAL, params }),
   fetchPropertiesTenant: async (params) => axios.get('/apartments/tenant', { params }),
   createProperty: async (body) => axios.post('/apartments/', body),
   deleteProperty: async (propertyId) => axios.put(`/apartments/${propertyId}/archive`),

@@ -1,12 +1,13 @@
 import axios from 'axios';
 import { actions, key as AUTH_KEY } from 'ducks/authentication';
-import { isArray, isString, result } from 'lodash';
+import { isArray, isString } from 'lodash';
 import {
   API_TIMEOUT,
   API_URL,
   NO_VERIFICATION_NEEDED,
   UNAUTHORIZED_RESPONSE,
 } from 'services/index';
+import { AUTH_TYPE } from 'shared/constants';
 
 export default function configureAxios(store) {
   axios.defaults.baseURL = API_URL;
@@ -24,15 +25,27 @@ export default function configureAxios(store) {
         return config;
       }
 
-      if(config.noAuth) { return config; }
+      const authType = config.authType || AUTH_TYPE.REQUIRED;
+
+      // Don't pass authorization if autType is NONE
+      if (authType === AUTH_TYPE.NONE) { return config; }
 
       // since there's no `connect` HOC, this is how we
       // access the store (or reducer)
+      // Get access token from store for every api request
       const { accessToken } = store?.getState()?.[AUTH_KEY];
 
-      // Get access token from store for every api request
-      // eslint-disable-next-line no-param-reassign
-      config.headers.authorization = accessToken ? `Bearer ${accessToken}` : null;
+      if (authType === AUTH_TYPE.OPTIONAL) {
+        if (accessToken) {
+        // eslint-disable-next-line no-param-reassign
+          config.headers.authorization = `Bearer ${accessToken}`;
+        }
+      }
+
+      if (authType === AUTH_TYPE.REQUIRED) {
+        // eslint-disable-next-line no-param-reassign
+        config.headers.authorization = accessToken ? `Bearer ${accessToken}` : null;
+      }
 
       return config;
     },
@@ -57,4 +70,3 @@ export default function configureAxios(store) {
     return Promise.reject(modifiedError);
   });
 }
-

@@ -12,3 +12,9 @@ export const SUPPORTED_IMAGE_UPLOAD_FORMATS = ['image/jpg', 'image/jpeg', 'image
 export const MAX_FILE_SIZE = 10000 * 1024;
 
 export const EMPTY_PLACEHOLDER = '—';
+
+export const AUTH_TYPE = {
+  NONE: 'none',
+  OPTIONAL: 'optional',
+  REQUIRED: 'required',
+};
